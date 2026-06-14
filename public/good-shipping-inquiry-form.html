@@ -353,6 +353,7 @@
     }
 
     input,
+    select,
     textarea {
       width: 100%;
       min-height: 48px;
@@ -380,6 +381,7 @@
     }
 
     input:focus,
+    select:focus,
     textarea:focus {
       border-color: rgba(250, 204, 21, .72);
       box-shadow: 0 0 0 4px rgba(250, 204, 21, .12);
@@ -394,6 +396,7 @@
     }
 
     .field.invalid input,
+    .field.invalid select,
     .field.invalid textarea {
       border-color: rgba(251, 113, 133, .86);
       box-shadow: 0 0 0 4px rgba(251, 113, 133, .1);
@@ -474,6 +477,13 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.55;
+    }
+
+    .form-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .template-note {
@@ -638,6 +648,29 @@
               <span class="hint">Optional. Tell us the service or cargo type you need.</span>
             </div>
 
+            <div class="field form-field" data-field="destination">
+              <label for="destination">Destination</label>
+              <select id="destination" name="destination">
+                <option value="">Select destination</option>
+                <option value="usa-mainland">USA Mainland</option>
+                <option value="hawaii">Hawaii</option>
+                <option value="alaska">Alaska</option>
+                <option value="puerto-rico">Puerto Rico</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="hint">Optional. Choose the main delivery destination.</span>
+            </div>
+
+            <div class="field form-field" data-field="preferred-contact">
+              <label for="preferred-contact">Preferred contact method</label>
+              <select id="preferred-contact" name="preferred_contact">
+                <option value="email">Email</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="either">Either is fine</option>
+              </select>
+              <span class="hint">Optional. We can reply by email or WhatsApp.</span>
+            </div>
+
             <div class="field full" data-field="message">
               <label for="message">Message</label>
               <textarea id="message" name="message" placeholder="Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline..."></textarea>
@@ -649,11 +682,12 @@
             <button id="submitBtn" type="submit">Submit Inquiry</button>
             <div id="formStatus" class="status" role="status" aria-live="polite">Complete the required fields, then submit your inquiry.</div>
           </div>
-          <p class="privacy">This static preview stores successful demo submissions in your browser only. For production, connect the endpoint to your email service, CRM or database.</p>
+          <p class="form-note">We respond within 12 hours via your preferred contact method. Business days, Shenzhen time (UTC+8).</p>
+          <p class="privacy">This form is ready for Formspree. Until YOUR_FORM_ID is replaced, successful demo submissions are stored in your browser only.</p>
         </form>
 
         <div class="template-note">
-          Integration note: replace <code>FORM_ENDPOINT</code> in the script with your backend route, such as <code>/api/inquiries</code>, Formspree, HubSpot, Airtable, Supabase or your own email API. Add Turnstile, reCAPTCHA or hCaptcha before production if the page receives public traffic.
+          Integration note: replace <code>YOUR_FORM_ID</code> in <code>FORM_ENDPOINT</code> with the form ID from formspree.io. Alternative options are Airtable, HubSpot, Supabase, a custom <code>/api/inquiries</code> route, or an email API. Add Turnstile, reCAPTCHA or hCaptcha before production if the page receives public traffic.
         </div>
       </section>
     </section>
@@ -662,7 +696,13 @@
   <script src="good-shipping-homepage/locales-data.js"></script>
   <script src="good-shipping-homepage/i18n.js"></script>
   <script>
-    const FORM_ENDPOINT = ""; // Example: "/api/inquiries" or "https://formspree.io/f/xxxxxxx"
+    // Replace YOUR_FORM_ID with the form ID from formspree.io before production.
+    const FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+    // Alternative backend options:
+    // const FORM_ENDPOINT = "/api/inquiries"; // Custom Next.js/API route
+    // const FORM_ENDPOINT = "https://api.airtable.com/v0/YOUR_BASE/YOUR_TABLE"; // Airtable proxy recommended
+    // const FORM_ENDPOINT = "https://your-crm-or-email-api.example/inquiries";
+    const FORM_ENDPOINT_CONFIGURED = !FORM_ENDPOINT.includes("YOUR_FORM_ID");
 
     const form = document.querySelector("#inquiryForm");
     const submitBtn = document.querySelector("#submitBtn");
@@ -750,7 +790,7 @@
       setStatus(tt("Submitting your inquiry..."), "");
 
       try {
-        if (FORM_ENDPOINT) {
+        if (FORM_ENDPOINT_CONFIGURED) {
           const response = await fetch(FORM_ENDPOINT, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
