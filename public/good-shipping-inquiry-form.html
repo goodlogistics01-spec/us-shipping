@@ -684,7 +684,7 @@
             <div id="formStatus" class="status" role="status" aria-live="polite">Complete the required fields, then submit your inquiry.</div>
           </div>
           <p class="form-note">We respond within 12 hours via your preferred contact method. Business days, Shenzhen time (UTC+8).</p>
-          <p class="privacy">This form is ready for Formspree. Until YOUR_FORM_ID is replaced, successful demo submissions are stored in your browser only.</p>
+          <p class="privacy">This form is ready for Formspree. Replace YOUR_FORM_ID before publishing so inquiries are delivered to your chosen mailbox or workflow.</p>
         </form>
 
         <div class="template-note">
@@ -697,14 +697,12 @@
   <script src="good-shipping-homepage/locales-data.js"></script>
   <script src="good-shipping-homepage/i18n.js"></script>
   <script>
-    // Replace YOUR_FORM_ID with the form ID from formspree.io before production.
+    // 请在 formspree.io 注册免费账号，创建表单后将 YOUR_FORM_ID 替换为实际表单 ID.
     const FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
     // Alternative backend options:
     // const FORM_ENDPOINT = "/api/inquiries"; // Custom Next.js/API route
     // const FORM_ENDPOINT = "https://api.airtable.com/v0/YOUR_BASE/YOUR_TABLE"; // Airtable proxy recommended
     // const FORM_ENDPOINT = "https://your-crm-or-email-api.example/inquiries";
-    const FORM_ENDPOINT_CONFIGURED = !FORM_ENDPOINT.includes("YOUR_FORM_ID");
-
     const form = document.querySelector("#inquiryForm");
     const submitBtn = document.querySelector("#submitBtn");
     const statusEl = document.querySelector("#formStatus");
@@ -791,36 +789,27 @@
       setStatus(tt("Submitting your inquiry..."), "");
 
       try {
-        if (FORM_ENDPOINT_CONFIGURED) {
-          const response = await fetch(FORM_ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              ...payload,
-              locale: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
-              language: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
-              source: "Good Logistics Co., Ltd. B2B inquiry page",
-              submittedAt: new Date().toISOString()
-            })
-          });
-
-          if (!response.ok) throw new Error("Submission failed");
-        } else {
-          const saved = JSON.parse(localStorage.getItem("goodShippingInquiries") || "[]");
-          saved.push({
+        const response = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
             ...payload,
             locale: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
             language: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
+            source: "Good Logistics Co., Ltd. B2B inquiry page",
             submittedAt: new Date().toISOString()
-          });
-          localStorage.setItem("goodShippingInquiries", JSON.stringify(saved));
-          await new Promise((resolve) => setTimeout(resolve, 650));
-        }
+          })
+        });
+
+        if (!response.ok) throw new Error("Submission failed");
 
         form.reset();
-        setStatus(tt("Submitted successfully. Our logistics team will contact you soon."), "success");
+        setStatus(tt("Thank you. We'll respond within 12 hours via your preferred contact method."), "success");
       } catch (error) {
-        setStatus(tt("Submission failed. Please try again or contact us by email / WhatsApp."), "error");
+        setStatus(tt("Submission failed. Please email us directly at zoe@gdlogi.com."), "error");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = tt("Submit Inquiry");
