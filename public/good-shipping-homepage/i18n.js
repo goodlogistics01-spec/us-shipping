@@ -2,6 +2,7 @@
   const SUPPORTED = ["en", "es", "pt", "fr", "de", "ru"];
   const STORAGE_KEY = "goodLogisticsLocale";
   const DEFAULT_LOCALE = "en";
+  const SITE_ORIGIN = "https://gdlogi.us";
   const data = window.GS_I18N || {};
   const textOriginals = new WeakMap();
   const attrOriginals = new WeakMap();
@@ -128,16 +129,13 @@
   }
 
   function createLocaleUrl(locale) {
-    const url = new URL(window.location.href);
-    const segments = url.pathname.split("/");
-    const localeIndex = segments.findIndex((segment) => SUPPORTED.includes(segment));
-    if (localeIndex >= 0) {
-      segments[localeIndex] = locale;
-      url.pathname = segments.join("/");
-      url.searchParams.delete("lang");
-    } else {
-      url.searchParams.set("lang", locale);
-    }
+    const currentCanonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href");
+    const url = currentCanonical?.startsWith(SITE_ORIGIN)
+      ? new URL(currentCanonical)
+      : new URL(window.location.pathname, SITE_ORIGIN);
+    url.search = "";
+    url.hash = "";
+    if (locale !== DEFAULT_LOCALE) url.searchParams.set("lang", locale);
     return url.toString();
   }
 
@@ -157,7 +155,7 @@
       canonical.rel = "canonical";
       document.head.appendChild(canonical);
     }
-    canonical.href = createLocaleUrl(locale);
+    canonical.href = createLocaleUrl(DEFAULT_LOCALE);
   }
 
   function renderSwitcher(locale) {
