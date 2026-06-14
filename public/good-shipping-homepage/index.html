@@ -271,20 +271,44 @@
 
 
     .hero-callout {
-      display: inline-block;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      width: fit-content;
+      max-width: 100%;
       margin-top: 24px;
-      padding: 14px 24px;
+      padding: 14px 18px;
       background: #1a3a5c;
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, .18);
       border-radius: var(--radius);
       box-shadow: 0 18px 38px rgba(6, 28, 58, .18);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.45;
     }
 
-    .hero-callout strong {
-      font-weight: 800;
+    .hero-callout-label {
+      font-weight: 850;
+    }
+
+    .hero-callout-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .hero-callout-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .14);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
     .proof-tags {
@@ -1447,7 +1471,15 @@
         <div class="hero-copy">
           <h1>More Than Shipping from China to the USA. We Help You Control Cost, Risk and Delivery from Start to Finish.</h1>
           <p>Nationwide pickup in China, multi-supplier consolidation, cargo preparation, international freight, customs clearance and final delivery—all managed by one accountable team.</p>
-          <div class="hero-callout"><strong>Covering destinations most freight forwarders don't:</strong> Hawaii · Alaska · Puerto Rico · Oversized Cargo</div>
+          <div class="hero-callout">
+            <span class="hero-callout-label">We cover destinations most freight forwarders don't:</span>
+            <span class="hero-callout-tags">
+              <span>Hawaii</span>
+              <span>Alaska</span>
+              <span>Puerto Rico</span>
+              <span>Oversized Cargo</span>
+            </span>
+          </div>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#quote">Get a Quote</a>
             <a class="btn btn-secondary" href="#services">View Services</a>
