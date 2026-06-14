@@ -7,7 +7,7 @@ export const metadata = {
   },
   description:
     "Good Logistics Co., Ltd. helps importers move cargo from China to the USA with pickup, consolidation, freight, customs coordination and final delivery.",
-  metadataBase: new URL("https://www.gdlogi.com")
+  metadataBase: new URL("https://gdlogi.us")
 };
 
 export default function RootLayout({ children }) {

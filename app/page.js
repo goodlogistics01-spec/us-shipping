@@ -8,13 +8,13 @@ export const metadata = {
   description:
     "China to USA door-to-door freight forwarding, DDP shipping, oversized cargo, Amazon FBA logistics, customs coordination and final delivery.",
   alternates: {
-    canonical: "https://www.gdlogi.com/"
+    canonical: "https://gdlogi.us/"
   },
   openGraph: {
     title: "Good Logistics Co., Ltd. | China to USA Freight Forwarder",
     description:
       "Control cost, risk and delivery from China pickup to final delivery in the United States.",
-    url: "https://www.gdlogi.com/",
+    url: "https://gdlogi.us/",
     siteName: "Good Logistics Co., Ltd.",
     type: "website"
   }
