@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en" data-i18n-page="inquiry">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get a Freight Quote | Good Logistics Co., Ltd.</title>
+  <meta name="description" content="Submit your China to USA freight inquiry to Good Logistics Co., Ltd. Air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics.">
+  <style>
+    :root {
+      --black: #06080d;
+      --black-2: #0d111a;
+      --panel: #111827;
+      --panel-2: #151d2b;
+      --yellow: #facc15;
+      --yellow-2: #f59e0b;
+      --white: #ffffff;
+      --text: #eef2ff;
+      --muted: #9aa7bd;
+      --line: rgba(255, 255, 255, .14);
+      --danger: #fb7185;
+      --success: #34d399;
+      --radius: 8px;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 78% 12%, rgba(250, 204, 21, .18), transparent 28%),
+        radial-gradient(circle at 8% 80%, rgba(245, 158, 11, .12), transparent 30%),
+        linear-gradient(135deg, var(--black) 0%, #0b1020 45%, var(--black-2) 100%);
+      letter-spacing: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 44px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      display: grid;
+      place-items: center;
+      width: 194px;
+      height: 58px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .18);
+    }
+
+    .logo-box img {
+      width: 158px;
+    }
+
+    .topbar span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .language-switcher {
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .language-button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(250, 204, 21, .26);
+      border-radius: var(--radius);
+      padding: 0 12px;
+      color: var(--yellow);
+      background: rgba(250, 204, 21, .08);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .language-button span {
+      color: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .language-button svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .language-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      z-index: 40;
+      min-width: 174px;
+      display: none;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #0b1020;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, .35);
+    }
+
+    .language-switcher.is-open .language-menu {
+      display: grid;
+      gap: 3px;
+    }
+
+    .language-option {
+      width: 100%;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 0;
+      border-radius: 6px;
+      padding: 0 10px;
+      color: var(--text);
+      background: transparent;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 750;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: none;
+    }
+
+    .language-option:hover,
+    .language-option[aria-current="true"] {
+      color: var(--yellow);
+      background: rgba(250, 204, 21, .1);
+      transform: none;
+    }
+
+    .language-option[aria-current="true"]::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--yellow);
+      flex: 0 0 auto;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(340px, .72fr) minmax(520px, 1fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .intro,
+    .form-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17, 24, 39, .78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .intro {
+      padding: 34px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .intro::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -80px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(250, 204, 21, .12);
+      filter: blur(10px);
+    }
+
+    .intro h1 {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(38px, 4.4vw, 60px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .intro p {
+      margin: 22px 0 0;
+      color: #cbd5e1;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .proof {
+      display: grid;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .proof-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .proof-icon {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: var(--black);
+      background: var(--yellow);
+      font-weight: 900;
+    }
+
+    .proof-item strong {
+      display: block;
+      color: var(--white);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .proof-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .form-card {
+      padding: 30px;
+      background: linear-gradient(180deg, rgba(21, 29, 43, .96), rgba(17, 24, 39, .92));
+    }
+
+    .form-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .form-head h2 {
+      margin: 0;
+      color: var(--white);
+      font-size: 30px;
+      line-height: 1.16;
+    }
+
+    .form-head p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .required-note {
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border: 1px solid rgba(250, 204, 21, .3);
+      border-radius: var(--radius);
+      color: var(--yellow);
+      background: rgba(250, 204, 21, .08);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: #e5e7eb;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .required {
+      color: var(--yellow);
+      margin-left: 4px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: var(--radius);
+      padding: 0 14px;
+      color: var(--white);
+      background: rgba(3, 7, 18, .5);
+      outline: none;
+      font: inherit;
+      font-size: 15px;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    textarea {
+      min-height: 118px;
+      padding: 13px 14px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(203, 213, 225, .54);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(250, 204, 21, .72);
+      box-shadow: 0 0 0 4px rgba(250, 204, 21, .12);
+      background: rgba(3, 7, 18, .68);
+    }
+
+    .hint {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .field.invalid input,
+    .field.invalid textarea {
+      border-color: rgba(251, 113, 133, .86);
+      box-shadow: 0 0 0 4px rgba(251, 113, 133, .1);
+    }
+
+    .field.invalid .hint {
+      color: var(--danger);
+    }
+
+    .anti-spam {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    button {
+      min-height: 52px;
+      border: 0;
+      border-radius: var(--radius);
+      padding: 0 24px;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-2));
+      font: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 16px 36px rgba(250, 204, 21, .22);
+      transition: transform .18s ease, opacity .18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: .72;
+      transform: none;
+    }
+
+    .status {
+      flex: 1 1 260px;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255, 255, 255, .04);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .status.success {
+      color: #d1fae5;
+      border-color: rgba(52, 211, 153, .38);
+      background: rgba(52, 211, 153, .12);
+    }
+
+    .status.error {
+      color: #ffe4e6;
+      border-color: rgba(251, 113, 133, .42);
+      background: rgba(251, 113, 133, .13);
+    }
+
+    .privacy {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .template-note {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid rgba(250, 204, 21, .24);
+      border-radius: var(--radius);
+      color: #d8dee9;
+      background: rgba(250, 204, 21, .06);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .template-note code {
+      color: var(--yellow);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    @media (max-width: 900px) {
+      .shell,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .form-head {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 28px, 1180px);
+        padding-top: 22px;
+      }
+
+      .intro,
+      .form-card {
+        padding: 22px;
+      }
+
+      .intro h1 {
+        font-size: 34px;
+      }
+
+      .form-head h2 {
+        font-size: 25px;
+      }
+
+      .logo-box {
+        width: 176px;
+      }
+
+      .language-button {
+        max-width: 150px;
+      }
+
+      .language-current {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="logo" href="/" aria-label="Back to Good Logistics Co., Ltd. homepage">
+        <span class="logo-box"><img src="good-shipping-homepage/assets/logo.png" alt="Good Logistics Co., Ltd."></span>
+      </a>
+      <div class="topbar-actions">
+        <span>China to USA freight quote request</span>
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-button" type="button" data-language-button aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
+            <span class="language-current" data-language-current>English</span>
+          </button>
+          <div class="language-menu" data-language-menu></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="shell">
+      <aside class="intro">
+        <h1>Get a Clear China to USA Shipping Quote</h1>
+        <p>Tell us what you need to ship. Our team will review the cargo details, destination and delivery requirements before recommending air freight, sea freight, DDP, Amazon FBA or oversized cargo solutions.</p>
+        <div class="proof">
+          <div class="proof-item">
+            <span class="proof-icon">1</span>
+            <div><strong>One accountable logistics team</strong><span>China pickup, consolidation, export handling and U.S. delivery coordination.</span></div>
+          </div>
+          <div class="proof-item">
+            <span class="proof-icon">2</span>
+            <div><strong>Designed for B2B shipments</strong><span>Importers, distributors, Amazon sellers, brand owners and project cargo buyers.</span></div>
+          </div>
+          <div class="proof-item">
+            <span class="proof-icon">3</span>
+            <div><strong>Anti-spam ready</strong><span>Includes a hidden honeypot field and can connect to captcha, email or CRM backends.</span></div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="form-card" aria-labelledby="form-title">
+        <div class="form-head">
+          <div>
+            <h2 id="form-title">B2B Inquiry Form</h2>
+            <p>Required fields are marked clearly. You will see validation tips before submission.</p>
+          </div>
+          <span class="required-note">* Required</span>
+        </div>
+
+        <form id="inquiryForm" novalidate>
+          <input class="anti-spam" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="grid">
+            <div class="field" data-field="name">
+              <label for="name">Name<span class="required">*</span></label>
+              <input id="name" name="name" type="text" placeholder="Your full name" autocomplete="name" required>
+              <span class="hint">Please enter your name.</span>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="email">Email<span class="required">*</span></label>
+              <input id="email" name="email" type="email" placeholder="name@company.com" autocomplete="email" required>
+              <span class="hint">Use a valid business email address.</span>
+            </div>
+
+            <div class="field" data-field="phone">
+              <label for="phone">Phone / WhatsApp<span class="required">*</span></label>
+              <input id="phone" name="phone" type="tel" placeholder="+1 213 555 0188 or +86 135 0000 0000" autocomplete="tel" required>
+              <span class="hint">International format is supported, e.g. +1 213 555 0188.</span>
+            </div>
+
+            <div class="field" data-field="company">
+              <label for="company">Company Name</label>
+              <input id="company" name="company" type="text" placeholder="Your company name" autocomplete="organization">
+              <span class="hint">Optional, but helpful for B2B quote follow-up.</span>
+            </div>
+
+            <div class="field" data-field="country">
+              <label for="country">Country / Region</label>
+              <input id="country" name="country" type="text" placeholder="United States / Mexico / UK" autocomplete="country-name">
+              <span class="hint">Optional destination or buyer location.</span>
+            </div>
+
+            <div class="field" data-field="requirement">
+              <label for="requirement">Product Requirement</label>
+              <input id="requirement" name="requirement" type="text" placeholder="Air freight, sea freight, DDP, FBA, oversized cargo">
+              <span class="hint">Optional. Tell us the service or cargo type you need.</span>
+            </div>
+
+            <div class="field full" data-field="message">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline..."></textarea>
+              <span class="hint">Optional. More cargo details help us quote faster.</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="submitBtn" type="submit">Submit Inquiry</button>
+            <div id="formStatus" class="status" role="status" aria-live="polite">Complete the required fields, then submit your inquiry.</div>
+          </div>
+          <p class="privacy">This static preview stores successful demo submissions in your browser only. For production, connect the endpoint to your email service, CRM or database.</p>
+        </form>
+
+        <div class="template-note">
+          Integration note: replace <code>FORM_ENDPOINT</code> in the script with your backend route, such as <code>/api/inquiries</code>, Formspree, HubSpot, Airtable, Supabase or your own email API. Add Turnstile, reCAPTCHA or hCaptcha before production if the page receives public traffic.
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="good-shipping-homepage/locales-data.js"></script>
+  <script src="good-shipping-homepage/i18n.js"></script>
+  <script>
+    const FORM_ENDPOINT = ""; // Example: "/api/inquiries" or "https://formspree.io/f/xxxxxxx"
+
+    const form = document.querySelector("#inquiryForm");
+    const submitBtn = document.querySelector("#submitBtn");
+    const statusEl = document.querySelector("#formStatus");
+
+    function tt(message) {
+      return window.GSI18n?.tText(message) || message;
+    }
+
+    const validators = {
+      name(value) {
+        return value.trim().length >= 2 ? "" : tt("Please enter your name.");
+      },
+      email(value) {
+        return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(value.trim()) ? "" : tt("Please enter a valid email address.");
+      },
+      phone(value) {
+        const cleaned = value.trim();
+        return /^\\+?[0-9][0-9\\s().-]{6,22}$/.test(cleaned) ? "" : tt("Please enter a valid phone or WhatsApp number.");
+      }
+    };
+
+    function setStatus(message, type = "") {
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`.trim();
+    }
+
+    function setFieldError(name, message) {
+      const field = form.querySelector(`[data-field="${name}"]`);
+      const hint = field?.querySelector(".hint");
+      if (!field || !hint) return;
+      field.classList.toggle("invalid", Boolean(message));
+      hint.textContent = message || defaultHint(name);
+    }
+
+    function defaultHint(name) {
+      return {
+        name: tt("Please enter your name."),
+        email: tt("Use a valid business email address."),
+        phone: tt("International format is supported, e.g. +1 213 555 0188.")
+      }[name] || "";
+    }
+
+    function getPayload() {
+      const data = new FormData(form);
+      return Object.fromEntries(data.entries());
+    }
+
+    function validateForm() {
+      const payload = getPayload();
+      const errors = {};
+
+      Object.keys(validators).forEach((name) => {
+        const message = validators[name](payload[name] || "");
+        setFieldError(name, message);
+        if (message) errors[name] = message;
+      });
+
+      if (payload.website) {
+        errors.website = tt("Spam protection triggered.");
+      }
+
+      return { payload, errors };
+    }
+
+    ["name", "email", "phone"].forEach((name) => {
+      const input = form.elements[name];
+      input.addEventListener("input", () => {
+        const message = validators[name](input.value);
+        setFieldError(name, message);
+      });
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const { payload, errors } = validateForm();
+
+      if (Object.keys(errors).length) {
+        setStatus(tt("Please complete the required fields before submitting."), "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = tt("Submitting...");
+      setStatus(tt("Submitting your inquiry..."), "");
+
+      try {
+        if (FORM_ENDPOINT) {
+          const response = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              ...payload,
+              locale: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
+              language: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
+              source: "Good Logistics Co., Ltd. B2B inquiry page",
+              submittedAt: new Date().toISOString()
+            })
+          });
+
+          if (!response.ok) throw new Error("Submission failed");
+        } else {
+          const saved = JSON.parse(localStorage.getItem("goodShippingInquiries") || "[]");
+          saved.push({
+            ...payload,
+            locale: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
+            language: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
+            submittedAt: new Date().toISOString()
+          });
+          localStorage.setItem("goodShippingInquiries", JSON.stringify(saved));
+          await new Promise((resolve) => setTimeout(resolve, 650));
+        }
+
+        form.reset();
+        setStatus(tt("Submitted successfully. Our logistics team will contact you soon."), "success");
+      } catch (error) {
+        setStatus(tt("Submission failed. Please try again or contact us by email / WhatsApp."), "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = tt("Submit Inquiry");
+      }
+    });
+
+    window.addEventListener("gs:languagechange", () => {
+      if (!submitBtn.disabled) submitBtn.textContent = tt("Submit Inquiry");
+      ["name", "email", "phone"].forEach((name) => {
+        const input = form.elements[name];
+        const message = input.value ? validators[name](input.value) : "";
+        setFieldError(name, message);
+      });
+      if (!statusEl.classList.contains("success") && !statusEl.classList.contains("error")) {
+        setStatus(tt("Complete the required fields, then submit your inquiry."));
+      }
+    });
+  </script>
+</body>
+</html>

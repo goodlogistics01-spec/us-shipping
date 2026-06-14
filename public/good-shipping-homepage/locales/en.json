@@ -1,0 +1,54 @@
+{
+  "locale": "en",
+  "displayName": "English",
+  "common": {
+    "Get a Quote": "Get a Quote",
+    "View Services": "View Services",
+    "Learn More": "Learn More",
+    "All rights reserved.": "All rights reserved."
+  },
+  "navigation": {
+    "Services": "Services",
+    "China to USA": "China to USA",
+    "Industries": "Industries",
+    "Case Studies": "Case Studies",
+    "Resources": "Resources",
+    "Contact": "Contact"
+  },
+  "home": {},
+  "services": {},
+  "routes": {},
+  "about": {},
+  "contact": {},
+  "footer": {},
+  "forms": {
+    "B2B Inquiry Form": "B2B Inquiry Form",
+    "Name": "Name",
+    "Email": "Email",
+    "Phone / WhatsApp": "Phone / WhatsApp",
+    "Company Name": "Company Name",
+    "Country / Region": "Country / Region",
+    "Product Requirement": "Product Requirement",
+    "Message": "Message",
+    "Submit Inquiry": "Submit Inquiry",
+    "Submitting...": "Submitting...",
+    "Complete the required fields, then submit your inquiry.": "Complete the required fields, then submit your inquiry.",
+    "Please complete the required fields before submitting.": "Please complete the required fields before submitting.",
+    "Submitted successfully. Our logistics team will contact you soon.": "Submitted successfully. Our logistics team will contact you soon.",
+    "Submission failed. Please try again or contact us by email / WhatsApp.": "Submission failed. Please try again or contact us by email / WhatsApp.",
+    "Please enter your name.": "Please enter your name.",
+    "Please enter a valid email address.": "Please enter a valid email address.",
+    "Please enter a valid phone or WhatsApp number.": "Please enter a valid phone or WhatsApp number."
+  },
+  "seo": {
+    "home": {
+      "title": "Good Logistics Co., Ltd. | China to USA Freight Forwarder",
+      "description": "China to USA freight forwarding, door-to-door shipping, air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics."
+    },
+    "inquiry": {
+      "title": "Get a Freight Quote | Good Logistics Co., Ltd.",
+      "description": "Submit your China to USA freight inquiry to Good Logistics Co., Ltd. Air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics."
+    }
+  },
+  "attributes": {}
+}
