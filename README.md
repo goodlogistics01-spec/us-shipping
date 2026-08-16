@@ -25,6 +25,11 @@ npm run dev
 npm run build
 ```
 
-## Notes
+## Inquiry delivery
 
-The inquiry form HTML includes front-end validation and demo submission feedback. To send real inquiries to email or a database, connect the example API handler in `examples/next-api-inquiries-example.js` to your preferred email service, CRM, or database.
+The homepage quote form and `/good-shipping-inquiry-form.html` submit directly to FormSubmit and deliver inquiries to `zoe@gdlogi.com`.
+
+- The first live submission triggers a FormSubmit activation email. Open it in `zoe@gdlogi.com` and activate the form before testing delivery.
+- FormSubmit's default CAPTCHA remains enabled for spam protection.
+- Successful submissions redirect to `/thank-you.html`.
+- The detailed form keeps its existing front-end validation and FormSubmit honeypot field.

@@ -610,8 +610,18 @@
           <span class="required-note">* Required</span>
         </div>
 
-        <form id="inquiryForm" novalidate>
-          <input class="anti-spam" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <form
+          id="inquiryForm"
+          action="https://formsubmit.co/zoe@gdlogi.com"
+          method="POST"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <input type="hidden" name="_subject" value="New detailed freight inquiry from the Good Logistics website">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://gdlogi.us/thank-you.html">
+          <input type="hidden" name="_url" value="https://gdlogi.us/good-shipping-inquiry-form.html">
+          <input class="anti-spam" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="grid">
             <div class="field" data-field="name">
               <label for="name">Name<span class="required">*</span></label>
@@ -684,11 +694,11 @@
             <div id="formStatus" class="status" role="status" aria-live="polite">Complete the required fields, then submit your inquiry.</div>
           </div>
           <p class="form-note">We respond within 12 hours via your preferred contact method. Business days, Shenzhen time (UTC+8).</p>
-          <p class="privacy">This form is ready for Formspree. Replace YOUR_FORM_ID before publishing so inquiries are delivered to your chosen mailbox or workflow.</p>
+          <p class="privacy">Your inquiry is sent through FormSubmit to the Good Logistics sales mailbox. No inquiry data is stored in this website database.</p>
         </form>
 
         <div class="template-note">
-          Integration note: replace <code>YOUR_FORM_ID</code> in <code>FORM_ENDPOINT</code> with the form ID from formspree.io. Alternative options are Airtable, HubSpot, Supabase, a custom <code>/api/inquiries</code> route, or an email API. Add Turnstile, reCAPTCHA or hCaptcha before production if the page receives public traffic.
+          Prefer email? Send your cargo details directly to <a href="mailto:zoe@gdlogi.com"><code>zoe@gdlogi.com</code></a>.
         </div>
       </section>
     </section>
@@ -697,12 +707,6 @@
   <script src="good-shipping-homepage/locales-data.js"></script>
   <script src="good-shipping-homepage/i18n.js"></script>
   <script>
-    // 请在 formspree.io 注册免费账号，创建表单后将 YOUR_FORM_ID 替换为实际表单 ID.
-    const FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
-    // Alternative backend options:
-    // const FORM_ENDPOINT = "/api/inquiries"; // Custom Next.js/API route
-    // const FORM_ENDPOINT = "https://api.airtable.com/v0/YOUR_BASE/YOUR_TABLE"; // Airtable proxy recommended
-    // const FORM_ENDPOINT = "https://your-crm-or-email-api.example/inquiries";
     const form = document.querySelector("#inquiryForm");
     const submitBtn = document.querySelector("#submitBtn");
     const statusEl = document.querySelector("#formStatus");
@@ -760,8 +764,8 @@
         if (message) errors[name] = message;
       });
 
-      if (payload.website) {
-        errors.website = tt("Spam protection triggered.");
+      if (payload._honey) {
+        errors._honey = tt("Spam protection triggered.");
       }
 
       return { payload, errors };
@@ -775,11 +779,11 @@
       });
     });
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const { payload, errors } = validateForm();
+    form.addEventListener("submit", (event) => {
+      const { errors } = validateForm();
 
       if (Object.keys(errors).length) {
+        event.preventDefault();
         setStatus(tt("Please complete the required fields before submitting."), "error");
         return;
       }
@@ -787,33 +791,6 @@
       submitBtn.disabled = true;
       submitBtn.textContent = tt("Submitting...");
       setStatus(tt("Submitting your inquiry..."), "");
-
-      try {
-        const response = await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            ...payload,
-            locale: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
-            language: window.GSI18n?.getLocale() || document.documentElement.lang || "en",
-            source: "Good Logistics Co., Ltd. B2B inquiry page",
-            submittedAt: new Date().toISOString()
-          })
-        });
-
-        if (!response.ok) throw new Error("Submission failed");
-
-        form.reset();
-        setStatus(tt("Thank you. We'll respond within 12 hours via your preferred contact method."), "success");
-      } catch (error) {
-        setStatus(tt("Submission failed. Please email us directly at zoe@gdlogi.com."), "error");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = tt("Submit Inquiry");
-      }
     });
 
     window.addEventListener("gs:languagechange", () => {

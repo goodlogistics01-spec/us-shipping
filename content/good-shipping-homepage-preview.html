@@ -439,6 +439,14 @@
       margin-top: 20px;
     }
 
+    .anti-spam {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
     .quote-grid .btn {
       grid-column: span 2;
     }
@@ -1496,18 +1504,29 @@
             <div class="media-main"><img src="good-shipping-homepage/assets/hero-logistics.jpeg" alt=""></div>
             <div class="media-small"><img src="good-shipping-homepage/assets/crane-truck-warehouse.jpg" alt=""></div>
           </div>
-          <form class="form-panel">
+          <form
+            class="form-panel"
+            action="https://formsubmit.co/zoe@gdlogi.com"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" name="_subject" value="New freight inquiry from the Good Logistics homepage">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://gdlogi.us/thank-you.html">
+            <input type="hidden" name="_url" value="https://gdlogi.us/">
+            <input class="anti-spam" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <h2>Get a China to USA Shipping Quote</h2>
             <p>Share your cargo details and our logistics team will recommend the most suitable shipping solution.</p>
             <div class="quote-grid">
-              <label>From City in China<input type="text" placeholder="Shenzhen / Guangzhou / Ningbo"></label>
-              <label>Destination in USA<input type="text" placeholder="Los Angeles / Amazon FBA / Door address"></label>
-              <label for="quote-destination">Destination<select id="quote-destination" name="destination"><option value="">Select destination</option><option value="usa-mainland">USA Mainland</option><option value="hawaii">Hawaii</option><option value="alaska">Alaska</option><option value="puerto-rico">Puerto Rico</option></select></label>
-              <label>Cargo Type<select><option>Air Freight</option><option>Sea Freight</option><option>DDP Door-to-Door</option><option>Amazon FBA</option><option>Oversized Cargo</option></select></label>
-              <label>Weight / Volume<input type="text" placeholder="e.g. 850 kg / 4.2 CBM"></label>
-              <label>Email or WhatsApp<input type="text" placeholder="name@email.com / WhatsApp"></label>
+              <label>From City in China<input type="text" name="origin" placeholder="Shenzhen / Guangzhou / Ningbo" required></label>
+              <label>Destination in USA<input type="text" name="delivery_location" placeholder="Los Angeles / Amazon FBA / Door address" required></label>
+              <label for="quote-destination">Destination<select id="quote-destination" name="destination_region"><option value="">Select destination</option><option value="usa-mainland">USA Mainland</option><option value="hawaii">Hawaii</option><option value="alaska">Alaska</option><option value="puerto-rico">Puerto Rico</option></select></label>
+              <label>Cargo Type<select name="cargo_type"><option>Air Freight</option><option>Sea Freight</option><option>DDP Door-to-Door</option><option>Amazon FBA</option><option>Oversized Cargo</option></select></label>
+              <label>Weight / Volume<input type="text" name="weight_volume" placeholder="e.g. 850 kg / 4.2 CBM"></label>
+              <label>Email<input type="email" name="email" placeholder="name@company.com" autocomplete="email" required></label>
+              <label>WhatsApp / Phone<input type="tel" name="phone" placeholder="+1 213 555 0188" autocomplete="tel"></label>
               <label for="quote-contact-pref">Preferred reply method<select id="quote-contact-pref" name="preferred_contact"><option value="email">Email</option><option value="whatsapp">WhatsApp</option><option value="either">Either is fine</option></select></label>
-              <button class="btn btn-primary" type="button">Request Quote Within 12 Hours</button>
+              <button class="btn btn-primary" type="submit">Request Quote Within 12 Hours</button>
             </div>
           </form>
         </div>

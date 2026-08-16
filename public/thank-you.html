@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>Inquiry Received | Good Logistics Co., Ltd.</title>
+  <meta name="description" content="Your freight inquiry has been sent to Good Logistics Co., Ltd.">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #eef2ff;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(250, 204, 21, .18), transparent 28%),
+        linear-gradient(135deg, #06080d 0%, #0b1020 45%, #0d111a 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    main {
+      width: min(660px, 100%);
+      padding: clamp(30px, 6vw, 56px);
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(17, 24, 39, .88);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .34);
+    }
+    .check {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 24px;
+      border-radius: 999px;
+      color: #06080d;
+      background: linear-gradient(135deg, #facc15, #f59e0b);
+      font-size: 34px;
+      font-weight: 900;
+    }
+    h1 { margin: 0; color: #fff; font-size: clamp(32px, 6vw, 48px); line-height: 1.08; }
+    p { margin: 18px auto 0; max-width: 540px; color: #b8c4d8; font-size: 17px; line-height: 1.7; }
+    .actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+    a {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 8px;
+      padding: 0 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    a.primary { border-color: transparent; color: #06080d; background: linear-gradient(135deg, #facc15, #f59e0b); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="check" aria-hidden="true">✓</div>
+    <h1>Your inquiry has been sent.</h1>
+    <p>Thank you for contacting Good Logistics. Our logistics team will review your shipment details and reply through your preferred contact method.</p>
+    <div class="actions">
+      <a class="primary" href="/">Return to homepage</a>
+      <a href="mailto:zoe@gdlogi.com">Email us directly</a>
+    </div>
+  </main>
+</body>
+</html>
