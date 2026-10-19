@@ -122,9 +122,14 @@
     const current = localeData(locale);
     const page = currentPageKey();
     const seo = current.seo?.[page] || current.meta || {};
-    if (seo.title) document.title = seo.title;
-    const description = document.querySelector('meta[name="description"]');
-    if (description && seo.description) description.setAttribute("content", seo.description);
+    // The Next.js homepage owns its streamed metadata. Mutating that node while
+    // hydration is in progress can leave a stale duplicate description behind.
+    const nextManagedHomepage = window.location.pathname === "/";
+    if (!nextManagedHomepage) {
+      if (seo.title) document.title = seo.title;
+      const description = document.querySelector('meta[name="description"]');
+      if (description && seo.description) description.setAttribute("content", seo.description);
+    }
     document.documentElement.lang = locale;
   }
 

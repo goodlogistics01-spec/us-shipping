@@ -2,8 +2,8 @@ window.GS_I18N = {
   en: {
     name: "English",
     meta: {
-      title: "Good Logistics Co., Ltd. | China to USA Freight Forwarder",
-      description: "China to USA freight forwarding, door-to-door shipping, air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics."
+      title: "China to USA Freight Forwarder | Good Logistics",
+      description: "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States."
     },
     text: {},
     attr: {}
@@ -478,8 +478,8 @@ window.GS_I18N.ru.text = {
 Object.assign(window.GS_I18N.en, {
   seo: {
     home: {
-      title: "Good Logistics Co., Ltd. | China to USA Freight Forwarder",
-      description: "China to USA freight forwarding, door-to-door shipping, air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics."
+      title: "China to USA Freight Forwarder | Good Logistics",
+      description: "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States."
     },
     inquiry: {
       title: "Get a Freight Quote | Good Logistics Co., Ltd.",

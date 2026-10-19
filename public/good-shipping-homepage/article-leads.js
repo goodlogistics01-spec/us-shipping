@@ -11,6 +11,25 @@
   popup.querySelector('[data-popup-close]')?.addEventListener('click',close);
   popup.addEventListener('click',(e)=>{if(e.target===popup) close();});
   document.addEventListener('keydown',(e)=>{if(e.key==='Escape') close();});
-  popup.querySelector('form')?.addEventListener('submit',(e)=>{e.preventDefault(); const form=e.currentTarget; const required=[...form.querySelectorAll('[required]')]; const invalid=required.find(i=>!i.value.trim()); const status=popup.querySelector('[data-popup-status]'); if(invalid){status.textContent='Please complete name, email and phone or WhatsApp.'; invalid.focus(); return;} const data=Object.fromEntries(new FormData(form).entries()); const saved=JSON.parse(localStorage.getItem('goodShippingArticleLeads')||'[]'); saved.push({...data,source:location.pathname,submittedAt:new Date().toISOString()}); localStorage.setItem('goodShippingArticleLeads',JSON.stringify(saved)); window.dataLayer?.push({event:'article_popup_form_submit'}); status.textContent='Submitted. Our logistics team will review your message.'; form.reset(); });
+  const form=popup.querySelector('form');
+  if(form){
+    const status=popup.querySelector('[data-popup-status]');
+    const button=form.querySelector('[type="submit"]');
+    form.addEventListener('invalid',()=>{
+      status.textContent='Please complete the required fields and review the privacy consent.';
+    },true);
+    form.addEventListener('submit',(event)=>{
+      if(button.disabled){event.preventDefault();return;}
+      if(!form.checkValidity())return;
+      button.disabled=true;
+      button.textContent='Sending…';
+      status.textContent='Sending your request through the current form provider…';
+      window.dataLayer?.push({event:'article_popup_form_submit'});
+    });
+    window.addEventListener('pageshow',()=>{
+      button.disabled=false;
+      button.textContent='Get a Shipping Quote';
+    });
+  }
   document.querySelectorAll('[data-event]').forEach((el)=>el.addEventListener('click',()=>window.dataLayer?.push({event:el.dataset.event,href:el.getAttribute('href')})));
 })();
