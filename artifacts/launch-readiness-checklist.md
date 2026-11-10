@@ -15,6 +15,7 @@ Status definitions:
 | 深圳市谷得供应链有限公司 public Chinese company name | VERIFIED for public display | Registration number, registered address and other license fields remain unpublished pending document review |
 | Zoe Zhou contact name, email and WhatsApp | VERIFIED | Current project contact data |
 | Zoe Zhou title: Director of International Logistics | VERIFIED | User-specified website role |
+| Zoe Zhou replacement profile photo | VERIFIED for website use | User supplied the exact replacement file and explicitly confirmed public website display on 2026-11-10; source hash and derivatives are recorded in `docs/GDLOGI-SOURCE-OF-TRUTH.md` |
 | Freight-forwarding filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | NVOCC-related filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | Company registration number and registered address | NOT_VERIFIED | Original company registration record and publication approval |
@@ -38,8 +39,8 @@ For each supplied operational photo set, confirm:
 - Customer permission to publish the photos and shipment context.
 
 Until these fields and publication rights are confirmed, the operational photos
-remain off the current public homepage. Zoe Zhou's approved public profile image
-remains in use; its source-rights record is still requested.
+remain off the current public homepage. Zoe Zhou's new public profile image is
+separately approved for website use and does not authorize any shipment photo.
 
 The Ningbo-to-Chicago background remains an internal draft. Its factual scope is
 limited to three factories, one 40HQ, Los Angeles customs clearance, rail to

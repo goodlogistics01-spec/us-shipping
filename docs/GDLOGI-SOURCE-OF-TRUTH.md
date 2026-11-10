@@ -51,7 +51,7 @@ Source labels used below:
 | Official Job Title | Director of International Logistics | `USER_CONFIRMED`; owner selected this as the title to standardize across website, LinkedIn, Schema, and future cards | CONFIRMED | Confirmed: Director of International Logistics |
 | Email | zoe@gdlogi.com | `LOCAL_FILE`: profile/contact/article pages | CONFIRMED | Recorded value: zoe@gdlogi.com |
 | WhatsApp | +86 135 5686 1676 | `LOCAL_FILE`: homepage/contact/author material | CONFIRMED | Recorded value: +86 135 5686 1676 |
-| Profile Photo | `authors/zoe-zhou-headshot.jpg` and AVIF derivative | `USER_CONFIRMED`: Zoe's name, selected title, photo, business email, and business WhatsApp may appear publicly; photographer/source rights still need a record | NEEDS CONFIRMATION | Subject permission confirmed; source/ownership evidence outstanding |
+| Profile Photo | `authors/zoe-zhou-headshot.jpg`, `headshot-640.avif`, and `headshot-240.jpg` | `USER_SUPPLIED` on 2026-11-10: `/Users/zoe/Desktop/头像.png`, SHA-256 `a11452c32f68bfa77c3cfc725fb73e922b9e65db643ddf690ebf7cdbfdf3e9ec`; owner explicitly confirmed this uploaded photo may be displayed publicly on the website | CONFIRMED FOR WEBSITE USE | Permission is limited to the public website use confirmed in this task; no photographer ownership or unrelated reuse is inferred |
 | Author of website articles? | Personal authorship must be removed or withheld until Zoe reviews and approves each article | `USER_CONFIRMED` | CONFIRMED | Keep articles as drafts/unattributed pending individual review |
 | Can appear publicly on website? | Yes: name, Director of International Logistics title, profile photo, business email, and business WhatsApp | `USER_CONFIRMED` | CONFIRMED | Confirmed within this scope |
 | Schema `jobTitle` | Director of International Logistics | `USER_CONFIRMED`; legacy `Operations Director` value is superseded | CONFIRMED | Use the confirmed title when code is updated in a later authorized round |
@@ -160,8 +160,8 @@ AVIF files are format/size derivatives of the listed source photographs and inhe
 | `assets/crane-truck-loading.jpg` plus `-800.avif`, `-1400.avif` | Indoor warehouse; crane truck flatbed and lifting gear; packed cargo nearby | — | Retained in legacy static materials; not referenced by the current App | No | Package labels may be present; worker not prominent in inspected frame | Crane-provider branding/text visible; no container number; plate not clearly visible | Not recorded | NEEDS REVIEW |
 | `assets/oversized-delivery-1.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people moving a large wooden crate through a building entrance | — | Retained in legacy static materials; not referenced by the current App | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
 | `assets/oversized-delivery-2.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people handling a large foam-wrapped item at a building entrance | — | Retained in legacy static materials; not referenced by the current App | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
-| `assets/authors/zoe-zhou-headshot.jpg` plus `headshot-640.avif` | Portrait identified by the owner as Zoe Zhou | Personal profile, not shipment | Homepage, profile page, articles, Schema | Photographer/source rights not documented | Personal face/biometric image | No visible third-party logo in cropped headshot | Zoe public-profile permission confirmed; source rights still need a record | NEEDS REVIEW |
-| `assets/authors/zoe-zhou-author-card.jpg` | Designed author/contact card containing portrait, phone, email, routes, job title, `NVOCC`, and `Forwarder` labels | Marketing profile asset | Legacy author page only | Not documented | Face and direct contact details visible | GOOD-SHIPPING logo and qualification labels visible | Not recorded; facts conflict with current pages | DO NOT USE |
+| `assets/authors/zoe-zhou-headshot.jpg` plus `headshot-640.avif` and `headshot-240.jpg` | New portrait supplied by the owner and identified as Zoe Zhou | Personal profile, not shipment | Homepage, profile page, legacy resource sidebars, page metadata and Schema | User-supplied file recorded by hash; photographer ownership not asserted | Personal face/biometric image | No visible third-party logo | Owner explicitly confirmed this specific uploaded photo may be displayed publicly on the website on 2026-11-10 | APPROVED FOR WEBSITE USE |
+| `assets/authors/zoe-zhou-author-card.jpg` | Designed author/contact card containing portrait, phone, email, routes, job title, `NVOCC`, and `Forwarder` labels | Marketing profile asset | Retained as an unreferenced legacy file; no tracked public page currently references it | Not documented | Face and direct contact details visible | GOOD-SHIPPING logo and qualification labels visible | Not recorded; facts conflict with current pages | DO NOT USE |
 
 ## Non-photographic assets
 
@@ -203,7 +203,7 @@ Do not describe these as Good Logistics shipments, China-to-USA projects, ocean-
 
 | Asset/content | Current evidence | Risk | Required decision/evidence | Status |
 | --- | --- | --- | --- | --- |
-| Zoe headshot | Owner permits publication of Zoe's selected profile data and photo; source/license record is absent | Photographer/source rights still unrecorded | Record photographer/source or ownership permission for site/Schema/social previews | NEEDS CONFIRMATION |
+| Zoe headshot | Owner supplied the replacement image and explicitly confirmed public website use on 2026-11-10; source file hash and generated derivatives are recorded | Do not infer photographer ownership or permission for unrelated reuse | Keep use within this website and its current page metadata/Schema; seek separate permission before reuse in other campaigns or products | CONFIRMED FOR WEBSITE USE |
 | Zoe author card | Contains retired logo, conflicting title, route claims, and unverified qualification labels | Factual conflict and brand confusion | Owner directs that old branding must not be used; do not reuse the card | DO NOT PUBLISH |
 | Current company logo | Owner confirms current Good Logistics logo is approved | No remaining owner-decision conflict | Retain an ownership/source record when available | CONFIRMED |
 | Older GOOD-SHIPPING logo | File exists in legacy assets | Brand conflict | Owner directs that it must not be used | DO NOT PUBLISH |
@@ -287,7 +287,7 @@ The following decisions were recorded from the owner's 2026-10-20 response. `CLO
 
 ## D. Zoe profile and article evidence
 
-- [ ] Source/photographer/ownership record for `zoe-zhou-headshot.jpg` and permission covering website, Schema, and social previews.
+- [x] Public website-use confirmation for the new Zoe portrait supplied on 2026-11-10, with source-file hash and derivative filenames recorded. Photographer ownership and unrelated reuse remain outside the confirmed scope.
 - [ ] Confirm LinkedIn and any future business-card title are updated to `Director of International Logistics` before treating cross-channel consistency as complete.
 - [ ] Individual Zoe review and approval record for each of the five current articles.
 - [ ] Qualified customs/legal review for customs-sensitive passages where required.

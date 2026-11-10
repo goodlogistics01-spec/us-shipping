@@ -19,7 +19,7 @@ export default function ZoeZhouPage() {
           <div className="marketing-profile-grid">
             <picture>
               <source srcSet="/good-shipping-homepage/assets/authors/zoe-zhou-headshot-640.avif" type="image/avif" />
-              <img src="/good-shipping-homepage/assets/authors/zoe-zhou-headshot.jpg" alt="Zoe Zhou of Good Logistics" width="640" height="780" />
+              <img src="/good-shipping-homepage/assets/authors/zoe-zhou-headshot.jpg" alt="Portrait of Zoe Zhou, Director of International Logistics at Good Logistics" width="640" height="904" decoding="async" />
             </picture>
             <div>
               <p className="marketing-eyebrow">Logistics Contact</p>

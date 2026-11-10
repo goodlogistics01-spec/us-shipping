@@ -444,6 +444,7 @@ body a {
   width: min(100%, 360px);
   height: 430px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 6px;
   justify-self: center;
 }

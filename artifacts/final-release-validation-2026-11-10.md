@@ -4,9 +4,13 @@
 
 The integrated local version is **ready to enter controlled release acceptance**.
 It is **not deployed** and is not yet represented as production-verified. One
-current-schema inbox test, the deployment-topology decision and confirmation
-of the current profile-photo usage right remain release gates. No real inquiry
-or email-provider request was made during this work.
+current-schema inbox test and the deployment-topology decision remain release
+gates. The profile-photo gate was resolved later on 2026-11-10 by the
+owner-supplied replacement and explicit confirmation of public website use.
+No real inquiry or email-provider request was made during this work.
+
+This avatar addendum only updates the photo-rights gate. The broader validation
+record below was not repeated or expanded during the avatar-only change.
 
 ## Protected baseline and rollback
 
@@ -107,10 +111,9 @@ The code/content version can enter release acceptance now. Before production:
    instances/serverless. For multi-instance deployment, add a shared durable
    limiter/idempotency store or explicitly accept the documented limitation.
 2. Run exactly one owner-approved current-schema inbox test.
-3. Confirm the Zoe Zhou profile-photo usage right, or remove/replace that image.
-4. Verify the production environment contains no local-mock variables. Keep
+3. Verify the production environment contains no local-mock variables. Keep
    GTM disabled unless a real container and applicable consent decision exist.
-5. Review the final production diff and obtain explicit deployment approval.
+4. Review the final production diff and obtain explicit deployment approval.
 
 ## Controlled real-inbox test procedure
 
@@ -138,11 +141,9 @@ The code/content version can enter release acceptance now. Before production:
 
 ## Minimum business confirmation still required from Zoe
 
-Only one current public-asset fact cannot be solved through conservative copy:
-
-- Confirm that the published Zoe Zhou profile photo is owned by the company or
-  licensed/authorized for website publication. If this cannot be confirmed,
-  remove or replace the photo before production.
+No unresolved public-asset fact remains for the replacement Zoe Zhou profile
+photo: the owner supplied the exact file and explicitly confirmed public website
+display. This does not assert photographer ownership or authorize unrelated use.
 
 Chicago-case permission, deeper destination coverage, warehouse/partner
 operating model, certificates and additional real-operation photos are not
