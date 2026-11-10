@@ -52,15 +52,18 @@ labeling, kitting, dates, savings or testimonials.
 
 | Check | Status | Required action |
 | --- | --- | --- |
-| Required fields and browser validation | VERIFIED | Covered by local QA, including separate shipping method and multi-value service needs |
-| Consent checkbox, honeypot and duplicate-submit guard | VERIFIED | Covered by code review and local QA |
-| Same-origin API validation and three-state UX | VERIFIED | Local SUCCESS, FAILED and PENDING paths re-tested with a local-only provider stub on 2026-11-10 |
-| Multi-service provider payload | VERIFIED | Local mock received Shipping, FBA Prep / Labeling and Kitting / Light Assembly as separate selected needs |
-| FormSubmit delivery for `zoe@gdlogi.com` | VERIFIED | Owner confirmed the single test email was received on 2026-10-21 |
-| Successful inbox delivery | VERIFIED | The one approved non-customer test reached `zoe@gdlogi.com` with the expected subject and fields |
-| Provider timeout response | VERIFIED | The first live test delivered the email but the original 12-second timeout incorrectly displayed failure; handling was revised so unknown responses become PENDING |
+| Server validation, provider classification and route behavior | VERIFIED locally | 39 unit/route tests pass, including valid international email/phone forms, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency and configuration failure |
+| Active browser forms and responsive interaction | NOT_VERIFIED on final build | Re-run homepage, `/quote/` and Sea Freight flows against the controlled loopback provider after the final build |
+| Separate shipping method and multi-value service needs | VERIFIED locally | Route tests preserve all selected values in the provider body |
+| Receiving checks versus product-quality inspection | VERIFIED locally | Both types can be selected together; legacy generic `Inspection` remains scope-not-specified; current real inbox rendering still needs the approved test |
+| Consent, honeypot and same-page duplicate-submit guard | VERIFIED locally | Honeypot makes zero provider calls; same-page UI locking must be reconfirmed in final browser QA |
+| Per-instance rate limit and idempotency | VERIFIED within stated boundary | Bounded in-memory Maps protect one running instance only; deployment platform and any cross-instance store remain `NOT_VERIFIED` |
+| Mock / production provider isolation | VERIFIED in route tests | Local mock requires explicit QA mode, loopback endpoint, loopback site request and local-only switch; public-host loopback configuration fails clearly |
+| Historical FormSubmit delivery to `zoe@gdlogi.com` | VERIFIED for 2026-10-21 schema only | Owner confirmed one non-customer test reached the inbox before the current service and inspection fields were added |
+| Current full-field inbox delivery and Reply-To | NOT_VERIFIED | Run one separately approved controlled test after release acceptance; verify every field, Reply-To and reply delivery |
+| Provider timeout / ambiguous response | VERIFIED locally; real provider not re-tested | Current code returns `PENDING`, does not fire success and does not resend automatically |
 
-### Owner-approved live test — 2026-10-21
+### Historical owner-approved live test — 2026-10-21 (pre-current schema)
 
 | Verification | Result |
 | --- | --- |
@@ -72,7 +75,9 @@ labeling, kitting, dates, savings or testimonials.
 | Thank-you Protection | PASS |
 | Timeout Handling | FAIL — original 12-second implementation; corrected locally after this test |
 
-No additional live inquiry is submitted during automated or local QA.
+That historical result does not verify the current inspection-type fields,
+complete current email body, Reply-To header or reply delivery. No additional
+live inquiry is submitted during automated or local QA.
 
 ## Legal and measurement
 
@@ -81,14 +86,17 @@ No additional live inquiry is submitted during automated or local QA.
 | Privacy Policy legal entity, regions, retention and recipients | NOT_VERIFIED | Company and qualified legal review |
 | Terms contracting entity, governing law and dispute process | NOT_VERIFIED | Company and qualified legal review |
 | Hosting logs and cross-border processing | NOT_VERIFIED | Confirm production hosting configuration |
-| Analytics and `generate_lead` measurement | BLOCKED | Select provider, configure consent where required, then validate without exposing secrets |
+| Deployment platform and multi-instance behavior | NOT_VERIFIED | Confirm platform topology before claiming distributed rate limiting or idempotency |
+| GTM / GA collection | NOT_VERIFIED and disabled | No production ID is committed; configure an applicable consent flow and validate before claiming collection |
+| Anonymous success-event gating | VERIFIED locally in code | Reconfirm in final browser mock that only explicit provider acceptance emits success and no personal data is sent |
 
 ## Release gate
 
 Before production deployment:
 
 1. Close or intentionally remove every `NOT_VERIFIED` public claim.
-2. Obtain owner approval before the second and final FormSubmit inbox test.
-3. Repeat desktop, tablet and mobile visual QA on the deployment preview after deployment is explicitly approved.
-4. Run production build, link checks, console checks and form validation.
-5. Review the production diff and obtain explicit approval before changing the live site.
+2. Complete the final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks.
+3. Confirm the deployment platform and decide whether single-instance rate limiting and idempotency are sufficient.
+4. Obtain owner approval before the controlled current-schema FormSubmit inbox test.
+5. Verify every current field, Reply-To and reply delivery in that single controlled test.
+6. Review the production diff and obtain explicit approval before changing the live site.

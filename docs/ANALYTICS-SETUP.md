@@ -2,6 +2,8 @@
 
 The site emits anonymous `dataLayer` events without loading a third-party tag by default. No analytics ID is hard-coded.
 
+Current release status: no production `GTM_CONTAINER_ID` or completed consent UI is recorded in the repository, so external GTM/GA collection remains disabled and unverified. Do not report that the site is collecting analytics until both configuration and consent behavior have been approved and tested.
+
 ## Configuration
 
 1. Set `GTM_CONTAINER_ID` to a valid `GTM-...` container ID in the deployment environment.
@@ -28,6 +30,6 @@ Until both a valid ID and `granted` consent exist, no Google script is requested
 | `whatsapp_click` | User chose a WhatsApp contact link | No |
 | `email_click` | User chose an email contact link | No |
 
-Allowed parameters are limited to form/page identifiers, service, result category, link location and request references. Names, email addresses, phone numbers, cargo text, full URLs, query strings and form values must not be sent to analytics.
+Allowed parameters are limited to form/page identifiers, shipping method, allowlisted service needs, allowlisted inspection types, result category, link location and non-sensitive request references. Names, email addresses, phone numbers, cargo text, full URLs, query strings and free-form values must not be sent to analytics.
 
 Direct visits or refreshes of `/thank-you/` do not emit `quote_submit_success`. Only the submit handler emits that event after explicit acceptance.
