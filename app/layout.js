@@ -7,7 +7,7 @@ export const metadata = {
     template: "%s | GOOD LOGISTICS"
   },
   description:
-    "China-side pickup, consolidation, warehousing, prep and inspection coordinated with international freight and U.S. final delivery.",
+    "China-side pickup, consolidation, warehousing, prep, receiving checks and project-scoped product inspection coordinated with international freight and U.S. final delivery.",
   metadataBase: new URL("https://gdlogi.us"),
   applicationName: "GOOD LOGISTICS",
   icons: { icon: "/good-shipping-homepage/assets/good-logistics-logo.png" },

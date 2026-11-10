@@ -1,6 +1,11 @@
 import MarketingPage from "../components/MarketingPage";
 import { createPageMetadata } from "../site-data";
 import { cookies } from "next/headers";
+import {
+  inquiryConfirmationCookieName,
+  isConfirmedInquiryRequest,
+  normalizeInquiryRequestId
+} from "../lib/inquiry-confirmation.mjs";
 
 export const metadata = {
   ...createPageMetadata({
@@ -11,8 +16,13 @@ export const metadata = {
   robots: { index: false, follow: true }
 };
 
-export default async function ThankYouPage() {
-  const inquiryAccepted = (await cookies()).has("gdlogi_inquiry_accepted");
+export default async function ThankYouPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const requestId = normalizeInquiryRequestId(resolvedSearchParams?.request_id);
+  const cookieStore = await cookies();
+  const cookieName = inquiryConfirmationCookieName(requestId);
+  const cookieValue = cookieName ? cookieStore.get(cookieName)?.value : "";
+  const inquiryAccepted = isConfirmedInquiryRequest(requestId, cookieValue);
 
   return (
     <MarketingPage>

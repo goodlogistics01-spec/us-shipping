@@ -64,6 +64,21 @@ export const SERVICE_NEED_LABELS = Object.freeze({
   "not-sure": "Not sure — please advise"
 });
 
+export const INSPECTION_TYPE_LABELS = Object.freeze({
+  "receiving-checks": "Receiving Checks — quantity, cartons, labels and visible damage",
+  "product-quality-inspection": "Product Quality Inspection — scope to confirm",
+  "scope-not-specified": "Inspection request — type not specified; confirm scope"
+});
+
+const INSPECTION_SCOPE_NOTES = Object.freeze({
+  "receiving-checks":
+    "Receiving checks are limited to agreed quantity, outer-carton, label and visible-damage checks.",
+  "product-quality-inspection":
+    "Product-quality inspection scope, sampling, criteria and reporting must be confirmed before work starts.",
+  "scope-not-specified":
+    "Inspection was requested without a defined type; confirm whether receiving checks, product-quality inspection or both are needed."
+});
+
 export const SOURCE_LABELS = Object.freeze({
   "homepage-quick-quote": "Homepage Quick Quote",
   "quote-page": "Quote Page",
@@ -194,6 +209,35 @@ export function normalizeServiceNeeds(value, legacyService = "") {
   return concreteNeeds.length > 0 ? concreteNeeds : ["not-sure"];
 }
 
+export function normalizeInspectionTypes(value, serviceNeeds = []) {
+  const aliases = {
+    inspection: "scope-not-specified",
+    "inspection-unspecified": "scope-not-specified",
+    "not-sure": "scope-not-specified",
+    "professional-quality-inspection": "product-quality-inspection",
+    "quality-inspection": "product-quality-inspection",
+    "receiving-check": "receiving-checks",
+    receiving: "receiving-checks"
+  };
+  const rawValues = Array.isArray(value)
+    ? value
+    : String(value || "")
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+  const normalized = [...new Set(rawValues
+    .map((item) => cleanString(String(item), 80).toLowerCase())
+    .map((item) => aliases[item] || item)
+    .filter((item) => INSPECTION_TYPE_LABELS[item]))];
+  const concreteTypes = normalized.filter((item) => item !== "scope-not-specified");
+
+  if (concreteTypes.length > 0) return concreteTypes;
+  if (normalized.includes("scope-not-specified") || serviceNeeds.includes("inspection")) {
+    return ["scope-not-specified"];
+  }
+  return [];
+}
+
 function normalizePreferredContact(value) {
   const normalized = cleanString(value, FIELD_LIMITS.preferred_contact).toLowerCase();
   return PREFERRED_CONTACT_VALUES.has(normalized) ? normalized : "email";
@@ -263,6 +307,19 @@ export function normalizePayload(raw, request) {
     normalized.service
   );
   normalized.service_needs = normalizeServiceNeeds(raw.service_needs, normalized.service);
+  normalized.inspection_types = normalizeInspectionTypes(
+    raw.inspection_types || raw.inspection_type,
+    normalized.service_needs
+  );
+  if (
+    normalized.inspection_types.length > 0 &&
+    !normalized.service_needs.includes("inspection")
+  ) {
+    normalized.service_needs = [
+      ...normalized.service_needs.filter((item) => item !== "not-sure"),
+      "inspection"
+    ];
+  }
   normalized.preferred_contact = normalizePreferredContact(normalized.preferred_contact);
   normalized.source_page = normalizeSourcePage(normalized.source_page || raw.page_url, request);
   normalized.referrer = normalizeReferrer(normalized.referrer);
@@ -355,7 +412,14 @@ export function providerExplicitlyRejected(providerResult) {
 export function buildProviderPayload(payload, submissionId) {
   const sourceLabel = SOURCE_LABELS[payload.source_type];
   const shippingMethodLabel = SHIPPING_METHOD_LABELS[payload.shipping_method];
+  const requestedServiceLabel = SERVICE_LABELS[payload.service];
   const serviceNeedLabels = payload.service_needs.map((item) => SERVICE_NEED_LABELS[item]);
+  const inspectionTypeLabels = payload.inspection_types.map(
+    (item) => INSPECTION_TYPE_LABELS[item]
+  );
+  const inspectionScopeNotes = payload.inspection_types.map(
+    (item) => INSPECTION_SCOPE_NOTES[item]
+  );
   const serviceNeedsSummary = serviceNeedLabels.length > 2
     ? `${serviceNeedLabels.slice(0, 2).join(" + ")} +${serviceNeedLabels.length - 2}`
     : serviceNeedLabels.join(" + ");
@@ -383,9 +447,12 @@ export function buildProviderPayload(payload, submissionId) {
     cargo_type: payload.cargo_type,
     weight: payload.weight,
     volume: payload.volume,
+    requested_service: requestedServiceLabel,
     shipping_method: shippingMethodLabel,
     service_needs: serviceNeedLabels.join(", "),
     service: serviceNeedLabels.join(", "),
+    inspection_types: inspectionTypeLabels.join(", "),
+    inspection_scope: inspectionScopeNotes.join(" "),
     message: payload.message,
     source_page: payload.source_page,
     source_type: payload.source_type,

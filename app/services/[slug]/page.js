@@ -7,6 +7,9 @@ function createQuoteHref(service) {
   const params = new URLSearchParams();
   if (service.shippingMethod) params.set("shipping_method", service.shippingMethod);
   service.quoteNeeds.forEach((need) => params.append("service_need", need));
+  (service.quoteInspectionTypes || []).forEach((type) => {
+    params.append("inspection_type", type);
+  });
   return `/quote/?${params.toString()}`;
 }
 

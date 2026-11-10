@@ -542,6 +542,7 @@ export const services = {
       "Approve the scope before cargo is checked or released."
     ],
     quoteNeeds: ["inspection"],
+    quoteInspectionTypes: ["receiving-checks"],
     shippingMethod: "not-sure",
     relatedServices: [
       ["Supplier Pickup & Consolidation", "/services/supplier-consolidation/"],

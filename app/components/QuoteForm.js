@@ -25,8 +25,14 @@ const serviceNeedOptions = [
   ["fba-prep-labeling", "FBA Prep / Labeling"],
   ["repacking", "Repacking"],
   ["kitting-light-assembly", "Kitting / Light Assembly"],
-  ["inspection", "Inspection"],
+  ["inspection", "Inspection / Receiving Checks"],
   ["not-sure", "Not sure — please advise"]
+];
+
+const inspectionTypeOptions = [
+  ["receiving-checks", "Receiving Checks — quantity, cartons, labels and visible damage"],
+  ["product-quality-inspection", "Product Quality Inspection — scope to confirm"],
+  ["scope-not-specified", "Not sure — help define the inspection scope"]
 ];
 
 const shippingMethodParameterMap = {
@@ -62,6 +68,8 @@ const serviceNeedParameterMap = {
   repacking: ["repacking"],
   "kitting-light-assembly": ["kitting-light-assembly"],
   inspection: ["inspection"],
+  "receiving-checks": ["inspection"],
+  "product-quality-inspection": ["inspection"],
   "cargo-inspection-receiving-checks": ["inspection"],
   "customs-clearance": ["shipping"],
   "final-delivery": ["shipping"],
@@ -77,8 +85,22 @@ const serviceNeedParameterMap = {
   "express-shipping": ["shipping"]
 };
 
+const inspectionTypeParameterMap = {
+  inspection: ["scope-not-specified"],
+  "inspection-unspecified": ["scope-not-specified"],
+  "scope-not-specified": ["scope-not-specified"],
+  "not-sure": ["scope-not-specified"],
+  "receiving-check": ["receiving-checks"],
+  "receiving-checks": ["receiving-checks"],
+  receiving: ["receiving-checks"],
+  "quality-inspection": ["product-quality-inspection"],
+  "professional-quality-inspection": ["product-quality-inspection"],
+  "product-quality-inspection": ["product-quality-inspection"],
+  "cargo-inspection-receiving-checks": ["receiving-checks"]
+};
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phonePattern = /^\+?[0-9][0-9\s().-]{6,22}$/;
+const phonePattern = /^\+?[0-9][0-9\s().-]*$/;
 
 function cleanAttributionValue(value) {
   return String(value || "")
@@ -102,6 +124,16 @@ function isValidPhone(value) {
   return digitCount >= 7 && digitCount <= 20;
 }
 
+function isValidEmail(value) {
+  const normalized = String(value || "").trim().normalize("NFKC").toLowerCase();
+  if (!emailPattern.test(normalized) || normalized.includes("..")) return false;
+  const [localPart, domain] = normalized.split("@");
+  if (!localPart || localPart.startsWith(".") || localPart.endsWith(".")) return false;
+  return domain
+    .split(".")
+    .every((label) => label && !label.startsWith("-") && !label.endsWith("-"));
+}
+
 function trackInquiryEvent(eventName, details = {}) {
   if (typeof window === "undefined") return;
   const payload = {
@@ -109,6 +141,7 @@ function trackInquiryEvent(eventName, details = {}) {
     form_source: String(details.source || "quote-page").slice(0, 80),
     shipping_method: String(details.shippingMethod || "not-sure").slice(0, 80),
     service_needs: String(details.serviceNeeds || "not-sure").slice(0, 180),
+    inspection_types: String(details.inspectionTypes || "").slice(0, 180),
     result: String(details.result || "").slice(0, 40)
   };
   window.dataLayer = window.dataLayer || [];
@@ -128,6 +161,7 @@ export default function QuoteForm({
   productPage = false,
   defaultShippingMethod = "not-sure",
   defaultServiceNeeds = ["not-sure"],
+  defaultInspectionTypes = [],
   submitLabel = "Request a Shipping & Prep Quote"
 }) {
   const [status, setStatus] = useState("idle");
@@ -138,6 +172,13 @@ export default function QuoteForm({
   const startedRef = useRef(false);
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(defaultShippingMethod);
   const [selectedServiceNeeds, setSelectedServiceNeeds] = useState(defaultServiceNeeds);
+  const [selectedInspectionTypes, setSelectedInspectionTypes] = useState(
+    defaultInspectionTypes.length > 0
+      ? defaultInspectionTypes
+      : defaultServiceNeeds.includes("inspection")
+        ? ["scope-not-specified"]
+        : []
+  );
   const [attribution, setAttribution] = useState({
     page_url: pageUrl,
     referrer: "",
@@ -165,6 +206,31 @@ export default function QuoteForm({
     if (requestedNeeds.length > 0) {
       setSelectedServiceNeeds(requestedNeeds);
     }
+    const explicitInspectionTypes = [
+      ...params.getAll("inspection_type"),
+      ...params.getAll("inspection_types")
+    ].flatMap((value) => value.split(","));
+    const mappedInspectionTypes = explicitInspectionTypes
+      .flatMap((value) => inspectionTypeParameterMap[value] || [])
+      .filter(Boolean);
+    const fallbackInspectionTypes = inspectionTypeParameterMap[requestedService] || [];
+    const requestedInspectionTypes = [
+      ...new Set(mappedInspectionTypes.length > 0 ? mappedInspectionTypes : fallbackInspectionTypes)
+    ];
+    if (requestedInspectionTypes.length > 0) {
+      const concreteTypes = requestedInspectionTypes.filter(
+        (value) => value !== "scope-not-specified"
+      );
+      setSelectedInspectionTypes(
+        concreteTypes.length > 0 ? concreteTypes : ["scope-not-specified"]
+      );
+      setSelectedServiceNeeds((current) => [
+        ...current.filter((value) => value !== "not-sure" && value !== "inspection"),
+        "inspection"
+      ]);
+    } else if (requestedNeeds.includes("inspection")) {
+      setSelectedInspectionTypes(["scope-not-specified"]);
+    }
     setAttribution({
       page_url: getPublicSourcePage(window.location),
       referrer: getReferrerOrigin(document.referrer),
@@ -190,7 +256,7 @@ export default function QuoteForm({
     });
 
     const email = String(data.get("email") || "").trim();
-    if (email && !emailPattern.test(email)) {
+    if (email && !isValidEmail(email)) {
       errors.email = "Enter a valid email address, such as audit@example.com.";
     }
 
@@ -204,6 +270,12 @@ export default function QuoteForm({
     if (data.getAll("service_needs").length === 0) {
       errors.service_needs = "Choose at least one service need or ask us to advise.";
     }
+    if (
+      data.getAll("service_needs").includes("inspection") &&
+      data.getAll("inspection_types").length === 0
+    ) {
+      errors.inspection_types = "Choose the inspection type or ask us to define the scope.";
+    }
     if (!form.elements.privacy_consent?.checked) {
       errors.privacy_consent = "Please confirm that we may use these details to answer your request.";
     }
@@ -215,6 +287,7 @@ export default function QuoteForm({
         source,
         shippingMethod: selectedShippingMethod,
         serviceNeeds: selectedServiceNeeds.join(","),
+        inspectionTypes: selectedInspectionTypes.join(","),
         result: "validation"
       });
       window.requestAnimationFrame(() => {
@@ -247,6 +320,7 @@ export default function QuoteForm({
           source,
           shippingMethod: selectedShippingMethod,
           serviceNeeds: selectedServiceNeeds.join(","),
+          inspectionTypes: selectedInspectionTypes.join(","),
           result: "pending"
         });
         return;
@@ -255,6 +329,7 @@ export default function QuoteForm({
         source,
         shippingMethod: selectedShippingMethod,
         serviceNeeds: selectedServiceNeeds.join(","),
+        inspectionTypes: selectedInspectionTypes.join(","),
         result: "accepted"
       });
       window.dispatchEvent(
@@ -264,6 +339,7 @@ export default function QuoteForm({
             productId,
             shippingMethod: selectedShippingMethod,
             serviceNeeds: selectedServiceNeeds,
+            inspectionTypes: selectedInspectionTypes,
             requestId: result.request_id,
             submissionId: result.submission_id
           }
@@ -280,6 +356,7 @@ export default function QuoteForm({
         source,
         shippingMethod: selectedShippingMethod,
         serviceNeeds: selectedServiceNeeds.join(","),
+        inspectionTypes: selectedInspectionTypes.join(","),
         result: "rejected"
       });
       if (Object.keys(serverFieldErrors).length > 0) {
@@ -317,6 +394,7 @@ export default function QuoteForm({
       source,
       shippingMethod: selectedShippingMethod,
       serviceNeeds: selectedServiceNeeds.join(","),
+      inspectionTypes: selectedInspectionTypes.join(","),
       result: "started"
     });
   }
@@ -328,7 +406,29 @@ export default function QuoteForm({
       const withoutNotSure = current.filter((item) => item !== "not-sure" && item !== value);
       return checked ? [...withoutNotSure, value] : withoutNotSure;
     });
+    if (value === "not-sure" && checked) {
+      setSelectedInspectionTypes([]);
+    } else if (value === "inspection") {
+      setSelectedInspectionTypes((current) => {
+        if (!checked) return [];
+        return current.length > 0 ? current : ["scope-not-specified"];
+      });
+    }
     setFieldErrors((current) => ({ ...current, service_needs: "" }));
+  }
+
+  function handleInspectionTypeChange(event) {
+    const { value, checked } = event.target;
+    setSelectedInspectionTypes((current) => {
+      if (value === "scope-not-specified") {
+        return checked ? ["scope-not-specified"] : [];
+      }
+      const withoutUnspecified = current.filter(
+        (item) => item !== "scope-not-specified" && item !== value
+      );
+      return checked ? [...withoutUnspecified, value] : withoutUnspecified;
+    });
+    setFieldErrors((current) => ({ ...current, inspection_types: "" }));
   }
 
   return (
@@ -474,6 +574,31 @@ export default function QuoteForm({
           </div>
           <FieldError id="quote-error-service-needs" message={fieldErrors.service_needs} />
         </fieldset>
+        {selectedServiceNeeds.includes("inspection") ? (
+          <fieldset
+            className="marketing-service-needs form-span-two"
+            aria-describedby={fieldErrors.inspection_types ? "quote-error-inspection-types" : "quote-inspection-types-help"}
+          >
+            <legend>Inspection Type <span aria-hidden="true">*</span></legend>
+            <p id="quote-inspection-types-help">Receiving checks and product-quality inspection are separate. Choose both if both are needed.</p>
+            <div className="marketing-checkbox-grid">
+              {inspectionTypeOptions.map(([value, label]) => (
+                <label key={value}>
+                  <input
+                    type="checkbox"
+                    name="inspection_types"
+                    value={value}
+                    checked={selectedInspectionTypes.includes(value)}
+                    onChange={handleInspectionTypeChange}
+                    aria-invalid={Boolean(fieldErrors.inspection_types)}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+            <FieldError id="quote-error-inspection-types" message={fieldErrors.inspection_types} />
+          </fieldset>
+        ) : null}
         <label>
           Preferred Reply Method
           <select

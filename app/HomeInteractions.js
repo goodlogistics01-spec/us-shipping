@@ -11,6 +11,18 @@ import {
 const PHONE_MESSAGE =
   "Enter a phone number using digits and common separators such as +, spaces, parentheses or hyphens.";
 
+function isValidEmail(value) {
+  const normalized = String(value || "").trim().normalize("NFKC").toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized) || normalized.includes("..")) {
+    return false;
+  }
+  const [localPart, domain] = normalized.split("@");
+  if (!localPart || localPart.startsWith(".") || localPart.endsWith(".")) return false;
+  return domain
+    .split(".")
+    .every((label) => label && !label.startsWith("-") && !label.endsWith("-"));
+}
+
 function emitAnonymousEvent(eventName, parameters = {}) {
   const detail = {
     event: eventName,
@@ -150,7 +162,12 @@ export default function HomeInteractions() {
       const status = form.querySelector("[data-home-form-status]");
       const preferredContact = form.elements.preferred_contact;
       const phone = form.elements.whatsapp;
+      const email = form.elements.email;
       const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
+      const inspectionTypesFieldset = form.querySelector("[data-home-inspection-types]");
+      const inspectionTypeInputs = Array.from(
+        form.querySelectorAll('input[name="inspection_types"]')
+      );
       let quoteStarted = false;
       let focusScheduled = false;
 
@@ -220,12 +237,79 @@ export default function HomeInteractions() {
         return false;
       };
 
+      const validateEmail = () => {
+        if (!email) return true;
+        email.setCustomValidity("");
+        if (!email.value.trim()) {
+          clearFieldError(email);
+          return true;
+        }
+        if (!isValidEmail(email.value)) {
+          email.setCustomValidity("Enter a valid email address.");
+        }
+        if (email.validity.valid) {
+          clearFieldError(email);
+          return true;
+        }
+        showFieldError(email);
+        return false;
+      };
+
+      const inspectionSelected = () => serviceNeedInputs.some(
+        (input) => input.checked && input.value === "inspection"
+      );
+
+      const syncInspectionTypes = () => {
+        const enabled = inspectionSelected();
+        if (inspectionTypesFieldset) inspectionTypesFieldset.hidden = !enabled;
+        inspectionTypeInputs.forEach((input) => {
+          input.disabled = !enabled;
+          if (!enabled) {
+            input.checked = false;
+            input.setCustomValidity("");
+            clearFieldError(input);
+          }
+        });
+        if (
+          enabled &&
+          inspectionTypeInputs.length > 0 &&
+          !inspectionTypeInputs.some((input) => input.checked)
+        ) {
+          const unspecified = inspectionTypeInputs.find(
+            (input) => input.value === "scope-not-specified"
+          );
+          if (unspecified) unspecified.checked = true;
+        }
+      };
+
+      const validateInspectionTypes = () => {
+        if (!inspectionSelected() || inspectionTypeInputs.length === 0) return true;
+        const hasSelection = inspectionTypeInputs.some((input) => input.checked);
+        const firstInput = inspectionTypeInputs[0];
+        firstInput.setCustomValidity(
+          hasSelection ? "" : "Choose the inspection type or ask us to define the scope."
+        );
+        inspectionTypeInputs.forEach((input) => {
+          input.toggleAttribute("aria-invalid", !hasSelection);
+        });
+        if (hasSelection) {
+          clearFieldError(firstInput);
+          return true;
+        }
+        showFieldError(firstInput);
+        return false;
+      };
+
       const getSelectionContext = () => ({
         shipping_method: form.elements.shipping_method?.value || "not-sure",
         service_needs: serviceNeedInputs
           .filter((input) => input.checked)
           .map((input) => input.value)
-          .join(",") || "not-sure"
+          .join(",") || "not-sure",
+        inspection_types: inspectionTypeInputs
+          .filter((input) => input.checked)
+          .map((input) => input.value)
+          .join(",")
       });
 
       const validateServiceNeeds = () => {
@@ -309,7 +393,9 @@ export default function HomeInteractions() {
         event.preventDefault();
         if (submitButton?.disabled) return;
         validatePhone();
+        validateEmail();
         validateServiceNeeds();
+        validateInspectionTypes();
         if (!form.checkValidity()) return;
 
         setAttributionFields();
@@ -356,7 +442,9 @@ export default function HomeInteractions() {
           Object.entries(serverFieldErrors).forEach(([name, message]) => {
             const field = name === "service_needs"
               ? serviceNeedInputs[0]
-              : form.elements[name];
+              : name === "inspection_types"
+                ? inspectionTypeInputs[0]
+                : form.elements[name];
             if (!field) return;
             field.setCustomValidity(message);
             showFieldError(field);
@@ -386,6 +474,7 @@ export default function HomeInteractions() {
 
       onInput = (event) => {
         if (event.target === phone || event.target === preferredContact) validatePhone();
+        if (event.target === email) validateEmail();
         if (event.target.name === "service_needs") {
           if (event.target.checked && event.target.value === "not-sure") {
             serviceNeedInputs.forEach((input) => {
@@ -395,8 +484,22 @@ export default function HomeInteractions() {
             const notSureInput = serviceNeedInputs.find((input) => input.value === "not-sure");
             if (notSureInput) notSureInput.checked = false;
           }
+          syncInspectionTypes();
           validateServiceNeeds();
-        } else if (event.target !== phone) {
+          validateInspectionTypes();
+        } else if (event.target.name === "inspection_types") {
+          if (event.target.checked && event.target.value === "scope-not-specified") {
+            inspectionTypeInputs.forEach((input) => {
+              if (input !== event.target) input.checked = false;
+            });
+          } else if (event.target.checked) {
+            const unspecified = inspectionTypeInputs.find(
+              (input) => input.value === "scope-not-specified"
+            );
+            if (unspecified) unspecified.checked = false;
+          }
+          validateInspectionTypes();
+        } else if (event.target !== phone && event.target !== email) {
           event.target.setCustomValidity?.("");
         }
         if (event.target.validity?.valid) clearFieldError(event.target);
@@ -429,7 +532,10 @@ export default function HomeInteractions() {
 
       setAttributionFields();
       validatePhone();
+      validateEmail();
       validateServiceNeeds();
+      syncInspectionTypes();
+      validateInspectionTypes();
       form.addEventListener("focusin", onFocusIn);
       form.addEventListener("invalid", onInvalid, true);
       form.addEventListener("input", onInput);

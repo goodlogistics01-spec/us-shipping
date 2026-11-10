@@ -190,6 +190,43 @@ test("service needs are allowlisted, deduplicated, and remove not-sure when conc
   assert.deepEqual(payload.service_needs, ["supplier-pickup", "repacking"]);
 });
 
+test("receiving checks and product-quality inspection remain separate and may be selected together", () => {
+  const payload = validPayload({
+    service_needs: ["inspection"],
+    inspection_types: ["receiving-checks", "product-quality-inspection"]
+  });
+
+  assert.deepEqual(payload.service_needs, ["inspection"]);
+  assert.deepEqual(payload.inspection_types, [
+    "receiving-checks",
+    "product-quality-inspection"
+  ]);
+});
+
+test("legacy generic inspection stays unspecified and is never promoted to product inspection", () => {
+  const payload = validPayload({
+    service_needs: ["inspection"],
+    inspection_types: []
+  });
+  const legacyTypePayload = validPayload({
+    service_needs: ["inspection"],
+    inspection_type: "inspection"
+  });
+
+  assert.deepEqual(payload.inspection_types, ["scope-not-specified"]);
+  assert.deepEqual(legacyTypePayload.inspection_types, ["scope-not-specified"]);
+});
+
+test("an explicit inspection type also adds the inspection service category", () => {
+  const payload = validPayload({
+    service_needs: ["not-sure"],
+    inspection_types: ["receiving-checks"]
+  });
+
+  assert.deepEqual(payload.service_needs, ["inspection"]);
+  assert.deepEqual(payload.inspection_types, ["receiving-checks"]);
+});
+
 test("provider payload contains product, shipping method, and every selected service need", () => {
   const payload = validPayload({
     email: "Name+Tag@Example.CO.UK",
@@ -209,7 +246,25 @@ test("provider payload contains product, shipping method, and every selected ser
     "Shipping, FBA Prep / Labeling, Kitting / Light Assembly"
   );
   assert.equal(providerPayload.service, providerPayload.service_needs);
+  assert.equal(providerPayload.requested_service, "Not sure — please recommend");
   assert.match(providerPayload._subject, /Shipping \+ FBA Prep \/ Labeling \+1/);
+});
+
+test("provider body carries both inspection types and their truthful scope boundaries", () => {
+  const payload = validPayload({
+    service: "supplier-consolidation",
+    service_needs: ["consolidation", "inspection"],
+    inspection_types: ["receiving-checks", "product-quality-inspection"]
+  });
+  const providerPayload = buildProviderPayload(payload, "GL-TEST-INSPECTION");
+
+  assert.equal(providerPayload.requested_service, "Supplier Consolidation");
+  assert.equal(
+    providerPayload.inspection_types,
+    "Receiving Checks — quantity, cartons, labels and visible damage, Product Quality Inspection — scope to confirm"
+  );
+  assert.match(providerPayload.inspection_scope, /quantity, outer-carton, label and visible-damage/);
+  assert.match(providerPayload.inspection_scope, /sampling, criteria and reporting must be confirmed/);
 });
 
 test("explicit JSON acceptance is SUCCESS", async () => {
