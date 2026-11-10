@@ -217,6 +217,44 @@ body a {
   min-width: 0;
 }
 
+.marketing-hero-brief {
+  min-height: 390px;
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  padding: clamp(28px, 5vw, 52px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  color: #e7f3ff;
+  background:
+    radial-gradient(circle at 85% 18%, rgba(50, 153, 220, 0.28), transparent 38%),
+    linear-gradient(145deg, #0a3d78, #061c3b);
+  box-shadow: 0 28px 60px rgba(3, 18, 39, 0.34);
+}
+
+.marketing-hero-brief img {
+  width: 176px;
+  height: 92px;
+  object-fit: contain;
+  padding: 8px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.marketing-hero-brief p {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 850;
+}
+
+.marketing-hero-brief ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #cfe5f8;
+  line-height: 1.8;
+}
+
 .marketing-destination-hero .marketing-hero-image {
   object-position: center 66%;
 }
@@ -484,8 +522,71 @@ body a {
   border-color: #af1733;
 }
 
+.marketing-form [aria-invalid="true"] {
+  border-color: #af1733;
+  box-shadow: 0 0 0 1px rgba(175, 23, 51, 0.12);
+}
+
+.marketing-field-error {
+  color: #9a1630;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .form-span-two {
   grid-column: 1 / -1;
+}
+
+.marketing-service-needs {
+  min-width: 0;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #cbd7e5;
+  border-radius: 5px;
+  background: #f7f9fc;
+}
+
+.marketing-service-needs legend {
+  padding: 0 7px;
+  color: #20354f;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.marketing-service-needs > p {
+  margin: 0 0 13px;
+  color: #52657d;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.marketing-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 12px;
+}
+
+.marketing-checkbox-grid label {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #d9e2ed;
+  border-radius: 4px;
+  background: #fff;
+  font-weight: 700;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.marketing-checkbox-grid input {
+  flex: 0 0 18px;
+  width: 18px;
+  min-height: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 .form-honeypot {
@@ -521,9 +622,20 @@ body a {
   font-size: 13px;
 }
 
-.marketing-form-status.status-invalid {
+.marketing-form-status.status-invalid,
+.marketing-form-status.status-failed {
   color: #9a1630;
   font-weight: 750;
+}
+
+.marketing-form-status.status-pending {
+  color: #7a4a00;
+  font-weight: 700;
+}
+
+.marketing-form-status.status-pending a {
+  color: #0b4f96;
+  text-decoration: underline;
 }
 
 .marketing-legal-copy h2 {
@@ -704,6 +816,11 @@ body a {
     height: 290px;
   }
 
+  .marketing-hero-brief {
+    min-height: 290px;
+    padding: 28px;
+  }
+
   .marketing-section {
     padding: 60px 0;
   }
@@ -719,6 +836,10 @@ body a {
 
   .form-span-two {
     grid-column: auto;
+  }
+
+  .marketing-checkbox-grid {
+    grid-template-columns: 1fr;
   }
 
   .marketing-actions,
@@ -756,6 +877,13 @@ body a {
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, #000 50%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, #000 50%, #000 100%);
+}
+
+.ocean-hero-route-visual {
+  background:
+    radial-gradient(circle at 78% 34%, rgba(37, 140, 211, 0.42), transparent 20%),
+    radial-gradient(circle at 88% 78%, rgba(25, 99, 174, 0.34), transparent 24%),
+    linear-gradient(135deg, #071f40 15%, #0b4f96 100%);
 }
 
 .ocean-hero-media img {
@@ -2486,6 +2614,25 @@ body a {
   text-transform: uppercase;
 }
 
+.marketing-dropdown-grouped {
+  width: min(650px, calc(100vw - 48px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.marketing-dropdown-group {
+  min-width: 0;
+}
+
+.marketing-dropdown-group > p {
+  margin: 4px 12px 8px;
+  color: #6c7c90;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .marketing-desktop-quote {
   min-width: 164px;
   margin-left: 2px;
@@ -2588,6 +2735,11 @@ body a {
     margin-bottom: 7px;
     box-shadow: none;
     background: #f5f8fb;
+  }
+
+  .marketing-dropdown-grouped {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .marketing-nav-item:hover .marketing-dropdown,

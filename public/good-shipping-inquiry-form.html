@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Get a Freight Quote | Good Logistics Co., Ltd.</title>
-  <meta name="description" content="Submit your China to USA freight inquiry to Good Logistics Co., Ltd. Air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics.">
+  <title>Get a Freight Quote | Good Logistics</title>
+  <meta name="description" content="Submit your China to USA freight inquiry to Good Logistics. Compare air freight, sea freight, scope-defined DDP and oversized cargo planning.">
   <link rel="canonical" href="https://gdlogi.us/good-shipping-inquiry-form.html">
   <style>
     :root {
@@ -83,6 +83,8 @@
 
     .logo-box img {
       width: 158px;
+      height: 48px;
+      object-fit: contain;
     }
 
     .topbar span {
@@ -342,6 +344,60 @@
       grid-column: 1 / -1;
     }
 
+    .service-needs {
+      min-width: 0;
+      margin: 0;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: var(--radius);
+      background: rgba(3, 7, 18, .28);
+    }
+
+    .service-needs legend {
+      padding: 0 7px;
+      color: #e5e7eb;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .service-needs > p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .service-needs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .service-needs-grid label {
+      min-width: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 9px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .035);
+      cursor: pointer;
+    }
+
+    .service-needs-grid input {
+      flex: 0 0 17px;
+      width: 17px;
+      min-height: 17px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .service-needs.invalid {
+      border-color: rgba(251, 113, 133, .86);
+      box-shadow: 0 0 0 4px rgba(251, 113, 133, .1);
+    }
+
     label {
       color: #e5e7eb;
       font-size: 13px;
@@ -474,6 +530,41 @@
       background: rgba(251, 113, 133, .13);
     }
 
+    .status.pending {
+      color: #fef3c7;
+      border-color: rgba(250, 204, 21, .42);
+      background: rgba(250, 204, 21, .1);
+    }
+
+    .status a,
+    .privacy a,
+    .template-note a {
+      color: var(--yellow);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .consent {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+
+    .consent input {
+      min-height: 18px;
+      width: 18px;
+      margin: 1px 0 0;
+    }
+
+    .consent.invalid {
+      color: var(--danger);
+    }
+
     .privacy {
       color: var(--muted);
       font-size: 12px;
@@ -511,6 +602,10 @@
 
       .field.full {
         grid-column: auto;
+      }
+
+      .service-needs-grid {
+        grid-template-columns: 1fr;
       }
 
       .topbar {
@@ -566,8 +661,8 @@
 <body>
   <main class="page">
     <header class="topbar">
-      <a class="logo" href="/" aria-label="Back to Good Logistics Co., Ltd. homepage">
-        <span class="logo-box"><img src="good-shipping-homepage/assets/logo.png" alt="Good Logistics Co., Ltd."></span>
+      <a class="logo" href="/" aria-label="Back to Good Logistics homepage">
+        <span class="logo-box"><img src="good-shipping-homepage/assets/good-logistics-logo.png" alt="Good Logistics" width="520" height="270"></span>
       </a>
       <div class="topbar-actions">
         <span>China to USA freight quote request</span>
@@ -596,7 +691,7 @@
           </div>
           <div class="proof-item">
             <span class="proof-icon">3</span>
-            <div><strong>Anti-spam ready</strong><span>Includes a hidden honeypot field and can connect to captcha, email or CRM backends.</span></div>
+            <div><strong>Quote details reviewed together</strong><span>Product name, route, cargo details and reply preference stay attached to one request.</span></div>
           </div>
         </div>
       </aside>
@@ -612,93 +707,144 @@
 
         <form
           id="inquiryForm"
-          action="https://formsubmit.co/zoe@gdlogi.com"
+          action="/api/inquiry/"
           method="POST"
-          enctype="multipart/form-data"
           novalidate
         >
-          <input type="hidden" name="_subject" value="New detailed freight inquiry from the Good Logistics website">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://gdlogi.us/thank-you.html">
-          <input type="hidden" name="_url" value="https://gdlogi.us/good-shipping-inquiry-form.html">
+          <input type="hidden" name="source_type" value="quote-page">
+          <input type="hidden" name="source_page" value="https://gdlogi.us/good-shipping-inquiry-form.html">
+          <input type="hidden" name="product_id" value="">
+          <input type="hidden" name="referrer" value="">
+          <input type="hidden" name="utm_source" value="">
+          <input type="hidden" name="utm_medium" value="">
+          <input type="hidden" name="utm_campaign" value="">
           <input class="anti-spam" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="grid">
             <div class="field" data-field="name">
               <label for="name">Name<span class="required">*</span></label>
-              <input id="name" name="name" type="text" placeholder="Your full name" autocomplete="name" required>
-              <span class="hint">Please enter your name.</span>
+              <input id="name" name="name" type="text" placeholder="Your full name" autocomplete="name" maxlength="100" required aria-describedby="hint-name">
+              <span class="hint" id="hint-name">Please enter your name.</span>
             </div>
 
             <div class="field" data-field="email">
               <label for="email">Email<span class="required">*</span></label>
-              <input id="email" name="email" type="email" placeholder="name@company.com" autocomplete="email" required>
-              <span class="hint">Use a valid business email address.</span>
+              <input id="email" name="email" type="email" placeholder="audit@example.com" autocomplete="email" maxlength="254" required aria-describedby="hint-email">
+              <span class="hint" id="hint-email">Use a valid email address, including addresses with + tags.</span>
             </div>
 
-            <div class="field" data-field="phone">
-              <label for="phone">Phone / WhatsApp<span class="required">*</span></label>
-              <input id="phone" name="phone" type="tel" placeholder="+1 213 555 0188 or +86 135 0000 0000" autocomplete="tel" required>
-              <span class="hint">International format is supported, e.g. +1 213 555 0188.</span>
+            <div class="field" data-field="whatsapp">
+              <label for="whatsapp">Phone / WhatsApp<span class="required" data-phone-required hidden>*</span></label>
+              <input id="whatsapp" name="whatsapp" type="tel" placeholder="+1 213 555 0188" autocomplete="tel" maxlength="50" aria-describedby="hint-whatsapp">
+              <span class="hint" id="hint-whatsapp">Optional for email replies. Required when WhatsApp is selected.</span>
             </div>
 
             <div class="field" data-field="company">
               <label for="company">Company Name</label>
-              <input id="company" name="company" type="text" placeholder="Your company name" autocomplete="organization">
+              <input id="company" name="company" type="text" placeholder="Your company name" autocomplete="organization" maxlength="160">
               <span class="hint">Optional, but helpful for B2B quote follow-up.</span>
             </div>
 
-            <div class="field" data-field="country">
-              <label for="country">Country / Region</label>
-              <input id="country" name="country" type="text" placeholder="United States / Mexico / UK" autocomplete="country-name">
-              <span class="hint">Optional destination or buyer location.</span>
+            <div class="field full" data-field="product_name">
+              <label for="product_name">Product Name<span class="required">*</span></label>
+              <input id="product_name" name="product_name" type="text" placeholder="What are you shipping?" maxlength="180" required aria-describedby="hint-product-name">
+              <span class="hint" id="hint-product-name">Enter a real product name, such as furniture, machinery parts or apparel.</span>
             </div>
 
-            <div class="field" data-field="requirement">
-              <label for="requirement">Product Requirement</label>
-              <input id="requirement" name="requirement" type="text" placeholder="Air freight, sea freight, DDP, FBA, oversized cargo">
-              <span class="hint">Optional. Tell us the service or cargo type you need.</span>
+            <div class="field" data-field="origin">
+              <label for="origin">Origin / Pickup City<span class="required">*</span></label>
+              <input id="origin" name="origin" type="text" placeholder="City in China" maxlength="120" required aria-describedby="hint-origin">
+              <span class="hint" id="hint-origin">Supplier or pickup city in China.</span>
             </div>
 
-            <div class="field form-field" data-field="destination">
-              <label for="destination">Destination</label>
-              <select id="destination" name="destination">
-                <option value="">Select destination</option>
-                <option value="usa-mainland">USA Mainland</option>
-                <option value="hawaii">Hawaii</option>
-                <option value="alaska">Alaska</option>
-                <option value="puerto-rico">Puerto Rico</option>
-                <option value="other">Other</option>
+            <div class="field" data-field="destination">
+              <label for="destination">Destination / ZIP Code<span class="required">*</span></label>
+              <input id="destination" name="destination" type="text" placeholder="U.S. city, state and ZIP code" maxlength="160" required aria-describedby="hint-destination">
+              <span class="hint" id="hint-destination">Enter the final delivery city or ZIP code.</span>
+            </div>
+
+            <div class="field" data-field="shipping_method">
+              <label for="shipping-method">Shipping Method</label>
+              <select id="shipping-method" name="shipping_method">
+                <option value="not-sure" selected>Not sure — please advise</option>
+                <option value="ocean-freight">Ocean Freight — review FCL/LCL</option>
+                <option value="ocean-fcl">Ocean FCL</option>
+                <option value="ocean-lcl">Ocean LCL</option>
+                <option value="air-freight">Air Freight</option>
+                <option value="express">Express / Courier</option>
               </select>
-              <span class="hint">Optional. Choose the main delivery destination.</span>
+              <span class="hint">Select a transport mode separately from the operations you need.</span>
             </div>
 
-            <div class="field form-field" data-field="preferred-contact">
+            <div class="field" data-field="preferred_contact">
               <label for="preferred-contact">Preferred contact method</label>
               <select id="preferred-contact" name="preferred_contact">
                 <option value="email">Email</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="either">Either is fine</option>
               </select>
-              <span class="hint">Optional. We can reply by email or WhatsApp.</span>
+              <span class="hint">Email is always required so the request has a reliable reply channel.</span>
+            </div>
+
+            <fieldset class="field full service-needs" data-field="service_needs">
+              <legend>Service Needs<span class="required">*</span></legend>
+              <p>Choose all that apply. You can combine shipping, labeling, kitting and other operations.</p>
+              <div class="service-needs-grid">
+                <label><input type="checkbox" name="service_needs" value="shipping" aria-describedby="hint-service-needs"><span>Shipping</span></label>
+                <label><input type="checkbox" name="service_needs" value="supplier-pickup"><span>Supplier Pickup</span></label>
+                <label><input type="checkbox" name="service_needs" value="consolidation"><span>Consolidation</span></label>
+                <label><input type="checkbox" name="service_needs" value="warehousing"><span>Warehousing</span></label>
+                <label><input type="checkbox" name="service_needs" value="fba-prep-labeling"><span>FBA Prep / Labeling</span></label>
+                <label><input type="checkbox" name="service_needs" value="repacking"><span>Repacking</span></label>
+                <label><input type="checkbox" name="service_needs" value="kitting-light-assembly"><span>Kitting / Light Assembly</span></label>
+                <label><input type="checkbox" name="service_needs" value="inspection"><span>Inspection</span></label>
+                <label><input type="checkbox" name="service_needs" value="not-sure" checked><span>Not sure — please advise</span></label>
+              </div>
+              <span class="hint" id="hint-service-needs">Choose at least one service need.</span>
+            </fieldset>
+
+            <div class="field" data-field="weight">
+              <label for="weight">Total Weight</label>
+              <input id="weight" name="weight" type="text" placeholder="kg or lb (optional / not sure is OK)" maxlength="100">
+              <span class="hint">Optional. You can tell us the weight is not known yet.</span>
+            </div>
+
+            <div class="field" data-field="volume">
+              <label for="volume">Total Volume / Packed Dimensions</label>
+              <input id="volume" name="volume" type="text" placeholder="CBM or dimensions (optional)" maxlength="160">
+              <span class="hint">Optional. Add CBM or packed dimensions when available.</span>
+            </div>
+
+            <div class="field full" data-field="cargo_type">
+              <label for="cargo_type">Cargo Details</label>
+              <textarea id="cargo_type" name="cargo_type" placeholder="Packaging, carton or pallet count, handling needs..." maxlength="2000" aria-describedby="hint-cargo-type"></textarea>
+              <span class="hint" id="hint-cargo-type">Optional. Add packaging and handling details when available.</span>
             </div>
 
             <div class="field full" data-field="message">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline..."></textarea>
-              <span class="hint">Optional. More cargo details help us quote faster.</span>
+              <label for="message">Additional Requirements</label>
+              <textarea id="message" name="message" placeholder="FBA appointment, liftgate, residential access, delivery deadline or other requirements" maxlength="2000"></textarea>
+              <span class="hint">Optional. Add delivery or customs requirements.</span>
             </div>
           </div>
 
+          <div class="field" data-field="privacy_consent">
+            <label class="consent">
+              <input id="privacy-consent" name="privacy_consent" type="checkbox" value="agreed" required aria-describedby="hint-privacy-consent">
+              <span>I agree that Good Logistics may use these details to respond to my shipping request. See the <a href="/privacy-policy/">Privacy Policy</a>.<span class="required">*</span></span>
+            </label>
+            <span class="hint" id="hint-privacy-consent">Please confirm that we may use these details to answer your request.</span>
+          </div>
+
           <div class="actions">
-            <button id="submitBtn" type="submit">Submit Inquiry</button>
+            <button id="submitBtn" type="submit">Request a Shipping &amp; Prep Quote</button>
             <div id="formStatus" class="status" role="status" aria-live="polite">Complete the required fields, then submit your inquiry.</div>
           </div>
-          <p class="form-note">We respond within 12 hours via your preferred contact method. Business days, Shenzhen time (UTC+8).</p>
-          <p class="privacy">Your inquiry is sent through FormSubmit to the Good Logistics sales mailbox. No inquiry data is stored in this website database.</p>
+          <p class="form-note">A team member will review the route and cargo details before responding by your preferred method.</p>
+          <p class="privacy">Your details are used to review and respond to this shipping request. The configured email delivery provider may process the submission.</p>
         </form>
 
         <div class="template-note">
-          Prefer email? Send your cargo details directly to <a href="mailto:zoe@gdlogi.com"><code>zoe@gdlogi.com</code></a>.
+          Prefer direct contact? Email <a href="mailto:zoe@gdlogi.com" data-track-contact="email"><code>zoe@gdlogi.com</code></a> or message <a href="https://wa.me/8613556861676" data-track-contact="whatsapp">WhatsApp</a>.
         </div>
       </section>
     </section>
@@ -710,6 +856,15 @@
     const form = document.querySelector("#inquiryForm");
     const submitBtn = document.querySelector("#submitBtn");
     const statusEl = document.querySelector("#formStatus");
+    const preferredContact = form.elements.preferred_contact;
+    const whatsappInput = form.elements.whatsapp;
+    const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
+    const phoneRequiredMarker = document.querySelector("[data-phone-required]");
+    const CLIENT_TIMEOUT_MS = 32000;
+    const FAILURE_MESSAGE = "We could not send the inquiry. Please check the highlighted fields or contact us directly.";
+    const PENDING_MESSAGE = "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.";
+    let submissionLocked = false;
+    let quoteStarted = false;
 
     function tt(message) {
       return window.GSI18n?.tText(message) || message;
@@ -717,14 +872,37 @@
 
     const validators = {
       name(value) {
-        return value.trim().length >= 2 ? "" : tt("Please enter your name.");
+        return value.trim() ? "" : tt("Please enter your name.");
       },
       email(value) {
-        return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(value.trim()) ? "" : tt("Please enter a valid email address.");
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()) ? "" : tt("Please enter a valid email address.");
       },
-      phone(value) {
+      whatsapp(value) {
         const cleaned = value.trim();
-        return /^\\+?[0-9][0-9\\s().-]{6,22}$/.test(cleaned) ? "" : tt("Please enter a valid phone or WhatsApp number.");
+        if (!cleaned && preferredContact.value !== "whatsapp") return "";
+        if (!cleaned) return tt("Phone / WhatsApp is required when WhatsApp is selected.");
+        if (!/^\+?[0-9][0-9\s().-]*$/.test(cleaned)) {
+          return tt("Please enter a valid phone or WhatsApp number.");
+        }
+        const digitCount = cleaned.replace(/\D/g, "").length;
+        return digitCount >= 7 && digitCount <= 20 ? "" : tt("Please enter a valid phone or WhatsApp number.");
+      },
+      product_name(value) {
+        return value.trim() ? "" : tt("Please enter the product you are shipping.");
+      },
+      origin(value) {
+        return value.trim() ? "" : tt("Please enter the pickup city or origin.");
+      },
+      destination(value) {
+        return value.trim() ? "" : tt("Please enter the destination city or ZIP code.");
+      },
+      service_needs(values) {
+        return Array.isArray(values) && values.length
+          ? ""
+          : tt("Please choose at least one service need or ask us to advise.");
+      },
+      privacy_consent(value) {
+        return value === "agreed" ? "" : tt("Please confirm that we may use these details to answer your request.");
       }
     };
 
@@ -733,25 +911,63 @@
       statusEl.className = `status ${type}`.trim();
     }
 
+    function setPendingStatus(submissionId) {
+      setStatus(tt(PENDING_MESSAGE), "pending");
+      if (submissionId) statusEl.append(document.createTextNode(` ${tt("Reference")}: ${submissionId}.`));
+      statusEl.append(document.createTextNode(` ${tt("Contact us by")} `));
+      const whatsappLink = document.createElement("a");
+      whatsappLink.href = "https://wa.me/8613556861676";
+      whatsappLink.textContent = "WhatsApp";
+      whatsappLink.dataset.trackContact = "whatsapp";
+      statusEl.append(whatsappLink, document.createTextNode(` ${tt("or")} `));
+      const emailLink = document.createElement("a");
+      emailLink.href = "mailto:zoe@gdlogi.com";
+      emailLink.textContent = "email";
+      emailLink.dataset.trackContact = "email";
+      statusEl.append(emailLink, document.createTextNode("."));
+    }
+
     function setFieldError(name, message) {
       const field = form.querySelector(`[data-field="${name}"]`);
       const hint = field?.querySelector(".hint");
-      if (!field || !hint) return;
+      const input = name === "service_needs" ? serviceNeedInputs[0] : form.elements[name];
+      if (!field || !hint || !input) return;
       field.classList.toggle("invalid", Boolean(message));
+      if (name === "service_needs") {
+        serviceNeedInputs.forEach((checkbox) => {
+          checkbox.setAttribute("aria-invalid", message ? "true" : "false");
+        });
+      } else {
+        input.setAttribute("aria-invalid", message ? "true" : "false");
+      }
       hint.textContent = message || defaultHint(name);
     }
 
     function defaultHint(name) {
       return {
         name: tt("Please enter your name."),
-        email: tt("Use a valid business email address."),
-        phone: tt("International format is supported, e.g. +1 213 555 0188.")
+        email: tt("Use a valid email address, including addresses with + tags."),
+        whatsapp: tt("Optional for email replies. Required when WhatsApp is selected."),
+        product_name: tt("Enter a real product name, such as furniture, machinery parts or apparel."),
+        origin: tt("Supplier or pickup city in China."),
+        destination: tt("Enter the final delivery city or ZIP code."),
+        service_needs: tt("Choose at least one service need."),
+        cargo_type: tt("Optional. Add packaging and handling details when available."),
+        privacy_consent: tt("Please confirm that we may use these details to answer your request.")
       }[name] || "";
     }
 
     function getPayload() {
       const data = new FormData(form);
-      return Object.fromEntries(data.entries());
+      const payload = {};
+      for (const [name, value] of data.entries()) {
+        if (name === "service_needs") {
+          payload.service_needs = [...(payload.service_needs || []), value];
+        } else {
+          payload[name] = value;
+        }
+      }
+      return payload;
     }
 
     function validateForm() {
@@ -759,7 +975,12 @@
       const errors = {};
 
       Object.keys(validators).forEach((name) => {
-        const message = validators[name](payload[name] || "");
+        const value = name === "service_needs"
+          ? (payload.service_needs || [])
+          : name === "privacy_consent"
+          ? (form.elements.privacy_consent.checked ? "agreed" : "")
+          : (payload[name] || "");
+        const message = validators[name](value);
         setFieldError(name, message);
         if (message) errors[name] = message;
       });
@@ -771,39 +992,257 @@
       return { payload, errors };
     }
 
-    ["name", "email", "phone"].forEach((name) => {
+    function cleanAttribution(value) {
+      return String(value || "").replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 100);
+    }
+
+    function configureAttribution() {
+      const params = new URLSearchParams(window.location.search);
+      form.elements.source_page.value = `${window.location.origin}${window.location.pathname}`;
+      try {
+        form.elements.referrer.value = document.referrer ? new URL(document.referrer).origin : "";
+      } catch {
+        form.elements.referrer.value = "";
+      }
+      ["utm_source", "utm_medium", "utm_campaign"].forEach((name) => {
+        form.elements[name].value = cleanAttribution(params.get(name));
+      });
+    }
+
+    function configureServicePrefill() {
+      const params = new URLSearchParams(window.location.search);
+      const legacyService = params.get("service") || params.get("solution") || "";
+      const shippingAliases = {
+        "not-sure": "not-sure",
+        "sea-freight": "ocean-freight",
+        "sea-freight-china-to-usa": "ocean-freight",
+        "ocean-freight": "ocean-freight",
+        "ocean-fcl": "ocean-fcl",
+        "ocean-lcl": "ocean-lcl",
+        fcl: "ocean-fcl",
+        lcl: "ocean-lcl",
+        "air-freight": "air-freight",
+        "air-freight-china-to-usa": "air-freight",
+        express: "express",
+        "express-shipping": "express"
+      };
+      const requestedMethod = params.get("shipping_method") || params.get("transport_mode") || legacyService;
+      if (shippingAliases[requestedMethod]) {
+        form.elements.shipping_method.value = shippingAliases[requestedMethod];
+      }
+
+      const needAliases = {
+        "not-sure": ["not-sure"],
+        shipping: ["shipping"],
+        "sea-freight": ["shipping"],
+        "sea-freight-china-to-usa": ["shipping"],
+        "air-freight": ["shipping"],
+        "air-freight-china-to-usa": ["shipping"],
+        ddp: ["shipping"],
+        "ddp-shipping-china-to-usa": ["shipping"],
+        "oversized-cargo-shipping": ["shipping"],
+        "amazon-fba-shipping": ["shipping", "fba-prep-labeling"],
+        "amazon-fba": ["shipping", "fba-prep-labeling"],
+        "supplier-consolidation": ["supplier-pickup", "consolidation"],
+        "supplier-pickup": ["supplier-pickup"],
+        consolidation: ["consolidation"],
+        warehousing: ["warehousing"],
+        "warehousing-inventory-coordination": ["warehousing"],
+        "fba-prep-labeling": ["fba-prep-labeling"],
+        repacking: ["repacking"],
+        "kitting-light-assembly": ["kitting-light-assembly"],
+        inspection: ["inspection"],
+        "cargo-inspection-receiving-checks": ["inspection"]
+      };
+      const explicitNeeds = [
+        ...params.getAll("service_need"),
+        ...params.getAll("service_needs")
+      ].flatMap((value) => value.split(",").map((item) => item.trim().toLowerCase()).filter(Boolean));
+      const requestedNeeds = [...new Set(
+        (explicitNeeds.length ? explicitNeeds : [legacyService])
+          .flatMap((value) => needAliases[value] || [])
+      )];
+      if (!requestedNeeds.length) return;
+      serviceNeedInputs.forEach((input) => {
+        input.checked = requestedNeeds.includes(input.value);
+      });
+      setFieldError("service_needs", "");
+    }
+
+    function trackEvent(eventName, result = "") {
+      const payload = {
+        event: eventName,
+        form_source: "standalone-inquiry",
+        shipping_method: String(form.elements.shipping_method.value || "not-sure").slice(0, 80),
+        service_needs: serviceNeedInputs
+          .filter((input) => input.checked)
+          .map((input) => input.value)
+          .join(",")
+          .slice(0, 180) || "not-sure",
+        result: String(result || "").slice(0, 40)
+      };
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+      window.dispatchEvent(new CustomEvent("gdlogi:analytics", { detail: payload }));
+    }
+
+    function updatePhoneRequirement() {
+      const isRequired = preferredContact.value === "whatsapp";
+      whatsappInput.required = isRequired;
+      phoneRequiredMarker.hidden = !isRequired;
+      const message = validators.whatsapp(whatsappInput.value);
+      setFieldError("whatsapp", message);
+    }
+
+    function resetSubmitButton() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = tt("Request a Shipping & Prep Quote");
+    }
+
+    Object.keys(validators).filter((name) => name !== "service_needs").forEach((name) => {
       const input = form.elements[name];
-      input.addEventListener("input", () => {
-        const message = validators[name](input.value);
+      const eventName = input.type === "checkbox" || input.tagName === "SELECT" ? "change" : "input";
+      input.addEventListener(eventName, () => {
+        const value = input.type === "checkbox" ? (input.checked ? "agreed" : "") : input.value;
+        const message = validators[name](value);
         setFieldError(name, message);
       });
     });
 
-    form.addEventListener("submit", (event) => {
-      const { errors } = validateForm();
+    serviceNeedInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        if (input.checked && input.value === "not-sure") {
+          serviceNeedInputs.forEach((candidate) => {
+            if (candidate !== input) candidate.checked = false;
+          });
+        } else if (input.checked) {
+          const notSureInput = serviceNeedInputs.find((candidate) => candidate.value === "not-sure");
+          if (notSureInput) notSureInput.checked = false;
+        }
+        const selected = serviceNeedInputs.filter((candidate) => candidate.checked).map((candidate) => candidate.value);
+        setFieldError("service_needs", validators.service_needs(selected));
+      });
+    });
+
+    preferredContact.addEventListener("change", updatePhoneRequirement);
+
+    form.addEventListener("focusin", () => {
+      if (quoteStarted) return;
+      quoteStarted = true;
+      trackEvent("quote_start", "started");
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submissionLocked) return;
+
+      const { payload, errors } = validateForm();
 
       if (Object.keys(errors).length) {
-        event.preventDefault();
         setStatus(tt("Please complete the required fields before submitting."), "error");
+        trackEvent("quote_submit_failed", "validation");
+        form.querySelector('[aria-invalid="true"]')?.focus();
         return;
       }
 
+      submissionLocked = true;
       submitBtn.disabled = true;
       submitBtn.textContent = tt("Submitting...");
       setStatus(tt("Submitting your inquiry..."), "");
+
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), CLIENT_TIMEOUT_MS);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+          credentials: "same-origin"
+        });
+
+        let result = null;
+        try {
+          result = await response.json();
+        } catch {
+          result = null;
+        }
+        window.clearTimeout(timeoutId);
+
+        const accepted = response.ok
+          && response.status !== 202
+          && result?.ok === true
+          && result?.submission_status === "SUCCESS";
+        if (accepted) {
+          trackEvent("quote_submit_success", "accepted");
+          window.dispatchEvent(new CustomEvent("gdlogi:generate_lead", {
+            detail: {
+              source: "standalone-inquiry",
+              shippingMethod: payload.shipping_method,
+              serviceNeeds: payload.service_needs || []
+            }
+          }));
+          window.location.assign(result.redirect || "/thank-you/");
+          return;
+        }
+
+        if (result?.submission_status === "FAILED") {
+          submissionLocked = false;
+          resetSubmitButton();
+          Object.entries(result.errors || {}).forEach(([name, message]) => setFieldError(name, tt(message)));
+          setStatus(
+            Object.keys(result.errors || {}).length
+              ? tt("Please complete the required fields before submitting.")
+              : tt(result.message || FAILURE_MESSAGE),
+            "error"
+          );
+          window.requestAnimationFrame(() => {
+            form.querySelector('[aria-invalid="true"]')?.focus();
+          });
+          trackEvent("quote_submit_failed", "rejected");
+          return;
+        }
+
+        setPendingStatus(result?.submission_id || "");
+        submitBtn.textContent = tt("Inquiry Processing...");
+        trackEvent("quote_submit_pending", "pending");
+      } catch {
+        window.clearTimeout(timeoutId);
+        setPendingStatus("");
+        submitBtn.textContent = tt("Inquiry Processing...");
+        trackEvent("quote_submit_pending", "network-or-timeout");
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const contactLink = event.target.closest("[data-track-contact]");
+      if (!contactLink) return;
+      trackEvent(contactLink.dataset.trackContact === "whatsapp" ? "whatsapp_click" : "email_click", "contact");
     });
 
     window.addEventListener("gs:languagechange", () => {
-      if (!submitBtn.disabled) submitBtn.textContent = tt("Submit Inquiry");
-      ["name", "email", "phone"].forEach((name) => {
-        const input = form.elements[name];
-        const message = input.value ? validators[name](input.value) : "";
+      if (!submissionLocked) submitBtn.textContent = tt("Request a Shipping & Prep Quote");
+      Object.keys(validators).forEach((name) => {
+        const input = name === "service_needs" ? serviceNeedInputs[0] : form.elements[name];
+        const value = name === "service_needs"
+          ? serviceNeedInputs.filter((candidate) => candidate.checked).map((candidate) => candidate.value)
+          : input.type === "checkbox" ? (input.checked ? "agreed" : "") : input.value;
+        const message = fieldIsInvalid(name) ? validators[name](value) : "";
         setFieldError(name, message);
       });
-      if (!statusEl.classList.contains("success") && !statusEl.classList.contains("error")) {
+      if (!submissionLocked && !statusEl.classList.contains("error")) {
         setStatus(tt("Complete the required fields, then submit your inquiry."));
       }
     });
+
+    function fieldIsInvalid(name) {
+      return form.querySelector(`[data-field="${name}"]`)?.classList.contains("invalid");
+    }
+
+    configureAttribution();
+    configureServicePrefill();
+    updatePhoneRequirement();
   </script>
 </body>
 </html>

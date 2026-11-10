@@ -1,13 +1,69 @@
 "use client";
 
 import { useEffect } from "react";
+import {
+  getPublicSourcePage,
+  INQUIRY_FAILURE_MESSAGE,
+  INQUIRY_PENDING_MESSAGE,
+  submitInquiryForm
+} from "./lib/inquiry-client";
+
+const PHONE_MESSAGE =
+  "Enter a phone number using digits and common separators such as +, spaces, parentheses or hyphens.";
+
+function emitAnonymousEvent(eventName, parameters = {}) {
+  const detail = {
+    event: eventName,
+    source_type: "homepage",
+    page_path: window.location.pathname,
+    ...parameters
+  };
+
+  window.dispatchEvent(new CustomEvent("gdlogi:analytics", { detail }));
+  if (Array.isArray(window.dataLayer)) window.dataLayer.push(detail);
+}
+
+function getSafeSourcePage() {
+  try {
+    const url = new URL(getPublicSourcePage(window.location));
+    return `${url.origin}${url.pathname}`;
+  } catch {
+    return "https://gdlogi.us/";
+  }
+}
+
+function getSafeReferrer() {
+  if (!document.referrer) return "direct";
+
+  try {
+    const url = new URL(document.referrer);
+    return url.origin === window.location.origin ? `${url.origin}${url.pathname}` : url.origin;
+  } catch {
+    return "unknown";
+  }
+}
+
+function getCampaignValue(name, maxLength) {
+  const value = new URLSearchParams(window.location.search).get(name) || "";
+  return value
+    .trim()
+    .slice(0, maxLength)
+    .replace(/[^a-zA-Z0-9._~+ -]/g, "");
+}
 
 export default function HomeInteractions() {
   useEffect(() => {
     const header = document.querySelector("[data-home-header]");
     const menuToggle = document.querySelector("[data-home-menu-toggle]");
+    const menuLabel = document.querySelector("[data-home-menu-label]");
     const navItems = Array.from(document.querySelectorAll("[data-home-nav-item]"));
     const form = document.querySelector("[data-home-quote-form]");
+
+    const setMenuLabel = (isOpen) => {
+      const label = isOpen ? "Close navigation menu" : "Open navigation menu";
+      menuToggle?.setAttribute("aria-label", label);
+      if (menuLabel) menuLabel.textContent = label;
+    };
 
     const closeDropdowns = (exceptItem = null) => {
       navItems.forEach((item) => {
@@ -17,18 +73,30 @@ export default function HomeInteractions() {
       });
     };
 
-    const closeMobileMenu = () => {
+    const closeMobileMenu = ({ restoreFocus = false } = {}) => {
       if (!header || !menuToggle) return;
+      const wasOpen = header.classList.contains("is-menu-open");
       header.classList.remove("is-menu-open");
+      document.body.classList.remove("home-menu-lock");
       menuToggle.setAttribute("aria-expanded", "false");
+      setMenuLabel(false);
       closeDropdowns();
+      if (restoreFocus && wasOpen) menuToggle.focus();
     };
+
+    const navLinks = Array.from(document.querySelectorAll("#home-primary-navigation a"));
 
     const onMenuToggle = () => {
       if (!header || !menuToggle) return;
       const isOpen = header.classList.toggle("is-menu-open");
+      document.body.classList.toggle("home-menu-lock", isOpen);
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      if (!isOpen) closeDropdowns();
+      setMenuLabel(isOpen);
+      if (isOpen) {
+        window.requestAnimationFrame(() => navLinks[0]?.focus());
+      } else {
+        closeDropdowns();
+      }
     };
 
     const navTriggerHandlers = navItems.map((item) => {
@@ -44,84 +112,348 @@ export default function HomeInteractions() {
     });
 
     const onDocumentClick = (event) => {
-      if (header && !header.contains(event.target)) {
-        closeDropdowns();
+      const contactLink = event.target.closest?.("[data-contact-event]");
+      if (contactLink?.dataset.contactEvent) {
+        emitAnonymousEvent(contactLink.dataset.contactEvent, {
+          contact_method: contactLink.dataset.contactEvent === "whatsapp_click" ? "whatsapp" : "email"
+        });
       }
+
+      if (header && !header.contains(event.target)) closeMobileMenu();
     };
 
     const onKeyDown = (event) => {
-      if (event.key === "Escape") closeMobileMenu();
+      if (event.key === "Escape") closeMobileMenu({ restoreFocus: true });
     };
 
     const onNavLinkClick = () => closeMobileMenu();
-    const navLinks = Array.from(document.querySelectorAll("#home-primary-navigation a"));
+    const desktopMedia = window.matchMedia("(min-width: 1101px)");
+    const onDesktopChange = (event) => {
+      if (event.matches) closeMobileMenu();
+    };
 
     menuToggle?.addEventListener("click", onMenuToggle);
     navLinks.forEach((link) => link.addEventListener("click", onNavLinkClick));
     document.addEventListener("click", onDocumentClick);
     document.addEventListener("keydown", onKeyDown);
+    desktopMedia.addEventListener("change", onDesktopChange);
 
+    let onFocusIn;
+    let onInput;
     let onInvalid;
     let onSubmit;
     let onPageShow;
-    let onInput;
+    let onPreferredContactChange;
 
     if (form) {
       const submitButton = form.querySelector("[data-home-submit]");
       const status = form.querySelector("[data-home-form-status]");
+      const preferredContact = form.elements.preferred_contact;
+      const phone = form.elements.whatsapp;
+      const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
+      let quoteStarted = false;
+      let focusScheduled = false;
 
-      onInvalid = () => {
-        if (!status) return;
-        status.textContent = "Please complete the required fields and check the highlighted entries.";
-        status.classList.add("is-error");
+      const setAttributionFields = () => {
+        if (form.elements.source_page) form.elements.source_page.value = getSafeSourcePage();
+        if (form.elements.referrer) form.elements.referrer.value = getSafeReferrer();
+        if (form.elements.utm_source) {
+          form.elements.utm_source.value = getCampaignValue("utm_source", 100);
+        }
+        if (form.elements.utm_medium) {
+          form.elements.utm_medium.value = getCampaignValue("utm_medium", 100);
+        }
+        if (form.elements.utm_campaign) {
+          form.elements.utm_campaign.value = getCampaignValue("utm_campaign", 160);
+        }
       };
 
-      onSubmit = (event) => {
-        if (submitButton?.disabled) {
-          event.preventDefault();
-          return;
+      const getErrorElement = (field) => {
+        const ids = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+        return ids
+          .map((id) => document.getElementById(id))
+          .find((element) => element?.matches("[data-field-error]"));
+      };
+
+      const getValidationMessage = (field) => {
+        if (field.validity.typeMismatch && field.type === "email") {
+          return "Enter a valid email address.";
         }
+        if (field.validity.valueMissing) return "This field is required.";
+        return field.validationMessage || "Check this field.";
+      };
+
+      const showFieldError = (field) => {
+        field.setAttribute("aria-invalid", "true");
+        const errorElement = getErrorElement(field);
+        if (errorElement) errorElement.textContent = getValidationMessage(field);
+      };
+
+      const clearFieldError = (field) => {
+        field.removeAttribute("aria-invalid");
+        const errorElement = getErrorElement(field);
+        if (errorElement) errorElement.textContent = "";
+      };
+
+      const validatePhone = () => {
+        if (!phone || !preferredContact) return true;
+        const isRequired = preferredContact.value === "whatsapp";
+        const value = phone.value.trim();
+        phone.required = isRequired;
+        phone.setCustomValidity("");
+
+        if (isRequired && !value) {
+          phone.setCustomValidity("Enter a WhatsApp or phone number for a WhatsApp reply.");
+        } else if (value) {
+          const digitCount = (value.match(/\d/g) || []).length;
+          if (!/^\+?[0-9][0-9\s().-]*$/.test(value) || digitCount < 7 || digitCount > 20) {
+            phone.setCustomValidity(PHONE_MESSAGE);
+          }
+        }
+
+        if (phone.validity.valid) {
+          clearFieldError(phone);
+          return true;
+        }
+
+        showFieldError(phone);
+        return false;
+      };
+
+      const getSelectionContext = () => ({
+        shipping_method: form.elements.shipping_method?.value || "not-sure",
+        service_needs: serviceNeedInputs
+          .filter((input) => input.checked)
+          .map((input) => input.value)
+          .join(",") || "not-sure"
+      });
+
+      const validateServiceNeeds = () => {
+        if (serviceNeedInputs.length === 0) return true;
+        const hasSelection = serviceNeedInputs.some((input) => input.checked);
+        const firstInput = serviceNeedInputs[0];
+        firstInput.setCustomValidity(hasSelection ? "" : "Choose at least one service need or ask us to advise.");
+        serviceNeedInputs.forEach((input) => {
+          input.toggleAttribute("aria-invalid", !hasSelection);
+        });
+        if (hasSelection) {
+          clearFieldError(firstInput);
+          return true;
+        }
+        showFieldError(firstInput);
+        return false;
+      };
+
+      const showPendingStatus = (submissionId) => {
+        if (!status) return;
+        const reference = submissionId ? ` Reference: ${submissionId}. ` : " ";
+        const whatsAppLink = document.createElement("a");
+        whatsAppLink.href =
+          "https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20help%20with%20an%20inquiry%20that%20is%20still%20processing.";
+        whatsAppLink.textContent = "WhatsApp";
+        whatsAppLink.dataset.contactEvent = "whatsapp_click";
+        const emailLink = document.createElement("a");
+        emailLink.href = "mailto:zoe@gdlogi.com";
+        emailLink.textContent = "email";
+        emailLink.dataset.contactEvent = "email_click";
+        status.replaceChildren(
+          document.createTextNode(`${INQUIRY_PENDING_MESSAGE}${reference}`),
+          document.createTextNode("If you need to add information, contact us by "),
+          whatsAppLink,
+          document.createTextNode(" or "),
+          emailLink,
+          document.createTextNode(".")
+        );
+        status.classList.remove("is-error");
+        status.classList.add("is-pending");
+      };
+
+      onFocusIn = () => {
+        if (quoteStarted) return;
+        quoteStarted = true;
+        emitAnonymousEvent("quote_start", {
+          form_id: "homepage_quick_quote",
+          ...getSelectionContext()
+        });
+      };
+
+      onPreferredContactChange = () => validatePhone();
+
+      onInvalid = (event) => {
+        const field = event.target;
+        showFieldError(field);
+        if (status) {
+          status.textContent = "Please complete the required fields and check the highlighted entries.";
+          status.classList.remove("is-pending");
+          status.classList.add("is-error");
+        }
+        if (!focusScheduled) {
+          focusScheduled = true;
+          emitAnonymousEvent("quote_validation_error", {
+            form_id: "homepage_quick_quote",
+            field_name: field.name || "unknown"
+          });
+          emitAnonymousEvent("quote_submit_failed", {
+            form_id: "homepage_quick_quote",
+            result: "validation",
+            failure_code: "validation"
+          });
+          window.requestAnimationFrame(() => {
+            form.querySelector(":invalid")?.focus();
+            focusScheduled = false;
+          });
+        }
+      };
+
+      onSubmit = async (event) => {
+        event.preventDefault();
+        if (submitButton?.disabled) return;
+        validatePhone();
+        validateServiceNeeds();
         if (!form.checkValidity()) return;
+
+        setAttributionFields();
+        form.dataset.submissionState = "submitting";
+        form.dataset.submissionId = "";
         if (submitButton) {
           submitButton.disabled = true;
           submitButton.textContent = "Sending…";
         }
         if (status) {
+          status.classList.remove("is-pending");
           status.classList.remove("is-error");
-          status.textContent = "Sending your request through the current form provider…";
+          status.textContent = "Sending your shipment details…";
         }
-        window.dispatchEvent(new CustomEvent("gdlogi:generate_lead", { detail: { source: "homepage-quick-form" } }));
+
+        try {
+          const result = await submitInquiryForm(form);
+          form.dataset.submissionState = result.submission_status?.toLowerCase() || "pending";
+          form.dataset.submissionId = result.submission_id || "";
+          if (result.submission_status === "PENDING") {
+            if (submitButton) submitButton.textContent = "Inquiry Processing…";
+            emitAnonymousEvent("quote_submit_pending", {
+              form_id: "homepage_quick_quote",
+              ...getSelectionContext()
+            });
+            showPendingStatus(result.submission_id);
+            return;
+          }
+
+          emitAnonymousEvent("quote_submit_success", {
+            form_id: "homepage_quick_quote",
+            ...getSelectionContext()
+          });
+          window.dispatchEvent(
+            new CustomEvent("gdlogi:generate_lead", {
+              detail: { source: "homepage-quick-quote", ...getSelectionContext() }
+            })
+          );
+          window.location.assign(result.redirect || "/thank-you/");
+        } catch (error) {
+          form.dataset.submissionState = "failed";
+          form.dataset.submissionId = error.submissionId || "";
+          const serverFieldErrors = error.fieldErrors || {};
+          Object.entries(serverFieldErrors).forEach(([name, message]) => {
+            const field = name === "service_needs"
+              ? serviceNeedInputs[0]
+              : form.elements[name];
+            if (!field) return;
+            field.setCustomValidity(message);
+            showFieldError(field);
+          });
+          emitAnonymousEvent("quote_submit_failed", {
+            form_id: "homepage_quick_quote",
+            failure_code: error.code || "delivery_failed"
+          });
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = "Request a Shipping & Prep Quote";
+          }
+          if (status) {
+            status.classList.remove("is-pending");
+            status.classList.add("is-error");
+            status.textContent = Object.keys(serverFieldErrors).length > 0
+              ? "Please complete the required fields and check the highlighted entries."
+              : INQUIRY_FAILURE_MESSAGE;
+          }
+          if (Object.keys(serverFieldErrors).length > 0) {
+            window.requestAnimationFrame(() => {
+              form.querySelector(":invalid")?.focus();
+            });
+          }
+        }
       };
 
-      onInput = () => {
-        if (!status || form.querySelectorAll(":invalid").length > 0) return;
+      onInput = (event) => {
+        if (event.target === phone || event.target === preferredContact) validatePhone();
+        if (event.target.name === "service_needs") {
+          if (event.target.checked && event.target.value === "not-sure") {
+            serviceNeedInputs.forEach((input) => {
+              if (input !== event.target) input.checked = false;
+            });
+          } else if (event.target.checked) {
+            const notSureInput = serviceNeedInputs.find((input) => input.value === "not-sure");
+            if (notSureInput) notSureInput.checked = false;
+          }
+          validateServiceNeeds();
+        } else if (event.target !== phone) {
+          event.target.setCustomValidity?.("");
+        }
+        if (event.target.validity?.valid) clearFieldError(event.target);
+        if (
+          !status ||
+          form.dataset.submissionState === "pending" ||
+          form.querySelectorAll(":invalid").length > 0
+        ) {
+          return;
+        }
+        status.classList.remove("is-pending");
         status.classList.remove("is-error");
         status.textContent = "If the form does not complete, email zoe@gdlogi.com.";
       };
 
       onPageShow = () => {
+        if (form.dataset.submissionState === "pending") {
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = "Inquiry Processing…";
+          }
+          showPendingStatus(form.dataset.submissionId);
+          return;
+        }
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = "Get a Shipping Quote";
+          submitButton.textContent = "Request a Shipping & Prep Quote";
         }
       };
 
+      setAttributionFields();
+      validatePhone();
+      validateServiceNeeds();
+      form.addEventListener("focusin", onFocusIn);
       form.addEventListener("invalid", onInvalid, true);
       form.addEventListener("input", onInput);
       form.addEventListener("submit", onSubmit);
+      preferredContact?.addEventListener("change", onPreferredContactChange);
       window.addEventListener("pageshow", onPageShow);
     }
 
     return () => {
+      document.body.classList.remove("home-menu-lock");
       menuToggle?.removeEventListener("click", onMenuToggle);
       navLinks.forEach((link) => link.removeEventListener("click", onNavLinkClick));
       navTriggerHandlers.forEach(([trigger, handler]) => trigger?.removeEventListener("click", handler));
       document.removeEventListener("click", onDocumentClick);
       document.removeEventListener("keydown", onKeyDown);
+      desktopMedia.removeEventListener("change", onDesktopChange);
       if (form) {
+        if (onFocusIn) form.removeEventListener("focusin", onFocusIn);
         if (onInvalid) form.removeEventListener("invalid", onInvalid, true);
         if (onInput) form.removeEventListener("input", onInput);
         if (onSubmit) form.removeEventListener("submit", onSubmit);
+        if (onPreferredContactChange) {
+          form.elements.preferred_contact?.removeEventListener("change", onPreferredContactChange);
+        }
       }
       if (onPageShow) window.removeEventListener("pageshow", onPageShow);
     };

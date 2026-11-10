@@ -10,12 +10,14 @@ Status definitions:
 
 | Item | Status | Evidence required before publication |
 | --- | --- | --- |
-| Good Logistics Co., Ltd. company name | VERIFIED | Current brand materials and website identity |
+| GOOD LOGISTICS public brand | VERIFIED | Owner-confirmed public presentation on 2026-11-10 |
+| Good Logistics Co., Ltd. public English company name | VERIFIED for public display | Official registered-English-name status still requires a primary document |
+| 深圳市谷得供应链有限公司 public Chinese company name | VERIFIED for public display | Registration number, registered address and other license fields remain unpublished pending document review |
 | Zoe Zhou contact name, email and WhatsApp | VERIFIED | Current project contact data |
 | Zoe Zhou title: Director of International Logistics | VERIFIED | User-specified website role |
 | Freight-forwarding filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | NVOCC-related filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
-| Chinese legal entity and registration details | NOT_VERIFIED | Company registration record and approved English rendering |
+| Company registration number and registered address | NOT_VERIFIED | Original company registration record and publication approval |
 | Company founding year | NOT_VERIFIED | Registration record or written company confirmation |
 | Team size, shipment volume, customer count and on-time rate | NOT_VERIFIED | Dated company records and publication approval |
 | Detailed Shenzhen office address | NOT_VERIFIED | Company confirmation and publication approval |
@@ -25,7 +27,7 @@ not as an original source certificate.
 
 ## Shipment case records
 
-For each of the three supplied operational photo sets, confirm:
+For each supplied operational photo set, confirm:
 
 - Cargo description that can be published.
 - Origin and destination that can be published.
@@ -35,21 +37,40 @@ For each of the three supplied operational photo sets, confirm:
 - Result that can be supported without a time or performance guarantee.
 - Customer permission to publish the photos and shipment context.
 
-Until these fields are confirmed, the homepage presents the images as
-operational photo records and labels route, mode and result as pending
-verification.
+Until these fields and publication rights are confirmed, the operational photos
+remain off the current public homepage. Zoe Zhou's approved public profile image
+remains in use; its source-rights record is still requested.
+
+The text-only Ningbo case is approved only for these confirmed facts: three
+factories, one 40HQ, Los Angeles customs clearance, rail to Chicago and door
+delivery. Do not add cargo type, inspection, labels, kitting, dates, savings,
+testimonials or unrelated photos.
 
 ## Inquiry delivery
 
 | Check | Status | Required action |
 | --- | --- | --- |
-| Required fields and browser validation | VERIFIED | Covered by local QA |
+| Required fields and browser validation | VERIFIED | Covered by local QA, including separate shipping method and multi-value service needs |
 | Consent checkbox, honeypot and duplicate-submit guard | VERIFIED | Covered by code review and local QA |
-| FormSubmit activation for `zoe@gdlogi.com` | BLOCKED | Site owner must activate the endpoint from the recipient inbox |
-| Successful production inbox delivery | BLOCKED | Send one approved non-customer test after activation |
-| Failure and retry behavior in production | BLOCKED | Test provider failure or rejected request on the production domain |
+| Same-origin API validation and three-state UX | VERIFIED | Local SUCCESS, FAILED and PENDING paths re-tested with a local-only provider stub on 2026-11-10 |
+| Multi-service provider payload | VERIFIED | Local mock received Shipping, FBA Prep / Labeling and Kitting / Light Assembly as separate selected needs |
+| FormSubmit delivery for `zoe@gdlogi.com` | VERIFIED | Owner confirmed the single test email was received on 2026-10-21 |
+| Successful inbox delivery | VERIFIED | The one approved non-customer test reached `zoe@gdlogi.com` with the expected subject and fields |
+| Provider timeout response | VERIFIED | The first live test delivered the email but the original 12-second timeout incorrectly displayed failure; handling was revised so unknown responses become PENDING |
 
-No real inquiry is submitted during automated or local QA.
+### Owner-approved live test — 2026-10-21
+
+| Verification | Result |
+| --- | --- |
+| Email Delivery | PASS |
+| Duplicate Submission | PASS |
+| Field Delivery | PASS |
+| UTM Tracking | PASS |
+| Service Tracking | PASS |
+| Thank-you Protection | PASS |
+| Timeout Handling | FAIL — original 12-second implementation; corrected locally after this test |
+
+No additional live inquiry is submitted during automated or local QA.
 
 ## Legal and measurement
 
@@ -65,7 +86,7 @@ No real inquiry is submitted during automated or local QA.
 Before production deployment:
 
 1. Close or intentionally remove every `NOT_VERIFIED` public claim.
-2. Complete the approved FormSubmit inbox test.
-3. Complete desktop, tablet and mobile visual QA on the deployment preview.
+2. Obtain owner approval before the second and final FormSubmit inbox test.
+3. Repeat desktop, tablet and mobile visual QA on the deployment preview after deployment is explicitly approved.
 4. Run production build, link checks, console checks and form validation.
 5. Review the production diff and obtain explicit approval before changing the live site.

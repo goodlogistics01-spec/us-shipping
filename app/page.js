@@ -6,45 +6,42 @@ import "./homepage.css";
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: { absolute: "China to USA Freight Forwarder | Good Logistics" },
+  title: { absolute: "China Cargo Operations & USA Delivery | GOOD LOGISTICS" },
   description:
-    "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States.",
+    "Supplier pickup, consolidation, warehousing, FBA prep, labeling, repacking, kitting and China-to-USA freight with final-delivery coordination.",
   alternates: {
     canonical: "https://gdlogi.us/"
   },
   openGraph: {
-    title: "China to USA Freight Forwarder | Good Logistics",
+    title: "From China Suppliers to Final Delivery | GOOD LOGISTICS",
     description:
-      "Sea, air and DDP freight from supplier pickup in China to final delivery across the United States.",
+      "China-side pickup, receiving, storage, prep and consolidation coordinated with freight, customs clearance and final delivery to the United States.",
     url: "https://gdlogi.us/",
-    siteName: "Good Logistics Co., Ltd.",
+    siteName: "GOOD LOGISTICS",
     type: "website",
     images: [
       {
-        url: "/good-shipping-homepage/assets/crane-truck-warehouse.jpg",
-        width: 1706,
-        height: 1279,
-        alt: "Crane truck and packed cargo during logistics handling"
+        url: "/good-shipping-homepage/assets/good-logistics-logo.png",
+        width: 520,
+        height: 270,
+        alt: "GOOD LOGISTICS"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "China to USA Freight Forwarder | Good Logistics",
-    description: "Sea, air and DDP freight from supplier pickup in China to U.S. final delivery.",
-    images: ["/good-shipping-homepage/assets/crane-truck-warehouse.jpg"]
+    title: "From China Suppliers to Final Delivery | GOOD LOGISTICS",
+    description: "China-side cargo operations coordinated with international freight and final delivery to the United States.",
+    images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
   }
 };
 
 const faqItems = [
-  ["How much does shipping from China to the USA cost?", "Cost depends on the commodity, package count, dimensions, weight, origin, destination ZIP code, shipping method, customs scope and delivery conditions."],
-  ["How long does sea freight from China to the USA take?", "The complete timeline depends on pickup, sailing schedule, port pair, customs and final delivery. Request a current route-specific estimate rather than relying on a fixed promise."],
-  ["Do you provide DDP door-to-door shipping?", "DDP can be reviewed when the commodity, value, importer requirements and exact delivery scope are confirmed."],
-  ["Can you collect cargo from multiple suppliers?", "Yes. Supplier locations, cargo-ready dates, packages and documents are reviewed before confirming a consolidation plan."],
-  ["Can you ship oversized machinery or furniture?", "Oversized cargo can be planned after exact packed dimensions, weights, handling photos, access and unloading requirements are provided."],
-  ["Do you deliver to Amazon FBA warehouses?", "Amazon FBA delivery coordination is available when the assigned destination, shipment plan and carton or label scope are confirmed."],
-  ["Can you ship to Hawaii, Alaska and Puerto Rico?", "These destinations can be reviewed. The final route, island or remote-area handoff and delivery requirements must be confirmed in the quote."],
-  ["What information is required for a shipping quote?", "Send the product, package count, dimensions, total weight, pickup city, U.S. ZIP code, cargo-ready date and any FBA, residential or oversized requirements."]
+  ["Can you collect cargo from multiple suppliers?", "Yes. Supplier locations, cargo-ready dates, packing lists and release instructions are reviewed before a combined pickup and consolidation plan is confirmed."],
+  ["Can you apply FNSKU and outer-carton labels?", "Yes. Labeling can be arranged using the final files and placement instructions confirmed by the customer. Current platform requirements still need shipment-specific verification."],
+  ["Is receiving the same as a product-quality inspection?", "No. Standard receiving can cover package quantity, outer cartons, labels and visible damage. Product checks, sampling and acceptance criteria must be scoped separately."],
+  ["Can you store and release cargo in stages?", "Temporary storage and planned releases can be coordinated after the cargo, expected duration, inventory record and release instructions are confirmed."],
+  ["Do you handle oversized cargo and U.S. island destinations?", "Yes, subject to review of packed cargo data, routing, equipment, access and final-delivery conditions for the confirmed address."]
 ];
 
 const homeSchema = {
@@ -53,7 +50,9 @@ const homeSchema = {
     {
       "@type": "Organization",
       "@id": "https://gdlogi.us/#organization",
-      name: "Good Logistics Co., Ltd.",
+      name: "GOOD LOGISTICS",
+      legalName: "Good Logistics Co., Ltd.",
+      alternateName: "深圳市谷得供应链有限公司",
       url: "https://gdlogi.us/",
       logo: "https://gdlogi.us/good-shipping-homepage/assets/good-logistics-logo.png"
     },
@@ -61,18 +60,18 @@ const homeSchema = {
       "@type": "WebSite",
       "@id": "https://gdlogi.us/#website",
       url: "https://gdlogi.us/",
-      name: "Good Logistics",
+      name: "GOOD LOGISTICS",
       publisher: { "@id": "https://gdlogi.us/#organization" },
       inLanguage: "en-US"
     },
     {
       "@type": "Service",
-      "@id": "https://gdlogi.us/#china-usa-freight-service",
-      name: "Freight Forwarding from China to the USA",
-      serviceType: "Freight forwarding",
+      "@id": "https://gdlogi.us/#china-operations-and-delivery",
+      name: "China-Side Cargo Operations and China-to-USA Delivery",
+      serviceType: "Cargo handling and international freight coordination",
       provider: { "@id": "https://gdlogi.us/#organization" },
       areaServed: { "@type": "Country", name: "United States" },
-      description: "Supplier pickup, consolidation, sea or air freight, customs coordination and final delivery planning from China to the United States."
+      description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with international freight, customs clearance and final delivery to the United States."
     },
     {
       "@type": "FAQPage",
@@ -91,15 +90,6 @@ export default function Home() {
 
   return (
     <>
-      <link
-        rel="preload"
-        href="/good-shipping-homepage/assets/crane-truck-warehouse-1400.avif"
-        as="image"
-        type="image/avif"
-        imageSrcSet="/good-shipping-homepage/assets/crane-truck-warehouse-800.avif 800w, /good-shipping-homepage/assets/crane-truck-warehouse-1400.avif 1400w"
-        imageSizes="(max-width: 1100px) calc(100vw - 40px), 46vw"
-        fetchPriority="high"
-      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }} />
       <div dangerouslySetInnerHTML={{ __html: body }} />
       <HomeInteractions />

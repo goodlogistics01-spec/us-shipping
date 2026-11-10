@@ -4,17 +4,17 @@ import ShipmentCaseStudy from "./ShipmentCaseStudy";
 import { company } from "../site-data";
 
 const trustItems = [
-  "China-Based Logistics Team",
+  "China-Side Shipment Coordination",
   "FCL & LCL Shipping Options",
-  "Door Delivery Across the USA",
-  "Amazon FBA & Commercial Cargo",
+  "U.S. Delivery Reviewed by ZIP Code",
+  "Commercial & FBA Destination Planning",
   "Oversized Cargo Support"
 ];
 
 const capabilities = [
   {
     number: "01",
-    title: "One Team from China to Final Delivery",
+    title: "Coordinated from Pickup to Delivery",
     copy: "Pickup, export handoff, ocean freight, customs coordination and U.S. delivery are reviewed under one shipment plan."
   },
   {
@@ -111,21 +111,7 @@ export default function OceanFreightPage({ service, schema }) {
       <JsonLd data={schema} />
 
       <section className="ocean-hero">
-        <div className="ocean-hero-media" data-image-type="supplied-operational-photo">
-          <picture>
-            <source
-              srcSet="/good-shipping-homepage/assets/crane-truck-warehouse-800.avif 800w, /good-shipping-homepage/assets/crane-truck-warehouse-1400.avif 1400w"
-              sizes="100vw"
-              type="image/avif"
-            />
-            <img
-              src="/good-shipping-homepage/assets/crane-truck-warehouse.jpg"
-              alt="Crane truck and protected cargo during a warehouse handling operation"
-              width="1706"
-              height="1279"
-              fetchPriority="high"
-            />
-          </picture>
+        <div className="ocean-hero-media ocean-hero-route-visual" data-image-type="brand-route-visual" aria-hidden="true">
           <svg className="ocean-route-line" viewBox="0 0 700 520" aria-hidden="true">
             <path d="M135 115c142 28 100 164 232 188 88 16 75 87 177 104" />
             <circle cx="135" cy="115" r="10" />
@@ -140,12 +126,12 @@ export default function OceanFreightPage({ service, schema }) {
           <h1>Sea Freight from China to the USA</h1>
           <p className="ocean-hero-service-line">FCL, LCL &amp; Door-to-Door Shipping</p>
           <div className="ocean-hero-copy">
-            <p>From factory pickup in China to ocean freight, customs coordination and final delivery across the U.S., our team coordinates the shipment from origin to destination.</p>
+            <p>From factory pickup in China to ocean freight, customs coordination and delivery to the confirmed U.S. address, our team coordinates the agreed shipment scope.</p>
             <p>FCL, LCL, Amazon FBA, oversized cargo and complex shipments can be reviewed under one shipping plan.</p>
           </div>
           <div className="ocean-hero-actions">
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
-            <a className="ocean-button ocean-button-secondary" href="#contact-options">Talk to a Shipping Expert</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form">Request a Shipping &amp; Prep Quote</a>
+            <a className="ocean-button ocean-button-secondary" href="#contact-options">Discuss Your Cargo</a>
           </div>
         </div>
       </section>
@@ -178,27 +164,19 @@ export default function OceanFreightPage({ service, schema }) {
       <section className="ocean-section ocean-real-ops" aria-labelledby="ocean-real-ops-title">
         <div className="marketing-container ocean-ops-layout">
           <div className="ocean-ops-copy">
-            <p className="ocean-section-label">Existing operations photography</p>
-            <h2 id="ocean-real-ops-title">Real Shipments. Real Operations.</h2>
-            <p>These project photos document warehouse staging and crane-truck handling. Cargo, customer and route details are not presented as China–USA proof without supporting records.</p>
-            <p className="ocean-evidence-note">Photography is used as operational context, not as a claim about a specific customer, lane or shipment result.</p>
+            <p className="ocean-section-label">Quote readiness</p>
+            <h2 id="ocean-real-ops-title">Cargo Facts Before Route Promises</h2>
+            <p>A useful sea-freight quotation starts with the product, packed dimensions, weight, supplier location and delivery conditions. Unknown weight or volume can be marked for follow-up.</p>
+            <p className="ocean-evidence-note">The quotation confirms the shipment-specific scope; it does not imply fixed schedules, customs acceptance or an unconditional delivery promise.</p>
           </div>
-          <div className="ocean-ops-gallery">
-            <figure>
-              <picture>
-                <source srcSet="/good-shipping-homepage/assets/crane-truck-warehouse-1400.avif" type="image/avif" />
-                <img src="/good-shipping-homepage/assets/crane-truck-warehouse.jpg" alt="Palletized cargo staged beside crane-truck equipment in a warehouse" width="1706" height="1279" loading="lazy" />
-              </picture>
-              <figcaption>Warehouse cargo staging beside crane-truck equipment</figcaption>
-            </figure>
-            <figure>
-              <picture>
-                <source srcSet="/good-shipping-homepage/assets/crane-truck-loading-1400.avif" type="image/avif" />
-                <img src="/good-shipping-homepage/assets/crane-truck-loading.jpg" alt="Crane-truck cargo handling inside a warehouse" width="1706" height="1279" loading="lazy" />
-              </picture>
-              <figcaption>Crane-truck cargo handling inside a warehouse</figcaption>
-            </figure>
-          </div>
+          <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
+            <li>Product name and packaging</li>
+            <li>Pickup city and cargo-ready date</li>
+            <li>Destination ZIP code and access conditions</li>
+            <li>Known weight, volume or packed dimensions</li>
+            <li>FCL, LCL or recommendation request</li>
+            <li>FBA, residential, liftgate or oversized needs</li>
+          </ul>
         </div>
       </section>
 
@@ -244,7 +222,7 @@ export default function OceanFreightPage({ service, schema }) {
         <div className="marketing-container ocean-delivery-layout">
           <div>
             <p className="ocean-section-label">Destination planning</p>
-            <h2 id="ocean-delivery-title">Delivery Across the United States</h2>
+            <h2 id="ocean-delivery-title">U.S. Final-Delivery Planning</h2>
             <p>The final-delivery scope can be planned after the destination address, access conditions and unloading or appointment requirements are confirmed.</p>
           </div>
           <div className="ocean-delivery-groups">
@@ -266,7 +244,7 @@ export default function OceanFreightPage({ service, schema }) {
             <p className="ocean-section-label">Schedule scope</p>
             <h2 id="ocean-transit-title">Typical Transit Planning</h2>
             <p>Transit planning is route- and shipment-specific. A working schedule is reviewed after the shipment details and current operating conditions are known.</p>
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form">Request a Shipping &amp; Prep Quote</a>
           </div>
           <ul className="ocean-factor-list">
             {planningFactors.map((factor) => <li key={factor}>{factor}</li>)}
@@ -291,6 +269,65 @@ export default function OceanFreightPage({ service, schema }) {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="marketing-section marketing-soft-section" aria-labelledby="ocean-fit-title">
+        <div className="marketing-container marketing-two-column">
+          <div>
+            <p className="marketing-eyebrow">Best Fit</p>
+            <h2 id="ocean-fit-title">When sea freight may fit</h2>
+            <ul className="marketing-check-list">
+              {service.bestFor.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <p className="marketing-eyebrow">Specific Operations</p>
+            <h2>What Good Logistics can coordinate</h2>
+            <ul className="marketing-check-list">
+              {service.operations.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="marketing-section" aria-labelledby="ocean-boundaries-title">
+        <div className="marketing-container marketing-two-column">
+          <div>
+            <p className="marketing-eyebrow">Service Boundaries</p>
+            <h2 id="ocean-boundaries-title">What is confirmed separately</h2>
+            <ul className="marketing-check-list">
+              {service.boundaries.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <p className="marketing-eyebrow">Customer Inputs</p>
+            <h2>What to provide</h2>
+            <ul className="marketing-check-list">
+              {service.customerInputs.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="marketing-section marketing-soft-section" aria-labelledby="ocean-cost-title">
+        <div className="marketing-container marketing-two-column">
+          <div>
+            <p className="marketing-eyebrow">Cost Factors</p>
+            <h2 id="ocean-cost-title">What influences the quotation</h2>
+            <ul className="marketing-check-list">
+              {service.costFactors.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <p className="marketing-eyebrow">How to Start</p>
+            <h2>Move from details to an agreed scope</h2>
+            <ol className="marketing-step-list">
+              {service.startSteps.map((item, index) => (
+                <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
@@ -324,15 +361,16 @@ export default function OceanFreightPage({ service, schema }) {
           <div className="ocean-quote-form-layout">
             <QuoteForm
               productPage
-              source="sea-freight-product-page"
+              source="service-page"
               pageUrl={`${company.website}/services/sea-freight-china-to-usa/`}
               productId="sea-freight-china-to-usa"
-              productName="Sea Freight from China to the USA"
-              submitLabel="Get a Shipping Quote"
+              defaultShippingMethod={service.shippingMethod}
+              defaultServiceNeeds={service.quoteNeeds}
+              submitLabel="Request a Shipping & Prep Quote"
             />
             <aside className="ocean-contact-card" id="contact-options" aria-labelledby="ocean-contact-title">
               <p className="ocean-section-label">Direct contact</p>
-              <h3 id="ocean-contact-title">Talk to a Shipping Expert</h3>
+              <h3 id="ocean-contact-title">Discuss Your Cargo</h3>
               <p>If you already have a packing list or cargo photos, you can send them directly for review.</p>
               <ul>
                 <li><span>Email</span><a href={`mailto:${company.email}`}>{company.email}</a></li>

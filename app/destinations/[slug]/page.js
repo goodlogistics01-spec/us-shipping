@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
       url,
       siteName: company.name,
       type: "website",
-      images: ["/good-shipping-homepage/assets/oversized-delivery-2.jpg"]
+      images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
     }
   };
 }
@@ -66,21 +66,20 @@ export default async function DestinationPage({ params }) {
               <h1>{destination.title}</h1>
               <p className="marketing-lead">{destination.summary}</p>
               <div className="marketing-actions">
-                <a className="marketing-button marketing-button-primary" href="/quote/">Get a Shipping Quote</a>
+                <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Request a Shipping Quote</a>
                 <a className="marketing-button marketing-button-secondary" href="/#destinations">View Destinations</a>
               </div>
             </div>
-            <picture>
-              <source srcSet="/good-shipping-homepage/assets/oversized-delivery-2-1400.avif" type="image/avif" />
-              <img
-                className="marketing-hero-image"
-                src="/good-shipping-homepage/assets/oversized-delivery-2.jpg"
-                alt="Crated cargo prepared for final delivery"
-                width="1536"
-                height="2048"
-                fetchPriority="high"
-              />
-            </picture>
+            <div className="marketing-note-card">
+              <p className="marketing-eyebrow">Route Review</p>
+              <h2>Confirm the address before confirming the scope</h2>
+              <ul className="marketing-check-list">
+                <li>Final ZIP code and delivery type</li>
+                <li>Commercial, residential or project-site access</li>
+                <li>Appointment, liftgate and unloading requirements</li>
+                <li>Island or remote-area carrier handoff</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -104,7 +103,7 @@ export default async function DestinationPage({ params }) {
       <section className="marketing-cta">
         <div className="marketing-container marketing-cta-inner">
           <div><h2>Planning cargo for this destination?</h2><p>Send the final ZIP code, cargo details and delivery conditions for review.</p></div>
-          <a className="marketing-button marketing-button-primary" href="/quote/">Get a Shipping Quote</a>
+          <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Request a Shipping Quote</a>
         </div>
       </section>
     </MarketingPage>

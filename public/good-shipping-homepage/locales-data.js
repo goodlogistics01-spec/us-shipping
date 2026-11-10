@@ -3,7 +3,7 @@ window.GS_I18N = {
     name: "English",
     meta: {
       title: "China to USA Freight Forwarder | Good Logistics",
-      description: "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States."
+      description: "Freight forwarding from China to the USA by sea, air and scope-defined DDP, with pickup, consolidation and address-specific final-delivery planning."
     },
     text: {},
     attr: {}
@@ -11,7 +11,7 @@ window.GS_I18N = {
   es: {
     name: "Español",
     meta: {
-      title: "Good Logistics Co., Ltd. | Transitario de China a EE. UU.",
+      title: "Good Logistics | Transitario de China a EE. UU.",
       description: "Transporte internacional de China a EE. UU.: puerta a puerta, aéreo, marítimo, DDP, Amazon FBA y carga sobredimensionada."
     },
     text: {
@@ -82,7 +82,7 @@ window.GS_I18N = {
       "Export & International Shipping": "Exportación y transporte internacional",
       "Customs & Final Delivery": "Aduana y entrega final",
       "Built for Importers, E-commerce Sellers and Project Cargo": "Para importadores, e-commerce y carga de proyecto",
-      "Good Logistics Co., Ltd. supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics Co., Ltd. atiende carga comercial estándar y envíos complejos que requieren más planificación que una paquetería ordinaria.",
+      "Good Logistics supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics atiende carga comercial estándar y envíos complejos que requieren más planificación que una paquetería ordinaria.",
       "Amazon FBA Sellers": "Vendedores Amazon FBA",
       "Machinery & Equipment": "Maquinaria y equipos",
       "Furniture & Home Goods": "Muebles y artículos para el hogar",
@@ -96,8 +96,8 @@ window.GS_I18N = {
       "What this office coordinates": "Qué coordina esta oficina",
       "For visitors and shipment discussions": "Para visitas y consultas de envío",
       "Need a Reliable China to USA Freight Forwarder?": "¿Necesita un transitario confiable de China a EE. UU.?",
-      "Send us your cargo details and destination. Good Logistics Co., Ltd. will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envíenos los detalles de su carga y destino. Good Logistics Co., Ltd. le ayudará a comparar métodos de envío, estimar factores de costo y elegir el plan logístico adecuado.",
-      "About Good Logistics Co., Ltd.": "Sobre Good Logistics Co., Ltd.",
+      "Send us your cargo details and destination. Good Logistics will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envíenos los detalles de su carga y destino. Good Logistics le ayudará a comparar métodos de envío, estimar factores de costo y elegir el plan logístico adecuado.",
+      "About Good Logistics": "Sobre Good Logistics",
       "All rights reserved.": "Todos los derechos reservados.",
       "B2B Inquiry Form": "Formulario de consulta B2B",
       "Required fields are marked clearly. You will see validation tips before submission.": "Los campos obligatorios están marcados. Verá consejos de validación antes de enviar.",
@@ -135,7 +135,7 @@ window.GS_I18N = {
   pt: {
     name: "Português",
     meta: {
-      title: "Good Logistics Co., Ltd. | Agente de cargas da China para os EUA",
+      title: "Good Logistics | Agente de cargas da China para os EUA",
       description: "Frete da China para os EUA: porta a porta, aéreo, marítimo, DDP, Amazon FBA e cargas superdimensionadas."
     },
     text: {},
@@ -144,7 +144,7 @@ window.GS_I18N = {
   fr: {
     name: "Français",
     meta: {
-      title: "Good Logistics Co., Ltd. | Transitaire Chine vers États-Unis",
+      title: "Good Logistics | Transitaire Chine vers États-Unis",
       description: "Transport Chine vers États-Unis : porte-à-porte, aérien, maritime, DDP, Amazon FBA et cargaisons hors gabarit."
     },
     text: {},
@@ -153,7 +153,7 @@ window.GS_I18N = {
   de: {
     name: "Deutsch",
     meta: {
-      title: "Good Logistics Co., Ltd. | Spedition China in die USA",
+      title: "Good Logistics | Spedition China in die USA",
       description: "Fracht von China in die USA: Door-to-Door, Luftfracht, Seefracht, DDP, Amazon FBA und übergroße Fracht."
     },
     text: {},
@@ -162,7 +162,7 @@ window.GS_I18N = {
   ru: {
     name: "Русский",
     meta: {
-      title: "Good Logistics Co., Ltd. | Экспедитор из Китая в США",
+      title: "Good Logistics | Экспедитор из Китая в США",
       description: "Доставка из Китая в США: door-to-door, авиа, море, DDP, Amazon FBA и негабаритные грузы."
     },
     text: {},
@@ -482,8 +482,8 @@ Object.assign(window.GS_I18N.en, {
       description: "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States."
     },
     inquiry: {
-      title: "Get a Freight Quote | Good Logistics Co., Ltd.",
-      description: "Submit your China to USA freight inquiry to Good Logistics Co., Ltd. Air freight, sea freight, DDP, Amazon FBA and oversized cargo logistics."
+      title: "Get a Freight Quote | Good Logistics",
+      description: "Submit your China to USA freight inquiry to Good Logistics. Compare air freight, sea freight, scope-defined DDP and oversized cargo planning."
     }
   }
 });
@@ -492,8 +492,8 @@ Object.assign(window.GS_I18N.es, {
   seo: {
     home: window.GS_I18N.es.meta,
     inquiry: {
-      title: "Solicite una cotización de carga | Good Logistics Co., Ltd.",
-      description: "Envíe su consulta de transporte de China a EE. UU. a Good Logistics Co., Ltd.: aéreo, marítimo, DDP, Amazon FBA y carga sobredimensionada."
+      title: "Solicite una cotización de carga | Good Logistics",
+      description: "Solicite a Good Logistics una revisión de transporte China-EE. UU. por vía aérea, marítima o DDP con alcance definido, incluida la planificación de carga sobredimensionada."
     }
   }
 });
@@ -502,8 +502,8 @@ Object.assign(window.GS_I18N.pt, {
   seo: {
     home: window.GS_I18N.pt.meta,
     inquiry: {
-      title: "Solicite uma cotação de frete | Good Logistics Co., Ltd.",
-      description: "Envie sua consulta de frete da China para os EUA à Good Logistics Co., Ltd.: aéreo, marítimo, DDP, Amazon FBA e cargas superdimensionadas."
+      title: "Solicite uma cotação de frete | Good Logistics",
+      description: "Solicite à Good Logistics uma análise de frete China-EUA por via aérea, marítima ou DDP com escopo definido, incluindo o planejamento de carga superdimensionada."
     }
   }
 });
@@ -512,8 +512,8 @@ Object.assign(window.GS_I18N.fr, {
   seo: {
     home: window.GS_I18N.fr.meta,
     inquiry: {
-      title: "Demander un devis de fret | Good Logistics Co., Ltd.",
-      description: "Envoyez votre demande de transport Chine-États-Unis à Good Logistics Co., Ltd. : aérien, maritime, DDP, Amazon FBA et cargaisons hors gabarit."
+      title: "Demander un devis de fret | Good Logistics",
+      description: "Demandez à Good Logistics une étude de transport Chine-États-Unis par air, mer ou DDP au périmètre défini, y compris la planification des cargaisons hors gabarit."
     }
   }
 });
@@ -522,8 +522,8 @@ Object.assign(window.GS_I18N.de, {
   seo: {
     home: window.GS_I18N.de.meta,
     inquiry: {
-      title: "Frachtangebot anfragen | Good Logistics Co., Ltd.",
-      description: "Senden Sie Ihre China-USA-Frachtanfrage an Good Logistics Co., Ltd.: Luftfracht, Seefracht, DDP, Amazon FBA und übergroße Fracht."
+      title: "Frachtangebot anfragen | Good Logistics",
+      description: "Fordern Sie bei Good Logistics eine Prüfung für China-USA-Luftfracht, Seefracht oder klar abgegrenztes DDP einschließlich der Planung übergroßer Fracht an."
     }
   }
 });
@@ -532,8 +532,8 @@ Object.assign(window.GS_I18N.ru, {
   seo: {
     home: window.GS_I18N.ru.meta,
     inquiry: {
-      title: "Запросить расчет фрахта | Good Logistics Co., Ltd.",
-      description: "Отправьте запрос на доставку из Китая в США в Good Logistics Co., Ltd.: авиа, море, DDP, Amazon FBA и негабаритные грузы."
+      title: "Запросить расчет фрахта | Good Logistics",
+      description: "Запросите у Good Logistics расчет перевозки Китай-США авиа, морем или DDP с определенным объемом услуг, включая планирование негабаритных грузов."
     }
   }
 });
@@ -608,7 +608,7 @@ Object.assign(window.GS_I18N.pt.text, {
   "Cargo can be collected from one or multiple suppliers and consolidated before export.": "A carga pode ser coletada de um ou vários fornecedores e consolidada antes da exportação.",
   "We coordinate export documents, loading, booking and international transport.": "Coordenamos documentos de exportação, carregamento, reserva e transporte internacional.",
   "Your cargo is delivered to Amazon FBA, warehouse, business address, distributor or project site.": "Sua carga é entregue em Amazon FBA, armazém, endereço comercial, distribuidor ou local de projeto.",
-  "Good Logistics Co., Ltd. supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics Co., Ltd. atende cargas comerciais padrão e envios complexos que exigem mais planejamento do que uma entrega comum de encomendas.",
+  "Good Logistics supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics atende cargas comerciais padrão e envios complexos que exigem mais planejamento do que uma entrega comum de encomendas.",
   "Inventory moving from Chinese suppliers to Amazon warehouses in the United States.": "Estoque saindo de fornecedores chineses para armazéns Amazon nos Estados Unidos.",
   "Freight planning for heavy machines, spare parts and industrial equipment.": "Planejamento de frete para máquinas pesadas, peças de reposição e equipamentos industriais.",
   "Sea freight, consolidation and door delivery for furniture importers and distributors.": "Frete marítimo, consolidação e entrega porta a porta para importadores e distribuidores de móveis.",
@@ -634,9 +634,9 @@ Object.assign(window.GS_I18N.pt.text, {
   "Our China-side coordination team supports supplier pickup, consolidation, cargo preparation and export handling from Shenzhen.": "Nossa equipe de coordenação na China apoia coleta com fornecedores, consolidação, preparação de carga e exportação a partir de Shenzhen.",
   "Map image powered by OpenStreetMap data. Marker is positioned around Fuhai Subdistrict, Bao'an District, Shenzhen for office area reference.": "Mapa baseado em dados OpenStreetMap. O marcador está posicionado na região de Fuhai, Bao'an, Shenzhen, como referência da área do escritório.",
   "Open in OpenStreetMap": "Abrir no OpenStreetMap",
-  "Good Logistics Co., Ltd. Shenzhen Office": "Escritório da Good Logistics Co., Ltd. em Shenzhen",
+  "Good Logistics Shenzhen Office": "Escritório da Good Logistics em Shenzhen",
   "Fuhai Subdistrict, Bao'an District, Shenzhen": "Subdistrito de Fuhai, Distrito de Bao'an, Shenzhen",
-  "Good Logistics Co., Ltd. China Team": "Equipe China da Good Logistics Co., Ltd.",
+  "Good Logistics China Team": "Equipe China da Good Logistics",
   "Pickup, consolidation and export coordination": "Coleta, consolidação e coordenação de exportação",
   "What this office coordinates": "O que este escritório coordena",
   "Nationwide supplier pickup, multi-supplier consolidation, cargo checking, packaging review, export documents and China-side shipment follow-up.": "Coleta de fornecedores em toda a China, consolidação de múltiplos fornecedores, conferência de carga, revisão de embalagem, documentos de exportação e acompanhamento do envio na China.",
@@ -646,9 +646,9 @@ Object.assign(window.GS_I18N.pt.text, {
   "USA Delivery": "Entrega nos EUA",
   "For visitors and shipment discussions": "Para visitas e conversas sobre embarques",
   "Please contact our team before visiting or sending cargo documents, so we can assign the right logistics coordinator for your shipment.": "Entre em contato antes de visitar ou enviar documentos da carga, para que possamos designar o coordenador logístico adequado.",
-  "Send us your cargo details and destination. Good Logistics Co., Ltd. will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envie os detalhes da carga e o destino. A Good Logistics Co., Ltd. ajuda a comparar modais, estimar fatores de custo e escolher o plano logístico adequado.",
-  "Good Logistics Co., Ltd. provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics Co., Ltd. oferece agenciamento de cargas China-EUA, entrega porta a porta e soluções logísticas B2B.",
-  "About Good Logistics Co., Ltd.": "Sobre a Good Logistics Co., Ltd.",
+  "Send us your cargo details and destination. Good Logistics will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envie os detalhes da carga e o destino. A Good Logistics ajuda a comparar modais, estimar fatores de custo e escolher o plano logístico adequado.",
+  "Good Logistics provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics oferece agenciamento de cargas China-EUA, entrega porta a porta e soluções logísticas B2B.",
+  "About Good Logistics": "Sobre a Good Logistics",
   "Company": "Empresa",
   "Shipping from China to USA": "Envio da China para os EUA",
   "Freight Forwarding from China to USA": "Agenciamento de cargas da China para os EUA",
@@ -702,7 +702,7 @@ Object.assign(window.GS_I18N.fr.text, {
   "Cargo can be collected from one or multiple suppliers and consolidated before export.": "Les marchandises peuvent être collectées auprès d’un ou plusieurs fournisseurs puis consolidées avant export.",
   "We coordinate export documents, loading, booking and international transport.": "Nous coordonnons documents export, chargement, réservation et transport international.",
   "Your cargo is delivered to Amazon FBA, warehouse, business address, distributor or project site.": "Votre cargaison est livrée à Amazon FBA, entrepôt, adresse commerciale, distributeur ou site de projet.",
-  "Good Logistics Co., Ltd. supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics Co., Ltd. accompagne les cargaisons commerciales standard et les expéditions complexes nécessitant plus de planification qu’un simple colis.",
+  "Good Logistics supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics accompagne les cargaisons commerciales standard et les expéditions complexes nécessitant plus de planification qu’un simple colis.",
   "Inventory moving from Chinese suppliers to Amazon warehouses in the United States.": "Stocks expédiés de fournisseurs chinois vers des entrepôts Amazon aux États-Unis.",
   "Freight planning for heavy machines, spare parts and industrial equipment.": "Planification du transport pour machines lourdes, pièces détachées et équipements industriels.",
   "Sea freight, consolidation and door delivery for furniture importers and distributors.": "Fret maritime, consolidation et livraison porte-à-porte pour importateurs et distributeurs de mobilier.",
@@ -728,9 +728,9 @@ Object.assign(window.GS_I18N.fr.text, {
   "Our China-side coordination team supports supplier pickup, consolidation, cargo preparation and export handling from Shenzhen.": "Notre équipe de coordination en Chine prend en charge l’enlèvement fournisseur, la consolidation, la préparation de cargaison et l’export depuis Shenzhen.",
   "Map image powered by OpenStreetMap data. Marker is positioned around Fuhai Subdistrict, Bao'an District, Shenzhen for office area reference.": "Carte basée sur les données OpenStreetMap. Le repère est placé dans la zone de Fuhai, Bao'an, Shenzhen, à titre indicatif.",
   "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
-  "Good Logistics Co., Ltd. Shenzhen Office": "Bureau de Good Logistics Co., Ltd. à Shenzhen",
+  "Good Logistics Shenzhen Office": "Bureau de Good Logistics à Shenzhen",
   "Fuhai Subdistrict, Bao'an District, Shenzhen": "Sous-district de Fuhai, district de Bao'an, Shenzhen",
-  "Good Logistics Co., Ltd. China Team": "Équipe Chine de Good Logistics Co., Ltd.",
+  "Good Logistics China Team": "Équipe Chine de Good Logistics",
   "Pickup, consolidation and export coordination": "Enlèvement, consolidation et coordination export",
   "What this office coordinates": "Ce que ce bureau coordonne",
   "Nationwide supplier pickup, multi-supplier consolidation, cargo checking, packaging review, export documents and China-side shipment follow-up.": "Enlèvement fournisseurs dans toute la Chine, consolidation multi-fournisseurs, contrôle de cargaison, revue d’emballage, documents export et suivi côté Chine.",
@@ -740,9 +740,9 @@ Object.assign(window.GS_I18N.fr.text, {
   "USA Delivery": "Livraison États-Unis",
   "For visitors and shipment discussions": "Pour les visites et échanges sur expédition",
   "Please contact our team before visiting or sending cargo documents, so we can assign the right logistics coordinator for your shipment.": "Contactez notre équipe avant toute visite ou envoi de documents afin d’affecter le bon coordinateur logistique à votre expédition.",
-  "Send us your cargo details and destination. Good Logistics Co., Ltd. will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envoyez-nous les détails de votre cargaison et la destination. Good Logistics Co., Ltd. vous aidera à comparer les modes de transport, estimer les facteurs de coût et choisir le bon plan logistique.",
-  "Good Logistics Co., Ltd. provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics Co., Ltd. propose du transit Chine-États-Unis, du porte-à-porte et des solutions logistiques B2B.",
-  "About Good Logistics Co., Ltd.": "À propos de Good Logistics Co., Ltd.",
+  "Send us your cargo details and destination. Good Logistics will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Envoyez-nous les détails de votre cargaison et la destination. Good Logistics vous aidera à comparer les modes de transport, estimer les facteurs de coût et choisir le bon plan logistique.",
+  "Good Logistics provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics propose du transit Chine-États-Unis, du porte-à-porte et des solutions logistiques B2B.",
+  "About Good Logistics": "À propos de Good Logistics",
   "Company": "Société",
   "Shipping from China to USA": "Transport de Chine vers les États-Unis",
   "Freight Forwarding from China to USA": "Transit de Chine vers les États-Unis",
@@ -796,7 +796,7 @@ Object.assign(window.GS_I18N.de.text, {
   "Cargo can be collected from one or multiple suppliers and consolidated before export.": "Fracht kann bei einem oder mehreren Lieferanten abgeholt und vor dem Export konsolidiert werden.",
   "We coordinate export documents, loading, booking and international transport.": "Wir koordinieren Exportdokumente, Verladung, Buchung und internationalen Transport.",
   "Your cargo is delivered to Amazon FBA, warehouse, business address, distributor or project site.": "Ihre Fracht wird an Amazon FBA, Lager, Geschäftsadresse, Distributor oder Projektstandort geliefert.",
-  "Good Logistics Co., Ltd. supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics Co., Ltd. unterstützt Standardhandelsfracht und komplexe Sendungen, die mehr Planung als gewöhnliche Paketzustellung erfordern.",
+  "Good Logistics supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics unterstützt Standardhandelsfracht und komplexe Sendungen, die mehr Planung als gewöhnliche Paketzustellung erfordern.",
   "Inventory moving from Chinese suppliers to Amazon warehouses in the United States.": "Warenbestand von chinesischen Lieferanten zu Amazon-Lagern in den USA.",
   "Freight planning for heavy machines, spare parts and industrial equipment.": "Frachtplanung für schwere Maschinen, Ersatzteile und Industrieausrüstung.",
   "Sea freight, consolidation and door delivery for furniture importers and distributors.": "Seefracht, Konsolidierung und Haustürzustellung für Möbelimporteure und Distributoren.",
@@ -822,9 +822,9 @@ Object.assign(window.GS_I18N.de.text, {
   "Our China-side coordination team supports supplier pickup, consolidation, cargo preparation and export handling from Shenzhen.": "Unser Koordinationsteam in China unterstützt Lieferantenabholung, Konsolidierung, Frachtvorbereitung und Exportabwicklung ab Shenzhen.",
   "Map image powered by OpenStreetMap data. Marker is positioned around Fuhai Subdistrict, Bao'an District, Shenzhen for office area reference.": "Kartenbild auf Basis von OpenStreetMap-Daten. Die Markierung liegt ungefähr im Fuhai Subdistrict, Bao'an District, Shenzhen, als Orientierung für den Bürobereich.",
   "Open in OpenStreetMap": "In OpenStreetMap öffnen",
-  "Good Logistics Co., Ltd. Shenzhen Office": "Good Logistics Co., Ltd. Büro Shenzhen",
+  "Good Logistics Shenzhen Office": "Good Logistics Büro Shenzhen",
   "Fuhai Subdistrict, Bao'an District, Shenzhen": "Fuhai Subdistrict, Bao'an District, Shenzhen",
-  "Good Logistics Co., Ltd. China Team": "Good Logistics Co., Ltd. China-Team",
+  "Good Logistics China Team": "Good Logistics China-Team",
   "Pickup, consolidation and export coordination": "Abholung, Konsolidierung und Exportkoordination",
   "What this office coordinates": "Was dieses Büro koordiniert",
   "Nationwide supplier pickup, multi-supplier consolidation, cargo checking, packaging review, export documents and China-side shipment follow-up.": "Lieferantenabholung in ganz China, Konsolidierung mehrerer Lieferanten, Frachtprüfung, Verpackungsprüfung, Exportdokumente und Sendungsverfolgung auf China-Seite.",
@@ -834,9 +834,9 @@ Object.assign(window.GS_I18N.de.text, {
   "USA Delivery": "Zustellung USA",
   "For visitors and shipment discussions": "Für Besuche und Versandgespräche",
   "Please contact our team before visiting or sending cargo documents, so we can assign the right logistics coordinator for your shipment.": "Kontaktieren Sie unser Team vor einem Besuch oder dem Versand von Frachtdokumenten, damit wir den passenden Logistikkoordinator zuweisen können.",
-  "Send us your cargo details and destination. Good Logistics Co., Ltd. will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Senden Sie uns Frachtdaten und Zielort. Good Logistics Co., Ltd. hilft beim Vergleich von Versandarten, der Einschätzung von Kostenfaktoren und der Auswahl des passenden Logistikplans.",
-  "Good Logistics Co., Ltd. provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics Co., Ltd. bietet China-USA-Spedition, Door-to-Door-Versand und B2B-Logistiklösungen.",
-  "About Good Logistics Co., Ltd.": "Über Good Logistics Co., Ltd.",
+  "Send us your cargo details and destination. Good Logistics will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Senden Sie uns Frachtdaten und Zielort. Good Logistics hilft beim Vergleich von Versandarten, der Einschätzung von Kostenfaktoren und der Auswahl des passenden Logistikplans.",
+  "Good Logistics provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics bietet China-USA-Spedition, Door-to-Door-Versand und B2B-Logistiklösungen.",
+  "About Good Logistics": "Über Good Logistics",
   "Company": "Unternehmen",
   "Shipping from China to USA": "Versand von China in die USA",
   "Freight Forwarding from China to USA": "Spedition von China in die USA",
@@ -890,7 +890,7 @@ Object.assign(window.GS_I18N.ru.text, {
   "Cargo can be collected from one or multiple suppliers and consolidated before export.": "Груз можно забрать у одного или нескольких поставщиков и консолидировать перед экспортом.",
   "We coordinate export documents, loading, booking and international transport.": "Мы координируем экспортные документы, погрузку, бронирование и международную перевозку.",
   "Your cargo is delivered to Amazon FBA, warehouse, business address, distributor or project site.": "Груз доставляется на Amazon FBA, склад, коммерческий адрес, дистрибьютору или на проектную площадку.",
-  "Good Logistics Co., Ltd. supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics Co., Ltd. работает со стандартными коммерческими грузами и сложными отправками, требующими большего планирования, чем обычная посылка.",
+  "Good Logistics supports standard commercial cargo and complex shipments that require more planning than ordinary parcel delivery.": "Good Logistics работает со стандартными коммерческими грузами и сложными отправками, требующими большего планирования, чем обычная посылка.",
   "Inventory moving from Chinese suppliers to Amazon warehouses in the United States.": "Товары от китайских поставщиков на склады Amazon в США.",
   "Freight planning for heavy machines, spare parts and industrial equipment.": "Планирование перевозок тяжелых машин, запчастей и промышленного оборудования.",
   "Sea freight, consolidation and door delivery for furniture importers and distributors.": "Морская перевозка, консолидация и доставка до двери для импортеров и дистрибьюторов мебели.",
@@ -916,9 +916,9 @@ Object.assign(window.GS_I18N.ru.text, {
   "Our China-side coordination team supports supplier pickup, consolidation, cargo preparation and export handling from Shenzhen.": "Наша команда координации в Китае поддерживает забор у поставщиков, консолидацию, подготовку груза и экспортные операции из Шэньчжэня.",
   "Map image powered by OpenStreetMap data. Marker is positioned around Fuhai Subdistrict, Bao'an District, Shenzhen for office area reference.": "Изображение карты основано на данных OpenStreetMap. Маркер расположен в районе Fuhai, Bao'an, Shenzhen как ориентир офисной зоны.",
   "Open in OpenStreetMap": "Открыть в OpenStreetMap",
-  "Good Logistics Co., Ltd. Shenzhen Office": "Офис Good Logistics Co., Ltd. в Шэньчжэне",
+  "Good Logistics Shenzhen Office": "Офис Good Logistics в Шэньчжэне",
   "Fuhai Subdistrict, Bao'an District, Shenzhen": "Fuhai Subdistrict, Bao'an District, Shenzhen",
-  "Good Logistics Co., Ltd. China Team": "Команда Good Logistics Co., Ltd. в Китае",
+  "Good Logistics China Team": "Команда Good Logistics в Китае",
   "Pickup, consolidation and export coordination": "Забор, консолидация и экспортная координация",
   "What this office coordinates": "Что координирует этот офис",
   "Nationwide supplier pickup, multi-supplier consolidation, cargo checking, packaging review, export documents and China-side shipment follow-up.": "Забор у поставщиков по всему Китаю, консолидация от разных поставщиков, проверка груза, оценка упаковки, экспортные документы и сопровождение отправки в Китае.",
@@ -928,9 +928,9 @@ Object.assign(window.GS_I18N.ru.text, {
   "USA Delivery": "Доставка в США",
   "For visitors and shipment discussions": "Для визитов и обсуждения отправок",
   "Please contact our team before visiting or sending cargo documents, so we can assign the right logistics coordinator for your shipment.": "Пожалуйста, свяжитесь с нами перед визитом или отправкой документов, чтобы мы назначили подходящего координатора по вашей отправке.",
-  "Send us your cargo details and destination. Good Logistics Co., Ltd. will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Отправьте нам данные груза и пункт назначения. Good Logistics Co., Ltd. поможет сравнить способы доставки, оценить факторы стоимости и выбрать логистический план.",
-  "Good Logistics Co., Ltd. provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics Co., Ltd. предоставляет экспедирование Китай-США, door-to-door доставку и B2B логистические решения.",
-  "About Good Logistics Co., Ltd.": "О Good Logistics Co., Ltd.",
+  "Send us your cargo details and destination. Good Logistics will help you compare shipping methods, estimate cost factors and choose the right logistics plan.": "Отправьте нам данные груза и пункт назначения. Good Logistics поможет сравнить способы доставки, оценить факторы стоимости и выбрать логистический план.",
+  "Good Logistics provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics предоставляет экспедирование Китай-США, door-to-door доставку и B2B логистические решения.",
+  "About Good Logistics": "О Good Logistics",
   "Company": "Компания",
   "Shipping from China to USA": "Доставка из Китая в США",
   "Freight Forwarding from China to USA": "Экспедирование из Китая в США",
@@ -959,8 +959,8 @@ Object.assign(window.GS_I18N.ru.text, {
 });
 
 Object.assign(window.GS_I18N.es.attr, {
-  "Back to Good Logistics Co., Ltd. homepage": "Volver a la página principal de Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. home": "Inicio de Good Logistics Co., Ltd.",
+  "Back to Good Logistics homepage": "Volver a la página principal de Good Logistics",
+  "Good Logistics home": "Inicio de Good Logistics",
   "Primary navigation": "Navegación principal",
   "Key service proof points": "Puntos clave del servicio",
   "Crane truck loading oversized cargo in warehouse": "Camión grúa cargando mercancía sobredimensionada en almacén",
@@ -973,7 +973,7 @@ Object.assign(window.GS_I18N.es.attr, {
   "Oversized cargo delivery case": "Caso de entrega de carga sobredimensionada",
   "Protected oversized cargo": "Carga sobredimensionada protegida",
   "Crane truck and packaged cargo": "Camión grúa y carga embalada",
-  "Open Good Logistics Co., Ltd. Shenzhen office area in OpenStreetMap": "Abrir el área de la oficina de Good Logistics Co., Ltd. en Shenzhen en OpenStreetMap",
+  "Open Good Logistics Shenzhen office area in OpenStreetMap": "Abrir el área de la oficina de Good Logistics en Shenzhen en OpenStreetMap",
   "Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline...": "Nombre de la carga, ciudad de recogida, destino, peso, volumen, cajas, pallets, Incoterms, fecha límite de entrega..."
 });
 
@@ -989,8 +989,8 @@ Object.assign(window.GS_I18N.pt.attr, {
   "United States / Mexico / UK": "Estados Unidos / México / Reino Unido",
   "Air freight, sea freight, DDP, FBA, oversized cargo": "Aéreo, marítimo, DDP, FBA, carga superdimensionada",
   "Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline...": "Nome da carga, cidade de coleta, destino, peso, volume, caixas, pallets, Incoterms, prazo de entrega...",
-  "Back to Good Logistics Co., Ltd. homepage": "Voltar à página inicial da Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. home": "Início da Good Logistics Co., Ltd.",
+  "Back to Good Logistics homepage": "Voltar à página inicial da Good Logistics",
+  "Good Logistics home": "Início da Good Logistics",
   "Primary navigation": "Navegação principal",
   "Key service proof points": "Pontos-chave do serviço",
   "Crane truck loading oversized cargo in warehouse": "Caminhão munck carregando carga superdimensionada no armazém",
@@ -1003,7 +1003,7 @@ Object.assign(window.GS_I18N.pt.attr, {
   "Oversized cargo delivery case": "Caso de entrega de carga superdimensionada",
   "Protected oversized cargo": "Carga superdimensionada protegida",
   "Crane truck and packaged cargo": "Caminhão munck e carga embalada",
-  "Open Good Logistics Co., Ltd. Shenzhen office area in OpenStreetMap": "Abrir a área do escritório da Good Logistics Co., Ltd. em Shenzhen no OpenStreetMap"
+  "Open Good Logistics Shenzhen office area in OpenStreetMap": "Abrir a área do escritório da Good Logistics em Shenzhen no OpenStreetMap"
 });
 
 Object.assign(window.GS_I18N.fr.attr, {
@@ -1018,8 +1018,8 @@ Object.assign(window.GS_I18N.fr.attr, {
   "United States / Mexico / UK": "États-Unis / Mexique / Royaume-Uni",
   "Air freight, sea freight, DDP, FBA, oversized cargo": "Aérien, maritime, DDP, FBA, hors gabarit",
   "Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline...": "Nom de la cargaison, ville d’enlèvement, destination, poids, volume, cartons, palettes, Incoterms, délai de livraison...",
-  "Back to Good Logistics Co., Ltd. homepage": "Retour à l’accueil de Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. home": "Accueil Good Logistics Co., Ltd.",
+  "Back to Good Logistics homepage": "Retour à l’accueil de Good Logistics",
+  "Good Logistics home": "Accueil Good Logistics",
   "Primary navigation": "Navigation principale",
   "Key service proof points": "Points de preuve clés",
   "Crane truck loading oversized cargo in warehouse": "Camion grue chargeant une cargaison hors gabarit en entrepôt",
@@ -1032,7 +1032,7 @@ Object.assign(window.GS_I18N.fr.attr, {
   "Oversized cargo delivery case": "Cas de livraison hors gabarit",
   "Protected oversized cargo": "Cargaison hors gabarit protégée",
   "Crane truck and packaged cargo": "Camion grue et cargaison emballée",
-  "Open Good Logistics Co., Ltd. Shenzhen office area in OpenStreetMap": "Ouvrir la zone du bureau de Good Logistics Co., Ltd. à Shenzhen dans OpenStreetMap"
+  "Open Good Logistics Shenzhen office area in OpenStreetMap": "Ouvrir la zone du bureau de Good Logistics à Shenzhen dans OpenStreetMap"
 });
 
 Object.assign(window.GS_I18N.de.attr, {
@@ -1047,8 +1047,8 @@ Object.assign(window.GS_I18N.de.attr, {
   "United States / Mexico / UK": "USA / Mexiko / UK",
   "Air freight, sea freight, DDP, FBA, oversized cargo": "Luftfracht, Seefracht, DDP, FBA, übergroße Fracht",
   "Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline...": "Frachtname, Abholstadt, Zielort, Gewicht, Volumen, Kartons, Paletten, Incoterms, Lieferfrist...",
-  "Back to Good Logistics Co., Ltd. homepage": "Zur Startseite von Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. home": "Good Logistics Co., Ltd. Startseite",
+  "Back to Good Logistics homepage": "Zur Startseite von Good Logistics",
+  "Good Logistics home": "Good Logistics Startseite",
   "Primary navigation": "Hauptnavigation",
   "Key service proof points": "Wichtige Leistungsnachweise",
   "Crane truck loading oversized cargo in warehouse": "Kran-Lkw lädt übergroße Fracht im Lager",
@@ -1061,7 +1061,7 @@ Object.assign(window.GS_I18N.de.attr, {
   "Oversized cargo delivery case": "Lieferfall für übergroße Fracht",
   "Protected oversized cargo": "Geschützte übergroße Fracht",
   "Crane truck and packaged cargo": "Kran-Lkw und verpackte Fracht",
-  "Open Good Logistics Co., Ltd. Shenzhen office area in OpenStreetMap": "Bürobereich von Good Logistics Co., Ltd. in Shenzhen in OpenStreetMap öffnen"
+  "Open Good Logistics Shenzhen office area in OpenStreetMap": "Bürobereich von Good Logistics in Shenzhen in OpenStreetMap öffnen"
 });
 
 Object.assign(window.GS_I18N.ru.attr, {
@@ -1076,8 +1076,8 @@ Object.assign(window.GS_I18N.ru.attr, {
   "United States / Mexico / UK": "США / Мексика / Великобритания",
   "Air freight, sea freight, DDP, FBA, oversized cargo": "Авиа, море, DDP, FBA, негабаритный груз",
   "Cargo name, pickup city, destination, weight, volume, cartons, pallets, Incoterms, delivery deadline...": "Название груза, город забора, пункт назначения, вес, объем, коробки, паллеты, Incoterms, срок доставки...",
-  "Back to Good Logistics Co., Ltd. homepage": "Вернуться на главную Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. home": "Главная Good Logistics Co., Ltd.",
+  "Back to Good Logistics homepage": "Вернуться на главную Good Logistics",
+  "Good Logistics home": "Главная Good Logistics",
   "Primary navigation": "Основная навигация",
   "Key service proof points": "Ключевые подтверждения сервиса",
   "Crane truck loading oversized cargo in warehouse": "Кран-манипулятор грузит негабаритный груз на складе",
@@ -1090,7 +1090,7 @@ Object.assign(window.GS_I18N.ru.attr, {
   "Oversized cargo delivery case": "Кейс доставки негабаритного груза",
   "Protected oversized cargo": "Защищенный негабаритный груз",
   "Crane truck and packaged cargo": "Кран-манипулятор и упакованный груз",
-  "Open Good Logistics Co., Ltd. Shenzhen office area in OpenStreetMap": "Открыть район офиса Good Logistics Co., Ltd. в Шэньчжэне в OpenStreetMap"
+  "Open Good Logistics Shenzhen office area in OpenStreetMap": "Открыть район офиса Good Logistics в Шэньчжэне в OpenStreetMap"
 });
 
 Object.assign(window.GS_I18N.es.text, {
@@ -1102,9 +1102,9 @@ Object.assign(window.GS_I18N.es.text, {
   "Freight Forwarding from China to USA": "Transporte internacional de China a EE. UU.",
   "Shipping from China to USA": "Envíos de China a EE. UU.",
   "Shenzhen Office": "Oficina en Shenzhen",
-  "Good Logistics Co., Ltd. China Team": "Equipo China de Good Logistics Co., Ltd.",
-  "Good Logistics Co., Ltd. Shenzhen Office": "Oficina de Good Logistics Co., Ltd. en Shenzhen",
-  "Good Logistics Co., Ltd. provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics Co., Ltd. ofrece transporte de China a EE. UU., envíos puerta a puerta y soluciones logísticas B2B.",
+  "Good Logistics China Team": "Equipo China de Good Logistics",
+  "Good Logistics Shenzhen Office": "Oficina de Good Logistics en Shenzhen",
+  "Good Logistics provides China to USA freight forwarding, door-to-door shipping and B2B logistics solutions.": "Good Logistics ofrece transporte de China a EE. UU., envíos puerta a puerta y soluciones logísticas B2B.",
   "Fuhai Subdistrict, Bao'an District, Shenzhen": "Subdistrito Fuhai, distrito Bao'an, Shenzhen",
   "Map image powered by OpenStreetMap data. Marker is positioned around Fuhai Subdistrict, Bao'an District, Shenzhen for office area reference.": "Mapa basado en datos de OpenStreetMap. El marcador está ubicado en la zona de Fuhai, Bao'an, Shenzhen, como referencia del área de oficina.",
   "Open in OpenStreetMap": "Abrir en OpenStreetMap",
@@ -1362,4 +1362,166 @@ Object.assign(window.GS_I18N.ru.text, {
   "Oversized Cargo Guide": "Руководство по негабариту",
   "DDP Quote Guide": "Руководство по DDP-расчету",
   "Author Profile": "Профиль автора"
+});
+
+const inquiryFormLocalePatches = {
+  es: {
+    "Quote details reviewed together": "Todos los datos de la cotización se revisan juntos",
+    "Product name, route, cargo details and reply preference stay attached to one request.": "El producto, la ruta, los datos de carga y el medio de respuesta quedan unidos en una sola solicitud.",
+    "Product Name": "Nombre del producto",
+    "What are you shipping?": "¿Qué mercancía envía?",
+    "Origin / Pickup City": "Origen / ciudad de recogida",
+    "Destination / ZIP Code": "Destino / código postal",
+    "Shipping Service": "Servicio de transporte",
+    "Not sure — please recommend": "No estoy seguro — recomiéndenme",
+    "Ocean Freight — review FCL/LCL": "Transporte marítimo — revisar FCL/LCL",
+    "Total Weight": "Peso total",
+    "Total Volume / Packed Dimensions": "Volumen total / dimensiones embaladas",
+    "Cargo Details": "Detalles de la carga",
+    "Additional Requirements": "Requisitos adicionales",
+    "Use a valid email address, including addresses with + tags.": "Use un email válido; se aceptan direcciones con etiquetas +.",
+    "Optional for email replies. Required when WhatsApp is selected.": "Opcional para responder por email; obligatorio si elige WhatsApp.",
+    "Please enter a valid email address.": "Introduzca una dirección de email válida.",
+    "Phone / WhatsApp is required when WhatsApp is selected.": "El teléfono o WhatsApp es obligatorio cuando se elige WhatsApp.",
+    "Please enter a valid phone or WhatsApp number.": "Introduzca un número de teléfono o WhatsApp válido.",
+    "Please enter the product you are shipping.": "Indique el producto que va a enviar.",
+    "Please enter the pickup city or origin.": "Indique la ciudad de recogida u origen.",
+    "Please enter the destination city or ZIP code.": "Indique la ciudad de destino o el código postal.",
+    "Please add a short cargo description.": "Añada una breve descripción de la carga.",
+    "Please confirm that we may use these details to answer your request.": "Confirme que podemos usar estos datos para responder a su solicitud.",
+    "We could not send the inquiry. Please check the highlighted fields or contact us directly.": "No pudimos enviar la consulta. Revise los campos marcados o contáctenos directamente.",
+    "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.": "Aún no pudimos confirmar la entrega. La solicitud no se considera aceptada y no se reenviará automáticamente.",
+    "Inquiry Processing...": "Consulta en proceso...",
+    "Reference": "Referencia",
+    "Contact us by": "Contáctenos por",
+    "or": "o"
+  },
+  pt: {
+    "Quote details reviewed together": "Todos os dados da cotação são revisados juntos",
+    "Product name, route, cargo details and reply preference stay attached to one request.": "Produto, rota, dados da carga e preferência de resposta ficam unidos em uma única solicitação.",
+    "Product Name": "Nome do produto",
+    "What are you shipping?": "O que você está enviando?",
+    "Origin / Pickup City": "Origem / cidade de coleta",
+    "Destination / ZIP Code": "Destino / CEP",
+    "Shipping Service": "Serviço de transporte",
+    "Not sure — please recommend": "Não tenho certeza — recomende uma opção",
+    "Ocean Freight — review FCL/LCL": "Frete marítimo — avaliar FCL/LCL",
+    "Total Weight": "Peso total",
+    "Total Volume / Packed Dimensions": "Volume total / dimensões embaladas",
+    "Cargo Details": "Detalhes da carga",
+    "Additional Requirements": "Requisitos adicionais",
+    "Use a valid email address, including addresses with + tags.": "Use um email válido; endereços com + são aceitos.",
+    "Optional for email replies. Required when WhatsApp is selected.": "Opcional para resposta por email; obrigatório ao escolher WhatsApp.",
+    "Please enter a valid email address.": "Informe um endereço de email válido.",
+    "Phone / WhatsApp is required when WhatsApp is selected.": "Telefone ou WhatsApp é obrigatório quando WhatsApp é selecionado.",
+    "Please enter a valid phone or WhatsApp number.": "Informe um telefone ou WhatsApp válido.",
+    "Please enter the product you are shipping.": "Informe o produto que será enviado.",
+    "Please enter the pickup city or origin.": "Informe a cidade de coleta ou origem.",
+    "Please enter the destination city or ZIP code.": "Informe a cidade de destino ou CEP.",
+    "Please add a short cargo description.": "Adicione uma breve descrição da carga.",
+    "Please confirm that we may use these details to answer your request.": "Confirme que podemos usar estes dados para responder à sua solicitação.",
+    "We could not send the inquiry. Please check the highlighted fields or contact us directly.": "Não foi possível enviar a consulta. Revise os campos destacados ou fale conosco diretamente.",
+    "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.": "Ainda não foi possível confirmar o envio. A solicitação não foi considerada aceita e não será reenviada automaticamente.",
+    "Inquiry Processing...": "Consulta em processamento...",
+    "Reference": "Referência",
+    "Contact us by": "Fale conosco por",
+    "or": "ou"
+  },
+  fr: {
+    "Quote details reviewed together": "Tous les éléments du devis sont examinés ensemble",
+    "Product name, route, cargo details and reply preference stay attached to one request.": "Le produit, l’itinéraire, les détails du fret et le mode de réponse restent liés à une seule demande.",
+    "Product Name": "Nom du produit",
+    "What are you shipping?": "Qu’expédiez-vous ?",
+    "Origin / Pickup City": "Origine / ville d’enlèvement",
+    "Destination / ZIP Code": "Destination / code postal",
+    "Shipping Service": "Service de transport",
+    "Not sure — please recommend": "Je ne sais pas — merci de recommander",
+    "Ocean Freight — review FCL/LCL": "Fret maritime — étudier FCL/LCL",
+    "Total Weight": "Poids total",
+    "Total Volume / Packed Dimensions": "Volume total / dimensions emballées",
+    "Cargo Details": "Détails du fret",
+    "Additional Requirements": "Exigences supplémentaires",
+    "Use a valid email address, including addresses with + tags.": "Utilisez un email valide ; les adresses avec un + sont acceptées.",
+    "Optional for email replies. Required when WhatsApp is selected.": "Facultatif pour une réponse par email ; obligatoire si WhatsApp est choisi.",
+    "Please enter a valid email address.": "Veuillez saisir une adresse email valide.",
+    "Phone / WhatsApp is required when WhatsApp is selected.": "Un numéro de téléphone ou WhatsApp est requis lorsque WhatsApp est choisi.",
+    "Please enter a valid phone or WhatsApp number.": "Veuillez saisir un numéro de téléphone ou WhatsApp valide.",
+    "Please enter the product you are shipping.": "Indiquez le produit que vous expédiez.",
+    "Please enter the pickup city or origin.": "Indiquez la ville d’enlèvement ou l’origine.",
+    "Please enter the destination city or ZIP code.": "Indiquez la ville de destination ou le code postal.",
+    "Please add a short cargo description.": "Ajoutez une brève description du fret.",
+    "Please confirm that we may use these details to answer your request.": "Confirmez que nous pouvons utiliser ces informations pour répondre à votre demande.",
+    "We could not send the inquiry. Please check the highlighted fields or contact us directly.": "La demande n’a pas pu être envoyée. Vérifiez les champs signalés ou contactez-nous directement.",
+    "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.": "Nous ne pouvons pas encore confirmer l’envoi. La demande n’est pas considérée comme acceptée et ne sera pas renvoyée automatiquement.",
+    "Inquiry Processing...": "Demande en cours...",
+    "Reference": "Référence",
+    "Contact us by": "Contactez-nous par",
+    "or": "ou"
+  },
+  de: {
+    "Quote details reviewed together": "Alle Angebotsangaben werden gemeinsam geprüft",
+    "Product name, route, cargo details and reply preference stay attached to one request.": "Produkt, Route, Frachtdaten und Antwortwunsch bleiben in einer Anfrage zusammen.",
+    "Product Name": "Produktname",
+    "What are you shipping?": "Was möchten Sie versenden?",
+    "Origin / Pickup City": "Ursprung / Abholort",
+    "Destination / ZIP Code": "Ziel / Postleitzahl",
+    "Shipping Service": "Versandservice",
+    "Not sure — please recommend": "Nicht sicher — bitte empfehlen",
+    "Ocean Freight — review FCL/LCL": "Seefracht — FCL/LCL prüfen",
+    "Total Weight": "Gesamtgewicht",
+    "Total Volume / Packed Dimensions": "Gesamtvolumen / Packmaße",
+    "Cargo Details": "Frachtdetails",
+    "Additional Requirements": "Zusätzliche Anforderungen",
+    "Use a valid email address, including addresses with + tags.": "Verwenden Sie eine gültige E-Mail-Adresse; Adressen mit + werden akzeptiert.",
+    "Optional for email replies. Required when WhatsApp is selected.": "Für E-Mail-Antworten optional; bei WhatsApp erforderlich.",
+    "Please enter a valid email address.": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "Phone / WhatsApp is required when WhatsApp is selected.": "Telefon oder WhatsApp ist erforderlich, wenn WhatsApp gewählt wurde.",
+    "Please enter a valid phone or WhatsApp number.": "Bitte geben Sie eine gültige Telefon- oder WhatsApp-Nummer ein.",
+    "Please enter the product you are shipping.": "Bitte geben Sie das zu versendende Produkt ein.",
+    "Please enter the pickup city or origin.": "Bitte geben Sie Abholort oder Ursprung ein.",
+    "Please enter the destination city or ZIP code.": "Bitte geben Sie Zielort oder Postleitzahl ein.",
+    "Please add a short cargo description.": "Bitte fügen Sie eine kurze Frachtbeschreibung hinzu.",
+    "Please confirm that we may use these details to answer your request.": "Bitte bestätigen Sie, dass wir diese Angaben zur Beantwortung Ihrer Anfrage verwenden dürfen.",
+    "We could not send the inquiry. Please check the highlighted fields or contact us directly.": "Die Anfrage konnte nicht gesendet werden. Prüfen Sie die markierten Felder oder kontaktieren Sie uns direkt.",
+    "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.": "Der Versand konnte noch nicht bestätigt werden. Die Anfrage gilt nicht als angenommen und wird nicht automatisch erneut gesendet.",
+    "Inquiry Processing...": "Anfrage wird bearbeitet...",
+    "Reference": "Referenz",
+    "Contact us by": "Kontaktieren Sie uns per",
+    "or": "oder"
+  },
+  ru: {
+    "Quote details reviewed together": "Все данные для расчета проверяются вместе",
+    "Product name, route, cargo details and reply preference stay attached to one request.": "Товар, маршрут, параметры груза и способ ответа остаются в одной заявке.",
+    "Product Name": "Название товара",
+    "What are you shipping?": "Что вы отправляете?",
+    "Origin / Pickup City": "Город отправления / забора",
+    "Destination / ZIP Code": "Пункт назначения / индекс",
+    "Shipping Service": "Способ доставки",
+    "Not sure — please recommend": "Не уверен — порекомендуйте",
+    "Ocean Freight — review FCL/LCL": "Морская доставка — подобрать FCL/LCL",
+    "Total Weight": "Общий вес",
+    "Total Volume / Packed Dimensions": "Объем / размеры в упаковке",
+    "Cargo Details": "Описание груза",
+    "Additional Requirements": "Дополнительные требования",
+    "Use a valid email address, including addresses with + tags.": "Укажите корректный email; адреса с + поддерживаются.",
+    "Optional for email replies. Required when WhatsApp is selected.": "Необязательно для ответа по email; обязательно при выборе WhatsApp.",
+    "Please enter a valid email address.": "Укажите корректный адрес электронной почты.",
+    "Phone / WhatsApp is required when WhatsApp is selected.": "Телефон или WhatsApp обязателен при выборе WhatsApp.",
+    "Please enter a valid phone or WhatsApp number.": "Укажите корректный номер телефона или WhatsApp.",
+    "Please enter the product you are shipping.": "Укажите отправляемый товар.",
+    "Please enter the pickup city or origin.": "Укажите город забора или отправления.",
+    "Please enter the destination city or ZIP code.": "Укажите город назначения или почтовый индекс.",
+    "Please add a short cargo description.": "Добавьте краткое описание груза.",
+    "Please confirm that we may use these details to answer your request.": "Подтвердите, что мы можем использовать эти данные для ответа на запрос.",
+    "We could not send the inquiry. Please check the highlighted fields or contact us directly.": "Не удалось отправить запрос. Проверьте отмеченные поля или свяжитесь с нами напрямую.",
+    "We could not confirm delivery yet. Your request has not been counted as accepted and will not be sent again automatically.": "Пока не удалось подтвердить отправку. Запрос не считается принятым и не будет отправлен повторно автоматически.",
+    "Inquiry Processing...": "Запрос обрабатывается...",
+    "Reference": "Номер",
+    "Contact us by": "Свяжитесь с нами через",
+    "or": "или"
+  }
+};
+
+Object.entries(inquiryFormLocalePatches).forEach(([locale, messages]) => {
+  Object.assign(window.GS_I18N[locale].text, messages);
 });

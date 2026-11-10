@@ -1,22 +1,29 @@
 import "./globals.css";
+import AnalyticsBridge from "./components/AnalyticsBridge";
 
 export const metadata = {
   title: {
-    default: "China to USA Freight Forwarder | Good Logistics",
-    template: "%s | Good Logistics"
+    default: "China Cargo Operations & USA Delivery | GOOD LOGISTICS",
+    template: "%s | GOOD LOGISTICS"
   },
   description:
-    "Freight forwarding from China to the USA by sea, air and DDP. Supplier pickup, consolidation, Amazon FBA, oversized cargo and final delivery across the United States.",
+    "China-side pickup, consolidation, warehousing, prep and inspection coordinated with international freight and U.S. final delivery.",
   metadataBase: new URL("https://gdlogi.us"),
-  applicationName: "Good Logistics",
+  applicationName: "GOOD LOGISTICS",
   icons: { icon: "/good-shipping-homepage/assets/good-logistics-logo.png" },
   formatDetection: { email: false, address: false, telephone: false }
 };
 
 export default function RootLayout({ children }) {
+  const configuredGtmId = process.env.GTM_CONTAINER_ID || "";
+  const gtmId = /^GTM-[A-Z0-9]+$/.test(configuredGtmId) ? configuredGtmId : "";
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <AnalyticsBridge gtmId={gtmId} />
+      </body>
     </html>
   );
 }

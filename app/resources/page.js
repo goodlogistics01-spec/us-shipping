@@ -22,7 +22,7 @@ export default function ResourcesPage() {
         <div className="marketing-container marketing-card-grid">
           {resourceArticles.map((article) => (
             <article className="marketing-content-card" key={article.href}>
-              <p className="marketing-eyebrow">Shipping Guide</p>
+              <p className="marketing-eyebrow">Service Planning</p>
               <h2>{article.title}</h2>
               <p>{article.description}</p>
               <a className="marketing-text-link" href={article.href}>Read the guide</a>

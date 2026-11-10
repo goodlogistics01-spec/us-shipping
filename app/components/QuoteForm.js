@@ -1,17 +1,143 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  getPublicSourcePage,
+  INQUIRY_FAILURE_MESSAGE,
+  INQUIRY_PENDING_MESSAGE,
+  submitInquiryForm
+} from "../lib/inquiry-client";
+
+const shippingMethodOptions = [
+  ["not-sure", "Not sure — please advise"],
+  ["ocean-freight", "Ocean Freight — review FCL/LCL"],
+  ["ocean-fcl", "Ocean FCL"],
+  ["ocean-lcl", "Ocean LCL"],
+  ["air-freight", "Air Freight"],
+  ["express", "Express / Courier"]
+];
+
+const serviceNeedOptions = [
+  ["shipping", "Shipping"],
+  ["supplier-pickup", "Supplier Pickup"],
+  ["consolidation", "Consolidation"],
+  ["warehousing", "Warehousing"],
+  ["fba-prep-labeling", "FBA Prep / Labeling"],
+  ["repacking", "Repacking"],
+  ["kitting-light-assembly", "Kitting / Light Assembly"],
+  ["inspection", "Inspection"],
+  ["not-sure", "Not sure — please advise"]
+];
+
+const shippingMethodParameterMap = {
+  "not-sure": "not-sure",
+  "sea-freight": "ocean-freight",
+  "sea-freight-china-to-usa": "ocean-freight",
+  "ocean-freight": "ocean-freight",
+  "ocean-fcl": "ocean-fcl",
+  "ocean-lcl": "ocean-lcl",
+  fcl: "ocean-fcl",
+  lcl: "ocean-lcl",
+  "air-freight": "air-freight",
+  "air-freight-china-to-usa": "air-freight",
+  express: "express",
+  "express-shipping": "express"
+};
+
+const serviceNeedParameterMap = {
+  "not-sure": ["not-sure"],
+  shipping: ["shipping"],
+  ddp: ["shipping"],
+  "ddp-shipping-china-to-usa": ["shipping"],
+  "ddp-door-to-door": ["shipping"],
+  "amazon-fba": ["shipping", "fba-prep-labeling"],
+  "amazon-fba-shipping": ["shipping", "fba-prep-labeling"],
+  "fba-prep-labeling": ["fba-prep-labeling"],
+  "supplier-consolidation": ["supplier-pickup", "consolidation"],
+  "supplier-pickup": ["supplier-pickup"],
+  "china-pickup": ["supplier-pickup"],
+  consolidation: ["consolidation"],
+  warehousing: ["warehousing"],
+  "warehousing-inventory-coordination": ["warehousing"],
+  repacking: ["repacking"],
+  "kitting-light-assembly": ["kitting-light-assembly"],
+  inspection: ["inspection"],
+  "cargo-inspection-receiving-checks": ["inspection"],
+  "customs-clearance": ["shipping"],
+  "final-delivery": ["shipping"],
+  oversized: ["shipping"],
+  "oversized-cargo": ["shipping"],
+  "oversized-cargo-shipping": ["shipping"],
+  "sea-freight": ["shipping"],
+  "sea-freight-china-to-usa": ["shipping"],
+  "ocean-freight": ["shipping"],
+  "air-freight": ["shipping"],
+  "air-freight-china-to-usa": ["shipping"],
+  express: ["shipping"],
+  "express-shipping": ["shipping"]
+};
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^\+?[0-9][0-9\s().-]{6,22}$/;
+
+function cleanAttributionValue(value) {
+  return String(value || "")
+    .replace(/[^a-zA-Z0-9 _.-]/g, "")
+    .slice(0, 100);
+}
+
+function getReferrerOrigin(value) {
+  if (!value) return "";
+  try {
+    return new URL(value).origin;
+  } catch {
+    return "";
+  }
+}
+
+function isValidPhone(value) {
+  const trimmed = String(value || "").trim();
+  if (!phonePattern.test(trimmed)) return false;
+  const digitCount = trimmed.replace(/\D/g, "").length;
+  return digitCount >= 7 && digitCount <= 20;
+}
+
+function trackInquiryEvent(eventName, details = {}) {
+  if (typeof window === "undefined") return;
+  const payload = {
+    event: eventName,
+    form_source: String(details.source || "quote-page").slice(0, 80),
+    shipping_method: String(details.shippingMethod || "not-sure").slice(0, 80),
+    service_needs: String(details.serviceNeeds || "not-sure").slice(0, 180),
+    result: String(details.result || "").slice(0, 40)
+  };
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(payload);
+  window.dispatchEvent(new CustomEvent("gdlogi:analytics", { detail: payload }));
+}
+
+function FieldError({ id, message }) {
+  return message ? <span className="marketing-field-error" id={id}>{message}</span> : null;
+}
 
 export default function QuoteForm({
   compact = false,
   source = "quote-page",
   pageUrl = "https://gdlogi.us/quote/",
   productId = "",
-  productName = "",
   productPage = false,
-  submitLabel = "Get a Shipping Quote"
+  defaultShippingMethod = "not-sure",
+  defaultServiceNeeds = ["not-sure"],
+  submitLabel = "Request a Shipping & Prep Quote"
 }) {
   const [status, setStatus] = useState("idle");
+  const [submissionId, setSubmissionId] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [preferredContact, setPreferredContact] = useState("email");
+  const submittingRef = useRef(false);
+  const startedRef = useRef(false);
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState(defaultShippingMethod);
+  const [selectedServiceNeeds, setSelectedServiceNeeds] = useState(defaultServiceNeeds);
   const [attribution, setAttribution] = useState({
     page_url: pageUrl,
     referrer: "",
@@ -22,56 +148,203 @@ export default function QuoteForm({
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const requestedService = params.get("service") || params.get("solution") || "";
+    const requestedShippingMethod = params.get("shipping_method") || params.get("transport_mode") || requestedService;
+    if (shippingMethodParameterMap[requestedShippingMethod]) {
+      setSelectedShippingMethod(shippingMethodParameterMap[requestedShippingMethod]);
+    }
+    const explicitNeeds = [
+      ...params.getAll("service_need"),
+      ...params.getAll("service_needs")
+    ].flatMap((value) => value.split(","));
+    const mappedNeeds = explicitNeeds
+      .flatMap((value) => serviceNeedParameterMap[value] || [])
+      .filter(Boolean);
+    const fallbackNeeds = serviceNeedParameterMap[requestedService] || [];
+    const requestedNeeds = [...new Set(mappedNeeds.length > 0 ? mappedNeeds : fallbackNeeds)];
+    if (requestedNeeds.length > 0) {
+      setSelectedServiceNeeds(requestedNeeds);
+    }
     setAttribution({
-      page_url: window.location.href,
-      referrer: document.referrer,
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || ""
+      page_url: getPublicSourcePage(window.location),
+      referrer: getReferrerOrigin(document.referrer),
+      utm_source: cleanAttributionValue(params.get("utm_source")),
+      utm_medium: cleanAttributionValue(params.get("utm_medium")),
+      utm_campaign: cleanAttributionValue(params.get("utm_campaign"))
     });
   }, []);
 
-  function handleSubmit(event) {
-    if (status === "submitting") {
-      event.preventDefault();
-      return;
+  function validateForm(form) {
+    const data = new FormData(form);
+    const errors = {};
+    const requiredTextFields = [
+      ["name", "Please enter your name."],
+      ["email", "Please enter your email address."],
+      ["product_name", "Please enter the product you are shipping."],
+      ["origin", "Please enter the pickup city or origin."],
+      ["destination", "Please enter the destination city or ZIP code."]
+    ];
+
+    requiredTextFields.forEach(([name, message]) => {
+      if (!String(data.get(name) || "").trim()) errors[name] = message;
+    });
+
+    const email = String(data.get("email") || "").trim();
+    if (email && !emailPattern.test(email)) {
+      errors.email = "Enter a valid email address, such as audit@example.com.";
     }
 
-    if (!event.currentTarget.checkValidity()) {
+    const whatsapp = String(data.get("whatsapp") || "").trim();
+    if (preferredContact === "whatsapp" && !whatsapp) {
+      errors.whatsapp = "A phone or WhatsApp number is required for a WhatsApp reply.";
+    } else if (whatsapp && !isValidPhone(whatsapp)) {
+      errors.whatsapp = "Enter a valid number using digits, spaces, +, parentheses or hyphens.";
+    }
+
+    if (data.getAll("service_needs").length === 0) {
+      errors.service_needs = "Choose at least one service need or ask us to advise.";
+    }
+    if (!form.elements.privacy_consent?.checked) {
+      errors.privacy_consent = "Please confirm that we may use these details to answer your request.";
+    }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
       setStatus("invalid");
-      return;
+      trackInquiryEvent("quote_submit_failed", {
+        source,
+        shippingMethod: selectedShippingMethod,
+        serviceNeeds: selectedServiceNeeds.join(","),
+        result: "validation"
+      });
+      window.requestAnimationFrame(() => {
+        const firstInvalid = form.querySelector('[aria-invalid="true"]');
+        firstInvalid?.focus();
+      });
+      return false;
     }
-
-    setStatus("submitting");
-    window.dispatchEvent(
-      new CustomEvent("gdlogi:generate_lead", {
-        detail: { source, productId }
-      })
-    );
+    return true;
   }
 
-  function handleInput() {
-    if (status === "invalid") setStatus("idle");
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+
+    if (submittingRef.current) {
+      return;
+    }
+
+    if (!validateForm(form)) return;
+
+    submittingRef.current = true;
+    setStatus("submitting");
+    try {
+      const result = await submitInquiryForm(form);
+      setSubmissionId(result.submission_id || "");
+      if (result.submission_status === "PENDING") {
+        setStatus("pending");
+        trackInquiryEvent("quote_submit_pending", {
+          source,
+          shippingMethod: selectedShippingMethod,
+          serviceNeeds: selectedServiceNeeds.join(","),
+          result: "pending"
+        });
+        return;
+      }
+      trackInquiryEvent("quote_submit_success", {
+        source,
+        shippingMethod: selectedShippingMethod,
+        serviceNeeds: selectedServiceNeeds.join(","),
+        result: "accepted"
+      });
+      window.dispatchEvent(
+        new CustomEvent("gdlogi:generate_lead", {
+          detail: {
+            source,
+            productId,
+            shippingMethod: selectedShippingMethod,
+            serviceNeeds: selectedServiceNeeds,
+            requestId: result.request_id,
+            submissionId: result.submission_id
+          }
+        })
+      );
+      window.location.assign(result.redirect || "/thank-you/");
+    } catch (error) {
+      setSubmissionId(error.submissionId || "");
+      submittingRef.current = false;
+      const serverFieldErrors = error.fieldErrors || {};
+      setFieldErrors((current) => ({ ...current, ...serverFieldErrors }));
+      setStatus(Object.keys(serverFieldErrors).length > 0 ? "invalid" : "failed");
+      trackInquiryEvent("quote_submit_failed", {
+        source,
+        shippingMethod: selectedShippingMethod,
+        serviceNeeds: selectedServiceNeeds.join(","),
+        result: "rejected"
+      });
+      if (Object.keys(serverFieldErrors).length > 0) {
+        window.requestAnimationFrame(() => {
+          form.querySelector('[aria-invalid="true"]')?.focus();
+        });
+      }
+    }
+  }
+
+  function handleInput(event) {
+    const fieldName = event.target?.name;
+    if (fieldName && fieldErrors[fieldName]) {
+      setFieldErrors((current) => ({ ...current, [fieldName]: "" }));
+    }
+    if (status === "invalid" || status === "failed") setStatus("idle");
+  }
+
+  function handlePreferredContactChange(event) {
+    const nextMethod = event.target.value;
+    const whatsapp = String(event.currentTarget.form?.elements.whatsapp?.value || "").trim();
+    setPreferredContact(nextMethod);
+    setFieldErrors((current) => ({
+      ...current,
+      whatsapp: whatsapp && !isValidPhone(whatsapp)
+        ? "Enter a valid number using digits, spaces, +, parentheses or hyphens."
+        : ""
+    }));
+  }
+
+  function handleStart() {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    trackInquiryEvent("quote_start", {
+      source,
+      shippingMethod: selectedShippingMethod,
+      serviceNeeds: selectedServiceNeeds.join(","),
+      result: "started"
+    });
+  }
+
+  function handleServiceNeedChange(event) {
+    const { value, checked } = event.target;
+    setSelectedServiceNeeds((current) => {
+      if (value === "not-sure") return checked ? ["not-sure"] : [];
+      const withoutNotSure = current.filter((item) => item !== "not-sure" && item !== value);
+      return checked ? [...withoutNotSure, value] : withoutNotSure;
+    });
+    setFieldErrors((current) => ({ ...current, service_needs: "" }));
   }
 
   return (
     <form
       className="marketing-form"
-      action="https://formsubmit.co/zoe@gdlogi.com"
+      action="/api/inquiry/"
       method="POST"
       onSubmit={handleSubmit}
-      onInvalid={() => setStatus("invalid")}
       onInput={handleInput}
+      onFocusCapture={handleStart}
+      noValidate
       data-lead-event="generate_lead"
     >
-      <input type="hidden" name="_subject" value={`New freight inquiry from ${productName || source}`} />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_next" value="https://gdlogi.us/thank-you/" />
-      <input type="hidden" name="_url" value={attribution.page_url || pageUrl} />
-      <input type="hidden" name="source" value={source} />
+      <input type="hidden" name="source_type" value={source} />
       <input type="hidden" name="product_id" value={productId} />
-      <input type="hidden" name="product_name" value={productName} />
-      <input type="hidden" name="page_url" value={attribution.page_url} />
+      <input type="hidden" name="source_page" value={attribution.page_url || pageUrl} />
       <input type="hidden" name="referrer" value={attribution.referrer} />
       <input type="hidden" name="utm_source" value={attribution.utm_source} />
       <input type="hidden" name="utm_medium" value={attribution.utm_medium} />
@@ -84,7 +357,15 @@ export default function QuoteForm({
       <div className="marketing-form-grid">
         <label>
           Name <span aria-hidden="true">*</span>
-          <input name="name" autoComplete="name" maxLength="100" required />
+          <input
+            name="name"
+            autoComplete="name"
+            maxLength="100"
+            required
+            aria-invalid={Boolean(fieldErrors.name)}
+            aria-describedby={fieldErrors.name ? "quote-error-name" : undefined}
+          />
+          <FieldError id="quote-error-name" message={fieldErrors.name} />
         </label>
         <label>
           Company
@@ -92,78 +373,147 @@ export default function QuoteForm({
         </label>
         <label>
           Email <span aria-hidden="true">*</span>
-          <input name="email" type="email" autoComplete="email" maxLength="254" required />
+          <input
+            name="email"
+            type="email"
+            autoComplete="email"
+            maxLength="254"
+            required
+            aria-invalid={Boolean(fieldErrors.email)}
+            aria-describedby={fieldErrors.email ? "quote-error-email" : undefined}
+          />
+          <FieldError id="quote-error-email" message={fieldErrors.email} />
         </label>
         <label>
-          WhatsApp / Phone
-          <input name="phone" type="tel" autoComplete="tel" maxLength="50" />
+          WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
+          <input
+            name="whatsapp"
+            type="tel"
+            autoComplete="tel"
+            maxLength="50"
+            required={preferredContact === "whatsapp"}
+            aria-invalid={Boolean(fieldErrors.whatsapp)}
+            aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
+          />
+          <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
+        </label>
+        <label className="form-span-two">
+          Product / Goods Name <span aria-hidden="true">*</span>
+          <input
+            name="product_name"
+            placeholder="e.g. furniture, machinery parts or apparel"
+            maxLength="180"
+            required
+            aria-invalid={Boolean(fieldErrors.product_name)}
+            aria-describedby={fieldErrors.product_name ? "quote-error-product" : undefined}
+          />
+          <FieldError id="quote-error-product" message={fieldErrors.product_name} />
         </label>
         <label>
           Origin / Pickup City <span aria-hidden="true">*</span>
-          <input name="origin_city" placeholder="City in China" maxLength="120" required />
+          <input
+            name="origin"
+            placeholder="City in China"
+            maxLength="120"
+            required
+            aria-invalid={Boolean(fieldErrors.origin)}
+            aria-describedby={fieldErrors.origin ? "quote-error-origin" : undefined}
+          />
+          <FieldError id="quote-error-origin" message={fieldErrors.origin} />
         </label>
         <label>
           Destination / ZIP Code <span aria-hidden="true">*</span>
-          <input name="destination" placeholder="U.S. city, state and ZIP code" maxLength="160" required />
+          <input
+            name="destination"
+            placeholder="U.S. city, state and ZIP code"
+            maxLength="160"
+            required
+            aria-invalid={Boolean(fieldErrors.destination)}
+            aria-describedby={fieldErrors.destination ? "quote-error-destination" : undefined}
+          />
+          <FieldError id="quote-error-destination" message={fieldErrors.destination} />
+        </label>
+
+        <label>
+          Shipping Method
+          <select
+            name="shipping_method"
+            value={selectedShippingMethod}
+            onChange={(event) => setSelectedShippingMethod(event.target.value)}
+          >
+            {shippingMethodOptions.map(([value, label]) => (
+              <option value={value} key={value}>{label}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Cargo Ready Date
+          <input name="cargo_ready_date" type="date" />
+        </label>
+
+        <fieldset
+          className="marketing-service-needs form-span-two"
+          aria-describedby={fieldErrors.service_needs ? "quote-error-service-needs" : "quote-service-needs-help"}
+        >
+          <legend>Service Needs <span aria-hidden="true">*</span></legend>
+          <p id="quote-service-needs-help">Choose all that apply. Shipping method is selected separately.</p>
+          <div className="marketing-checkbox-grid">
+            {serviceNeedOptions.map(([value, label]) => (
+              <label key={value}>
+                <input
+                  type="checkbox"
+                  name="service_needs"
+                  value={value}
+                  checked={selectedServiceNeeds.includes(value)}
+                  onChange={handleServiceNeedChange}
+                  aria-invalid={Boolean(fieldErrors.service_needs)}
+                />
+                <span>{label}</span>
+              </label>
+            ))}
+          </div>
+          <FieldError id="quote-error-service-needs" message={fieldErrors.service_needs} />
+        </fieldset>
+        <label>
+          Preferred Reply Method
+          <select
+            name="preferred_contact"
+            value={preferredContact}
+            onChange={handlePreferredContactChange}
+          >
+            <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="either">Either is fine</option>
+          </select>
         </label>
 
         {productPage ? (
           <>
             <label>
-              Shipping Mode <span aria-hidden="true">*</span>
-              <select name="shipping_method" defaultValue="" required>
-                <option value="" disabled>Select an option</option>
-                <option value="fcl">FCL</option>
-                <option value="lcl">LCL</option>
-                <option value="door-to-door">Door-to-Door</option>
-                <option value="amazon-fba">Amazon FBA</option>
-                <option value="oversized">Oversized Cargo</option>
-                <option value="not-sure">Not Sure</option>
-              </select>
+              Total Weight
+              <input name="weight" placeholder="kg or lb (optional / not sure is OK)" maxLength="100" />
             </label>
             <label>
-              Cargo Volume / Weight <span aria-hidden="true">*</span>
-              <input
-                name="cargo_volume_weight"
-                placeholder="CBM, kg/lb, or packed dimensions"
-                maxLength="160"
-                required
-              />
+              Volume / Packed Dimensions
+              <input name="volume" placeholder="CBM or dimensions (optional)" maxLength="160" />
             </label>
             <label className="form-span-two">
-              Cargo Description <span aria-hidden="true">*</span>
+              Cargo Details (optional)
               <textarea
-                name="cargo_description"
+                name="cargo_type"
                 rows="4"
-                placeholder="Products, packaging and handling requirements"
+                placeholder="Packaging, carton or pallet count, and handling requirements"
                 maxLength="2000"
-                required
               />
             </label>
             <label>
               Carton / Pallet Quantity
               <input name="package_count" inputMode="numeric" maxLength="80" />
             </label>
-            <label>
-              Packed Dimensions
-              <input name="dimensions" placeholder="L × W × H and unit" maxLength="160" />
-            </label>
-            <label>
-              Cargo Ready Date
-              <input name="cargo_ready_date" type="date" />
-            </label>
-            <label>
-              Preferred Reply Method
-              <select name="preferred_contact" defaultValue="email">
-                <option value="email">Email</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="either">Either</option>
-              </select>
-            </label>
             <label className="form-span-two">
               Special Requirements
               <textarea
-                name="additional_requirements"
+                name="message"
                 rows="3"
                 placeholder="FBA appointment, liftgate, residential access, oversized handling or other requirements"
                 maxLength="2000"
@@ -172,29 +522,13 @@ export default function QuoteForm({
           </>
         ) : (
           <>
-            <label>
-              Shipping Method
-              <select name="shipping_method" defaultValue="review-needed">
-                <option value="review-needed">Please recommend</option>
-                <option value="sea-freight">Sea Freight</option>
-                <option value="air-freight">Air Freight</option>
-                <option value="ddp">DDP Door-to-Door</option>
-                <option value="amazon-fba">Amazon FBA</option>
-                <option value="oversized">Oversized Cargo</option>
-              </select>
-            </label>
-            <label>
-              Cargo Ready Date
-              <input name="cargo_ready_date" type="date" />
-            </label>
             <label className="form-span-two">
-              Cargo Description <span aria-hidden="true">*</span>
+              Cargo Details (optional)
               <textarea
-                name="cargo_description"
+                name="cargo_type"
                 rows="4"
-                placeholder="Product, packaging and any special handling needs"
+                placeholder="Packaging and any special handling needs"
                 maxLength="2000"
-                required
               />
             </label>
             {!compact && (
@@ -205,24 +539,16 @@ export default function QuoteForm({
                 </label>
                 <label>
                   Total Weight
-                  <input name="total_weight" placeholder="kg or lb" maxLength="80" />
+                  <input name="weight" placeholder="kg or lb" maxLength="100" />
                 </label>
                 <label>
                   Total Volume
-                  <input name="total_volume" placeholder="CBM or dimensions" maxLength="120" />
-                </label>
-                <label>
-                  Preferred Reply Method
-                  <select name="preferred_contact" defaultValue="email">
-                    <option value="email">Email</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="either">Either</option>
-                  </select>
+                  <input name="volume" placeholder="CBM or dimensions" maxLength="160" />
                 </label>
                 <label className="form-span-two">
                   Additional Requirements
                   <textarea
-                    name="additional_requirements"
+                    name="message"
                     rows="3"
                     placeholder="FBA, liftgate, residential delivery, customs or other requirements"
                     maxLength="2000"
@@ -235,19 +561,55 @@ export default function QuoteForm({
       </div>
 
       <label className="marketing-consent">
-        <input type="checkbox" name="privacy_consent" value="agreed" required />
+        <input
+          type="checkbox"
+          name="privacy_consent"
+          value="agreed"
+          required
+          aria-invalid={Boolean(fieldErrors.privacy_consent)}
+          aria-describedby={fieldErrors.privacy_consent ? "quote-error-consent" : undefined}
+        />
         <span>
           I agree that Good Logistics may use these details to respond to my shipping request. See the{" "}
           <a href="/privacy-policy/">Privacy Policy</a>. <span aria-hidden="true">*</span>
+          <FieldError id="quote-error-consent" message={fieldErrors.privacy_consent} />
         </span>
       </label>
-      <button className="marketing-button marketing-button-primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Sending…" : submitLabel}
+      <button
+        className="marketing-button marketing-button-primary"
+        type="submit"
+        disabled={status === "submitting" || status === "pending"}
+      >
+        {status === "submitting"
+          ? "Sending…"
+          : status === "pending"
+            ? "Inquiry Processing…"
+            : submitLabel}
       </button>
       <p className={`marketing-form-status status-${status}`} role="status" aria-live="polite">
         {status === "invalid"
           ? "Please complete the required fields and check the highlighted entries."
-          : "Email and WhatsApp responses are available. If the form does not complete, email zoe@gdlogi.com."}
+          : status === "failed"
+            ? INQUIRY_FAILURE_MESSAGE
+            : status === "pending"
+              ? (
+                <>
+                  {INQUIRY_PENDING_MESSAGE}
+                  {submissionId ? <> Reference: {submissionId}.</> : null}{" "}
+                  If you need to add information, contact us by{" "}
+                  <a
+                    href="https://wa.me/8613556861676"
+                    data-analytics-owned="true"
+                    onClick={() => trackInquiryEvent("whatsapp_click", { source, shippingMethod: selectedShippingMethod, serviceNeeds: selectedServiceNeeds.join(","), result: "pending-help" })}
+                  >WhatsApp</a> or{" "}
+                  <a
+                    href="mailto:zoe@gdlogi.com"
+                    data-analytics-owned="true"
+                    onClick={() => trackInquiryEvent("email_click", { source, shippingMethod: selectedShippingMethod, serviceNeeds: selectedServiceNeeds.join(","), result: "pending-help" })}
+                  >email</a>.
+                </>
+              )
+            : "Email and WhatsApp responses are available. If the form does not complete, email zoe@gdlogi.com."}
       </p>
     </form>
   );
