@@ -1,6 +1,5 @@
 import MarketingPage, { JsonLd } from "./MarketingPage";
 import QuoteForm from "./QuoteForm";
-import ShipmentCaseStudy from "./ShipmentCaseStudy";
 import { company } from "../site-data";
 
 const trustItems = [
@@ -93,9 +92,6 @@ const comparisonRows = [
   ["Cargo compatibility", "Useful when separation or dedicated space matters", "Compatibility with other consolidated cargo must be reviewed"],
   ["Oversized cargo", "Equipment and loading method require advance review", "May not fit LCL handling limits; dimensions must be checked"]
 ];
-
-// TODO_CONFIRM: Publish only after the route, cargo, solution and result are supported by customer-approved evidence.
-const verifiedCaseStudy = null;
 
 function ArrowIcon() {
   return (
@@ -331,8 +327,6 @@ export default function OceanFreightPage({ service, schema }) {
           </div>
         </div>
       </section>
-
-      <ShipmentCaseStudy study={verifiedCaseStudy} />
 
       <section className="ocean-section ocean-faq-section" aria-labelledby="ocean-faq-title">
         <div className="marketing-container ocean-faq-layout">

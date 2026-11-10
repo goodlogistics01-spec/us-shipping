@@ -41,10 +41,12 @@ Until these fields and publication rights are confirmed, the operational photos
 remain off the current public homepage. Zoe Zhou's approved public profile image
 remains in use; its source-rights record is still requested.
 
-The text-only Ningbo case is approved only for these confirmed facts: three
-factories, one 40HQ, Los Angeles customs clearance, rail to Chicago and door
-delivery. Do not add cargo type, inspection, labels, kitting, dates, savings,
-testimonials or unrelated photos.
+The Ningbo-to-Chicago background remains an internal draft. Its factual scope is
+limited to three factories, one 40HQ, Los Angeles customs clearance, rail to
+Chicago and door delivery, but separate traceable publication authorization is
+`NOT_VERIFIED`. It is therefore absent from the current public pages and must not
+be paired with unrelated photos or expanded with cargo type, inspection,
+labeling, kitting, dates, savings or testimonials.
 
 ## Inquiry delivery
 

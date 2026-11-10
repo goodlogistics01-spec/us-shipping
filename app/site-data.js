@@ -563,7 +563,7 @@ export const destinations = {
     description:
       "Plan ocean or air freight from China to Hawaii with customs coordination and final delivery requirements reviewed before booking.",
     summary:
-      "Freight planning for commercial cargo moving from Chinese suppliers to Honolulu or other Hawaiian destinations, with the final island and delivery conditions confirmed in the quote.",
+      "Freight planning for commercial cargo moving from Chinese suppliers to a confirmed address in Hawaii, with the island, route and final-delivery conditions reviewed in the quote.",
     considerations: [
       "Destination island, ZIP code and final delivery access",
       "Ocean, air or combined routing based on current schedules",
@@ -576,7 +576,7 @@ export const destinations = {
     description:
       "Plan freight from China to Alaska with routing, customs coordination and final delivery requirements reviewed before booking.",
     summary:
-      "Shipping coordination for cargo destined for Anchorage and other Alaska locations where onward routing, weather exposure and site access may affect the plan.",
+      "Shipping coordination for cargo moving from Chinese suppliers to a confirmed address in Alaska, where onward routing, weather exposure and site access may affect the plan.",
     considerations: [
       "Final destination and access beyond the main gateway",
       "Current ocean, air or combined routing options",
@@ -589,7 +589,7 @@ export const destinations = {
     description:
       "Plan freight from China to Puerto Rico with routing, customs documentation and island delivery scope reviewed before booking.",
     summary:
-      "Ocean or air freight planning for commercial cargo moving to San Juan and other Puerto Rico destinations, with documentation and final delivery requirements confirmed in advance.",
+      "Ocean or air freight planning for commercial cargo moving from Chinese suppliers to a confirmed address in Puerto Rico, with documentation and final-delivery requirements reviewed in advance.",
     considerations: [
       "Port or airport routing based on the cargo and current schedule",
       "Commodity, invoice and consignee documentation",

@@ -70,7 +70,10 @@ const homeSchema = {
       name: "China-Side Cargo Operations and China-to-USA Delivery",
       serviceType: "Cargo handling and international freight coordination",
       provider: { "@id": "https://gdlogi.us/#organization" },
-      areaServed: { "@type": "Country", name: "United States" },
+      areaServed: [
+        { "@type": "Country", name: "China" },
+        { "@type": "Country", name: "United States" }
+      ],
       description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with international freight, customs clearance and final delivery to the United States."
     },
     {

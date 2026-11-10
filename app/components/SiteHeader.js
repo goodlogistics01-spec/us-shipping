@@ -33,7 +33,6 @@ const destinations = [
 ];
 
 const directLinks = [
-  ["Case Study", "/#case-study"],
   ["About Us", "/about/"],
   ["Resources", "/resources/"]
 ];

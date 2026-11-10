@@ -1,7 +1,7 @@
 # GDLOGI.US SOURCE OF TRUTH / WEBSITE FACT VERIFICATION
 
-Last updated from owner decisions: 2026-11-10  
-Scope: current repository, the owner's 2026-10-20 answers to Questions 01–30, and the 2026-11-10 supplemental capability and case confirmation. No external corporate registry, license database, inbox, contract, or original certificate was inspected.  
+Last updated from owner decisions: 2026-11-10
+Scope: current repository, the owner's 2026-10-20 answers to Questions 01–30, and the 2026-11-10 supplemental capability, internal case background and publication-status decisions. No external corporate registry, license database, inbox, contract, or original certificate was inspected.
 Purpose: approval ledger for facts that may appear on the homepage, About, Service, Destination, Case Study, Schema, author profile, and qualification sections.
 
 ## Status Rules
@@ -156,10 +156,10 @@ AVIF files are format/size derivatives of the listed source photographs and inhe
 
 | File | What it shows | Likely shipment/project | Where currently used | Ownership known? | Customer information visible? | Logo/license plate/container number visible? | Public use approved? | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `assets/crane-truck-warehouse.jpg` plus `-800.avif`, `-1400.avif` | Indoor warehouse; crane truck; wrapped wooden crates/pallets; one worker | — | Homepage hero/case; generic service heroes; Sea page; destination/article/OG reuse | No | Package labels may be present but not legible in audit image | Crane-provider branding/text visible; no container number; plate not clearly visible | Not recorded | NEEDS REVIEW |
-| `assets/crane-truck-loading.jpg` plus `-800.avif`, `-1400.avif` | Indoor warehouse; crane truck flatbed and lifting gear; packed cargo nearby | — | Homepage oversized section; Sea page; oversized article/OG | No | Package labels may be present; worker not prominent in inspected frame | Crane-provider branding/text visible; no container number; plate not clearly visible | Not recorded | NEEDS REVIEW |
-| `assets/oversized-delivery-1.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people moving a large wooden crate through a building entrance | — | Homepage case gallery | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
-| `assets/oversized-delivery-2.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people handling a large foam-wrapped item at a building entrance | — | Homepage case gallery; all three destination page hero images/OG | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
+| `assets/crane-truck-warehouse.jpg` plus `-800.avif`, `-1400.avif` | Indoor warehouse; crane truck; wrapped wooden crates/pallets; one worker | — | Retained in legacy static materials; not referenced by the current App | No | Package labels may be present but not legible in audit image | Crane-provider branding/text visible; no container number; plate not clearly visible | Not recorded | NEEDS REVIEW |
+| `assets/crane-truck-loading.jpg` plus `-800.avif`, `-1400.avif` | Indoor warehouse; crane truck flatbed and lifting gear; packed cargo nearby | — | Retained in legacy static materials; not referenced by the current App | No | Package labels may be present; worker not prominent in inspected frame | Crane-provider branding/text visible; no container number; plate not clearly visible | Not recorded | NEEDS REVIEW |
+| `assets/oversized-delivery-1.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people moving a large wooden crate through a building entrance | — | Retained in legacy static materials; not referenced by the current App | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
+| `assets/oversized-delivery-2.jpg` plus `-800.avif`, `-1400.avif` | Several identifiable people handling a large foam-wrapped item at a building entrance | — | Retained in legacy static materials; not referenced by the current App | No | Faces visible; building/location context visible | Building signage/context visible; no container number | Not recorded | NEEDS REVIEW |
 | `assets/authors/zoe-zhou-headshot.jpg` plus `headshot-640.avif` | Portrait identified by the owner as Zoe Zhou | Personal profile, not shipment | Homepage, profile page, articles, Schema | Photographer/source rights not documented | Personal face/biometric image | No visible third-party logo in cropped headshot | Zoe public-profile permission confirmed; source rights still need a record | NEEDS REVIEW |
 | `assets/authors/zoe-zhou-author-card.jpg` | Designed author/contact card containing portrait, phone, email, routes, job title, `NVOCC`, and `Forwarder` labels | Marketing profile asset | Legacy author page only | Not documented | Face and direct contact details visible | GOOD-SHIPPING logo and qualification labels visible | Not recorded; facts conflict with current pages | DO NOT USE |
 
@@ -175,7 +175,7 @@ Default photo-safety direction confirmed by owner: blur or crop identifiable fac
 
 # 7. CASE STUDY VERIFICATION
 
-The homepage contains three explicit case cards and additional hero/oversized sections that imply operational projects. No route, customer, shipment document, date, or outcome evidence is linked to the photos. Missing facts are intentionally left blank.
+The current publishable App contains no public case-study module. The following records are retained only as internal evidence drafts. No route, customer, shipment document, date, outcome or publication authorization may be inferred from a photo; missing facts are intentionally left blank.
 
 | Case ID | Photos | Origin | Destination | Cargo | Shipment Mode | Good Logistics Responsibility | Special Challenge | Solution | Result | Can Publish? | Missing Facts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -183,7 +183,7 @@ The homepage contains three explicit case cards and additional hero/oversized se
 | CASE-002 — Protected Large Cargo Record | `oversized-delivery-2.jpg` |  |  |  |  |  |  |  |  | NEEDS CONFIRMATION | Do not infer cargo or case facts from image; identify project, route, mode, scope, challenge, solution, result, and permissions |
 | CASE-003 — Crane-Truck Handling Record | `crane-truck-warehouse.jpg` |  |  |  |  |  |  |  |  | NEEDS CONFIRMATION | Do not infer cargo or case facts from image; identify project, route, mode, scope, challenge, solution, result, and permissions |
 | CASE-004 — Crane-Truck Loading / Oversized Feature | `crane-truck-loading.jpg` |  |  |  |  |  |  |  |  | NEEDS CONFIRMATION | Determine whether it is related to CASE-003; identify all facts and photo rights |
-| CASE-005 — Ningbo Three-Supplier Consolidation to Chicago | No approved case photo supplied | Ningbo; three factories | Chicago door address | Not supplied | 1×40HQ; rail after Los Angeles clearance | Coordinate three suppliers, consolidation, export plan, Los Angeles customs clearance handoff, rail to Chicago and door delivery | Align three supplier handoffs under one container plan | Consolidate as 1×40HQ and coordinate the confirmed route | Multi-supplier cargo moved under one plan to the agreed Chicago address | YES, text-only within these exact facts | Do not add cargo type, inspection, labels, kitting, dates, savings, testimonial or unrelated photos |
+| CASE-005 — Ningbo Three-Supplier Consolidation to Chicago | No approved case photo supplied | Ningbo; three factories | Chicago door address | Not supplied | 1×40HQ; rail after Los Angeles clearance | Coordinate three suppliers, consolidation, export plan, Los Angeles customs clearance handoff, rail to Chicago and door delivery | Align three supplier handoffs under one container plan | Consolidate as 1×40HQ and coordinate the confirmed route | Multi-supplier cargo moved under one plan to the agreed Chicago address | INTERNAL DRAFT — PUBLICATION NOT VERIFIED | Obtain separate, traceable publication authorization; do not add cargo type, inspection, labels, kitting, dates, savings, testimonial or unrelated photos |
 
 ## Priority real-case candidates requested by owner
 
@@ -191,7 +191,7 @@ These are editorial priorities, not completed case facts:
 
 | Candidate | Required real record | Status |
 | --- | --- | --- |
-| Multi-supplier consolidation → Chicago | Owner confirmed: Ningbo, three factories, 1×40HQ, Los Angeles customs clearance, rail to Chicago and door delivery. No approved photo or further outcome data supplied. | CONFIRMED for text-only publication within the stated facts |
+| Multi-supplier consolidation → Chicago | Owner confirmed the internal background: Ningbo, three factories, 1×40HQ, Los Angeles customs clearance, rail to Chicago and door delivery. No approved photo, traceable publication authorization or further outcome data supplied. | INTERNAL DRAFT; PUBLICATION RIGHTS NOT VERIFIED |
 | Oversized / Heavy Cargo → USA | Origin, U.S. destination level safe to publish, cargo dimensions/weight approved for publication, mode/equipment, Good Logistics vs partner roles, challenge, solution, verified result, approved photos | NEEDS CONFIRMATION |
 | Hawaii / Puerto Rico / special destination | Exact approved market and destination, cargo, mode, route/handoff, Good Logistics vs partner roles, special-destination challenge, solution, verified result, approved photos | NEEDS CONFIRMATION |
 

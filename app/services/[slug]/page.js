@@ -13,6 +13,19 @@ function createQuoteHref(service) {
   return `/quote/?${params.toString()}`;
 }
 
+function serviceAreaServed(service) {
+  if (service.category === "China Operations") {
+    return { "@type": "Country", name: "China" };
+  }
+  if (service.category === "China Operations & International Delivery") {
+    return [
+      { "@type": "Country", name: "China" },
+      { "@type": "Country", name: "United States" }
+    ];
+  }
+  return { "@type": "Country", name: "United States" };
+}
+
 export function generateStaticParams() {
   return Object.keys(services).map((slug) => ({ slug }));
 }
@@ -73,7 +86,7 @@ export default async function ServicePage({ params }) {
         description: service.description,
         url,
         provider: { "@type": "Organization", name: company.name, url: company.website },
-        areaServed: { "@type": "Country", name: "United States" },
+        areaServed: serviceAreaServed(service),
         serviceType: service.navTitle
       },
       {
