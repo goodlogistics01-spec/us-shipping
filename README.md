@@ -27,9 +27,13 @@ pnpm test
 pnpm dev
 pnpm build
 pnpm start
+pnpm test:preview http://127.0.0.1:3000
 ```
 
 The root `pnpm-lock.yaml` is the only package lock. Do not add npm, Yarn or Bun lock files.
+`test:preview` only accepts a loopback origin and verifies current sitemap pages,
+internal links and fragments, legacy redirects, SEO metadata, brand/contact
+consistency, image attributes/assets and thank-you indexing/cookie boundaries.
 
 ## Inquiry delivery
 

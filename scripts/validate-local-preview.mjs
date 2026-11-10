@@ -149,6 +149,10 @@ for (const canonicalUrl of sitemapUrls) {
   check(Boolean(metadata.description), `${productionUrl.pathname} is missing a meta description`);
   check(Boolean(metadata.h1), `${productionUrl.pathname} is missing an H1`);
   check(metadata.canonical === canonicalUrl, `${productionUrl.pathname} canonical is ${metadata.canonical || "missing"}`);
+  check(/GOOD LOGISTICS/i.test(html), `${productionUrl.pathname} is missing the public brand`);
+  check(!/\bGOOD SHIPPING\b/i.test(html), `${productionUrl.pathname} exposes the retired public brand`);
+  check(/zoe@gdlogi\.com/i.test(html), `${productionUrl.pathname} is missing the public email`);
+  check(/\+86\s*135\s*5686\s*1676/.test(textContent(html)), `${productionUrl.pathname} is missing the public phone/WhatsApp number`);
   check(!/#case-study\b/i.test(html), `${productionUrl.pathname} still links to the unpublished case study`);
   check(!/"@type"\s*:\s*"CaseStudy"/i.test(html), `${productionUrl.pathname} exposes case-study structured data`);
 
@@ -247,5 +251,6 @@ if (failures.length > 0) {
   console.log(`Rendered images checked: ${imageCount}`);
   console.log(`Image assets checked: ${imageTargets.size}; AVIF sources rendered: ${modernImageSourceCount}`);
   console.log("SEO: title, description, H1 and canonical present on every sitemap page");
+  console.log("Brand/contact: GOOD LOGISTICS, public email and phone are consistent on every sitemap page");
   console.log("Indexing: robots/sitemap valid; thank-you remains noindex and cookie-bound");
 }
