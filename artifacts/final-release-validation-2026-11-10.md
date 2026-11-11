@@ -12,6 +12,17 @@ No real inquiry or email-provider request was made during this work.
 This avatar addendum only updates the photo-rights gate. The broader validation
 record below was not repeated or expanded during the avatar-only change.
 
+## 2026-11-11 controlled inbox addendum
+
+The owner later authorized one current-schema real-provider call from an
+isolated one-shot process. The application returned `PENDING /
+PROVIDER_RESPONSE_UNKNOWN` for request `GL-20261111-5D836B44`; it did not set a
+success cookie and did not retry. Provider acceptance and inbox delivery are not
+claimed. Manual verification of exactly one received message, the complete
+field body, final Reply-To header and reply delivery remains required. The
+redacted evidence is recorded in
+`artifacts/controlled-real-inbox-test-2026-11-11.md`.
+
 ## Protected baseline and rollback
 
 - Branch: `codex/inquiry-first-round-20261110`

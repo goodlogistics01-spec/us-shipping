@@ -75,7 +75,7 @@ These values are local-QA settings and must not be copied into deployment. `INQU
 
 - Local unit and route tests use injected or loopback-only mocks and never contact FormSubmit.
 - A historical owner-approved test reached `zoe@gdlogi.com` on 2026-10-21, before the current multi-service and inspection-type schema.
-- Current full-field inbox rendering, Reply-To behavior and reply delivery are not yet verified with a real provider.
+- One owner-approved current-schema call was made on 2026-11-11. The application returned `PENDING / PROVIDER_RESPONSE_UNKNOWN` for request `GL-20261111-5D836B44`, did not set a success cookie and did not retry. Inbox receipt, full-field rendering, final Reply-To headers and reply delivery remain unverified pending the owner's mailbox check; see `artifacts/controlled-real-inbox-test-2026-11-11.md`.
 - Production deployment has not been performed in this integration round.
 
 ## Analytics

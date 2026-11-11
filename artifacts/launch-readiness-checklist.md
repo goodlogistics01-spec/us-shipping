@@ -61,8 +61,8 @@ labeling, kitting, dates, savings or testimonials.
 | Per-instance rate limit and idempotency | VERIFIED within stated boundary | Bounded in-memory Maps protect one running instance only; deployment platform and any cross-instance store remain `NOT_VERIFIED` |
 | Mock / production provider isolation | VERIFIED in route tests | Local mock requires explicit QA mode, loopback endpoint, loopback site request and local-only switch; public-host loopback configuration fails clearly |
 | Historical FormSubmit delivery to `zoe@gdlogi.com` | VERIFIED for 2026-10-21 schema only | Owner confirmed one non-customer test reached the inbox before the current service and inspection fields were added |
-| Current full-field inbox delivery and Reply-To | NOT_VERIFIED | Run one separately approved controlled test after release acceptance; verify every field, Reply-To and reply delivery |
-| Provider timeout / ambiguous response | VERIFIED locally; real provider not re-tested | Current code returns `PENDING`, does not fire success and does not resend automatically |
+| Current full-field inbox delivery and Reply-To | PENDING manual verification | One approved call on 2026-11-11 returned `PENDING / PROVIDER_RESPONSE_UNKNOWN` with request `GL-20261111-5D836B44`; no retry was made. Check the recipient inbox and junk folder for exactly one copy, all fields, Reply-To and reply delivery |
+| Provider timeout / ambiguous response | VERIFIED locally and observed in the controlled call | The controlled call remained `PENDING`, did not set a success cookie, did not fire success and was not resent automatically |
 
 ### Historical owner-approved live test — 2026-10-21 (pre-current schema)
 
@@ -98,6 +98,6 @@ Before production deployment:
 1. Close or intentionally remove every `NOT_VERIFIED` public claim.
 2. Final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks completed on 2026-11-10.
 3. Confirm the deployment platform and decide whether single-instance rate limiting and idempotency are sufficient.
-4. Obtain owner approval before the controlled current-schema FormSubmit inbox test.
-5. Verify every current field, Reply-To and reply delivery in that single controlled test.
+4. Owner approval was obtained and the single controlled current-schema FormSubmit call was made on 2026-11-11; do not submit it again.
+5. Complete the manual inbox check for request `GL-20261111-5D836B44`: exactly one copy, every current field, Reply-To and reply delivery.
 6. Review the production diff and obtain explicit approval before changing the live site.
