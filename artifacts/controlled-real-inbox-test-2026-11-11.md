@@ -53,21 +53,23 @@ to classify it as accepted or rejected. In accordance with the state rules,
 this result is **not SUCCESS**, is not counted as accepted, did not set a success
 cookie and was not resent. It does not establish that an email was delivered.
 
-## Manual inbox verification still required
+## Owner-confirmed inbox evidence
 
-The owner must inspect the `zoe@gdlogi.com` inbox and spam/junk folders and
-report all of the following without triggering another website submission:
+On 2026-11-11 the owner supplied the received message and separately confirmed
+the copy count and Reply-To behavior:
 
-1. whether a message carrying request ID `GL-20261111-5D836B44` arrived;
-2. whether exactly one copy arrived;
-3. whether every current field and both inspection scopes are present;
-4. whether Reply-To resolves to the controlled `395***@qq.com` address;
-5. after a manual reply, whether the reply reaches that QQ mailbox.
+| Manual check | Result |
+| --- | --- |
+| Message carrying request ID `GL-20261111-5D836B44` arrived at `zoe@gdlogi.com` | PASS |
+| Number of received copies | PASS — exactly one |
+| Current fields, both inspection types and both scope boundaries | PASS |
+| Clicking Reply addresses the controlled `395***@qq.com` mailbox | PASS |
+| A manually sent reply reaches the QQ mailbox | `NOT_VERIFIED` |
 
-Until those checks are reported, inbox delivery, final Reply-To headers and reply
-delivery remain `NOT_VERIFIED`. A missing message should be investigated through
-the receiving mailbox and Provider state; it must not cause an automatic or
-second website submission.
+The inbox evidence confirms delivery even though the synchronous Provider reply
+was ambiguous. The application was correct to remain conservative: it did not
+claim success, set a success cookie or resend. No second website submission is
+needed. Only delivery of a manually sent reply remains to be confirmed.
 
 ## Cleanup and boundary
 

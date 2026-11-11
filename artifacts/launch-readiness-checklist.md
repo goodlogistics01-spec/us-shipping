@@ -56,12 +56,12 @@ labeling, kitting, dates, savings or testimonials.
 | Server validation, provider classification and route behavior | VERIFIED locally | 39 unit/route tests pass, including valid international email/phone forms, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency and configuration failure |
 | Active browser forms and responsive interaction | VERIFIED locally on final build | Homepage, `/quote/` and Sea Freight forms were checked against the controlled loopback provider at 375, 390, 768 and 1440 widths; no real provider was contacted |
 | Separate shipping method and multi-value service needs | VERIFIED locally | Route tests preserve all selected values in the provider body |
-| Receiving checks versus product-quality inspection | VERIFIED locally | Both types can be selected together; legacy generic `Inspection` remains scope-not-specified; current real inbox rendering still needs the approved test |
+| Receiving checks versus product-quality inspection | VERIFIED locally and in the controlled inbox message | Both types and their separate scope boundaries were present in request `GL-20261111-5D836B44`; legacy generic `Inspection` remains scope-not-specified |
 | Consent, honeypot and same-page duplicate-submit guard | VERIFIED locally on final build | Honeypot makes zero provider calls; a double-click success sample produced one mock record and the browser lock remained active for `PENDING` |
 | Per-instance rate limit and idempotency | VERIFIED within stated boundary | Bounded in-memory Maps protect one running instance only; deployment platform and any cross-instance store remain `NOT_VERIFIED` |
 | Mock / production provider isolation | VERIFIED in route tests | Local mock requires explicit QA mode, loopback endpoint, loopback site request and local-only switch; public-host loopback configuration fails clearly |
 | Historical FormSubmit delivery to `zoe@gdlogi.com` | VERIFIED for 2026-10-21 schema only | Owner confirmed one non-customer test reached the inbox before the current service and inspection fields were added |
-| Current full-field inbox delivery and Reply-To | PENDING manual verification | One approved call on 2026-11-11 returned `PENDING / PROVIDER_RESPONSE_UNKNOWN` with request `GL-20261111-5D836B44`; no retry was made. Check the recipient inbox and junk folder for exactly one copy, all fields, Reply-To and reply delivery |
+| Current full-field inbox delivery and Reply-To | VERIFIED; reply delivery remains `NOT_VERIFIED` | The owner confirmed exactly one copy, every current field and the correct Reply-To target for request `GL-20261111-5D836B44`. A manual reply still needs to be confirmed at the controlled mailbox |
 | Provider timeout / ambiguous response | VERIFIED locally and observed in the controlled call | The controlled call remained `PENDING`, did not set a success cookie, did not fire success and was not resent automatically |
 
 ### Historical owner-approved live test — 2026-10-21 (pre-current schema)
@@ -99,5 +99,5 @@ Before production deployment:
 2. Final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks completed on 2026-11-10.
 3. Confirm the deployment platform and decide whether single-instance rate limiting and idempotency are sufficient.
 4. Owner approval was obtained and the single controlled current-schema FormSubmit call was made on 2026-11-11; do not submit it again.
-5. Complete the manual inbox check for request `GL-20261111-5D836B44`: exactly one copy, every current field, Reply-To and reply delivery.
+5. Receipt, exactly-one count, current fields and Reply-To are confirmed for request `GL-20261111-5D836B44`; only delivery of a manually sent reply remains to be confirmed.
 6. Review the production diff and obtain explicit approval before changing the live site.

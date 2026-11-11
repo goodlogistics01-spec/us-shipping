@@ -18,9 +18,10 @@ The owner later authorized one current-schema real-provider call from an
 isolated one-shot process. The application returned `PENDING /
 PROVIDER_RESPONSE_UNKNOWN` for request `GL-20261111-5D836B44`; it did not set a
 success cookie and did not retry. Provider acceptance and inbox delivery are not
-claimed. Manual verification of exactly one received message, the complete
-field body, final Reply-To header and reply delivery remains required. The
-redacted evidence is recorded in
+claimed from that synchronous response alone. The owner later confirmed exactly
+one message arrived, its complete current field body was present and clicking
+Reply addressed the controlled contact mailbox. Delivery of a manually sent
+reply remains `NOT_VERIFIED`. The redacted evidence is recorded in
 `artifacts/controlled-real-inbox-test-2026-11-11.md`.
 
 ## Protected baseline and rollback
