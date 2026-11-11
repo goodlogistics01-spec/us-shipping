@@ -35,6 +35,17 @@ const inspectionTypeOptions = [
   ["scope-not-specified", "Not sure — help define the inspection scope"]
 ];
 
+const optionalDetailFieldNames = new Set([
+  "company",
+  "whatsapp",
+  "cargo_ready_date",
+  "preferred_contact",
+  "package_count",
+  "dimensions",
+  "cargo_type",
+  "message"
+]);
+
 const shippingMethodParameterMap = {
   "not-sure": "not-sure",
   "sea-freight": "ocean-freight",
@@ -170,6 +181,7 @@ export default function QuoteForm({
   const [preferredContact, setPreferredContact] = useState("email");
   const submittingRef = useRef(false);
   const startedRef = useRef(false);
+  const optionalDetailsRef = useRef(null);
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(defaultShippingMethod);
   const [selectedServiceNeeds, setSelectedServiceNeeds] = useState(defaultServiceNeeds);
   const [selectedInspectionTypes, setSelectedInspectionTypes] = useState(
@@ -282,6 +294,9 @@ export default function QuoteForm({
 
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
+      if (Object.keys(errors).some((name) => optionalDetailFieldNames.has(name))) {
+        optionalDetailsRef.current.open = true;
+      }
       setStatus("invalid");
       trackInquiryEvent("quote_submit_failed", {
         source,
@@ -351,6 +366,9 @@ export default function QuoteForm({
       submittingRef.current = false;
       const serverFieldErrors = error.fieldErrors || {};
       setFieldErrors((current) => ({ ...current, ...serverFieldErrors }));
+      if (Object.keys(serverFieldErrors).some((name) => optionalDetailFieldNames.has(name))) {
+        optionalDetailsRef.current.open = true;
+      }
       setStatus(Object.keys(serverFieldErrors).length > 0 ? "invalid" : "failed");
       trackInquiryEvent("quote_submit_failed", {
         source,
@@ -455,6 +473,9 @@ export default function QuoteForm({
       </label>
 
       <div className="marketing-form-grid">
+        <p className="marketing-form-intro form-span-two">
+          Only the starred fields are required. We can confirm the remaining details with you.
+        </p>
         <label>
           Name <span aria-hidden="true">*</span>
           <input
@@ -468,10 +489,6 @@ export default function QuoteForm({
           <FieldError id="quote-error-name" message={fieldErrors.name} />
         </label>
         <label>
-          Company
-          <input name="company" autoComplete="organization" maxLength="160" />
-        </label>
-        <label>
           Email <span aria-hidden="true">*</span>
           <input
             name="email"
@@ -483,19 +500,6 @@ export default function QuoteForm({
             aria-describedby={fieldErrors.email ? "quote-error-email" : undefined}
           />
           <FieldError id="quote-error-email" message={fieldErrors.email} />
-        </label>
-        <label>
-          WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
-          <input
-            name="whatsapp"
-            type="tel"
-            autoComplete="tel"
-            maxLength="50"
-            required={preferredContact === "whatsapp"}
-            aria-invalid={Boolean(fieldErrors.whatsapp)}
-            aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
-          />
-          <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
         </label>
         <label className="form-span-two">
           Product / Goods Name <span aria-hidden="true">*</span>
@@ -534,7 +538,7 @@ export default function QuoteForm({
           <FieldError id="quote-error-destination" message={fieldErrors.destination} />
         </label>
 
-        <label>
+        <label className="form-span-two">
           Shipping Method
           <select
             name="shipping_method"
@@ -546,10 +550,18 @@ export default function QuoteForm({
             ))}
           </select>
         </label>
-        <label>
-          Cargo Ready Date
-          <input name="cargo_ready_date" type="date" />
-        </label>
+        {(productPage || !compact) ? (
+          <>
+            <label>
+              Total Weight <span className="marketing-optional-label">(optional)</span>
+              <input name="weight" placeholder="kg, lb or not sure" maxLength="100" />
+            </label>
+            <label>
+              Total Volume <span className="marketing-optional-label">(optional)</span>
+              <input name="volume" placeholder="CBM or not sure" maxLength="160" />
+            </label>
+          </>
+        ) : null}
 
         <fieldset
           className="marketing-service-needs form-span-two"
@@ -599,90 +611,76 @@ export default function QuoteForm({
             <FieldError id="quote-error-inspection-types" message={fieldErrors.inspection_types} />
           </fieldset>
         ) : null}
-        <label>
-          Preferred Reply Method
-          <select
-            name="preferred_contact"
-            value={preferredContact}
-            onChange={handlePreferredContactChange}
-          >
-            <option value="email">Email</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="either">Either is fine</option>
-          </select>
-        </label>
-
-        {productPage ? (
-          <>
+        <details className="marketing-optional-details form-span-two" ref={optionalDetailsRef}>
+          <summary>Add shipment details <span>(optional)</span></summary>
+          <div className="marketing-form-grid marketing-optional-details-grid">
             <label>
-              Total Weight
-              <input name="weight" placeholder="kg or lb (optional / not sure is OK)" maxLength="100" />
+              Company
+              <input name="company" autoComplete="organization" maxLength="160" />
             </label>
             <label>
-              Volume / Packed Dimensions
-              <input name="volume" placeholder="CBM or dimensions (optional)" maxLength="160" />
-            </label>
-            <label className="form-span-two">
-              Cargo Details (optional)
-              <textarea
-                name="cargo_type"
-                rows="4"
-                placeholder="Packaging, carton or pallet count, and handling requirements"
-                maxLength="2000"
+              WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
+              <input
+                name="whatsapp"
+                type="tel"
+                autoComplete="tel"
+                maxLength="50"
+                required={preferredContact === "whatsapp"}
+                aria-invalid={Boolean(fieldErrors.whatsapp)}
+                aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
               />
+              <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
+            </label>
+            <label>
+              Cargo Ready Date
+              <input name="cargo_ready_date" type="date" />
+            </label>
+            <label>
+              Preferred Reply Method
+              <select
+                name="preferred_contact"
+                value={preferredContact}
+                onChange={handlePreferredContactChange}
+              >
+                <option value="email">Email</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="either">Either is fine</option>
+              </select>
             </label>
             <label>
               Carton / Pallet Quantity
               <input name="package_count" inputMode="numeric" maxLength="80" />
             </label>
-            <label className="form-span-two">
-              Special Requirements
-              <textarea
-                name="message"
-                rows="3"
-                placeholder="FBA appointment, liftgate, residential access, oversized handling or other requirements"
-                maxLength="2000"
-              />
+            <label>
+              Packed Dimensions
+              <input name="dimensions" placeholder="L × W × H and unit" maxLength="160" />
             </label>
-          </>
-        ) : (
-          <>
             <label className="form-span-two">
-              Cargo Details (optional)
+              Cargo Details
               <textarea
                 name="cargo_type"
                 rows="4"
-                placeholder="Packaging and any special handling needs"
+                placeholder={productPage
+                  ? "Packaging, carton or pallet details, and handling requirements"
+                  : "Packaging and any special handling needs"}
                 maxLength="2000"
               />
             </label>
-            {!compact && (
-              <>
-                <label>
-                  Number of Cartons / Pallets
-                  <input name="package_count" inputMode="numeric" maxLength="80" />
-                </label>
-                <label>
-                  Total Weight
-                  <input name="weight" placeholder="kg or lb" maxLength="100" />
-                </label>
-                <label>
-                  Total Volume
-                  <input name="volume" placeholder="CBM or dimensions" maxLength="160" />
-                </label>
-                <label className="form-span-two">
-                  Additional Requirements
-                  <textarea
-                    name="message"
-                    rows="3"
-                    placeholder="FBA, liftgate, residential delivery, customs or other requirements"
-                    maxLength="2000"
-                  />
-                </label>
-              </>
-            )}
-          </>
-        )}
+            {(productPage || !compact) ? (
+              <label className="form-span-two">
+                Additional Notes
+                <textarea
+                  name="message"
+                  rows="3"
+                  placeholder={productPage
+                    ? "FBA appointment, liftgate, residential access, oversized handling or other requirements"
+                    : "FBA, liftgate, residential delivery, customs or other requirements"}
+                  maxLength="2000"
+                />
+              </label>
+            ) : null}
+          </div>
+        </details>
       </div>
 
       <label className="marketing-consent">

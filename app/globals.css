@@ -492,6 +492,16 @@ body a {
   gap: 18px;
 }
 
+.marketing-form-intro {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid #1682c4;
+  color: #52657d;
+  background: #f4f8fc;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .marketing-form label {
   display: grid;
   gap: 7px;
@@ -535,8 +545,50 @@ body a {
   line-height: 1.4;
 }
 
+.marketing-optional-label {
+  color: #6a7c91;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .form-span-two {
   grid-column: 1 / -1;
+}
+
+.marketing-optional-details {
+  min-width: 0;
+  border: 1px solid #cbd7e5;
+  border-radius: 5px;
+  background: #f7f9fc;
+}
+
+.marketing-optional-details summary {
+  min-height: 48px;
+  padding: 14px 17px;
+  color: #20354f;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.marketing-optional-details summary span {
+  color: #6a7c91;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.marketing-optional-details summary:focus-visible {
+  outline: 3px solid rgba(22, 130, 196, 0.3);
+  outline-offset: 3px;
+}
+
+.marketing-optional-details[open] summary {
+  border-bottom: 1px solid #d9e2ed;
+}
+
+.marketing-optional-details-grid {
+  padding: 18px;
 }
 
 .marketing-service-needs {
@@ -841,6 +893,10 @@ body a {
 
   .marketing-checkbox-grid {
     grid-template-columns: 1fr;
+  }
+
+  .marketing-optional-details-grid {
+    gap: 18px;
   }
 
   .marketing-actions,
@@ -2397,6 +2453,12 @@ body a {
 
   .ocean-quote-form-layout {
     grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+
+@media (max-width: 860px) {
+  .ocean-quote-form-layout {
+    grid-template-columns: 1fr;
   }
 }
 

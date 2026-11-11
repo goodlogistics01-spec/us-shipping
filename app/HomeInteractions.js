@@ -163,6 +163,8 @@ export default function HomeInteractions() {
       const preferredContact = form.elements.preferred_contact;
       const phone = form.elements.whatsapp;
       const email = form.elements.email;
+      const optionalDetails = form.querySelector("[data-home-optional-details]");
+      const phoneRequiredIndicator = form.querySelector("[data-home-phone-required]");
       const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
       const inspectionTypesFieldset = form.querySelector("[data-home-inspection-types]");
       const inspectionTypeInputs = Array.from(
@@ -201,6 +203,7 @@ export default function HomeInteractions() {
       };
 
       const showFieldError = (field) => {
+        if (optionalDetails?.contains(field)) optionalDetails.open = true;
         field.setAttribute("aria-invalid", "true");
         const errorElement = getErrorElement(field);
         if (errorElement) errorElement.textContent = getValidationMessage(field);
@@ -217,6 +220,7 @@ export default function HomeInteractions() {
         const isRequired = preferredContact.value === "whatsapp";
         const value = phone.value.trim();
         phone.required = isRequired;
+        if (phoneRequiredIndicator) phoneRequiredIndicator.hidden = !isRequired;
         phone.setCustomValidity("");
 
         if (isRequired && !value) {
