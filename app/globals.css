@@ -442,9 +442,11 @@ body a {
 
 .marketing-profile-grid img {
   width: min(100%, 360px);
-  height: 430px;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 640 / 904;
+  object-fit: contain;
   object-position: center top;
+  background: #dbe3eb;
   border-radius: 6px;
   justify-self: center;
 }

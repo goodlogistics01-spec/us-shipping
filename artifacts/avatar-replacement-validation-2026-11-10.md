@@ -16,7 +16,9 @@
 | `public/good-shipping-homepage/assets/authors/zoe-zhou-headshot.jpg` | 640×904 | 63,693 bytes | `47b171a040fcdad56b74e1bdf6ad5d274c759cf0c73f1414be4116724695d9ad` | JPEG fallback, metadata and Schema image URL |
 | `public/good-shipping-homepage/assets/authors/zoe-zhou-headshot-240.jpg` | 240×339 | 13,990 bytes | `4546b1ea8aee3c22731fab811485fb0ca852354af0ac796a125665d04549bce2` | Retained legacy resource sidebars displayed at 92×112 |
 
-The original aspect ratio is preserved in every generated file. Existing fixed display boxes use `object-fit: cover`; top-center positioning keeps the full face visible without stretching.
+The original aspect ratio is preserved in every generated file. The current homepage and Zoe profile now use `object-fit: contain` with top-center positioning so the uploaded upper-body portrait remains visible without stretching. The small retained legacy author cards keep their existing thumbnail treatment because showing the full upper body inside a 92×112 slot would make the person impractically small.
+
+Display follow-up: `artifacts/avatar-half-body-validation-2026-11-13.md` records the responsive half-body presentation change and its browser evidence. No image pixels were generated or altered for that follow-up.
 
 ## Reference coverage
 
