@@ -713,6 +713,85 @@
   font-weight: 720;
 }
 
+.home-operations-showcase {
+  margin-top: 58px;
+  padding-top: 42px;
+  border-top: 1px solid var(--home-line);
+}
+
+.home-operations-heading {
+  max-width: 760px;
+}
+
+.home-operations-heading h3 {
+  margin-top: 10px;
+  color: var(--home-navy-900);
+  font-size: clamp(26px, 3.2vw, 38px);
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.home-operations-heading > p:last-child {
+  margin-top: 14px;
+  color: var(--home-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.home-operations-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-operation-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--home-line);
+  border-radius: 14px;
+  color: inherit;
+  background: var(--home-white);
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.home-operation-card:hover,
+.home-operation-card:focus-visible {
+  border-color: #8bb6d7;
+  transform: translateY(-3px);
+}
+
+.home-operation-card picture {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e7edf3;
+}
+
+.home-operation-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.home-operation-card > div {
+  display: grid;
+  gap: 7px;
+  padding: 20px;
+}
+
+.home-operation-card strong {
+  color: var(--home-navy-900);
+  font-size: 16px;
+}
+
+.home-operation-card span {
+  color: var(--home-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .home-oversized {
   color: var(--home-white);
   background: var(--home-navy-950);
@@ -727,6 +806,7 @@
 
 .home-oversized-media {
   position: relative;
+  margin: 0;
 }
 
 .home-oversized-media picture {
@@ -819,6 +899,16 @@
 
 .home-oversized-copy > p {
   color: #c9d7e6;
+}
+
+.home-oversized-copy .home-oversized-inputs {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border-left: 3px solid #79bee9;
+  color: #dce8f4;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 .home-feature-list {
@@ -2285,6 +2375,10 @@
     gap: 16px;
   }
 
+  .home-operations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .home-buyer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2451,6 +2545,10 @@
   .home-case-grid,
   .home-scenario-grid,
   .home-industry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-operations-grid {
     grid-template-columns: 1fr;
   }
 

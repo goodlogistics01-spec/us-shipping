@@ -163,6 +163,20 @@ AVIF files are format/size derivatives of the listed source photographs and inhe
 | `assets/authors/zoe-zhou-headshot.jpg` plus `headshot-640.avif` and `headshot-240.jpg` | New portrait supplied by the owner and identified as Zoe Zhou | Personal profile, not shipment | Homepage, profile page, legacy resource sidebars, page metadata and Schema | User-supplied file recorded by hash; photographer ownership not asserted | Personal face/biometric image | No visible third-party logo | Owner explicitly confirmed this specific uploaded photo may be displayed publicly on the website on 2026-11-10 | APPROVED FOR WEBSITE USE |
 | `assets/authors/zoe-zhou-author-card.jpg` | Designed author/contact card containing portrait, phone, email, routes, job title, `NVOCC`, and `Forwarder` labels | Marketing profile asset | Retained as an unreferenced legacy file; no tracked public page currently references it | Not documented | Face and direct contact details visible | GOOD-SHIPPING logo and qualification labels visible | Not recorded; facts conflict with current pages | DO NOT USE |
 
+## Local operational-photo placement draft — 2026-11-13
+
+The owner asked that available operational photos be placed in their most relevant website locations. The following files are privacy-reduced derivatives used in the local preview; originals remain outside the public directory. The instruction authorizes this local placement review, but photographer/customer/location publication rights have not been separately documented. Do not deploy these derivatives until Zoe confirms that each selected source is cleared for public website use.
+
+| Public derivative set | Source and SHA-256 | Local placement | Privacy / authenticity treatment | Status |
+| --- | --- | --- | --- | --- |
+| `assets/operations/china-operations-*` | `china-warehouse.jpg` — `79abd6561bac2474018c251e0c3b9e2a4fa8c2cfee46b86d5655a2878ab0425e` | Homepage hero | Cropped away area signs and most labels; remaining readable barcode blurred; metadata stripped; caption does not claim an owned warehouse | LOCAL PREVIEW — PUBLIC RIGHTS TODO_CONFIRM |
+| `assets/operations/consolidation-staging-*` | `consolidation.jpg` — `8af4fb4bbf0b731aa33f55a3fba7bd0562877aeba13833132a3cc3d104b1d3f9` | Homepage operations strip, supplier-consolidation page and ocean-freight cargo-facts section | Person and overhead location sign excluded by crop; small labels and handwritten markings blurred; metadata stripped; caption does not infer multi-supplier project facts or location from the image | LOCAL PREVIEW — PUBLIC RIGHTS TODO_CONFIRM |
+| `assets/operations/warehouse-crates-*` | `warehouse-crates.jpg` — `5e511115abf0e3d358541954002b6d3643d7af4c2423a488ec258033e3cae86b` | Homepage operations strip and warehousing page | Area sign reduced by crop; visible barcode and shipment marking blurred; metadata stripped; caption states that facility model and scope are confirmed separately | LOCAL PREVIEW — PUBLIC RIGHTS TODO_CONFIRM |
+| `assets/operations/packing-preparation-*` | `packing-detail.jpg` — `547c51bb8c02856481d45dcd8c75d6ff39fbbac9630cb5db1b8b23a67be41e73` | Homepage operations strip and oversized-cargo packaging section | Customer/brand labels excluded by crop; metadata stripped; described as packaging and handling context, not inspection or certification | LOCAL PREVIEW — PUBLIC RIGHTS TODO_CONFIRM |
+| `assets/operations/loading-coordination-*` | `crane-loading.jpg` — `a6a8f9c588c2aeec637880a46c1023fcc981e78cbae0e5ca34b1b89feb226a55` | Homepage oversized section, oversized-cargo page and ocean-freight cargo-facts section | Identifiable operator and equipment branding excluded by crop; small shipment label blurred; metadata stripped; no location, project or equipment ownership implied | LOCAL PREVIEW — PUBLIC RIGHTS TODO_CONFIRM |
+
+The three UK delivery photos and `早到柜子.jpg` remain out of active pages. They need separate location/project-rights confirmation and materially more privacy treatment; UK photos must not be used as evidence of U.S. delivery.
+
 ## Non-photographic assets
 
 | File | Type | Rights / factual risk | Status |
@@ -197,7 +211,7 @@ These are editorial priorities, not completed case facts:
 
 ## Oversized cargo publication gate
 
-Do not describe these as Good Logistics shipments, China-to-USA projects, ocean-freight cases, successful deliveries, or customer results until each case has its own approved evidence record. The current homepage labels `China → USA`, `Pickup · Ocean Freight · Final Delivery`, and `Real Cargo. Real Handling. Real Delivery.` require owner verification against the specific images.
+Do not describe these as Good Logistics shipments, China-to-USA projects, ocean-freight cases, successful deliveries, or customer results until each case has its own approved evidence record. Previously removed image labels that asserted a route, mode or delivery result must not be restored without shipment-specific evidence.
 
 # 8. CONTENT / LEGAL OWNERSHIP
 
@@ -207,7 +221,7 @@ Do not describe these as Good Logistics shipments, China-to-USA projects, ocean-
 | Zoe author card | Contains retired logo, conflicting title, route claims, and unverified qualification labels | Factual conflict and brand confusion | Owner directs that old branding must not be used; do not reuse the card | DO NOT PUBLISH |
 | Current company logo | Owner confirms current Good Logistics logo is approved | No remaining owner-decision conflict | Retain an ownership/source record when available | CONFIRMED |
 | Older GOOD-SHIPPING logo | File exists in legacy assets | Brand conflict | Owner directs that it must not be used | DO NOT PUBLISH |
-| Customer/project photos | Four operational-looking source photos plus derivatives | Customer permission, photographer rights, location/person privacy, inaccurate project attribution | Identify owner/project; obtain written publication approval; review visible people, labels, and third-party branding | NEEDS CONFIRMATION |
+| Customer/project photos | Legacy operational photos plus five local-preview source photos and their derivatives | Customer permission, photographer rights, location/person privacy, inaccurate project attribution | Identify owner/project; obtain written publication approval; review visible people, labels, and third-party branding | NEEDS CONFIRMATION |
 | Amazon-related illustration | Generic graphic contains Amazon branding; source/authorization unclear | Trademark and brand-guideline risk; could imply affiliation | Owner directs replacement with real FBA operations material; do not treat it as a permanent asset | NEEDS CONFIRMATION |
 | Certificates/filings | No original certificate image found; old composite described only as marketing reference | Misrepresentation and sensitive-data exposure | Obtain original/registry evidence; approve public-safe redacted copies | DO NOT PUBLISH |
 | Customer brand logos | No customer-logo library found | No permission evidence | Do not add logos without written permission | DO NOT PUBLISH |
@@ -299,6 +313,8 @@ The following decisions were recorded from the owner's 2026-10-20 response. `CLO
 - [ ] Identify source, photographer, project, client, date, and owner for `crane-truck-loading.jpg`.
 - [ ] Identify source, photographer, project, client, date, and owner for `oversized-delivery-1.jpg`.
 - [ ] Identify source, photographer, project, client, date, and owner for `oversized-delivery-2.jpg`.
+- [ ] Confirm public commercial website rights for `china-warehouse.jpg`, `consolidation.jpg`, `warehouse-crates.jpg`, `packing-detail.jpg`, and `crane-loading.jpg`.
+- [ ] Where available, record each selected source photo's photographer/owner, project, client, date, safe location description, and Good Logistics responsibility.
 - [ ] Written or recorded permission to publish each approved operational photo.
 - [ ] Per-photo privacy review for faces, customer/location signage, shipment labels, plates, container numbers, and third-party logos.
 - [ ] Confirm whether CASE-003 and CASE-004 are the same project.

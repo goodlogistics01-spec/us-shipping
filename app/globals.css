@@ -217,6 +217,40 @@ body a {
   min-width: 0;
 }
 
+.marketing-service-media {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: #061c3b;
+  box-shadow: 0 28px 60px rgba(3, 18, 39, 0.34);
+}
+
+.marketing-service-media picture {
+  display: block;
+  height: 420px;
+}
+
+.marketing-service-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.marketing-service-media figcaption {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: #dbe8f7;
+  background: #061c3b;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .marketing-hero-brief {
   min-height: 390px;
   display: grid;
@@ -272,6 +306,48 @@ body a {
 
 .marketing-section {
   padding: 82px 0;
+}
+
+.marketing-operation-feature {
+  padding-block: 24px 82px;
+}
+
+.marketing-operation-feature-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 54px;
+  align-items: center;
+}
+
+.marketing-operation-feature figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e8eef4;
+  box-shadow: 0 24px 52px rgba(7, 43, 83, 0.12);
+}
+
+.marketing-operation-feature picture {
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.marketing-operation-feature img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.marketing-operation-feature h2 {
+  margin-top: 12px;
+}
+
+.marketing-operation-feature p:last-child {
+  margin-top: 18px;
+  color: #4c5f74;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 .marketing-soft-section {
@@ -864,6 +940,15 @@ body a {
     height: 360px;
   }
 
+  .marketing-service-media picture {
+    height: 360px;
+  }
+
+  .marketing-operation-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
   .marketing-card-grid,
   .marketing-contact-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -905,6 +990,14 @@ body a {
 
   .marketing-hero-image {
     height: 290px;
+  }
+
+  .marketing-service-media picture {
+    height: 320px;
+  }
+
+  .marketing-service-media figcaption {
+    min-height: 0;
   }
 
   .marketing-hero-brief {
@@ -2016,6 +2109,17 @@ body a {
   font-size: 13px !important;
 }
 
+.ocean-ops-evidence {
+  display: grid;
+  gap: 30px;
+}
+
+.ocean-ops-evidence .ocean-factor-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+}
+
 .ocean-ops-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2530,7 +2634,7 @@ body a {
   .ocean-solutions-grid,
   .ocean-workflow-rail,
   .ocean-delivery-groups,
-  .ocean-factor-list,
+  .ocean-ops-evidence .ocean-factor-list,
   .ocean-quote-form-layout,
   .ocean-case-study dl {
     grid-template-columns: 1fr;

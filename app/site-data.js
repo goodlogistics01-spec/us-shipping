@@ -277,6 +277,25 @@ export const services = {
       "Oversized and complex cargo shipping from China to the USA with packing, loading and final delivery planning.",
     summary:
       "Shipment planning for large, heavy or difficult cargo where dimensions, lifting points, packaging, route access and delivery equipment must be reviewed together.",
+    heroMedia: {
+      base: "/good-shipping-homepage/assets/operations/loading-coordination",
+      widths: [320, 480, 550],
+      fallbackWidth: 550,
+      width: 550,
+      height: 688,
+      alt: "A wrapped wooden crate positioned on a truck.",
+      caption: "Packed-cargo loading context. Equipment and operating responsibility are confirmed for each shipment."
+    },
+    supportingMedia: {
+      base: "/good-shipping-homepage/assets/operations/packing-preparation",
+      widths: [480, 800, 1000],
+      fallbackWidth: 1000,
+      width: 1000,
+      height: 563,
+      alt: "Large wooden shipping crates prepared for cargo handling.",
+      title: "Packaging is reviewed against the actual cargo",
+      copy: "Packed dimensions, lifting points, crate condition and the proposed loading method are reviewed before equipment or routing is confirmed. This is a planning review, not a packaging certification."
+    },
     bestFor: [
       "Machinery and industrial equipment",
       "Large furniture and commercial fixtures",
@@ -334,6 +353,15 @@ export const services = {
       "Coordinate factory pickup, receiving checks and multi-supplier consolidation in China before international shipping.",
     summary:
       "A coordinated workflow for buyers who need cargo collected from one or more Chinese suppliers, checked against the agreed handoff record and released under one shipping plan.",
+    heroMedia: {
+      base: "/good-shipping-homepage/assets/operations/consolidation-staging",
+      widths: [480, 800, 1000],
+      fallbackWidth: 1000,
+      width: 1000,
+      height: 750,
+      alt: "Mixed crates and packaged cargo staged inside a consolidation facility.",
+      caption: "Crates and packaged cargo in a handling area. Supplier and shipment details are confirmed separately."
+    },
     bestFor: [
       "Importers buying from several factories",
       "Mixed products with different cargo-ready dates",
@@ -392,6 +420,15 @@ export const services = {
       "Coordinate receiving, temporary storage, inventory checks and planned cargo releases in China for international shipments.",
     summary:
       "A practical holding and release workflow for buyers whose suppliers finish at different times or whose cargo needs to move under a staged shipping plan.",
+    heroMedia: {
+      base: "/good-shipping-homepage/assets/operations/warehouse-crates",
+      widths: [480, 800, 1150],
+      fallbackWidth: 1150,
+      width: 1150,
+      height: 862,
+      alt: "Wooden export crates stored inside a cargo handling area.",
+      caption: "Crated cargo in a handling area. Facility model, storage conditions and release scope are confirmed per project."
+    },
     bestFor: [
       "Buyers collecting cargo from multiple suppliers",
       "Shipments with different production-ready dates",

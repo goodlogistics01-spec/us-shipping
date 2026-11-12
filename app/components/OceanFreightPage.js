@@ -165,14 +165,34 @@ export default function OceanFreightPage({ service, schema }) {
             <p>A useful sea-freight quotation starts with the product, packed dimensions, weight, supplier location and delivery conditions. Unknown weight or volume can be marked for follow-up.</p>
             <p className="ocean-evidence-note">The quotation confirms the shipment-specific scope; it does not imply fixed schedules, customs acceptance or an unconditional delivery promise.</p>
           </div>
-          <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
-            <li>Product name and packaging</li>
-            <li>Pickup city and cargo-ready date</li>
-            <li>Destination ZIP code and access conditions</li>
-            <li>Known weight, volume or packed dimensions</li>
-            <li>FCL, LCL or recommendation request</li>
-            <li>FBA, residential, liftgate or oversized needs</li>
-          </ul>
+          <div className="ocean-ops-evidence">
+            <div className="ocean-ops-gallery" role="group" aria-label="Selected cargo handling photos">
+              <figure>
+                <picture>
+                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/consolidation-staging-480.avif 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.avif 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.avif 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/consolidation-staging-480.webp 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.webp 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.webp 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <img src="/good-shipping-homepage/assets/operations/consolidation-staging-1000.jpg" alt="Mixed crates and packaged cargo staged inside a consolidation facility." width="1000" height="750" loading="lazy" decoding="async" />
+                </picture>
+                <figcaption>Crates and packaged cargo shown in a handling area; the shipment-specific plan is confirmed separately.</figcaption>
+              </figure>
+              <figure>
+                <picture>
+                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/loading-coordination-320.avif 320w, /good-shipping-homepage/assets/operations/loading-coordination-480.avif 480w, /good-shipping-homepage/assets/operations/loading-coordination-550.avif 550w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/loading-coordination-320.webp 320w, /good-shipping-homepage/assets/operations/loading-coordination-480.webp 480w, /good-shipping-homepage/assets/operations/loading-coordination-550.webp 550w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <img src="/good-shipping-homepage/assets/operations/loading-coordination-550.jpg" alt="A wrapped wooden crate positioned on a truck." width="550" height="688" loading="lazy" decoding="async" />
+                </picture>
+                <figcaption>Packed-cargo loading context; equipment and operating scope are confirmed for each shipment.</figcaption>
+              </figure>
+            </div>
+            <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
+              <li>Product name and packaging</li>
+              <li>Pickup city and cargo-ready date</li>
+              <li>Destination ZIP code and access conditions</li>
+              <li>Known weight, volume or packed dimensions</li>
+              <li>FCL, LCL or recommendation request</li>
+              <li>FBA, residential, liftgate or oversized needs</li>
+            </ul>
+          </div>
         </div>
       </section>
 

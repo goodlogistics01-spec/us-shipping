@@ -26,6 +26,28 @@ function serviceAreaServed(service) {
   return { "@type": "Country", name: "United States" };
 }
 
+function ResponsiveOperationPhoto({ media, eager = false, sizes = "(max-width: 1023px) 100vw, 44vw" }) {
+  const srcSet = (extension) => media.widths
+    .map((width) => `${media.base}-${width}.${extension} ${width}w`)
+    .join(", ");
+
+  return (
+    <picture>
+      <source type="image/avif" srcSet={srcSet("avif")} sizes={sizes} />
+      <source type="image/webp" srcSet={srcSet("webp")} sizes={sizes} />
+      <img
+        src={`${media.base}-${media.fallbackWidth}.jpg`}
+        alt={media.alt}
+        width={media.width}
+        height={media.height}
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : "auto"}
+        decoding="async"
+      />
+    </picture>
+  );
+}
+
 export function generateStaticParams() {
   return Object.keys(services).map((slug) => ({ slug }));
 }
@@ -133,20 +155,27 @@ export default async function ServicePage({ params }) {
                 </a>
               </div>
             </div>
-            <aside className="marketing-hero-brief" aria-label={`${service.navTitle} planning summary`}>
-              <img
-                src="/good-shipping-homepage/assets/good-logistics-logo.png"
-                alt="GOOD LOGISTICS"
-                width="520"
-                height="270"
-              />
-              <p>China <span aria-hidden="true">→</span> United States</p>
-              <ul>
-                <li>{service.category}</li>
-                <li>Scope confirmed before work starts</li>
-                <li>Progress updates at agreed milestones</li>
-              </ul>
-            </aside>
+            {service.heroMedia ? (
+              <figure className="marketing-service-media">
+                <ResponsiveOperationPhoto media={service.heroMedia} eager />
+                <figcaption>{service.heroMedia.caption}</figcaption>
+              </figure>
+            ) : (
+              <aside className="marketing-hero-brief" aria-label={`${service.navTitle} planning summary`}>
+                <img
+                  src="/good-shipping-homepage/assets/good-logistics-logo.png"
+                  alt="GOOD LOGISTICS"
+                  width="520"
+                  height="270"
+                />
+                <p>China <span aria-hidden="true">→</span> United States</p>
+                <ul>
+                  <li>{service.category}</li>
+                  <li>Scope confirmed before work starts</li>
+                  <li>Progress updates at agreed milestones</li>
+                </ul>
+              </aside>
+            )}
           </div>
         </div>
       </section>
@@ -169,6 +198,21 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
       </section>
+
+      {service.supportingMedia ? (
+        <section className="marketing-section marketing-operation-feature">
+          <div className="marketing-container marketing-operation-feature-grid">
+            <figure>
+              <ResponsiveOperationPhoto media={service.supportingMedia} sizes="(max-width: 700px) 100vw, 52vw" />
+            </figure>
+            <div>
+              <p className="marketing-eyebrow">Operational Planning</p>
+              <h2>{service.supportingMedia.title}</h2>
+              <p>{service.supportingMedia.copy}</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container marketing-two-column">
