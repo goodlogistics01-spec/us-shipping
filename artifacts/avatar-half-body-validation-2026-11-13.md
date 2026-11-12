@@ -1,5 +1,7 @@
 # Zoe Zhou Upper-Body Portrait Validation — 2026-11-13
 
+> Presentation follow-up: the larger portrait treatment documented below was subsequently reduced to a logo-scale contact thumbnail. See `artifacts/avatar-compact-layout-validation-2026-11-13.md` for the current responsive evidence. The photo asset and authorization did not change.
+
 ## Scope and authorization
 
 - Public-use authorization remains the owner's explicit confirmation for `/Users/zoe/Desktop/头像.png`.

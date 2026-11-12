@@ -440,8 +440,14 @@ body a {
   color: #c8d7e9;
 }
 
+.marketing-profile-grid {
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 40px;
+}
+
 .marketing-profile-grid img {
-  width: min(100%, 360px);
+  display: block;
+  width: 132px;
   height: auto;
   aspect-ratio: 640 / 904;
   object-fit: contain;
@@ -453,7 +459,8 @@ body a {
 
 .marketing-profile-grid > picture {
   display: block;
-  justify-self: center;
+  width: 132px;
+  justify-self: start;
 }
 
 .marketing-role {
@@ -841,6 +848,17 @@ body a {
     gap: 34px;
   }
 
+  .marketing-profile-grid {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .marketing-profile-grid img,
+  .marketing-profile-grid > picture {
+    width: 112px;
+  }
+
   .marketing-hero-image {
     height: 360px;
   }
@@ -862,6 +880,16 @@ body a {
 
   .marketing-links[data-open="true"] {
     grid-template-columns: 1fr;
+  }
+
+  .marketing-profile-grid {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .marketing-profile-grid img,
+  .marketing-profile-grid > picture {
+    width: 104px;
   }
 
   .marketing-hero,
