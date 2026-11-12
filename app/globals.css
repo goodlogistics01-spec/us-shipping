@@ -441,25 +441,26 @@ body a {
 }
 
 .marketing-profile-grid {
-  grid-template-columns: 132px minmax(0, 1fr);
-  gap: 40px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 20px;
 }
 
 .marketing-profile-grid img {
   display: block;
-  width: 132px;
-  height: auto;
-  aspect-ratio: 640 / 904;
-  object-fit: contain;
-  object-position: center top;
+  width: 52px;
+  height: 52px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center 24%;
   background: #dbe3eb;
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
   justify-self: center;
 }
 
 .marketing-profile-grid > picture {
   display: block;
-  width: 132px;
+  width: 52px;
   justify-self: start;
 }
 
@@ -849,14 +850,14 @@ body a {
   }
 
   .marketing-profile-grid {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 24px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 18px;
     align-items: start;
   }
 
   .marketing-profile-grid img,
   .marketing-profile-grid > picture {
-    width: 112px;
+    width: 52px;
   }
 
   .marketing-hero-image {
@@ -883,13 +884,13 @@ body a {
   }
 
   .marketing-profile-grid {
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 16px;
   }
 
   .marketing-profile-grid img,
   .marketing-profile-grid > picture {
-    width: 104px;
+    width: 52px;
   }
 
   .marketing-hero,

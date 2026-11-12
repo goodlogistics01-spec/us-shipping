@@ -1317,28 +1317,29 @@
 .home-person-card {
   overflow: hidden;
   display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  gap: 32px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 20px;
   align-items: start;
   padding: 32px;
 }
 
 .home-person-card picture {
   display: block;
-  width: 132px;
-  aspect-ratio: 640 / 904;
+  width: 52px;
+  aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 10px;
+  border: 1px solid var(--home-line);
+  border-radius: 50%;
   background: #dbe3eb;
 }
 
 .home-person-card img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 640 / 904;
-  object-fit: contain;
-  object-position: center top;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center 24%;
 }
 
 .home-person-card > div {
@@ -2546,8 +2547,7 @@
   }
 
   .home-person-card picture {
-    width: 112px;
-    height: auto;
+    width: 52px;
     justify-self: start;
   }
 
