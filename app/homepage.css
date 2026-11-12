@@ -160,22 +160,20 @@
   transform: translate(0, 8px);
 }
 
-.home-nav-item:hover > .home-dropdown,
 .home-nav-item.is-open > .home-dropdown {
   visibility: visible;
   opacity: 1;
   transform: translate(-50%, 0);
 }
 
-.home-nav-item:hover > .home-dropdown-compact,
 .home-nav-item.is-open > .home-dropdown-compact {
   transform: translate(0, 0);
 }
 
 .home-dropdown-label {
   margin: 0 0 12px;
-  color: #768497;
-  font-size: 11px;
+  color: #5c6c80;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -230,8 +228,8 @@
 }
 
 .home-dropdown-list a span {
-  color: #8290a2;
-  font-size: 10px;
+  color: #5c6c80;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -243,7 +241,6 @@
 .home-dropdown-list a:focus-visible {
   color: var(--home-blue);
   background: var(--home-soft);
-  outline: none;
 }
 
 .home-button {
@@ -303,6 +300,8 @@
 .home-button:focus-visible,
 .home-nav-trigger:focus-visible,
 .home-nav-link:focus-visible,
+.home-dropdown-grid a:focus-visible,
+.home-dropdown-list a:focus-visible,
 .home-menu-toggle:focus-visible,
 .home-main summary:focus-visible,
 .home-main input:focus-visible,
@@ -1486,8 +1485,8 @@
 }
 
 .home-form-grid label > span small {
-  color: #6c7d90;
-  font-size: 10px;
+  color: #5c6c80;
+  font-size: 11px;
   font-weight: 550;
 }
 
@@ -1551,7 +1550,7 @@
 }
 
 .home-optional-details summary span {
-  color: #6c7d90;
+  color: #5c6c80;
   font-size: 11px;
   font-weight: 600;
 }
@@ -1753,6 +1752,20 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+}
+
+@media (min-width: 1101px) {
+  .home-nav-item > .home-dropdown {
+    display: none;
+  }
+
+  .home-nav-item.is-open > .home-dropdown {
+    display: block;
+  }
+
+  .home-nav-item.is-open > .home-dropdown-services {
+    display: grid;
+  }
 }
 
 .home-dropdown-group {

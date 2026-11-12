@@ -108,8 +108,13 @@ export default function SiteHeader() {
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === "Escape" && (open || openMenu)) {
+        const focusTarget = open
+          ? menuButtonRef.current
+          : headerRef.current?.querySelector(
+              '.marketing-nav-item[data-open="true"] > .marketing-nav-trigger'
+            );
         closeAll();
-        window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+        window.requestAnimationFrame(() => focusTarget?.focus());
       }
     };
     const onPointerDown = (event) => {

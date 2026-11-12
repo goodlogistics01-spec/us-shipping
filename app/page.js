@@ -51,8 +51,7 @@ const homeSchema = {
       "@type": "Organization",
       "@id": "https://gdlogi.us/#organization",
       name: "GOOD LOGISTICS",
-      legalName: "Good Logistics Co., Ltd.",
-      alternateName: "深圳市谷得供应链有限公司",
+      alternateName: ["Good Logistics Co., Ltd.", "深圳市谷得供应链有限公司"],
       url: "https://gdlogi.us/",
       logo: "https://gdlogi.us/good-shipping-homepage/assets/good-logistics-logo.png"
     },

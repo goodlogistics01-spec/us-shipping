@@ -21,12 +21,12 @@ const legacyRedirects = [
   ["/good-shipping-homepage/robots.txt", "/robots.txt"]
 ];
 
-const unpublishedDraftRedirects = [
-  "/good-shipping-homepage/blog/oversized-cargo-shipping-from-china-to-usa.html",
-  "/good-shipping-homepage/blog/ddp-shipping-from-china-to-usa-quote-risks.html",
-  "/good-shipping-homepage/blog/multi-supplier-consolidation-china-shipping.html",
-  "/good-shipping-homepage/blog/shipping-from-china-to-hawaii.html",
-  "/good-shipping-homepage/blog/shipping-from-china-to-puerto-rico.html"
+const legacyArticleRedirects = [
+  ["/good-shipping-homepage/blog/oversized-cargo-shipping-from-china-to-usa.html", "/services/oversized-cargo-shipping/"],
+  ["/good-shipping-homepage/blog/ddp-shipping-from-china-to-usa-quote-risks.html", "/services/ddp-shipping-china-to-usa/"],
+  ["/good-shipping-homepage/blog/multi-supplier-consolidation-china-shipping.html", "/services/supplier-consolidation/"],
+  ["/good-shipping-homepage/blog/shipping-from-china-to-hawaii.html", "/destinations/hawaii/"],
+  ["/good-shipping-homepage/blog/shipping-from-china-to-puerto-rico.html", "/destinations/puerto-rico/"]
 ];
 
 const nextConfig = {
@@ -38,10 +38,10 @@ const nextConfig = {
         destination,
         statusCode: 301
       })),
-      ...unpublishedDraftRedirects.map((source) => ({
+      ...legacyArticleRedirects.map(([source, destination]) => ({
         source,
-        destination: "/resources/",
-        permanent: false
+        destination,
+        statusCode: 301
       }))
     ];
   }

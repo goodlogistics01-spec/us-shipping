@@ -25,7 +25,7 @@ export default function ResourcesPage() {
               <p className="marketing-eyebrow">Service Planning</p>
               <h2>{article.title}</h2>
               <p>{article.description}</p>
-              <a className="marketing-text-link" href={article.href}>Read the guide</a>
+              <a className="marketing-text-link" href={article.href}>{article.ctaLabel}</a>
             </article>
           ))}
         </div>

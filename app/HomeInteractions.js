@@ -135,7 +135,14 @@ export default function HomeInteractions() {
     };
 
     const onKeyDown = (event) => {
-      if (event.key === "Escape") closeMobileMenu({ restoreFocus: true });
+      if (event.key !== "Escape") return;
+      const mobileMenuWasOpen = header?.classList.contains("is-menu-open");
+      const expandedTrigger = header?.querySelector(
+        ".home-nav-item.is-open [data-home-nav-trigger]"
+      );
+      closeMobileMenu();
+      const focusTarget = mobileMenuWasOpen ? menuToggle : expandedTrigger;
+      if (focusTarget) window.requestAnimationFrame(() => focusTarget.focus());
     };
 
     const onNavLinkClick = () => closeMobileMenu();

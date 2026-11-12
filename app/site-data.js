@@ -603,26 +603,31 @@ export const resourceArticles = [
   {
     title: "Oversized Cargo Shipping from China to the USA",
     description: "Plan dimensions, packaging, lifting, routing and final-delivery requirements before quoting.",
-    href: "/services/oversized-cargo-shipping/"
+    href: "/services/oversized-cargo-shipping/",
+    ctaLabel: "View oversized cargo service"
   },
   {
     title: "DDP Shipping from China to the USA",
     description: "Review the quoted scope, exclusions and customs-sensitive responsibilities before booking.",
-    href: "/services/ddp-shipping-china-to-usa/"
+    href: "/services/ddp-shipping-china-to-usa/",
+    ctaLabel: "View DDP service"
   },
   {
     title: "Supplier Pickup & Consolidation",
     description: "See how pickup, receiving checks and consolidation can be scoped for multiple suppliers.",
-    href: "/services/supplier-consolidation/"
+    href: "/services/supplier-consolidation/",
+    ctaLabel: "View consolidation service"
   },
   {
     title: "Shipping from China to Hawaii",
     description: "Route, cargo and final-delivery questions to confirm before booking.",
-    href: "/destinations/hawaii/"
+    href: "/destinations/hawaii/",
+    ctaLabel: "View Hawaii destination"
   },
   {
     title: "Shipping from China to Puerto Rico",
     description: "Planning notes for documentation, routing and island delivery.",
-    href: "/destinations/puerto-rico/"
+    href: "/destinations/puerto-rico/",
+    ctaLabel: "View Puerto Rico destination"
   }
 ];

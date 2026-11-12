@@ -184,7 +184,7 @@ body a {
 
 .marketing-eyebrow {
   margin: 0;
-  color: #2c8ad0;
+  color: #176aa6;
   font-size: 12px;
   font-weight: 850;
   letter-spacing: 0.13em;
@@ -510,6 +510,13 @@ body a {
   font-weight: 800;
 }
 
+.marketing-field-label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3em;
+}
+
 .marketing-form input,
 .marketing-form select,
 .marketing-form textarea {
@@ -546,7 +553,7 @@ body a {
 }
 
 .marketing-optional-label {
-  color: #6a7c91;
+  color: #5c6c80;
   font-size: 12px;
   font-weight: 600;
 }
@@ -573,7 +580,7 @@ body a {
 }
 
 .marketing-optional-details summary span {
-  color: #6a7c91;
+  color: #5c6c80;
   font-size: 12px;
   font-weight: 650;
 }
@@ -2623,6 +2630,13 @@ body a {
   color: #0b5a9f;
 }
 
+.marketing-nav-trigger:focus-visible,
+.marketing-nav-link:focus-visible,
+.marketing-dropdown a:focus-visible {
+  outline: 3px solid rgba(11, 90, 159, 0.35);
+  outline-offset: 3px;
+}
+
 .marketing-dropdown {
   position: absolute;
   top: calc(100% + 10px);
@@ -2632,7 +2646,7 @@ body a {
   visibility: hidden;
   opacity: 0;
   transform: translateY(8px);
-  display: grid;
+  display: none;
   gap: 3px;
   padding: 12px;
   border: 1px solid #d9e3ed;
@@ -2642,8 +2656,8 @@ body a {
   transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
 }
 
-.marketing-nav-item:hover .marketing-dropdown,
 .marketing-nav-item[data-open="true"] .marketing-dropdown {
+  display: grid;
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
@@ -2666,12 +2680,11 @@ body a {
 .marketing-dropdown a:focus-visible {
   color: #0b5a9f;
   background: #f5f8fb;
-  outline: none;
 }
 
 .marketing-dropdown small {
-  color: #8290a2;
-  font-size: 10px;
+  color: #5c6c80;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -2679,6 +2692,8 @@ body a {
 
 .marketing-dropdown-grouped {
   width: min(650px, calc(100vw - 48px));
+  right: 0;
+  left: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
@@ -2689,8 +2704,8 @@ body a {
 
 .marketing-dropdown-group > p {
   margin: 4px 12px 8px;
-  color: #6c7c90;
-  font-size: 10px;
+  color: #5c6c80;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;

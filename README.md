@@ -12,7 +12,7 @@ This repository contains the GOOD LOGISTICS B2B website for China-side cargo ope
 - Unified inquiry form at `/quote/`, plus the homepage and Sea Freight forms
 - Contact, privacy, terms, custom 404, `robots.txt` and `sitemap.xml`
 
-Legacy source files remain in `public/` for compatibility and rollback, but their HTTP requests are intercepted by the exact redirects in `next.config.mjs` before static-file serving. The old standalone inquiry file redirects permanently to `/quote/`. Five long-form article files remain unpublished drafts and redirect temporarily to `/resources/`; their embedded popups are not active inquiry entry points. No blanket legacy-directory redirect is used.
+Legacy source files remain in `public/` for compatibility and rollback, but their HTTP requests are intercepted by the exact redirects in `next.config.mjs` before static-file serving. The old standalone inquiry file redirects permanently to `/quote/`. Five legacy article URLs redirect permanently and one-to-one to the closest current service or destination page; their embedded popups are not active inquiry entry points. No blanket legacy-directory redirect is used.
 
 ## Runtime and commands
 
@@ -49,7 +49,7 @@ The shared schema keeps these concepts separate:
 
 The provider body includes the original requested service, shipping method, every service need, every inspection type, customer fields, source attribution and a non-sensitive submission ID. The subject may summarize the first service needs, but the body is not shortened.
 
-Status rules are strict:
+The provider wait defaults to 24 seconds inside the 30-second route limit so the application has time to return an honest `PENDING` result when acceptance cannot be confirmed. Status rules are strict:
 
 - `SUCCESS` is returned only after an explicit upstream acceptance. It sets a five-minute HttpOnly cookie bound to that request ID and redirects to the matching `/thank-you/?request_id=...` URL.
 - `FAILED` covers validation, configuration and explicit provider rejection. The customer may correct the form and retry.

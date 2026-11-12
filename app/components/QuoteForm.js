@@ -477,7 +477,7 @@ export default function QuoteForm({
           Only the starred fields are required. We can confirm the remaining details with you.
         </p>
         <label>
-          Name <span aria-hidden="true">*</span>
+          <span className="marketing-field-label">Name <span aria-hidden="true">*</span></span>
           <input
             name="name"
             autoComplete="name"
@@ -489,7 +489,7 @@ export default function QuoteForm({
           <FieldError id="quote-error-name" message={fieldErrors.name} />
         </label>
         <label>
-          Email <span aria-hidden="true">*</span>
+          <span className="marketing-field-label">Email <span aria-hidden="true">*</span></span>
           <input
             name="email"
             type="email"
@@ -502,7 +502,7 @@ export default function QuoteForm({
           <FieldError id="quote-error-email" message={fieldErrors.email} />
         </label>
         <label className="form-span-two">
-          Product / Goods Name <span aria-hidden="true">*</span>
+          <span className="marketing-field-label">Product / Goods Name <span aria-hidden="true">*</span></span>
           <input
             name="product_name"
             placeholder="e.g. furniture, machinery parts or apparel"
@@ -514,7 +514,7 @@ export default function QuoteForm({
           <FieldError id="quote-error-product" message={fieldErrors.product_name} />
         </label>
         <label>
-          Origin / Pickup City <span aria-hidden="true">*</span>
+          <span className="marketing-field-label">Origin / Pickup City <span aria-hidden="true">*</span></span>
           <input
             name="origin"
             placeholder="City in China"
@@ -526,7 +526,7 @@ export default function QuoteForm({
           <FieldError id="quote-error-origin" message={fieldErrors.origin} />
         </label>
         <label>
-          Destination / ZIP Code <span aria-hidden="true">*</span>
+          <span className="marketing-field-label">Destination / ZIP Code <span aria-hidden="true">*</span></span>
           <input
             name="destination"
             placeholder="U.S. city, state and ZIP code"
@@ -539,7 +539,7 @@ export default function QuoteForm({
         </label>
 
         <label className="form-span-two">
-          Shipping Method
+          <span className="marketing-field-label">Shipping Method</span>
           <select
             name="shipping_method"
             value={selectedShippingMethod}
@@ -553,11 +553,11 @@ export default function QuoteForm({
         {(productPage || !compact) ? (
           <>
             <label>
-              Total Weight <span className="marketing-optional-label">(optional)</span>
+              <span className="marketing-field-label">Total Weight <span className="marketing-optional-label">(optional)</span></span>
               <input name="weight" placeholder="kg, lb or not sure" maxLength="100" />
             </label>
             <label>
-              Total Volume <span className="marketing-optional-label">(optional)</span>
+              <span className="marketing-field-label">Total Volume <span className="marketing-optional-label">(optional)</span></span>
               <input name="volume" placeholder="CBM or not sure" maxLength="160" />
             </label>
           </>
@@ -615,11 +615,13 @@ export default function QuoteForm({
           <summary>Add shipment details <span>(optional)</span></summary>
           <div className="marketing-form-grid marketing-optional-details-grid">
             <label>
-              Company
+              <span className="marketing-field-label">Company</span>
               <input name="company" autoComplete="organization" maxLength="160" />
             </label>
             <label>
-              WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
+              <span className="marketing-field-label">
+                WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
+              </span>
               <input
                 name="whatsapp"
                 type="tel"
@@ -632,11 +634,11 @@ export default function QuoteForm({
               <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
             </label>
             <label>
-              Cargo Ready Date
+              <span className="marketing-field-label">Cargo Ready Date</span>
               <input name="cargo_ready_date" type="date" />
             </label>
             <label>
-              Preferred Reply Method
+              <span className="marketing-field-label">Preferred Reply Method</span>
               <select
                 name="preferred_contact"
                 value={preferredContact}
@@ -648,15 +650,15 @@ export default function QuoteForm({
               </select>
             </label>
             <label>
-              Carton / Pallet Quantity
+              <span className="marketing-field-label">Carton / Pallet Quantity</span>
               <input name="package_count" inputMode="numeric" maxLength="80" />
             </label>
             <label>
-              Packed Dimensions
+              <span className="marketing-field-label">Packed Dimensions</span>
               <input name="dimensions" placeholder="L × W × H and unit" maxLength="160" />
             </label>
             <label className="form-span-two">
-              Cargo Details
+              <span className="marketing-field-label">Cargo Details</span>
               <textarea
                 name="cargo_type"
                 rows="4"
@@ -668,7 +670,7 @@ export default function QuoteForm({
             </label>
             {(productPage || !compact) ? (
               <label className="form-span-two">
-                Additional Notes
+                <span className="marketing-field-label">Additional Notes</span>
                 <textarea
                   name="message"
                   rows="3"

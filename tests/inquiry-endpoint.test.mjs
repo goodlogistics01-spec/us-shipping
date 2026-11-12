@@ -442,6 +442,19 @@ test("a local site request cannot contact the real provider unless separately an
   );
 });
 
+test("provider timeout defaults to 24 seconds, clamps larger values, and keeps smaller values", () => {
+  const request = new Request("https://gdlogi.us/api/inquiry/");
+  assert.equal(resolveProviderConfiguration(request, {}).timeoutMs, 24_000);
+  assert.equal(
+    resolveProviderConfiguration(request, { INQUIRY_PROVIDER_TIMEOUT_MS: "60000" }).timeoutMs,
+    24_000
+  );
+  assert.equal(
+    resolveProviderConfiguration(request, { INQUIRY_PROVIDER_TIMEOUT_MS: "9000" }).timeoutMs,
+    9_000
+  );
+});
+
 test("thank-you confirmation requires a valid request ID and its matching short-lived cookie", () => {
   const requestId = "GL-20261110-12345678";
   assert.equal(normalizeInquiryRequestId(requestId), requestId);
