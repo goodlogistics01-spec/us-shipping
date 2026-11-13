@@ -30,7 +30,24 @@ const assets = [
     name: "carton-container",
     source: path.join(desktopMediaSourceRoot, "芝加哥整柜直送/柜门封尾.jpg"),
     crop: { left: 0, top: 900, width: 3072, height: 2304 },
-    blur: [],
+    workingWidth: 1200,
+    blur: [
+      { left: 148, top: 270, width: 152, height: 110, sigma: 24 },
+      { left: 316, top: 270, width: 164, height: 110, sigma: 24 },
+      { left: 234, top: 367, width: 195, height: 160, sigma: 24 },
+      { left: 430, top: 375, width: 160, height: 145, sigma: 24 },
+      { left: 133, top: 531, width: 168, height: 141, sigma: 24 },
+      { left: 309, top: 527, width: 168, height: 145, sigma: 24 },
+      { left: 230, top: 656, width: 172, height: 180, sigma: 24 },
+      { left: 418, top: 652, width: 176, height: 180, sigma: 24 },
+      { left: 859, top: 141, width: 152, height: 105, sigma: 24 },
+      { left: 695, top: 219, width: 137, height: 117, sigma: 24 },
+      { left: 855, top: 293, width: 164, height: 129, sigma: 24 },
+      { left: 691, top: 371, width: 145, height: 129, sigma: 24 },
+      { left: 695, top: 496, width: 152, height: 152, sigma: 24 },
+      { left: 875, top: 508, width: 168, height: 160, sigma: 24 }
+    ],
+    blurFeather: { inset: 8, deviation: 4 },
     widths: [480, 800, 1200]
   },
   ...(deliveryRecordSource
@@ -121,18 +138,31 @@ const assets = [
 ];
 
 async function sanitizedCrop(asset) {
-  const cropped = await sharp(asset.source)
+  let cropPipeline = sharp(asset.source)
     .rotate()
-    .extract(asset.crop)
+    .extract(asset.crop);
+
+  if (asset.workingWidth) {
+    const workingHeight = Math.round(
+      asset.workingWidth / (asset.crop.width / asset.crop.height)
+    );
+    cropPipeline = cropPipeline.resize(asset.workingWidth, workingHeight, {
+      fit: "fill"
+    });
+  }
+
+  const cropped = await cropPipeline
     .jpeg({ quality: 96, chromaSubsampling: "4:4:4" })
     .toBuffer();
 
   const overlays = await Promise.all(
     asset.blur.map(async (region) => {
-      const inset = Math.max(4, Math.min(10, Math.floor(Math.min(region.width, region.height) / 6)));
+      const inset = asset.blurFeather?.inset
+        ?? Math.max(4, Math.min(10, Math.floor(Math.min(region.width, region.height) / 6)));
+      const deviation = asset.blurFeather?.deviation ?? Math.max(3, inset / 2);
       const mask = Buffer.from(
         `<svg width="${region.width}" height="${region.height}" xmlns="http://www.w3.org/2000/svg">
-          <defs><filter id="feather"><feGaussianBlur stdDeviation="${Math.max(3, inset / 2)}"/></filter></defs>
+          <defs><filter id="feather"><feGaussianBlur stdDeviation="${deviation}"/></filter></defs>
           <rect x="${inset}" y="${inset}" width="${region.width - inset * 2}" height="${region.height - inset * 2}" rx="${inset}" fill="white" filter="url(#feather)"/>
         </svg>`
       );
