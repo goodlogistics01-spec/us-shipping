@@ -17,6 +17,8 @@ const outputDir = path.join(
   "public/good-shipping-homepage/assets/operations"
 );
 const deliveryRecordSource = process.env.GDLOGI_DELIVERY_RECORD_SOURCE;
+const fclLoadedCartonsSource = process.env.GDLOGI_FCL_LOADED_CARTONS_SOURCE;
+const emptyContainerInteriorSource = process.env.GDLOGI_EMPTY_CONTAINER_INTERIOR_SOURCE;
 
 const assets = [
   {
@@ -147,7 +149,54 @@ const assets = [
     crop: { left: 0, top: 300, width: 1250, height: 833 },
     blur: [],
     widths: [480, 800, 1200]
-  }
+  },
+  ...(fclLoadedCartonsSource
+    ? [{
+        name: "fcl-loaded-cartons",
+        source: path.resolve(fclLoadedCartonsSource),
+        crop: { left: 650, top: 0, width: 560, height: 700 },
+        blur: [
+          { left: 26, top: 262, width: 44, height: 34, sigma: 18 },
+          { left: 210, top: 170, width: 38, height: 42, sigma: 18 },
+          { left: 242, top: 196, width: 36, height: 28, sigma: 18 },
+          { left: 386, top: 180, width: 66, height: 48, sigma: 18 },
+          { left: 220, top: 238, width: 36, height: 26, sigma: 18 },
+          { left: 254, top: 302, width: 76, height: 48, sigma: 18 },
+          { left: 270, top: 332, width: 62, height: 38, sigma: 18 },
+          { left: 398, top: 324, width: 58, height: 34, sigma: 18 },
+          { left: 232, top: 392, width: 42, height: 30, sigma: 18 },
+          { left: 266, top: 424, width: 68, height: 46, sigma: 18 },
+          { left: 276, top: 458, width: 62, height: 34, sigma: 18 },
+          { left: 298, top: 548, width: 74, height: 52, sigma: 18 },
+          { left: 418, top: 594, width: 62, height: 34, sigma: 18 },
+          { left: 476, top: 662, width: 70, height: 34, sigma: 18 },
+          { left: 190, top: 128, width: 74, height: 82, sigma: 18 },
+          { left: 248, top: 278, width: 76, height: 66, sigma: 18 },
+          { left: 248, top: 418, width: 86, height: 72, sigma: 18 },
+          { left: 20, top: 248, width: 62, height: 72, sigma: 18 },
+          { left: 30, top: 118, width: 34, height: 92, sigma: 18 },
+          { left: 206, top: 138, width: 58, height: 102, sigma: 18 },
+          { left: 360, top: 150, width: 112, height: 92, sigma: 18 },
+          { left: 384, top: 280, width: 78, height: 66, sigma: 18 },
+          { left: 394, top: 390, width: 82, height: 66, sigma: 18 },
+          { left: 210, top: 386, width: 64, height: 54, sigma: 18 },
+          { left: 260, top: 528, width: 108, height: 86, sigma: 18 },
+          { left: 408, top: 574, width: 94, height: 70, sigma: 18 },
+          { left: 464, top: 640, width: 88, height: 58, sigma: 18 }
+        ],
+        blurFeather: { inset: 4, deviation: 2 },
+        widths: [480, 800, 1000]
+      }]
+    : []),
+  ...(emptyContainerInteriorSource
+    ? [{
+        name: "empty-container-interior",
+        source: path.resolve(emptyContainerInteriorSource),
+        crop: { left: 39, top: 0, width: 1200, height: 900 },
+        blur: [],
+        widths: [480, 800, 1200]
+      }]
+    : [])
 ];
 
 async function sanitizedCrop(asset) {
@@ -236,8 +285,24 @@ async function exportAsset(asset) {
 }
 
 await fs.mkdir(outputDir, { recursive: true });
-for (const asset of assets) {
+const requestedAssetNames = new Set(
+  (process.env.GDLOGI_OPERATION_ASSETS || "")
+    .split(",")
+    .map((name) => name.trim())
+    .filter(Boolean)
+);
+const selectedAssets = requestedAssetNames.size
+  ? assets.filter((asset) => requestedAssetNames.has(asset.name))
+  : assets;
+
+if (requestedAssetNames.size && selectedAssets.length !== requestedAssetNames.size) {
+  const available = new Set(selectedAssets.map((asset) => asset.name));
+  const missing = [...requestedAssetNames].filter((name) => !available.has(name));
+  throw new Error(`Unknown or unconfigured operation assets: ${missing.join(", ")}`);
+}
+
+for (const asset of selectedAssets) {
   await exportAsset(asset);
 }
 
-console.log(`Generated ${assets.length} sanitized responsive image sets in ${outputDir}`);
+console.log(`Generated ${selectedAssets.length} sanitized responsive image sets in ${outputDir}`);

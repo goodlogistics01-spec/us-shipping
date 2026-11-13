@@ -169,19 +169,19 @@ export default function OceanFreightPage({ service, schema }) {
             <div className="ocean-ops-gallery" role="group" aria-label="Selected cargo handling photos">
               <figure>
                 <picture>
-                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/consolidation-staging-480.avif 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.avif 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.avif 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/consolidation-staging-480.webp 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.webp 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.webp 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <img src="/good-shipping-homepage/assets/operations/consolidation-staging-1000.jpg" alt="Mixed crates and packaged cargo staged inside a consolidation facility." width="1000" height="750" loading="lazy" decoding="async" />
+                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/empty-container-interior-480.avif 480w, /good-shipping-homepage/assets/operations/empty-container-interior-800.avif 800w, /good-shipping-homepage/assets/operations/empty-container-interior-1200.avif 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/empty-container-interior-480.webp 480w, /good-shipping-homepage/assets/operations/empty-container-interior-800.webp 800w, /good-shipping-homepage/assets/operations/empty-container-interior-1200.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <img src="/good-shipping-homepage/assets/operations/empty-container-interior-1200.jpg" alt="Empty shipping container interior before cargo loading." width="1200" height="900" loading="lazy" decoding="async" />
                 </picture>
-                <figcaption>Crates and packaged cargo shown in a handling area; the shipment-specific plan is confirmed separately.</figcaption>
+                <figcaption>Empty-container context before loading; condition checks and cargo suitability are confirmed separately.</figcaption>
               </figure>
               <figure>
                 <picture>
-                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/container-handoff-480.avif 480w, /good-shipping-homepage/assets/operations/container-handoff-800.avif 800w, /good-shipping-homepage/assets/operations/container-handoff-1200.avif 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/container-handoff-480.webp 480w, /good-shipping-homepage/assets/operations/container-handoff-800.webp 800w, /good-shipping-homepage/assets/operations/container-handoff-1200.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <img src="/good-shipping-homepage/assets/operations/container-handoff-1200.jpg" alt="Closed shipping container doors at a cargo handoff." width="1200" height="1500" loading="lazy" decoding="async" />
+                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-480.avif 480w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-800.avif 800w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.avif 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-480.webp 480w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-800.webp 800w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.webp 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <img src="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.jpg" alt="Cartoned cargo arranged inside an open shipping container during loading." width="1000" height="1250" loading="lazy" decoding="async" />
                 </picture>
-                <figcaption>Closed-container handoff context; the container identity and shipment scope are confirmed separately.</figcaption>
+                <figcaption>Privacy-treated cartoned-cargo loading context; shipment details and the loading scope are confirmed separately.</figcaption>
               </figure>
             </div>
             <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
