@@ -9,6 +9,9 @@ const projectRoot = path.resolve(import.meta.dirname, "..");
 const mediaSourceRoot = path.resolve(
   process.env.GDLOGI_MEDIA_SOURCE_ROOT || path.join(projectRoot, "..")
 );
+const desktopMediaSourceRoot = path.resolve(
+  process.env.GDLOGI_DESKTOP_MEDIA_SOURCE_ROOT || path.join(projectRoot, "../../..", "Desktop")
+);
 const outputDir = path.join(
   projectRoot,
   "public/good-shipping-homepage/assets/operations"
@@ -60,6 +63,25 @@ const assets = [
       { left: 0, top: 0, width: 75, height: 105 }
     ],
     widths: [320, 480, 550]
+  },
+  {
+    name: "container-handoff",
+    source: path.join(desktopMediaSourceRoot, "芝加哥整柜直送/完柜.jpg"),
+    crop: { left: 700, top: 200, width: 2000, height: 2500 },
+    blur: [
+      { left: 880, top: 380, width: 1120, height: 520 }
+    ],
+    widths: [480, 800, 1200]
+  },
+  {
+    name: "specialist-lifting",
+    source: path.join(
+      projectRoot,
+      "public/good-shipping-homepage/assets/crane-truck-loading.jpg"
+    ),
+    crop: { left: 0, top: 300, width: 1250, height: 833 },
+    blur: [],
+    widths: [480, 800, 1200]
   }
 ];
 

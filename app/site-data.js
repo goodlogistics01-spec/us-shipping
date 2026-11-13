@@ -278,13 +278,13 @@ export const services = {
     summary:
       "Shipment planning for large, heavy or difficult cargo where dimensions, lifting points, packaging, route access and delivery equipment must be reviewed together.",
     heroMedia: {
-      base: "/good-shipping-homepage/assets/operations/loading-coordination",
-      widths: [320, 480, 550],
-      fallbackWidth: 550,
-      width: 550,
-      height: 688,
-      alt: "A wrapped wooden crate positioned on a truck.",
-      caption: "Packed-cargo loading context. Equipment and operating responsibility are confirmed for each shipment."
+      base: "/good-shipping-homepage/assets/operations/specialist-lifting",
+      widths: [480, 800, 1200],
+      fallbackWidth: 1200,
+      width: 1200,
+      height: 800,
+      alt: "Truck-mounted lifting equipment positioned for cargo handling at an indoor handoff.",
+      caption: "Specialist lifting equipment at a cargo handoff. Location, provider and operating responsibility are confirmed per shipment."
     },
     supportingMedia: {
       base: "/good-shipping-homepage/assets/operations/packing-preparation",

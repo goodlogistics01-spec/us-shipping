@@ -177,11 +177,11 @@ export default function OceanFreightPage({ service, schema }) {
               </figure>
               <figure>
                 <picture>
-                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/loading-coordination-320.avif 320w, /good-shipping-homepage/assets/operations/loading-coordination-480.avif 480w, /good-shipping-homepage/assets/operations/loading-coordination-550.avif 550w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/loading-coordination-320.webp 320w, /good-shipping-homepage/assets/operations/loading-coordination-480.webp 480w, /good-shipping-homepage/assets/operations/loading-coordination-550.webp 550w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
-                  <img src="/good-shipping-homepage/assets/operations/loading-coordination-550.jpg" alt="A wrapped wooden crate positioned on a truck." width="550" height="688" loading="lazy" decoding="async" />
+                  <source type="image/avif" srcSet="/good-shipping-homepage/assets/operations/container-handoff-480.avif 480w, /good-shipping-homepage/assets/operations/container-handoff-800.avif 800w, /good-shipping-homepage/assets/operations/container-handoff-1200.avif 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/container-handoff-480.webp 480w, /good-shipping-homepage/assets/operations/container-handoff-800.webp 800w, /good-shipping-homepage/assets/operations/container-handoff-1200.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
+                  <img src="/good-shipping-homepage/assets/operations/container-handoff-1200.jpg" alt="Closed shipping container doors at a cargo handoff." width="1200" height="1500" loading="lazy" decoding="async" />
                 </picture>
-                <figcaption>Packed-cargo loading context; equipment and operating scope are confirmed for each shipment.</figcaption>
+                <figcaption>Closed-container handoff context; the container identity and shipment scope are confirmed separately.</figcaption>
               </figure>
             </div>
             <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
