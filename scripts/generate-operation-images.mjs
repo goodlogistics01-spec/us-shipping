@@ -16,8 +16,36 @@ const outputDir = path.join(
   projectRoot,
   "public/good-shipping-homepage/assets/operations"
 );
+const deliveryRecordSource = process.env.GDLOGI_DELIVERY_RECORD_SOURCE;
 
 const assets = [
+  {
+    name: "carton-handling",
+    source: path.join(desktopMediaSourceRoot, "早到柜子.jpg"),
+    crop: { left: 2050, top: 1850, width: 1600, height: 1200 },
+    blur: [],
+    widths: [480, 800, 1200]
+  },
+  ...(deliveryRecordSource
+    ? [{
+        name: "redacted-delivery-record",
+        source: path.resolve(deliveryRecordSource),
+        crop: { left: 20, top: 0, width: 612, height: 285 },
+        blur: [],
+        redact: [
+          { left: 60, top: 5, width: 125, height: 45 },
+          { left: 190, top: 5, width: 135, height: 45 },
+          { left: 505, top: 5, width: 107, height: 65 },
+          { left: 60, top: 38, width: 270, height: 48 },
+          { left: 70, top: 135, width: 110, height: 54 },
+          { left: 205, top: 138, width: 120, height: 54 },
+          { left: 335, top: 123, width: 215, height: 63 },
+          { left: 330, top: 165, width: 282, height: 62 },
+          { left: 225, top: 198, width: 260, height: 82 }
+        ],
+        widths: [480, 640]
+      }]
+    : []),
   {
     name: "china-operations",
     source: path.join(mediaSourceRoot, "谷得全球官网/public/images/china-warehouse.jpg"),
@@ -103,7 +131,7 @@ async function sanitizedCrop(asset) {
       );
       const blurred = await sharp(cropped)
         .extract(region)
-        .blur(16)
+        .blur(region.sigma || 16)
         .ensureAlpha()
         .composite([{ input: mask, blend: "dest-in" }])
         .png()
@@ -112,9 +140,21 @@ async function sanitizedCrop(asset) {
       return { input: blurred, left: region.left, top: region.top };
     })
   );
+  const redactions = (asset.redact || []).map((region) => ({
+    input: {
+      create: {
+        width: region.width,
+        height: region.height,
+        channels: 4,
+        background: region.color || "#cfd5dc"
+      }
+    },
+    left: region.left,
+    top: region.top
+  }));
 
   return sharp(cropped)
-    .composite(overlays)
+    .composite([...overlays, ...redactions])
     .jpeg({ quality: 96, chromaSubsampling: "4:4:4" })
     .toBuffer();
 }

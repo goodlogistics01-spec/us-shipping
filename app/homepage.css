@@ -1268,6 +1268,44 @@
   line-height: 1.65;
 }
 
+.home-delivery-proof {
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.home-delivery-proof picture {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: #dfe5eb;
+}
+
+.home-delivery-proof img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.home-delivery-proof figcaption {
+  display: grid;
+  gap: 7px;
+}
+
+.home-delivery-proof strong {
+  color: var(--home-white);
+  font-size: 14px;
+}
+
+.home-delivery-proof span {
+  color: #c7d6e6;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .home-city-list {
   margin-top: 32px;
   display: flex;
@@ -2422,6 +2460,10 @@
     min-height: 270px;
   }
 
+  .home-delivery-proof {
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+  }
+
   .home-faq-layout {
     grid-template-columns: 1fr;
     gap: 44px;
@@ -2549,6 +2591,10 @@
   }
 
   .home-operations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-delivery-proof {
     grid-template-columns: 1fr;
   }
 
