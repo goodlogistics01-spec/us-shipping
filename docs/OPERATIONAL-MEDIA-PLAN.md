@@ -1,7 +1,7 @@
 # Operational media plan
 
 Updated: 2026-11-13
-Scope: current five-asset set approved by the owner for publication on `gdlogi.us`; supplemental media will be added later.
+Scope: current seven-asset set selected from owner-approved uploads for publication on `gdlogi.us`; supplemental media will be added later.
 
 ## Page-to-asset map
 
@@ -12,10 +12,10 @@ Scope: current five-asset set approved by the owner for publication on `gdlogi.u
 | Homepage oversized section | `loading-coordination-*` | Show a real packed-cargo loading setting next to oversized planning copy | Do not imply ownership of the truck, forklift or warehouse |
 | Supplier Pickup & Consolidation | `consolidation-staging-*` | Service-page hero | Caption confirms that supplier and shipment facts are separate from the photo |
 | Warehousing & Inventory Coordination | `warehouse-crates-*` | Service-page hero | No warehouse ownership, area, real-time inventory or API claim |
-| Oversized Cargo | `loading-coordination-*` hero and `packing-preparation-*` supporting image | Connect packaging review with loading-plan inputs | Packaging review is not certification or product inspection |
-| Sea Freight | `consolidation-staging-*` and `loading-coordination-*` in “Cargo Facts Before Route Promises” | Illustrate the cargo facts used for planning, not a specific origin or shipment | Photos do not prove a location, port, sailing, U.S. delivery or route outcome |
+| Oversized Cargo | `specialist-lifting-*` hero and `packing-preparation-*` supporting image | Connect specialist lifting context and packaging review with loading-plan inputs | The image does not prove owned equipment, location, route or a specific project; packaging review is not certification or product inspection |
+| Sea Freight | `consolidation-staging-*` and `container-handoff-*` in “Cargo Facts Before Route Promises” | Illustrate origin staging and a container handoff without presenting either image as a named case | Photos do not prove a location, port, sailing, U.S. delivery, Chicago case link or route outcome |
 
-The UK arrival, crane-delivery and unloading photos are intentionally held. They may later support a clearly labelled UK/global operation example after project rights and location details are confirmed. They must not be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. `早到柜子.jpg` is also held because it contains faces, plates, container identifiers, location clues and prominent third-party branding.
+The UK arrival, crane-delivery and unloading photos are intentionally held. They may later support a clearly labelled UK/global operation example after project facts and location details are confirmed. They must not be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. `早到柜子.jpg` is also held because it contains faces, plates, container identifiers, location clues and prominent third-party branding. The Chicago-named folder is owner-approved for selection, but only the privacy-treated closed-container crop is active, and it is used as generic sea-freight handoff context until its exact case link is confirmed.
 
 ## Usage and crop spec
 
@@ -25,7 +25,9 @@ The UK arrival, crane-delivery and unloading photos are intentionally held. They
 | `consolidation-staging-*` | 4:3 / 1000 × 750 | Crop out person and overhead location sign; blur small labels and handwritten markings; strip metadata | Lazy below fold; reusable service hero loads eagerly on its page |
 | `warehouse-crates-*` | 4:3 / 1150 × 862 | Crop out most signage; blur visible barcode and shipment marking; strip metadata | Lazy below fold; eager when used as service hero |
 | `packing-preparation-*` | 16:9 / 1000 × 563 | Crop away customer/brand labels; strip metadata | Lazy below fold; do not enlarge beyond source-derived output |
-| `loading-coordination-*` | 4:5 / 550 × 688 | Crop out operator face and forklift branding; blur remaining small label; strip metadata | Lazy below fold; eager when used as service hero |
+| `loading-coordination-*` | 4:5 / 550 × 688 | Crop out operator face and forklift branding; blur remaining small label; strip metadata | Lazy below fold in the homepage oversized section |
+| `container-handoff-*` | 4:5 / 1200 × 1500 | Crop out plate, trailer identifiers and most surroundings; blur container identity; strip metadata | Lazy below fold in the sea-freight evidence pair |
+| `specialist-lifting-*` | 3:2 / 1200 × 800 | Crop out people, equipment-provider branding, vehicle identity and readable shipment details; strip metadata | Eager as the oversized-cargo service hero |
 
 ## Responsive export list
 
@@ -34,6 +36,8 @@ The UK arrival, crane-delivery and unloading photos are intentionally held. They
 - `warehouse-crates`: 480, 800 and 1150 px AVIF/WebP plus 1150 px progressive JPEG fallback.
 - `packing-preparation`: 480, 800 and 1000 px AVIF/WebP plus 1000 px progressive JPEG fallback.
 - `loading-coordination`: 320, 480 and 550 px AVIF/WebP plus 550 px progressive JPEG fallback.
+- `container-handoff`: 480, 800 and 1200 px AVIF/WebP plus 1200 px progressive JPEG fallback.
+- `specialist-lifting`: 480, 800 and 1200 px AVIF/WebP plus 1200 px progressive JPEG fallback.
 
 All rendered `<img>` elements have explicit width and height. Below-fold images use native lazy loading and asynchronous decoding. Derivatives can be regenerated with `node scripts/generate-operation-images.mjs` while the recorded source paths are available.
 
@@ -44,13 +48,16 @@ All rendered `<img>` elements have explicit width and height. Below-fold images 
 - Warehouse crates: `Wooden export crates stored inside a cargo handling area.`
 - Packing preparation: `Large wooden shipping crates prepared for cargo handling.`
 - Loading context: `A wrapped wooden crate positioned on a truck.`
+- Container handoff: `Closed shipping container doors at a cargo handoff.`
+- Specialist lifting: `Truck-mounted lifting equipment positioned for cargo handling at an indoor handoff.`
 
 ## Rights and authenticity flags
 
-- `OWNER_APPROVED`: on 2026-11-13, Zoe explicitly instructed that the current selected materials be published on `gdlogi.us` while supplemental media is prepared later.
+- `OWNER_APPROVED`: on 2026-11-13, Zoe explicitly confirmed that all materials uploaded to this project may be considered for public website use and instructed that suitable existing materials be published while supplemental media is prepared later.
 - `NOT_VERIFIED`: photographer ownership, customer permission, named facility, project identity and route are not established by the files alone.
 - Approved captions use neutral “coordinated” language and do not claim owned warehouses, vehicles, equipment, laboratories or overseas networks.
 - Cropping and blur reduce privacy exposure; the owner publication instruction is limited to the current website use and does not establish rights for unrelated reuse.
+- Owner approval does not override suitability: private chats, unredacted legal records, conflicting branded cards, duplicate crops, geographically misleading delivery photos and customer-identifiable close-ups remain inactive.
 
 ## Minimum additional material to request
 
