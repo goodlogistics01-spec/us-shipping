@@ -1,14 +1,14 @@
 # Operational media plan
 
 Updated: 2026-11-13
-Scope: eight active asset sets selected from owner-approved uploads for publication on `gdlogi.us`, plus one previous derivative retained for rollback; supplemental media will be added later.
+Scope: nine active asset sets selected from owner-approved uploads for publication on `gdlogi.us`, plus one previous derivative retained for rollback; supplemental media will be added later.
 
 ## Page-to-asset map
 
 | Page / section | Asset set | Purpose | Content boundary |
 | --- | --- | --- | --- |
-| Homepage hero | `carton-handling-*` | Show a real carton-handling moment without making wooden crates the dominant first impression | The crop excludes the person's face, uniform mark, plates, vehicles and container identity; do not claim the person or site is owned by Good Logistics |
-| Homepage operations strip | `consolidation-staging-*`, `carton-handling-*`, `container-handoff-*` | Balance mixed consolidation, paper-carton handling and container handoff | The carton crop is deliberately reused because the other available carton-loading photo exposes customer marks; do not infer supplier count, named customer, shipment route or delivery result |
+| Homepage hero | `carton-container-*` | Lead with visible cartoned cargo inside a shipping container instead of a wooden-crate-dominant image | The owner explicitly approved the visible customer brand; the crop excludes plate, truck identifiers, seal and container identifiers; do not infer customer endorsement, route or case result |
+| Homepage operations strip | `consolidation-staging-*`, `carton-handling-*`, `container-handoff-*` | Balance mixed consolidation, paper-carton handling and container handoff | Do not infer supplier count, named customer, shipment route or delivery result |
 | Homepage oversized section | `loading-coordination-*` | Show a real packed-cargo loading setting next to oversized planning copy | Do not imply ownership of the truck, forklift or warehouse |
 | Homepage U.S. delivery section | `redacted-delivery-record-*` | Show that delivery records can accompany final-delivery coordination without exposing shipment or personal data | This is a neutral record example, not a named case, testimonial or proof that every shipment receives the same document |
 | Supplier Pickup & Consolidation | `consolidation-staging-*` | Service-page hero | Caption confirms that supplier and shipment facts are separate from the photo |
@@ -16,13 +16,14 @@ Scope: eight active asset sets selected from owner-approved uploads for publicat
 | Oversized Cargo | `specialist-lifting-*` hero and `packing-preparation-*` supporting image | Connect specialist lifting context and packaging review with loading-plan inputs | The image does not prove owned equipment, location, route or a specific project; packaging review is not certification or product inspection |
 | Sea Freight | `consolidation-staging-*` and `container-handoff-*` in “Cargo Facts Before Route Promises” | Illustrate origin staging and a container handoff without presenting either image as a named case | Photos do not prove a location, port, sailing, U.S. delivery, Chicago case link or route outcome |
 
-The UK arrival, crane-delivery and unloading photos are intentionally held. They may later support a clearly labelled UK/global operation example after project facts and location details are confirmed. They must not be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. A tightly cropped derivative of `早到柜子.jpg` is active only as neutral carton-handling context; the face, uniform mark, plates, vehicles and container identity are outside the crop. The Chicago-named folder is owner-approved for selection, but only the privacy-treated closed-container crop is active until the exact case link is confirmed. The customer-branded carton-loading photo remains inactive. The original delivery record remains private and outside Git/public; only the fully opaque-redacted derivative is published.
+The delivery-location photos are intentionally held. `oversized-delivery-1/2` visibly show `ROYAL LIVER BUILDING 360 TOUR` and Liverpool wording; `uk-unload.jpg` has UK-consistent rear-plate, road-marking and telephone evidence but no verified city. `uk-arrival.jpg` and `uk-crane-delivery.jpg` do not contain enough unique visible evidence to assert an exact location. None may be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. A tightly cropped derivative of `早到柜子.jpg` is active only as neutral carton-handling context; the face, uniform mark, plates, vehicles and container identity are outside the crop. The Chicago-named folder is owner-approved for selection, but its folder name is not treated as case evidence. The selected branded-carton crop is active by explicit owner approval and keeps the brand without implying customer endorsement. The original delivery record remains private and outside Git/public; only the fully opaque-redacted derivative is published.
 
 ## Usage and crop spec
 
 | Asset set | Aspect / largest output | Safety treatment | Display behavior |
 | --- | --- | --- | --- |
-| `carton-handling-*` | 4:3 / 1200 × 900 | Tight crop excludes face, uniform mark, plates, vehicles and container identity; metadata stripped | Homepage hero: eager load, high fetch priority, `object-fit: cover`; homepage operations card: lazy load |
+| `carton-container-*` | 4:3 / 1200 × 900 | Crop preserves the owner-approved customer brand and carton markings while excluding plate, truck identifiers, seal and container identifiers; metadata stripped | Homepage hero: eager load, high fetch priority, `object-fit: cover` |
+| `carton-handling-*` | 4:3 / 1200 × 900 | Tight crop excludes face, uniform mark, plates, vehicles and container identity; metadata stripped | Homepage operations card: lazy load |
 | `redacted-delivery-record-*` | 612:285 / 640 × 298 | Driver, vehicle/container, date, times, full address, ZIP and signature are covered with opaque blocks; source stays outside Git/public | Lazy below fold; small supporting evidence only |
 | `china-operations-*` | 1:1 / 1200 × 1200 | Crop to crate area; blur remaining readable barcode; strip metadata | Retained for rollback; no current page reference |
 | `consolidation-staging-*` | 4:3 / 1000 × 750 | Crop out person and overhead location sign; blur small labels and handwritten markings; strip metadata | Lazy below fold; reusable service hero loads eagerly on its page |
@@ -34,6 +35,7 @@ The UK arrival, crane-delivery and unloading photos are intentionally held. They
 
 ## Responsive export list
 
+- `carton-container`: 480, 800 and 1200 px AVIF/WebP plus 1200 px progressive JPEG fallback.
 - `carton-handling`: 480, 800 and 1200 px AVIF/WebP plus 1200 px progressive JPEG fallback.
 - `redacted-delivery-record`: 480 and 640 px AVIF/WebP plus 640 px progressive JPEG fallback.
 - `china-operations`: 480, 800 and 1200 px AVIF/WebP plus 1200 px progressive JPEG fallback.
@@ -48,6 +50,7 @@ All rendered `<img>` elements have explicit width and height. Below-fold images 
 
 ## Alt text
 
+- Cartoned cargo: `Branded cartons and palletized cargo arranged inside a shipping container.`
 - Carton handling: `A sealed carton being moved during a cargo handoff.`
 - Delivery record: `A proof-of-delivery record with personal and shipment details redacted.`
 - Cargo handling: `Wooden export crates staged inside a cargo handling facility.`

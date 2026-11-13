@@ -26,6 +26,13 @@ const assets = [
     blur: [],
     widths: [480, 800, 1200]
   },
+  {
+    name: "carton-container",
+    source: path.join(desktopMediaSourceRoot, "芝加哥整柜直送/柜门封尾.jpg"),
+    crop: { left: 0, top: 900, width: 3072, height: 2304 },
+    blur: [],
+    widths: [480, 800, 1200]
+  },
   ...(deliveryRecordSource
     ? [{
         name: "redacted-delivery-record",
