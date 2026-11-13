@@ -57,8 +57,8 @@ Final responsive regression after the privacy and copy adjustments:
 - Selected source photos were cropped to remove or reduce people, location signs, customer labels and third-party branding; remaining readable shipment markings were blurred and metadata was stripped.
 - Captions describe visible cargo context only; they do not assert a photo location, owned warehouse, vehicle, equipment or a specific China-to-USA case.
 - UK delivery images and `早到柜子.jpg` remain unused.
-- BLOCKED FOR DEPLOYMENT UNTIL CONFIRMED: Zoe must confirm that each of the five selected source photos is cleared for public commercial use on `gdlogi.us`.
+- RELEASE AUTHORIZATION RECORDED: on 2026-11-13, Zoe instructed that the current selected materials be published on `gdlogi.us` while supplemental materials are prepared later. This is recorded as owner approval for the five privacy-reduced derivative sets; photographer/customer provenance remains unverified and no project facts are inferred.
 
 ## Deployment status
 
-Not deployed and not pushed.
+This validation snapshot predates the authorized release. Confirm the live deployment against the release commit rather than inferring production status from this file.

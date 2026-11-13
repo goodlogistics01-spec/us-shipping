@@ -1,7 +1,7 @@
 # Operational media plan
 
 Updated: 2026-11-13
-Scope: local preview only; no deployment in this change.
+Scope: current five-asset set approved by the owner for publication on `gdlogi.us`; supplemental media will be added later.
 
 ## Page-to-asset map
 
@@ -47,10 +47,10 @@ All rendered `<img>` elements have explicit width and height. Below-fold images 
 
 ## Rights and authenticity flags
 
-- `TODO_CONFIRM`: Zoe must confirm that each of the five selected source photos is cleared for public commercial use on `gdlogi.us` before deployment.
+- `OWNER_APPROVED`: on 2026-11-13, Zoe explicitly instructed that the current selected materials be published on `gdlogi.us` while supplemental media is prepared later.
 - `NOT_VERIFIED`: photographer ownership, customer permission, named facility, project identity and route are not established by the files alone.
 - Approved captions use neutral “coordinated” language and do not claim owned warehouses, vehicles, equipment, laboratories or overseas networks.
-- Cropping and blur reduce privacy exposure but do not replace publication permission.
+- Cropping and blur reduce privacy exposure; the owner publication instruction is limited to the current website use and does not establish rights for unrelated reuse.
 
 ## Minimum additional material to request
 

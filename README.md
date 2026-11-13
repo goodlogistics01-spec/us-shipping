@@ -76,7 +76,7 @@ These values are local-QA settings and must not be copied into deployment. `INQU
 - Local unit and route tests use injected or loopback-only mocks and never contact FormSubmit.
 - A historical owner-approved test reached `zoe@gdlogi.com` on 2026-10-21, before the current multi-service and inspection-type schema.
 - One owner-approved current-schema call was made on 2026-11-11. The application conservatively returned `PENDING / PROVIDER_RESPONSE_UNKNOWN` for request `GL-20261111-5D836B44`, did not set a success cookie and did not retry. The owner then confirmed exactly one message arrived, the complete current field body was present and clicking Reply addressed the controlled contact mailbox. Delivery of a manually sent reply remains `NOT_VERIFIED`; see `artifacts/controlled-real-inbox-test-2026-11-11.md`.
-- Production deployment has not been performed in this integration round.
+- Production status must be verified against the live domain and the recorded Vercel deployment for the release commit; do not infer it from a local repository snapshot.
 
 ## Analytics
 
