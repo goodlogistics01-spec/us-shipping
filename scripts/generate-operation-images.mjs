@@ -126,6 +126,19 @@ const assets = [
     widths: [480, 800, 1200]
   },
   {
+    name: "recipient-handoff",
+    source: path.join(
+      projectRoot,
+      "public/good-shipping-homepage/assets/oversized-delivery-1.jpg"
+    ),
+    crop: { left: 0, top: 640, width: 1536, height: 1152 },
+    blur: [
+      { left: 870, top: 220, width: 125, height: 125, sigma: 26 }
+    ],
+    blurFeather: { inset: 3, deviation: 2 },
+    widths: [480, 800, 1200]
+  },
+  {
     name: "specialist-lifting",
     source: path.join(
       projectRoot,
