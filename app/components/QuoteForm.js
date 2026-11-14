@@ -170,6 +170,7 @@ export default function QuoteForm({
   pageUrl = "https://gdlogi.us/quote/",
   productId = "",
   productPage = false,
+  replyFieldsNearEmail = false,
   defaultShippingMethod = "not-sure",
   defaultServiceNeeds = ["not-sure"],
   defaultInspectionTypes = [],
@@ -294,8 +295,8 @@ export default function QuoteForm({
 
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
-      if (Object.keys(errors).some((name) => optionalDetailFieldNames.has(name))) {
-        optionalDetailsRef.current.open = true;
+      if (Object.keys(errors).some(isOptionalDetailField)) {
+        optionalDetailsRef.current?.setAttribute("open", "");
       }
       setStatus("invalid");
       trackInquiryEvent("quote_submit_failed", {
@@ -366,8 +367,8 @@ export default function QuoteForm({
       submittingRef.current = false;
       const serverFieldErrors = error.fieldErrors || {};
       setFieldErrors((current) => ({ ...current, ...serverFieldErrors }));
-      if (Object.keys(serverFieldErrors).some((name) => optionalDetailFieldNames.has(name))) {
-        optionalDetailsRef.current.open = true;
+      if (Object.keys(serverFieldErrors).some(isOptionalDetailField)) {
+        optionalDetailsRef.current?.setAttribute("open", "");
       }
       setStatus(Object.keys(serverFieldErrors).length > 0 ? "invalid" : "failed");
       trackInquiryEvent("quote_submit_failed", {
@@ -449,6 +450,46 @@ export default function QuoteForm({
     setFieldErrors((current) => ({ ...current, inspection_types: "" }));
   }
 
+  function isOptionalDetailField(name) {
+    if (replyFieldsNearEmail && (name === "whatsapp" || name === "preferred_contact")) {
+      return false;
+    }
+    return optionalDetailFieldNames.has(name);
+  }
+
+  const preferredReplyField = (
+    <label>
+      <span className="marketing-field-label">Preferred Reply Method</span>
+      <select
+        name="preferred_contact"
+        value={preferredContact}
+        onChange={handlePreferredContactChange}
+      >
+        <option value="email">Email</option>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="either">Either is fine</option>
+      </select>
+    </label>
+  );
+
+  const whatsappPhoneField = (
+    <label>
+      <span className="marketing-field-label">
+        WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
+      </span>
+      <input
+        name="whatsapp"
+        type="tel"
+        autoComplete="tel"
+        maxLength="50"
+        required={preferredContact === "whatsapp"}
+        aria-invalid={Boolean(fieldErrors.whatsapp)}
+        aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
+      />
+      <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
+    </label>
+  );
+
   return (
     <form
       className="marketing-form"
@@ -501,6 +542,12 @@ export default function QuoteForm({
           />
           <FieldError id="quote-error-email" message={fieldErrors.email} />
         </label>
+        {replyFieldsNearEmail ? (
+          <>
+            {preferredReplyField}
+            {whatsappPhoneField}
+          </>
+        ) : null}
         <label className="form-span-two">
           <span className="marketing-field-label">Product / Goods Name <span aria-hidden="true">*</span></span>
           <input
@@ -618,37 +665,12 @@ export default function QuoteForm({
               <span className="marketing-field-label">Company</span>
               <input name="company" autoComplete="organization" maxLength="160" />
             </label>
-            <label>
-              <span className="marketing-field-label">
-                WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
-              </span>
-              <input
-                name="whatsapp"
-                type="tel"
-                autoComplete="tel"
-                maxLength="50"
-                required={preferredContact === "whatsapp"}
-                aria-invalid={Boolean(fieldErrors.whatsapp)}
-                aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
-              />
-              <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
-            </label>
+            {replyFieldsNearEmail ? null : whatsappPhoneField}
             <label>
               <span className="marketing-field-label">Cargo Ready Date</span>
               <input name="cargo_ready_date" type="date" />
             </label>
-            <label>
-              <span className="marketing-field-label">Preferred Reply Method</span>
-              <select
-                name="preferred_contact"
-                value={preferredContact}
-                onChange={handlePreferredContactChange}
-              >
-                <option value="email">Email</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="either">Either is fine</option>
-              </select>
-            </label>
+            {replyFieldsNearEmail ? null : preferredReplyField}
             <label>
               <span className="marketing-field-label">Carton / Pallet Quantity</span>
               <input name="package_count" inputMode="numeric" maxLength="80" />

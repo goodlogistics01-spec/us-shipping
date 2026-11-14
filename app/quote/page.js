@@ -11,8 +11,8 @@ export const metadata = createPageMetadata({
 export default function QuotePage() {
   return (
     <MarketingPage>
-      <section className="marketing-page-hero marketing-quote-hero"><div className="marketing-container marketing-content-narrow"><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Quote" }]} /><p className="marketing-eyebrow">Shipping &amp; China-Side Operations</p><h1>Request a Shipping &amp; Prep Quote</h1><p className="marketing-lead">Select shipping separately from pickup, consolidation, warehousing, labeling, repacking, kitting, receiving checks or project-scoped product inspection. Unknown weight or volume can be marked for follow-up.</p></div></section>
-      <section className="marketing-section"><div className="marketing-container marketing-form-shell"><QuoteForm /></div></section>
+      <section className="marketing-page-hero marketing-quote-hero"><div className="marketing-container marketing-content-narrow"><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Quote" }]} /><p className="marketing-eyebrow">Shipping &amp; Prep Quote</p><h1>Tell Us About Your Shipment</h1><p className="marketing-lead">Share the essentials. We’ll confirm the remaining shipping and cargo-prep details with you.</p></div></section>
+      <section className="marketing-section"><div className="marketing-container marketing-form-shell"><QuoteForm replyFieldsNearEmail /></div></section>
     </MarketingPage>
   );
 }

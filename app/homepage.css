@@ -556,7 +556,7 @@
 .home-trust-grid {
   min-height: 126px;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .home-trust-grid > div {
@@ -719,10 +719,15 @@
   border-top: 1px solid var(--home-line);
 }
 
+.home-operations-section {
+  border-bottom: 1px solid var(--home-line);
+}
+
 .home-operations-heading {
   max-width: 760px;
 }
 
+.home-operations-heading h2,
 .home-operations-heading h3 {
   margin-top: 10px;
   color: var(--home-navy-900);
@@ -743,6 +748,10 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+}
+
+.home-operations-grid-featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .home-operation-card {
@@ -1506,6 +1515,18 @@
   margin-top: 26px;
 }
 
+.home-person-actions {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+}
+
+.home-person-actions .home-text-link {
+  display: inline-flex;
+}
+
 .home-industry-grid {
   margin-top: 42px;
   display: grid;
@@ -2019,6 +2040,68 @@
   letter-spacing: 0.05em;
 }
 
+.home-service-directory {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.home-service-directory-group {
+  min-width: 0;
+  padding: clamp(26px, 3vw, 36px);
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: var(--home-white);
+}
+
+.home-service-directory-group > span {
+  color: var(--home-blue);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.home-service-directory-group h3 {
+  margin-top: 14px;
+  color: var(--home-navy-900);
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.home-service-link-list {
+  margin-top: 22px;
+  display: grid;
+}
+
+.home-service-link-list a {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 0;
+  border-top: 1px solid var(--home-line);
+  color: var(--home-navy-900);
+  font-size: 14px;
+  font-weight: 680;
+  line-height: 1.4;
+}
+
+.home-service-link-list a:last-child {
+  border-bottom: 1px solid var(--home-line);
+}
+
+.home-service-link-list a span {
+  flex: 0 0 auto;
+  color: var(--home-blue);
+}
+
+.home-service-link-list a:hover,
+.home-service-link-list a:focus-visible {
+  color: var(--home-blue);
+}
+
 .home-value-grid {
   margin-top: 44px;
   display: grid;
@@ -2395,16 +2478,8 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .home-trust-grid > div:nth-child(4) {
-    border-left: 1px solid var(--home-line);
-  }
-
   .home-trust-grid > div {
     min-height: 104px;
-    border-bottom: 1px solid var(--home-line);
-  }
-
-  .home-trust-grid > div:nth-last-child(-n + 2) {
     border-bottom: 0;
   }
 
@@ -2594,6 +2669,10 @@
     grid-template-columns: 1fr;
   }
 
+  .home-service-directory {
+    grid-template-columns: 1fr;
+  }
+
   .home-delivery-proof {
     grid-template-columns: 1fr;
   }
@@ -2693,6 +2772,15 @@
   .home-person-card picture {
     width: 52px;
     justify-self: start;
+  }
+
+  .home-person-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .home-person-actions .home-button {
+    width: 100%;
   }
 
   .home-certificate-grid article {

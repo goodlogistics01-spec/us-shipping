@@ -1,29 +1,28 @@
 # Operational media plan
 
 Updated: 2026-11-14
-Scope: twelve active asset sets selected from owner-approved uploads for publication on `gdlogi.us`, plus one previous derivative retained for rollback; supplemental media will be added later.
+Scope: nine active asset sets selected from owner-approved uploads for publication on `gdlogi.us`, plus four previous derivative sets retained for rollback; supplemental media will be added later.
 
 ## Page-to-asset map
 
 | Page / section | Asset set | Purpose | Content boundary |
 | --- | --- | --- | --- |
 | Homepage hero | `carton-container-*` | Lead with visible cartoned cargo inside a shipping container instead of a wooden-crate-dominant image | Customer logos, brand-name wording and brand-slogan wording are blurred; the crop excludes plate, truck identifiers, seal and container identifiers; do not infer customer endorsement, route or case result |
-| Homepage operations strip | `consolidation-staging-*`, `carton-handling-*`, `container-handoff-*`, `recipient-handoff-*` | Balance mixed consolidation, paper-carton handling, container handoff and a recipient-visible destination handoff | Do not infer supplier count, named customer, shipment route, destination or Good Logistics responsibility from the photos |
-| Homepage oversized section | `loading-coordination-*` | Show a real packed-cargo loading setting next to oversized planning copy | Do not imply ownership of the truck, forklift or warehouse |
+| Homepage selected operations | `consolidation-staging-*`, `recipient-handoff-*` | Place one origin-staging context and one recipient-visible destination handoff near the three customer paths and Zoe contact module | Do not infer supplier count, named customer, shipment route, destination or Good Logistics responsibility from the photos |
 | Homepage U.S. delivery section | `redacted-delivery-record-*` | Show that delivery records can accompany final-delivery coordination without exposing shipment or personal data | This is a neutral record example, not a named case, testimonial or proof that every shipment receives the same document |
 | Supplier Pickup & Consolidation | `consolidation-staging-*` | Service-page hero | Caption confirms that supplier and shipment facts are separate from the photo |
 | Warehousing & Inventory Coordination | `warehouse-crates-*` | Service-page hero | No warehouse ownership, area, real-time inventory or API claim |
 | Oversized Cargo | `specialist-lifting-*` hero and `packing-preparation-*` supporting image | Connect specialist lifting context and packaging review with loading-plan inputs | The image does not prove owned equipment, location, route or a specific project; packaging review is not certification or product inspection |
 | Sea Freight | `empty-container-interior-*` and `fcl-loaded-cartons-*` in “Cargo Facts Before Route Promises” | Show neutral before-loading container context and cartoned-cargo loading without presenting either image as a named case | Photos do not prove container condition, inspection, suitability, customer, location, port, sailing, U.S. delivery, loading rate or route outcome |
 
-One delivery-location image is active only through the privacy-treated `recipient-handoff-*` derivative. It retains the people and visible handoff action requested by the owner while strongly blurring the `ROYAL LIVER BUILDING 360 TOUR` location sign. Its homepage placement is a neutral operations card, not the U.S. delivery section, and the caption does not publish a destination, customer, route, case or Good Logistics responsibility. The second `oversized-delivery-2` image remains held; `uk-unload.jpg` has UK-consistent rear-plate, road-marking and telephone evidence but no verified city, while `uk-arrival.jpg` and `uk-crane-delivery.jpg` do not contain enough unique visible evidence to assert an exact location. None may be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. A tightly cropped derivative of `早到柜子.jpg` is active only as neutral carton-handling context; the face, uniform mark, plates, vehicles and container identity are outside the crop. The Chicago-named folder is owner-approved for selection, but its folder name is not treated as case evidence. The selected carton crop is active by explicit owner approval, with customer logos, brand-name wording and brand-slogan wording blurred by the owner's later direction. The original delivery record remains private and outside Git/public; only the fully opaque-redacted derivative is published.
+One delivery-location image is active only through the privacy-treated `recipient-handoff-*` derivative. It retains the people and visible handoff action requested by the owner while strongly blurring the `ROYAL LIVER BUILDING 360 TOUR` location sign. Its homepage placement is a neutral operations card, not the U.S. delivery section, and the caption does not publish a destination, customer, route, case or Good Logistics responsibility. The second `oversized-delivery-2` image remains held; `uk-unload.jpg` has UK-consistent rear-plate, road-marking and telephone evidence but no verified city, while `uk-arrival.jpg` and `uk-crane-delivery.jpg` do not contain enough unique visible evidence to assert an exact location. None may be used as evidence of U.S., Hawaii, Alaska or Puerto Rico delivery. A tightly cropped derivative of `早到柜子.jpg` is retained for rollback and is not referenced by a current page; the face, uniform mark, plates, vehicles and container identity are outside the crop. The Chicago-named folder is owner-approved for selection, but its folder name is not treated as case evidence. The selected carton crop is active by explicit owner approval, with customer logos, brand-name wording and brand-slogan wording blurred by the owner's later direction. The original delivery record remains private and outside Git/public; only the fully opaque-redacted derivative is published.
 
 ## Usage and crop spec
 
 | Asset set | Aspect / largest output | Safety treatment | Display behavior |
 | --- | --- | --- | --- |
 | `carton-container-*` | 4:3 / 1200 × 900 | Customer logos, brand-name wording and brand-slogan wording blurred; crop excludes plate, truck identifiers, seal and container identifiers; metadata stripped | Homepage hero: eager load, high fetch priority, `object-fit: cover` |
-| `carton-handling-*` | 4:3 / 1200 × 900 | Tight crop excludes face, uniform mark, plates, vehicles and container identity; metadata stripped | Homepage operations card: lazy load |
+| `carton-handling-*` | 4:3 / 1200 × 900 | Tight crop excludes face, uniform mark, plates, vehicles and container identity; metadata stripped | Retained for rollback; no current page reference |
 | `redacted-delivery-record-*` | 612:285 / 640 × 298 | Driver, vehicle/container, date, times, full address, ZIP and signature are covered with opaque blocks; source stays outside Git/public | Lazy below fold; small supporting evidence only |
 | `china-operations-*` | 1:1 / 1200 × 1200 | Crop to crate area; blur remaining readable barcode; strip metadata | Retained for rollback; no current page reference |
 | `consolidation-staging-*` | 4:3 / 1000 × 750 | Crop out person and overhead location sign; blur small labels and handwritten markings; strip metadata | Lazy below fold; reusable service hero loads eagerly on its page |
@@ -31,9 +30,9 @@ One delivery-location image is active only through the privacy-treated `recipien
 | `fcl-loaded-cartons-*` | 4:5 / 1000 × 1250 | Crop excludes the truck plate and surrounding vehicle identities; blur shipping labels, barcodes and order-specific carton codes; strip metadata | Lazy below fold in the sea-freight cargo-facts gallery |
 | `empty-container-interior-*` | 4:3 / 1200 × 900 | Crop excludes the truck plate and trailer identifiers; strip metadata | Lazy below fold; describe only as empty-container context before loading |
 | `packing-preparation-*` | 16:9 / 1000 × 563 | Crop away customer/brand labels; strip metadata | Lazy below fold; do not enlarge beyond source-derived output |
-| `loading-coordination-*` | 4:5 / 550 × 688 | Crop out operator face and forklift branding; blur remaining small label; strip metadata | Lazy below fold in the homepage oversized section |
-| `container-handoff-*` | 4:5 / 1200 × 1500 | Crop out plate, trailer identifiers and most surroundings; blur container identity; strip metadata | Lazy below fold in the homepage operations strip |
-| `recipient-handoff-*` | 4:3 / 1200 × 900 | Keep people and the handoff action; strongly blur the readable location sign; strip metadata | Lazy below fold in the homepage operations strip only; do not place in the U.S. delivery section |
+| `loading-coordination-*` | 4:5 / 550 × 688 | Crop out operator face and forklift branding; blur remaining small label; strip metadata | Retained for rollback; no current page reference |
+| `container-handoff-*` | 4:5 / 1200 × 1500 | Crop out plate, trailer identifiers and most surroundings; blur container identity; strip metadata | Retained for rollback; no current page reference |
+| `recipient-handoff-*` | 4:3 / 1200 × 900 | Keep people and the handoff action; strongly blur the readable location sign; strip metadata | Lazy below fold in the homepage selected-operations section only; do not place in the U.S. delivery section |
 | `specialist-lifting-*` | 3:2 / 1200 × 800 | Crop out people, equipment-provider branding, vehicle identity and readable shipment details; strip metadata | Eager as the oversized-cargo service hero |
 
 ## Responsive export list
@@ -60,7 +59,7 @@ All rendered `<img>` elements have explicit width and height. Below-fold images 
 - Carton handling: `A sealed carton being moved during a cargo handoff.`
 - Delivery record: `A proof-of-delivery record with personal and shipment details redacted.`
 - Cargo handling: `Wooden export crates staged inside a cargo handling facility.`
-- Consolidation staging: `Mixed crates and packaged cargo staged inside a consolidation facility.`
+- Consolidation staging: `Mixed crates and packaged cargo staged inside a cargo handling area.`
 - Warehouse crates: `Wooden export crates stored inside a cargo handling area.`
 - FCL loading: `Cartoned cargo arranged inside an open shipping container during loading.`
 - Empty container: `Empty shipping container interior before cargo loading.`

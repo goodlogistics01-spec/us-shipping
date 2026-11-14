@@ -157,6 +157,18 @@ body a {
   padding: 54px 0 64px;
 }
 
+.marketing-quote-hero {
+  padding: 34px 0 40px;
+}
+
+.marketing-quote-hero .marketing-breadcrumbs {
+  margin-bottom: 22px;
+}
+
+.marketing-quote-hero h1 {
+  margin-bottom: 12px;
+}
+
 .marketing-hero-grid,
 .marketing-profile-grid {
   display: grid;
@@ -981,6 +993,10 @@ body a {
   .marketing-hero,
   .marketing-page-hero {
     padding: 38px 0 52px;
+  }
+
+  .marketing-quote-hero {
+    padding: 28px 0 34px;
   }
 
   .marketing-hero h1,
