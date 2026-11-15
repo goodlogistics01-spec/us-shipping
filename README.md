@@ -91,4 +91,4 @@ The application emits anonymous local events. It does not load Google Tag Manage
 
 ## Release readiness
 
-Unverified certificates, shipment outcomes, detailed office address, case-publication rights and final legal details remain unpublished. Review `artifacts/launch-readiness-checklist.md` and the latest local validation record before any production release.
+Unverified certificates, shipment outcomes, detailed office address, case-publication rights and final legal details remain unpublished. Review `artifacts/launch-readiness-checklist.md` and `artifacts/final-release-validation-2026-11-15.md` before any production release.
