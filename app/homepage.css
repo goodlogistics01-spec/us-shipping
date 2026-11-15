@@ -317,12 +317,12 @@
 }
 
 .home-hero-grid {
-  min-height: 682px;
+  min-height: 632px;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(440px, 0.92fr);
   gap: clamp(44px, 5vw, 76px);
   align-items: center;
-  padding-block: 58px 62px;
+  padding-block: 50px 54px;
 }
 
 .home-hero-copy {
@@ -342,7 +342,7 @@
   max-width: 750px;
   margin-top: 16px;
   color: var(--home-navy-950);
-  font-size: clamp(54px, 4.4vw, 66px);
+  font-size: clamp(50px, 4.15vw, 64px);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.025;
@@ -505,7 +505,7 @@
 .home-hero-media picture {
   display: block;
   overflow: hidden;
-  height: 560px;
+  height: 520px;
   border: 1px solid #cfdbe7;
   border-radius: 18px;
   background: #e7edf3;
@@ -554,7 +554,7 @@
 }
 
 .home-trust-grid {
-  min-height: 126px;
+  min-height: 108px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -751,6 +751,8 @@
 }
 
 .home-operations-grid-featured {
+  max-width: 960px;
+  margin-inline: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -2047,6 +2049,100 @@
   gap: 20px;
 }
 
+.home-mode-grid {
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-mode-card {
+  min-width: 0;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(26px, 3vw, 34px);
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+}
+
+.home-mode-card > span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: var(--home-blue);
+  background: var(--home-sky);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-mode-card h3 {
+  margin-top: 24px;
+  color: var(--home-navy-900);
+  font-size: 24px;
+  line-height: 1.22;
+}
+
+.home-mode-card p {
+  margin-top: 14px;
+  color: var(--home-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.home-mode-card a {
+  margin-top: auto;
+  padding-top: 24px;
+  color: var(--home-blue) !important;
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+
+.home-operations-links {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--home-line);
+  border-radius: 14px;
+  background: var(--home-soft);
+}
+
+.home-operations-links strong {
+  margin-right: 4px;
+  color: var(--home-navy-900);
+  font-size: 13px;
+}
+
+.home-operations-links a {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid #c7d5e3;
+  border-radius: 999px;
+  color: #29415b;
+  background: var(--home-white);
+  font-size: 12px;
+  font-weight: 680;
+}
+
+.home-operations-links a:hover,
+.home-operations-links a:focus-visible {
+  border-color: #8bb6d7;
+  color: var(--home-blue);
+}
+
 .home-service-directory-group {
   min-width: 0;
   padding: clamp(26px, 3vw, 36px);
@@ -2496,6 +2592,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .home-mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .home-value-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2556,7 +2656,7 @@
   }
 
   .home-section {
-    padding-block: 78px;
+    padding-block: 64px;
   }
 
   .home-hero-grid {
@@ -2658,6 +2758,7 @@
 
   .home-service-grid,
   .home-buyer-grid,
+  .home-mode-grid,
   .home-why-grid,
   .home-case-grid,
   .home-scenario-grid,
@@ -2671,6 +2772,50 @@
 
   .home-service-directory {
     grid-template-columns: 1fr;
+  }
+
+  .home-mode-card {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .home-mode-grid {
+    margin-top: 30px;
+    gap: 12px;
+  }
+
+  .home-mode-card h3 {
+    margin-top: 18px;
+  }
+
+  .home-mode-card p {
+    margin-top: 12px;
+  }
+
+  .home-mode-card a {
+    padding-top: 18px;
+  }
+
+  .home-operations-links {
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .home-operations-links strong {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .home-operations-links a {
+    min-height: 40px;
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    padding: 8px 10px;
+    border-radius: 10px;
+    line-height: 1.35;
+    text-align: center;
   }
 
   .home-delivery-proof {

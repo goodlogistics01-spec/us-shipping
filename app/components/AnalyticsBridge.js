@@ -45,6 +45,7 @@ export default function AnalyticsBridge({ gtmId = "" }) {
     };
 
     if (readConsent() === "granted") loadGtm(gtmId);
+    pushAnonymousEvent("page_view");
 
     const handleConsent = (event) => {
       const status = event.detail?.status;
@@ -61,6 +62,15 @@ export default function AnalyticsBridge({ gtmId = "" }) {
         pushAnonymousEvent("email_click", { link_location: "site" });
       } else if (href.includes("wa.me/") || href.includes("whatsapp.com/")) {
         pushAnonymousEvent("whatsapp_click", { link_location: "site" });
+      } else {
+        try {
+          const url = new URL(href, window.location.href);
+          if (url.origin === window.location.origin && url.pathname === "/quote/") {
+            pushAnonymousEvent("quote_cta_click", { link_location: "site" });
+          }
+        } catch {
+          // Ignore malformed links instead of interrupting navigation.
+        }
       }
     };
 

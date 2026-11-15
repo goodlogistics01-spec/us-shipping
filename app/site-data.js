@@ -39,6 +39,73 @@ export function createPageMetadata({
 }
 
 export const services = {
+  "international-express-china-to-usa": {
+    navTitle: "International Express",
+    category: "International Freight & Delivery",
+    eyebrow: "China-to-USA express coordination",
+    title: "International Express Shipping from China to the USA",
+    description:
+      "International express shipping from China to the USA for samples, small commercial shipments and time-sensitive cartons, with pickup and delivery scope confirmed before booking.",
+    summary:
+      "A shipment-specific express option for samples, smaller commercial orders and urgent cartons when the service level, chargeable weight and delivery conditions need to be confirmed before dispatch.",
+    heroMedia: {
+      base: "/good-shipping-homepage/assets/operations/carton-handling",
+      widths: [480, 800, 1200],
+      fallbackWidth: 1200,
+      width: 1200,
+      height: 900,
+      alt: "A sealed commercial carton being handled for shipment.",
+      caption: "A sealed commercial carton during handling before the agreed shipment handoff."
+    },
+    bestFor: [
+      "Commercial samples and document packs",
+      "Smaller cartons that need a time-sensitive option",
+      "Replacement parts and urgent replenishment",
+      "Door-delivery requests with a confirmed consignee address"
+    ],
+    operations: [
+      "Coordinate pickup from the confirmed supplier or handoff point in China.",
+      "Review package count, packed dimensions, gross weight and commodity details.",
+      "Compare an available express service level for the confirmed route and shipment.",
+      "Arrange the agreed handoff and provide updates at the confirmed milestones."
+    ],
+    boundaries: [
+      "Carrier, channel, route and service level are confirmed per shipment; this site does not claim an exclusive or official carrier appointment.",
+      "Restricted, dangerous, regulated or unusually sized goods require separate review before acceptance.",
+      "Customs decisions, remote-area coverage and carrier-controlled delivery events are not unconditional guarantees."
+    ],
+    customerInputs: [
+      "Product description, value and intended use",
+      "Pickup city, supplier contact and cargo-ready date",
+      "Package count, packed dimensions and gross weight",
+      "Destination address, ZIP code and consignee contact"
+    ],
+    costFactors: [
+      "Actual or volumetric chargeable weight",
+      "Origin pickup and confirmed service level",
+      "Commodity, declared value and customs requirements",
+      "Remote, residential, oversized or other delivery conditions"
+    ],
+    startSteps: [
+      "Send the commodity, package and route details.",
+      "Confirm whether the cargo is eligible for the available express option.",
+      "Review the quoted service level, inclusions and possible accessorial charges.",
+      "Approve the shipment-specific plan before pickup or handoff."
+    ],
+    quoteNeeds: ["shipping"],
+    shippingMethod: "express",
+    relatedServices: [
+      ["Air Freight", "/services/air-freight-china-to-usa/"],
+      ["Supplier Pickup & Consolidation", "/services/supplier-consolidation/"],
+      ["Cargo Inspection & Receiving Checks", "/services/cargo-inspection-receiving-checks/"]
+    ],
+    faq: [
+      ["What details are needed for an express quote?", "Send the product description, value, package count, packed dimensions, gross weight, pickup city and complete destination address."],
+      ["Is the express carrier fixed?", "No carrier or channel is promised on this page. The available option and service level are confirmed for the actual shipment and route."],
+      ["Why do packed dimensions matter?", "Express pricing commonly considers chargeable weight, which may be based on actual weight or package volume. Exact packed dimensions are needed for a useful comparison."],
+      ["Can every product move by express?", "No. Commodity restrictions, batteries, liquids, declared value, dimensions and destination conditions must be reviewed before acceptance."]
+    ]
+  },
   "air-freight-china-to-usa": {
     navTitle: "Air Freight",
     category: "International Freight & Delivery",
@@ -87,8 +154,8 @@ export const services = {
     shippingMethod: "air-freight",
     relatedServices: [
       ["Sea Freight", "/services/sea-freight-china-to-usa/"],
+      ["International Express", "/services/international-express-china-to-usa/"],
       ["Supplier Pickup & Consolidation", "/services/supplier-consolidation/"],
-      ["DDP Door-to-Door", "/services/ddp-shipping-china-to-usa/"]
     ],
     faq: [
       ["What information is needed for an air freight quote?", "Send the product name, package count, dimensions, gross weight, pickup city, U.S. destination ZIP code and cargo-ready date."],
@@ -359,7 +426,7 @@ export const services = {
       fallbackWidth: 1000,
       width: 1000,
       height: 750,
-      alt: "Mixed crates and packaged cargo staged inside a consolidation facility.",
+      alt: "Mixed crates and packaged cargo staged inside a cargo handling area.",
       caption: "Crates and packaged cargo in a handling area. Supplier and shipment details are confirmed separately."
     },
     bestFor: [
@@ -397,6 +464,29 @@ export const services = {
       "Confirm the receiving, storage and release scope.",
       "Coordinate the agreed pickups and shipment plan."
     ],
+    workflow: [
+      ["01", "Supplier list", "Confirm supplier contacts, pickup locations, cargo-ready dates and expected packages."],
+      ["02", "Pickup schedule", "Coordinate the agreed pickup or handoff sequence without assuming every supplier finishes together."],
+      ["03", "Receiving record", "Register arrivals and perform the confirmed package-level checks against customer-provided records."],
+      ["04", "Consolidated release", "Release cargo under the approved combined or split shipping instruction after compatibility and scope are confirmed."]
+    ],
+    planningInputs: [
+      "Supplier list and pickup contacts",
+      "Packing lists, carton data and cargo-ready dates",
+      "Requested receiving or product-inspection scope",
+      "Storage, split-release and destination instructions"
+    ],
+    planningOutput: [
+      "A scope showing the planned supplier handoffs",
+      "The confirmed receiving, handling and storage steps",
+      "Any missing data, cargo-compatibility or timing constraints",
+      "A shipment plan or comparison based on the available cargo data"
+    ],
+    resourceLink: {
+      title: "Multi-supplier consolidation checklist",
+      copy: "Prepare the supplier, carton, document, check and release information needed for a useful review.",
+      href: "/resources/multi-supplier-consolidation-checklist/"
+    },
     quoteNeeds: ["supplier-pickup", "consolidation"],
     shippingMethod: "not-sure",
     relatedServices: [
@@ -598,45 +688,147 @@ export const destinations = {
   hawaii: {
     title: "Shipping from China to Hawaii",
     description:
-      "Plan ocean or air freight from China to Hawaii with customs coordination and final delivery requirements reviewed before booking.",
+      "Plan ocean or air shipping from China to Hawaii with supplier pickup, customs-broker coordination and final delivery reviewed for the confirmed island and ZIP code.",
     summary:
-      "Freight planning for commercial cargo moving from Chinese suppliers to a confirmed address in Hawaii, with the island, route and final-delivery conditions reviewed in the quote.",
+      "GOOD LOGISTICS coordinates China pickup and freight, then reviews the customs handoff and final delivery against the exact island, ZIP code, cargo and site conditions.",
+    areaServed: "Hawaii",
+    focusTitle: "Why the final address matters",
+    focusCopy:
+      "A Hawaii quotation should be built around the actual destination rather than mainland assumptions. The destination island, local handoff, delivery access and unloading requirements can change the workable route and quoted scope.",
     considerations: [
       "Destination island, ZIP code and final delivery access",
       "Ocean, air or combined routing based on current schedules",
       "Cargo dimensions, packaging and special handling needs",
       "Customs, delivery appointment and unloading scope"
+    ],
+    operations: [
+      "Coordinate supplier pickup and multi-supplier consolidation in China.",
+      "Arrange confirmed cargo preparation before release.",
+      "Review available ocean or air options for the shipment.",
+      "Coordinate customs-clearance handoff through a licensed broker or partner.",
+      "Plan the final handoff through an available local carrier or partner."
+    ],
+    customerInputs: [
+      "Supplier city and cargo-ready date",
+      "Commodity and packaging description",
+      "Package count, dimensions, weight and volume",
+      "Destination island, city and ZIP code",
+      "Delivery type, access, appointment and unloading requirements"
+    ],
+    quoteClarifies: [
+      "Planned freight mode and route scope",
+      "Origin pickup and preparation included",
+      "Customs and broker responsibilities",
+      "Local-carrier handoff and delivery scope",
+      "Known exclusions and possible destination accessorials"
+    ],
+    boundary:
+      "Schedules, route availability and local handoffs are confirmed for each shipment. Remote or special-address coverage is not unconditional. Duties, examinations, storage and delivery accessorials are included only when stated in the quotation.",
+    faq: [
+      ["Can GOOD LOGISTICS arrange door delivery in Hawaii?", "A door-delivery option can be reviewed once the exact island, ZIP code, cargo and site access are supplied. Coverage and the local handoff are confirmed for that shipment."],
+      ["Should I use ocean or air freight?", "The comparison depends on cargo size, urgency, handling requirements, current routing and the final delivery address."],
+      ["Are timing and charges the same as mainland delivery?", "No mainland timing or pricing is assumed. The complete route and destination scope are quoted separately."]
     ]
   },
   alaska: {
     title: "Shipping from China to Alaska",
     description:
-      "Plan freight from China to Alaska with routing, customs coordination and final delivery requirements reviewed before booking.",
+      "Plan ocean, air or combined freight from China to Alaska with routing, customs-broker coordination and final delivery reviewed for the confirmed address.",
     summary:
-      "Shipping coordination for cargo moving from Chinese suppliers to a confirmed address in Alaska, where onward routing, weather exposure and site access may affect the plan.",
+      "GOOD LOGISTICS reviews ocean, air or combined routing for commercial cargo to Alaska, then defines the local handoff and delivery requirements for the confirmed city and ZIP code.",
+    areaServed: "Alaska",
+    focusTitle: "Build the route around the final address",
+    focusCopy:
+      "Alaska shipments require an address-specific review. Current routing, onward handoffs, cargo protection, site access and unloading requirements should be considered together before the service is confirmed.",
     considerations: [
       "Final destination and access beyond the main gateway",
       "Current ocean, air or combined routing options",
       "Packaging suitable for handling and weather exposure",
       "Delivery equipment, appointment and unloading needs"
+    ],
+    operations: [
+      "Coordinate supplier pickup and consolidation in China.",
+      "Review available ocean, air or combined routing.",
+      "Confirm packaging and handling requirements for the cargo.",
+      "Coordinate customs-clearance handoff through a licensed broker or partner.",
+      "Plan the local-carrier and final-delivery handoff."
+    ],
+    customerInputs: [
+      "Commodity, packaging and cargo-ready details",
+      "Package count, packed dimensions, weight and volume",
+      "Final Alaska city, ZIP code and delivery type",
+      "Road or site access information supplied by the consignee",
+      "Appointment, liftgate, forklift or unloading requirements"
+    ],
+    quoteClarifies: [
+      "Planned routing and handoff points",
+      "Included origin and freight stages",
+      "Customs and broker responsibilities",
+      "Local-carrier availability for the confirmed address",
+      "Delivery equipment, appointment and known exclusions"
+    ],
+    boundary:
+      "No blanket Alaska coverage, fixed route or fixed transit time is promised. Remote addresses, weather-sensitive handling and specialist delivery equipment require shipment-specific confirmation.",
+    faq: [
+      ["Can you review a remote Alaska address?", "Yes. Send the complete address and site-access details. Route and local-carrier availability must be confirmed before the delivery scope is accepted."],
+      ["What destination information is most important?", "The city, ZIP code, delivery type, road or site access, appointment rules and unloading capability."],
+      ["Can oversized cargo be planned for Alaska?", "It can be reviewed after dimensions, weight, packaging, lifting points, access and required equipment are supplied. Acceptance is shipment-specific."]
     ]
   },
   "puerto-rico": {
     title: "Shipping from China to Puerto Rico",
     description:
-      "Plan freight from China to Puerto Rico with routing, customs documentation and island delivery scope reviewed before booking.",
+      "Plan ocean or air freight from China to Puerto Rico with supplier pickup, documentation handoffs and final delivery reviewed for the confirmed cargo and address.",
     summary:
-      "Ocean or air freight planning for commercial cargo moving from Chinese suppliers to a confirmed address in Puerto Rico, with documentation and final-delivery requirements reviewed in advance.",
+      "GOOD LOGISTICS coordinates ocean or air planning, documentation handoffs and delivery scope for commercial cargo moving from China to a confirmed Puerto Rico address.",
+    areaServed: "Puerto Rico",
+    focusTitle: "Route and documentation belong in the same review",
+    focusCopy:
+      "Commodity, invoice, consignee and destination details should be reviewed before the route is quoted. The planned freight mode, customs handoff and final-delivery scope are confirmed for the actual shipment rather than inferred from a mainland U.S. quotation.",
     considerations: [
       "Port or airport routing based on the cargo and current schedule",
       "Commodity, invoice and consignee documentation",
       "Final delivery address and island access requirements",
       "Oversized, residential or appointment delivery conditions"
+    ],
+    operations: [
+      "Coordinate supplier pickup and multi-supplier consolidation in China.",
+      "Review available ocean or air freight options.",
+      "Coordinate commercial-document and customs-broker handoffs.",
+      "Plan partner-carrier delivery to the confirmed address.",
+      "Review oversized, residential or appointment delivery when required."
+    ],
+    customerInputs: [
+      "Product description, commercial value and intended use",
+      "Packing list or preliminary package details",
+      "Supplier location and cargo-ready date",
+      "Consignee information available for quotation",
+      "Final city, ZIP code, delivery type and unloading needs"
+    ],
+    quoteClarifies: [
+      "Freight mode and planned routing",
+      "Origin handling and consolidation included",
+      "Documentation and customs responsibilities",
+      "Final-delivery handoff",
+      "Duties, storage, examinations or accessorials only where expressly included"
+    ],
+    boundary:
+      "Documentation, customs treatment, local handoffs and destination access are confirmed per shipment. No blanket tax rule, fixed route, guaranteed coverage or mainland-equivalent pricing is stated.",
+    faq: [
+      ["What documents are needed to start a quote?", "Begin with the product description, value, supplier details, package data, preliminary commercial invoice information and consignee details. The exact document requirement is confirmed for the shipment."],
+      ["Can the quotation include final delivery?", "Yes. A final-delivery option can be reviewed when the complete address and access conditions are supplied."],
+      ["Is a Puerto Rico quotation the same as a mainland U.S. quotation?", "It should be reviewed separately because routing, documentation and local-delivery scope depend on the actual shipment and destination."]
     ]
   }
 };
 
 export const resourceArticles = [
+  {
+    title: "Multi-Supplier Consolidation Checklist",
+    description: "Prepare supplier contacts, packing data, receiving instructions and release details before requesting a consolidation plan.",
+    href: "/resources/multi-supplier-consolidation-checklist/",
+    ctaLabel: "Use the checklist"
+  },
   {
     title: "Oversized Cargo Shipping from China to the USA",
     description: "Plan dimensions, packaging, lifting, routing and final-delivery requirements before quoting.",

@@ -28,6 +28,7 @@ export default function SiteFooter() {
           <h2>Freight &amp; Destinations</h2>
           <a href="/services/sea-freight-china-to-usa/">Sea Freight</a>
           <a href="/services/air-freight-china-to-usa/">Air Freight</a>
+          <a href="/services/international-express-china-to-usa/">International Express</a>
           <a href="/services/ddp-shipping-china-to-usa/">DDP Door-to-Door</a>
           <a href="/destinations/hawaii/">Hawaii</a>
           <a href="/destinations/alaska/">Alaska</a>
@@ -39,7 +40,7 @@ export default function SiteFooter() {
           <a href="/about/zoe-zhou/">Zoe Zhou</a>
           <a href="/contact/">Contact</a>
           <a href="/resources/">Resources</a>
-          <a href="/quote/">Request a Shipping &amp; Prep Quote</a>
+          <a href="/quote/">Get a Shipping Quote</a>
           <a href={`mailto:${company.email}`}>Email {company.email}</a>
           <a href={company.whatsappHref}>WhatsApp {company.phoneDisplay}</a>
         </div>

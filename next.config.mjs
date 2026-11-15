@@ -12,7 +12,8 @@ const legacyRedirects = [
   ["/good-shipping-homepage/services/ddp-shipping-china-to-usa.html", "/services/ddp-shipping-china-to-usa/"],
   ["/good-shipping-homepage/services/amazon-fba-shipping-china.html", "/services/amazon-fba-shipping/"],
   ["/good-shipping-homepage/services/oversized-cargo-shipping.html", "/services/oversized-cargo-shipping/"],
-  ["/good-shipping-homepage/services/express-shipping-china-usa.html", "/services/air-freight-china-to-usa/"],
+  ["/good-shipping-homepage/services/express-shipping-china-usa.html", "/services/international-express-china-to-usa/"],
+  ["/services/express-shipping-china-usa", "/services/international-express-china-to-usa/"],
   ["/good-shipping-homepage/destinations/hawaii-shipping-from-china.html", "/destinations/hawaii/"],
   ["/good-shipping-homepage/destinations/alaska-shipping-from-china.html", "/destinations/alaska/"],
   ["/good-shipping-homepage/destinations/puerto-rico-shipping-from-china.html", "/destinations/puerto-rico/"],
@@ -29,6 +30,24 @@ const legacyArticleRedirects = [
   ["/good-shipping-homepage/blog/shipping-from-china-to-puerto-rico.html", "/destinations/puerto-rico/"]
 ];
 
+const legacyAssetRedirects = [
+  ["/good-shipping-homepage/assets/logo.png", "/good-shipping-homepage/assets/good-logistics-logo.png"],
+  ["/good-shipping-homepage/assets/amazon-fba.png", "/good-shipping-homepage/assets/good-logistics-logo.png"],
+  ["/good-shipping-homepage/assets/authors/zoe-zhou-author-card.jpg", "/good-shipping-homepage/assets/authors/zoe-zhou-headshot.jpg"],
+  ["/good-shipping-homepage/assets/crane-truck-warehouse.jpg", "/good-shipping-homepage/assets/operations/warehouse-crates-1150.jpg"],
+  ["/good-shipping-homepage/assets/crane-truck-warehouse-800.avif", "/good-shipping-homepage/assets/operations/warehouse-crates-800.avif"],
+  ["/good-shipping-homepage/assets/crane-truck-warehouse-1400.avif", "/good-shipping-homepage/assets/operations/warehouse-crates-1150.avif"],
+  ["/good-shipping-homepage/assets/crane-truck-loading.jpg", "/good-shipping-homepage/assets/operations/specialist-lifting-1200.jpg"],
+  ["/good-shipping-homepage/assets/crane-truck-loading-800.avif", "/good-shipping-homepage/assets/operations/specialist-lifting-800.avif"],
+  ["/good-shipping-homepage/assets/crane-truck-loading-1400.avif", "/good-shipping-homepage/assets/operations/specialist-lifting-1200.avif"],
+  ["/good-shipping-homepage/assets/oversized-delivery-1.jpg", "/good-shipping-homepage/assets/operations/recipient-handoff-1200.jpg"],
+  ["/good-shipping-homepage/assets/oversized-delivery-1-800.avif", "/good-shipping-homepage/assets/operations/recipient-handoff-800.avif"],
+  ["/good-shipping-homepage/assets/oversized-delivery-1-1400.avif", "/good-shipping-homepage/assets/operations/recipient-handoff-1200.avif"],
+  ["/good-shipping-homepage/assets/oversized-delivery-2.jpg", "/good-shipping-homepage/assets/operations/recipient-handoff-1200.jpg"],
+  ["/good-shipping-homepage/assets/oversized-delivery-2-800.avif", "/good-shipping-homepage/assets/operations/recipient-handoff-800.avif"],
+  ["/good-shipping-homepage/assets/oversized-delivery-2-1400.avif", "/good-shipping-homepage/assets/operations/recipient-handoff-1200.avif"]
+];
+
 const nextConfig = {
   trailingSlash: true,
   async redirects() {
@@ -39,6 +58,11 @@ const nextConfig = {
         statusCode: 301
       })),
       ...legacyArticleRedirects.map(([source, destination]) => ({
+        source,
+        destination,
+        statusCode: 301
+      })),
+      ...legacyAssetRedirects.map(([source, destination]) => ({
         source,
         destination,
         statusCode: 301

@@ -126,7 +126,7 @@ export default function OceanFreightPage({ service, schema }) {
             <p>FCL, LCL, Amazon FBA, oversized cargo and complex shipments can be reviewed under one shipping plan.</p>
           </div>
           <div className="ocean-hero-actions">
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Request a Shipping &amp; Prep Quote</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
             <a className="ocean-button ocean-button-secondary" href="#contact-options">Discuss Your Cargo</a>
           </div>
         </div>
@@ -260,7 +260,7 @@ export default function OceanFreightPage({ service, schema }) {
             <p className="ocean-section-label">Schedule scope</p>
             <h2 id="ocean-transit-title">Typical Transit Planning</h2>
             <p>Transit planning is route- and shipment-specific. A working schedule is reviewed after the shipment details and current operating conditions are known.</p>
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Request a Shipping &amp; Prep Quote</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
           </div>
           <ul className="ocean-factor-list">
             {planningFactors.map((factor) => <li key={factor}>{factor}</li>)}
@@ -380,7 +380,7 @@ export default function OceanFreightPage({ service, schema }) {
               productId="sea-freight-china-to-usa"
               defaultShippingMethod={service.shippingMethod}
               defaultServiceNeeds={service.quoteNeeds}
-              submitLabel="Request a Shipping & Prep Quote"
+              submitLabel="Send My Quote Request"
             />
             <aside className="ocean-contact-card" id="contact-options" aria-labelledby="ocean-contact-title">
               <p className="ocean-section-label">Direct contact</p>

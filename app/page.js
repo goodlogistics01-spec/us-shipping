@@ -6,16 +6,16 @@ import "./homepage.css";
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: { absolute: "China Cargo Operations & USA Delivery | GOOD LOGISTICS" },
+  title: { absolute: "China to USA Freight & Cargo Coordination | GOOD LOGISTICS" },
   description:
-    "Supplier pickup, consolidation, warehousing, FBA prep, labeling, repacking, kitting and China-to-USA freight with final-delivery coordination.",
+    "China to USA ocean, air and express freight with supplier pickup, consolidation, cargo prep, customs-broker handoffs and final-delivery coordination.",
   alternates: {
     canonical: "https://gdlogi.us/"
   },
   openGraph: {
-    title: "From China Suppliers to Final Delivery | GOOD LOGISTICS",
+    title: "China to USA Shipping, From Pickup to Delivery | GOOD LOGISTICS",
     description:
-      "China-side pickup, receiving, storage, prep and consolidation coordinated with freight, customs clearance and final delivery to the United States.",
+      "Supplier pickup, receiving, consolidation and prep coordinated with ocean, air or express freight and final delivery to the United States.",
     url: "https://gdlogi.us/",
     siteName: "GOOD LOGISTICS",
     type: "website",
@@ -30,8 +30,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "From China Suppliers to Final Delivery | GOOD LOGISTICS",
-    description: "China-side cargo operations coordinated with international freight and final delivery to the United States.",
+    title: "China to USA Shipping, From Pickup to Delivery | GOOD LOGISTICS",
+    description: "China-side cargo operations coordinated with ocean, air or express freight and final delivery to the United States.",
     images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
   }
 };
@@ -73,7 +73,7 @@ const homeSchema = {
         { "@type": "Country", name: "China" },
         { "@type": "Country", name: "United States" }
       ],
-      description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with international freight, customs clearance and final delivery to the United States."
+      description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with ocean, air or express freight, customs-broker handoffs and final delivery to the United States."
     },
     {
       "@type": "FAQPage",

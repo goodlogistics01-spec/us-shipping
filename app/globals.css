@@ -498,6 +498,168 @@ body a {
   margin-top: auto;
 }
 
+.marketing-section-intro {
+  max-width: 760px;
+  margin: -4px 0 0;
+  font-size: 16px;
+}
+
+.marketing-workflow-section {
+  background: #f7fafd;
+  border-bottom: 1px solid #dbe3ee;
+}
+
+.marketing-workflow-grid {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.marketing-workflow-grid article {
+  min-width: 0;
+  min-height: 228px;
+  padding: 26px;
+  border: 1px solid #d4deeb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.marketing-workflow-grid span {
+  color: #1682c4;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.marketing-workflow-grid h3 {
+  margin: 28px 0 12px;
+  color: #0b2b56;
+  font-size: 21px;
+}
+
+.marketing-workflow-grid p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.marketing-planning-section {
+  padding-top: 64px;
+}
+
+.marketing-planning-grid > div {
+  min-width: 0;
+  padding: 34px;
+  border: 1px solid #d4deeb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.marketing-resource-callout {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 28px 32px;
+  border: 1px solid #b9d4e8;
+  border-radius: 8px;
+  background: #edf7fd;
+}
+
+.marketing-resource-callout h3 {
+  margin: 6px 0 8px;
+  color: #0b2b56;
+  font-size: 24px;
+}
+
+.marketing-resource-callout p:last-child {
+  max-width: 720px;
+  margin: 0;
+}
+
+.marketing-resource-callout .marketing-button {
+  flex: 0 0 auto;
+}
+
+.marketing-guide-stack {
+  display: grid;
+  gap: 22px;
+}
+
+.marketing-guide-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(34px, 6vw, 74px);
+  padding: clamp(28px, 4vw, 46px);
+  border: 1px solid #d4deeb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.marketing-guide-heading {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.marketing-guide-heading > span {
+  color: #1682c4;
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.marketing-guide-heading h2 {
+  margin-top: 0;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.marketing-guide-heading p {
+  margin-bottom: 0;
+}
+
+.marketing-guide-section .marketing-check-list {
+  margin-top: 0;
+}
+
+.marketing-person-card {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 34px;
+  align-items: center;
+  padding: 34px;
+  border: 1px solid #d4deeb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.marketing-person-card picture,
+.marketing-person-card img {
+  display: block;
+  width: 148px;
+}
+
+.marketing-person-card img {
+  height: 176px;
+  object-fit: cover;
+  object-position: center 25%;
+  border-radius: 6px;
+}
+
+.marketing-person-card h2 {
+  margin-bottom: 12px;
+}
+
+.marketing-person-card p:last-of-type {
+  max-width: 760px;
+}
+
+.marketing-person-card .marketing-actions {
+  align-items: center;
+}
+
 .marketing-text-link {
   color: #0b4f96;
   font-weight: 800;
@@ -875,6 +1037,10 @@ body a {
 }
 
 @media (max-width: 1023px) {
+  .marketing-workflow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .marketing-nav {
     min-height: 68px;
     flex-wrap: wrap;
@@ -1032,6 +1198,59 @@ body a {
   .marketing-footer-grid {
     grid-template-columns: 1fr;
     gap: 34px;
+  }
+
+  .marketing-workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketing-workflow-grid article {
+    min-height: 0;
+  }
+
+  .marketing-planning-grid > div {
+    padding: 26px 22px;
+  }
+
+  .marketing-resource-callout {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 26px 22px;
+  }
+
+  .marketing-resource-callout .marketing-button {
+    width: 100%;
+  }
+
+  .marketing-guide-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 26px 22px;
+  }
+
+  .marketing-guide-heading {
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+  }
+
+  .marketing-person-card {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    padding: 24px 20px;
+  }
+
+  .marketing-person-card picture,
+  .marketing-person-card img {
+    width: 72px;
+  }
+
+  .marketing-person-card img {
+    height: 86px;
+  }
+
+  .marketing-person-card .marketing-actions {
+    align-items: stretch;
   }
 
   .form-span-two {

@@ -13,6 +13,11 @@ function createQuoteHref(service) {
   return `/quote/?${params.toString()}`;
 }
 
+function createWhatsappHref(service) {
+  const text = `Hello Zoe, I'd like to discuss ${service.navTitle.toLowerCase()} for my cargo.`;
+  return `${company.whatsappHref}?text=${encodeURIComponent(text)}`;
+}
+
 function serviceAreaServed(service) {
   if (service.category === "China Operations") {
     return { "@type": "Country", name: "China" };
@@ -23,7 +28,10 @@ function serviceAreaServed(service) {
       { "@type": "Country", name: "United States" }
     ];
   }
-  return { "@type": "Country", name: "United States" };
+  return [
+    { "@type": "Country", name: "China" },
+    { "@type": "Country", name: "United States" }
+  ];
 }
 
 function ResponsiveOperationPhoto({ media, eager = false, sizes = "(max-width: 1023px) 100vw, 44vw" }) {
@@ -65,6 +73,9 @@ export async function generateMetadata({ params }) {
   const description = isSeaFreight
     ? "Sea freight from China to the USA with FCL, LCL, factory pickup, customs coordination and final delivery options. Request a quote from GOOD LOGISTICS."
     : service.description;
+  const socialImage = service.heroMedia
+    ? `${service.heroMedia.base}-${service.heroMedia.fallbackWidth}.jpg`
+    : "/good-shipping-homepage/assets/good-logistics-logo.png";
 
   return {
     title: { absolute: title },
@@ -76,14 +87,14 @@ export async function generateMetadata({ params }) {
       url,
       siteName: company.name,
       type: "website",
-      images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
+      images: [socialImage]
     },
-    twitter: isSeaFreight ? {
+    twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
-    } : undefined
+      images: [socialImage]
+    }
   };
 }
 
@@ -94,6 +105,7 @@ export default async function ServicePage({ params }) {
 
   const url = `${company.website}/services/${slug}/`;
   const quoteHref = createQuoteHref(service);
+  const whatsappHref = createWhatsappHref(service);
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Services", href: "/#services" },
@@ -148,10 +160,13 @@ export default async function ServicePage({ params }) {
               <p className="marketing-lead">{service.summary}</p>
               <div className="marketing-actions">
                 <a className="marketing-button marketing-button-primary" href={quoteHref}>
-                  Request a Shipping &amp; Prep Quote
+                  Get a Shipping Quote
                 </a>
-                <a className="marketing-button marketing-button-secondary" href="/#services">
-                  Compare Services
+                <a
+                  className="marketing-button marketing-button-secondary"
+                  href={whatsappHref}
+                >
+                  Chat with Zoe on WhatsApp
                 </a>
               </div>
             </div>
@@ -179,6 +194,25 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
       </section>
+
+      {service.workflow ? (
+        <section className="marketing-section marketing-workflow-section">
+          <div className="marketing-container">
+            <p className="marketing-eyebrow">A Scope You Can Review</p>
+            <h2>From supplier list to approved cargo release</h2>
+            <p className="marketing-section-intro">Each step is confirmed against the actual suppliers, cargo and release instructions. It is a working sequence, not a fixed promise that every shipment follows the same route.</p>
+            <div className="marketing-workflow-grid">
+              {service.workflow.map(([number, title, copy]) => (
+                <article key={number}>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
@@ -232,6 +266,39 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
       </section>
+
+      {service.planningInputs && service.planningOutput ? (
+        <section className="marketing-section marketing-planning-section">
+          <div className="marketing-container">
+            <div className="marketing-two-column marketing-planning-grid">
+              <div>
+                <p className="marketing-eyebrow">What You Send</p>
+                <h2>Information for a useful first review</h2>
+                <ul className="marketing-check-list">
+                  {service.planningInputs.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <p className="marketing-eyebrow">What We Return</p>
+                <h2>A scope to confirm before work starts</h2>
+                <ul className="marketing-check-list">
+                  {service.planningOutput.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            </div>
+            {service.resourceLink ? (
+              <aside className="marketing-resource-callout">
+                <div>
+                  <p className="marketing-eyebrow">Preparation Guide</p>
+                  <h3>{service.resourceLink.title}</h3>
+                  <p>{service.resourceLink.copy}</p>
+                </div>
+                <a className="marketing-button marketing-button-secondary" href={service.resourceLink.href}>Open the checklist</a>
+              </aside>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
@@ -291,7 +358,7 @@ export default async function ServicePage({ params }) {
             <h2>Need a shipment and handling plan?</h2>
             <p>Send the cargo, supplier, operation and destination details needed for a scope-based quotation.</p>
           </div>
-          <a className="marketing-button marketing-button-primary" href={quoteHref}>Request a Shipping &amp; Prep Quote</a>
+          <a className="marketing-button marketing-button-primary" href={quoteHref}>Get a Shipping Quote</a>
         </div>
       </section>
     </MarketingPage>

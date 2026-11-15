@@ -18,6 +18,7 @@ const serviceGroups = [
     items: [
       ["Ocean Freight", "/services/sea-freight-china-to-usa/"],
       ["Air Freight", "/services/air-freight-china-to-usa/"],
+      ["International Express", "/services/international-express-china-to-usa/"],
       ["DDP Door-to-Door", "/services/ddp-shipping-china-to-usa/"],
       ["Amazon FBA Delivery", "/services/amazon-fba-shipping/"],
       ["Oversized Cargo", "/services/oversized-cargo-shipping/"]
@@ -166,11 +167,11 @@ export default function SiteHeader() {
             <a className="marketing-nav-link" key={href} href={href} onClick={closeAll}>{label}</a>
           ))}
           <a className="marketing-button marketing-button-primary marketing-mobile-quote" href="/quote/" onClick={closeAll}>
-            Request a Quote
+            Get a Shipping Quote
           </a>
         </nav>
         <a className="marketing-button marketing-button-primary marketing-desktop-quote" href="/quote/">
-          Request a Quote
+          Get a Shipping Quote
         </a>
       </div>
     </header>

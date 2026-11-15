@@ -6,6 +6,7 @@ export const INQUIRY_PENDING_MESSAGE =
 
 const CLIENT_RESPONSE_TIMEOUT_MS = 32_000;
 const IDEMPOTENCY_WINDOW_MS = 15 * 60 * 1000;
+const TEST_INQUIRY_MARKERS = ["[TEST-GDLOGI]", "GDLOGI TEST INQUIRY — DO NOT PROCESS"];
 const IDEMPOTENCY_FIELDS = [
   "name",
   "company",
@@ -42,6 +43,19 @@ export function formDataToInquiryPayload(formData) {
   }
 
   return payload;
+}
+
+export function isMarkedTestInquiry(form) {
+  try {
+    const values = Array.from(new FormData(form).values());
+    return values.some((value) => {
+      if (typeof value !== "string") return false;
+      const normalized = value.toUpperCase();
+      return TEST_INQUIRY_MARKERS.some((marker) => normalized.includes(marker));
+    });
+  } catch {
+    return false;
+  }
 }
 
 function canonicalIdempotencyPayload(payload) {

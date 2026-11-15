@@ -38,9 +38,13 @@ For each supplied operational photo set, confirm:
 - Result that can be supported without a time or performance guarantee.
 - Customer permission to publish the photos and shipment context.
 
-Until these fields and publication rights are confirmed, the operational photos
-remain off the current public homepage. Zoe Zhou's new public profile image is
-separately approved for website use and does not authorize any shipment photo.
+Selected operational photos now appear only through the privacy-treated
+derivatives and neutral placements recorded in
+`docs/GDLOGI-SOURCE-OF-TRUTH.md`. They are not presented as customer
+endorsements or case evidence. Named case use, shipment attribution and any
+third-party rights beyond the owner's website-selection approval remain
+`NOT_VERIFIED`. Zoe Zhou's new public profile image is separately approved for
+website use and does not authorize any shipment photo.
 
 The Ningbo-to-Chicago background remains an internal draft. Its factual scope is
 limited to three factories, one 40HQ, Los Angeles customs clearance, rail to
@@ -53,8 +57,8 @@ labeling, kitting, dates, savings or testimonials.
 
 | Check | Status | Required action |
 | --- | --- | --- |
-| Server validation, provider classification and route behavior | VERIFIED locally | 39 unit/route tests pass, including valid international email/phone forms, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency and configuration failure |
-| Active browser forms and responsive interaction | VERIFIED locally on final build | Homepage, `/quote/` and Sea Freight forms were checked against the controlled loopback provider at 375, 390, 768 and 1440 widths; no real provider was contacted |
+| Server validation, provider classification and route behavior | VERIFIED locally | 41 unit/route tests pass, including valid international email/phone forms, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency, controlled-test marking and configuration failure |
+| Active browser forms and responsive interaction | VERIFIED locally on final build within stated scope | `/quote/` completed a full controlled-loopback success path with every current field and both inspection types. Homepage, Sea Freight and service-page entries share the validated contract or route to the editable Quote form; their links, preselection and responsive layouts were checked without additional provider submissions. No real provider was contacted |
 | Separate shipping method and multi-value service needs | VERIFIED locally | Route tests preserve all selected values in the provider body |
 | Receiving checks versus product-quality inspection | VERIFIED locally and in the controlled inbox message | Both types and their separate scope boundaries were present in request `GL-20261111-5D836B44`; legacy generic `Inspection` remains scope-not-specified |
 | Consent, honeypot and same-page duplicate-submit guard | VERIFIED locally on final build | Honeypot makes zero provider calls; a double-click success sample produced one mock record and the browser lock remained active for `PENDING` |
@@ -87,17 +91,17 @@ live inquiry is submitted during automated or local QA.
 | Privacy Policy legal entity, regions, retention and recipients | NOT_VERIFIED | Company and qualified legal review |
 | Terms contracting entity, governing law and dispute process | NOT_VERIFIED | Company and qualified legal review |
 | Hosting logs and cross-border processing | NOT_VERIFIED | Confirm production hosting configuration |
-| Deployment platform and multi-instance behavior | NOT_VERIFIED | Confirm platform topology before claiming distributed rate limiting or idempotency |
+| Deployment platform and multi-instance behavior | Vercel hosting VERIFIED; production settings and durable protection NOT_VERIFIED | Current response headers and server route identify Vercel hosting, whose scalable/serverless execution does not make the in-memory Maps cross-instance. Confirm production project settings and add an atomic TTL store if cross-instance protection is required |
 | GTM / GA collection | NOT_VERIFIED and disabled | No production ID is committed; configure an applicable consent flow and validate before claiming collection |
-| Anonymous success-event gating | VERIFIED locally in code and state tests | `SUCCESS` is reachable only from explicit provider acceptance; browser `FAILED`/`PENDING` states did not navigate to success. Event payload builders include only form/source, allowlisted service/inspection selections and result fields, not contact or cargo text. GTM remains disabled without a real ID and consent |
+| Anonymous success-event gating | VERIFIED locally in code and state tests | `SUCCESS` is reachable only from explicit provider acceptance; browser `FAILED`/`PENDING` states did not navigate to success. Event payload builders include only form/source, allowlisted service/inspection selections and result fields, not contact or cargo text. Marked `[TEST-GDLOGI]` submissions do not emit outcome or generated-lead events. GTM remains disabled without a real ID and consent |
 
 ## Release gate
 
 Before production deployment:
 
 1. Close or intentionally remove every `NOT_VERIFIED` public claim.
-2. Final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks completed on 2026-11-10.
-3. Confirm the deployment platform and decide whether single-instance rate limiting and idempotency are sufficient.
+2. Final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks completed on 2026-11-15.
+3. Confirm the Vercel production-project settings and decide whether per-instance rate limiting and idempotency are sufficient; add a durable atomic TTL store before representing them as cross-instance controls.
 4. Owner approval was obtained and the single controlled current-schema FormSubmit call was made on 2026-11-11; do not submit it again.
 5. Receipt, exactly-one count, current fields and Reply-To are confirmed for request `GL-20261111-5D836B44`; only delivery of a manually sent reply remains to be confirmed.
 6. Review the production diff and obtain explicit approval before changing the live site.

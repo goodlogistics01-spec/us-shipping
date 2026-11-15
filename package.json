@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "mock:inquiry-provider": "node scripts/mock-inquiry-provider.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:preview": "node scripts/validate-local-preview.mjs",
     "start": "next start"

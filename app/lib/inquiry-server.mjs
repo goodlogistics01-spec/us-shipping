@@ -409,7 +409,7 @@ export function providerExplicitlyRejected(providerResult) {
   );
 }
 
-export function buildProviderPayload(payload, submissionId) {
+export function buildProviderPayload(payload, submissionId, submittedAt = new Date()) {
   const sourceLabel = SOURCE_LABELS[payload.source_type];
   const shippingMethodLabel = SHIPPING_METHOD_LABELS[payload.shipping_method];
   const requestedServiceLabel = SERVICE_LABELS[payload.service];
@@ -423,11 +423,11 @@ export function buildProviderPayload(payload, submissionId) {
   const serviceNeedsSummary = serviceNeedLabels.length > 2
     ? `${serviceNeedLabels.slice(0, 2).join(" + ")} +${serviceNeedLabels.length - 2}`
     : serviceNeedLabels.join(" + ");
-  const testMarker = "GDLOGI TEST INQUIRY — DO NOT PROCESS";
+  const testMarkers = ["[TEST-GDLOGI]", "GDLOGI TEST INQUIRY — DO NOT PROCESS"];
   const isTest = Object.values(payload).some(
-    (value) => typeof value === "string" && value.includes(testMarker)
+    (value) => typeof value === "string" && testMarkers.some((marker) => value.toUpperCase().includes(marker))
   );
-  const subjectPrefix = isTest ? "[GDLOGI TEST — DO NOT PROCESS]" : "[GDLOGI Inquiry]";
+  const subjectPrefix = isTest ? "[TEST-GDLOGI] [DO NOT PROCESS]" : "[GDLOGI Inquiry]";
 
   const providerPayload = {
     _subject: `${subjectPrefix} ${sourceLabel} | ${serviceNeedsSummary} | ${submissionId}`,
@@ -437,6 +437,7 @@ export function buildProviderPayload(payload, submissionId) {
     _url: payload.source_page,
     _honey: "",
     submission_id: submissionId,
+    submitted_at_utc: submittedAt.toISOString(),
     name: payload.name,
     company: payload.company,
     email: payload.email,

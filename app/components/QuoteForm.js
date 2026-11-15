@@ -5,6 +5,7 @@ import {
   getPublicSourcePage,
   INQUIRY_FAILURE_MESSAGE,
   INQUIRY_PENDING_MESSAGE,
+  isMarkedTestInquiry,
   submitInquiryForm
 } from "../lib/inquiry-client";
 
@@ -58,7 +59,8 @@ const shippingMethodParameterMap = {
   "air-freight": "air-freight",
   "air-freight-china-to-usa": "air-freight",
   express: "express",
-  "express-shipping": "express"
+  "express-shipping": "express",
+  "international-express-china-to-usa": "express"
 };
 
 const serviceNeedParameterMap = {
@@ -93,7 +95,8 @@ const serviceNeedParameterMap = {
   "air-freight": ["shipping"],
   "air-freight-china-to-usa": ["shipping"],
   express: ["shipping"],
-  "express-shipping": ["shipping"]
+  "express-shipping": ["shipping"],
+  "international-express-china-to-usa": ["shipping"]
 };
 
 const inspectionTypeParameterMap = {
@@ -174,7 +177,7 @@ export default function QuoteForm({
   defaultShippingMethod = "not-sure",
   defaultServiceNeeds = ["not-sure"],
   defaultInspectionTypes = [],
-  submitLabel = "Request a Shipping & Prep Quote"
+  submitLabel = "Send My Quote Request"
 }) {
   const [status, setStatus] = useState("idle");
   const [submissionId, setSubmissionId] = useState("");
@@ -299,13 +302,15 @@ export default function QuoteForm({
         optionalDetailsRef.current?.setAttribute("open", "");
       }
       setStatus("invalid");
-      trackInquiryEvent("quote_submit_failed", {
-        source,
-        shippingMethod: selectedShippingMethod,
-        serviceNeeds: selectedServiceNeeds.join(","),
-        inspectionTypes: selectedInspectionTypes.join(","),
-        result: "validation"
-      });
+      if (!isMarkedTestInquiry(form)) {
+        trackInquiryEvent("quote_submit_failed", {
+          source,
+          shippingMethod: selectedShippingMethod,
+          serviceNeeds: selectedServiceNeeds.join(","),
+          inspectionTypes: selectedInspectionTypes.join(","),
+          result: "validation"
+        });
+      }
       window.requestAnimationFrame(() => {
         const firstInvalid = form.querySelector('[aria-invalid="true"]');
         firstInvalid?.focus();
@@ -325,6 +330,7 @@ export default function QuoteForm({
 
     if (!validateForm(form)) return;
 
+    const trackSubmission = !isMarkedTestInquiry(form);
     submittingRef.current = true;
     setStatus("submitting");
     try {
@@ -332,35 +338,39 @@ export default function QuoteForm({
       setSubmissionId(result.submission_id || "");
       if (result.submission_status === "PENDING") {
         setStatus("pending");
-        trackInquiryEvent("quote_submit_pending", {
+        if (trackSubmission) {
+          trackInquiryEvent("quote_submit_pending", {
+            source,
+            shippingMethod: selectedShippingMethod,
+            serviceNeeds: selectedServiceNeeds.join(","),
+            inspectionTypes: selectedInspectionTypes.join(","),
+            result: "pending"
+          });
+        }
+        return;
+      }
+      if (trackSubmission) {
+        trackInquiryEvent("quote_submit_success", {
           source,
           shippingMethod: selectedShippingMethod,
           serviceNeeds: selectedServiceNeeds.join(","),
           inspectionTypes: selectedInspectionTypes.join(","),
-          result: "pending"
+          result: "accepted"
         });
-        return;
+        window.dispatchEvent(
+          new CustomEvent("gdlogi:generate_lead", {
+            detail: {
+              source,
+              productId,
+              shippingMethod: selectedShippingMethod,
+              serviceNeeds: selectedServiceNeeds,
+              inspectionTypes: selectedInspectionTypes,
+              requestId: result.request_id,
+              submissionId: result.submission_id
+            }
+          })
+        );
       }
-      trackInquiryEvent("quote_submit_success", {
-        source,
-        shippingMethod: selectedShippingMethod,
-        serviceNeeds: selectedServiceNeeds.join(","),
-        inspectionTypes: selectedInspectionTypes.join(","),
-        result: "accepted"
-      });
-      window.dispatchEvent(
-        new CustomEvent("gdlogi:generate_lead", {
-          detail: {
-            source,
-            productId,
-            shippingMethod: selectedShippingMethod,
-            serviceNeeds: selectedServiceNeeds,
-            inspectionTypes: selectedInspectionTypes,
-            requestId: result.request_id,
-            submissionId: result.submission_id
-          }
-        })
-      );
       window.location.assign(result.redirect || "/thank-you/");
     } catch (error) {
       setSubmissionId(error.submissionId || "");
@@ -371,13 +381,15 @@ export default function QuoteForm({
         optionalDetailsRef.current?.setAttribute("open", "");
       }
       setStatus(Object.keys(serverFieldErrors).length > 0 ? "invalid" : "failed");
-      trackInquiryEvent("quote_submit_failed", {
-        source,
-        shippingMethod: selectedShippingMethod,
-        serviceNeeds: selectedServiceNeeds.join(","),
-        inspectionTypes: selectedInspectionTypes.join(","),
-        result: "rejected"
-      });
+      if (trackSubmission) {
+        trackInquiryEvent("quote_submit_failed", {
+          source,
+          shippingMethod: selectedShippingMethod,
+          serviceNeeds: selectedServiceNeeds.join(","),
+          inspectionTypes: selectedInspectionTypes.join(","),
+          result: "rejected"
+        });
+      }
       if (Object.keys(serverFieldErrors).length > 0) {
         window.requestAnimationFrame(() => {
           form.querySelector('[aria-invalid="true"]')?.focus();

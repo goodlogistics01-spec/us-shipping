@@ -5,9 +5,9 @@ This repository contains the GOOD LOGISTICS B2B website for China-side cargo ope
 ## Public routes
 
 - Homepage at `/`
-- Nine substantive service pages under `/services/`
+- Ten substantive service pages under `/services/`, including International Express
 - Destination pages for Hawaii, Alaska and Puerto Rico under `/destinations/`
-- Resource hub at `/resources/`
+- Resource hub at `/resources/` and the original multi-supplier consolidation checklist
 - Company and Zoe Zhou profile pages under `/about/`
 - Unified inquiry form at `/quote/`, plus the homepage and Sea Freight forms
 - Contact, privacy, terms, custom 404, `robots.txt` and `sitemap.xml`
@@ -27,6 +27,7 @@ pnpm test
 pnpm dev
 pnpm build
 pnpm start
+pnpm mock:inquiry-provider
 pnpm test:preview http://127.0.0.1:3000
 ```
 
@@ -65,9 +66,11 @@ Local requests are blocked from contacting the real provider by default. Control
 
 ```bash
 INQUIRY_PROVIDER_MODE=local-mock
-INQUIRY_PROVIDER_ENDPOINT=http://127.0.0.1:3199/mock
+INQUIRY_PROVIDER_ENDPOINT=http://127.0.0.1:3218/mock
 INQUIRY_ALLOW_LOCAL_MOCK=true
 ```
+
+`pnpm mock:inquiry-provider` starts the repository's loopback-only controllable provider. Its default result is explicit acceptance; local QA may switch it to `failed`, `pending` or `ambiguous` through its loopback control path. It is test tooling only and must never be used as a production endpoint.
 
 These values are local-QA settings and must not be copied into deployment. `INQUIRY_ALLOW_REAL_PROVIDER_LOCAL=true` is reserved for a separately approved controlled inbox test. See `.env.example`; `.env*` files are ignored except for that secret-free template.
 
@@ -77,6 +80,10 @@ These values are local-QA settings and must not be copied into deployment. `INQU
 - A historical owner-approved test reached `zoe@gdlogi.com` on 2026-10-21, before the current multi-service and inspection-type schema.
 - One owner-approved current-schema call was made on 2026-11-11. The application conservatively returned `PENDING / PROVIDER_RESPONSE_UNKNOWN` for request `GL-20261111-5D836B44`, did not set a success cookie and did not retry. The owner then confirmed exactly one message arrived, the complete current field body was present and clicking Reply addressed the controlled contact mailbox. Delivery of a manually sent reply remains `NOT_VERIFIED`; see `artifacts/controlled-real-inbox-test-2026-11-11.md`.
 - Production status must be verified against the live domain and the recorded Vercel deployment for the release commit; do not infer it from a local repository snapshot.
+
+The website does not persist customer inquiries in this repository and does not claim a CRM integration. After inbox receipt, use the private follow-up fields and status rules in `docs/INQUIRY-FOLLOW-UP-RECORD.md` in the company's existing private spreadsheet or CRM.
+
+The internal 30-day publishing sequence is documented in `docs/CONTENT-PLAN-30-DAYS-2026-11-15.md`. Every item still requires the listed source material before publication.
 
 ## Analytics
 

@@ -235,7 +235,11 @@ test("provider payload contains product, shipping method, and every selected ser
     shipping_method: "ocean-freight",
     service_needs: ["shipping", "fba-prep-labeling", "kitting-light-assembly"]
   });
-  const providerPayload = buildProviderPayload(payload, "GL-TEST-001");
+  const providerPayload = buildProviderPayload(
+    payload,
+    "GL-TEST-001",
+    new Date("2026-11-15T12:34:56.000Z")
+  );
 
   assert.equal(providerPayload.product_name, "Dining chairs");
   assert.equal(providerPayload.email, "name+tag@example.co.uk");
@@ -247,7 +251,22 @@ test("provider payload contains product, shipping method, and every selected ser
   );
   assert.equal(providerPayload.service, providerPayload.service_needs);
   assert.equal(providerPayload.requested_service, "Not sure — please recommend");
+  assert.equal(providerPayload.submitted_at_utc, "2026-11-15T12:34:56.000Z");
   assert.match(providerPayload._subject, /Shipping \+ FBA Prep \/ Labeling \+1/);
+});
+
+test("the current controlled-test marker is visible in the provider subject", () => {
+  const payload = validPayload({
+    name: "[TEST-GDLOGI] Website acceptance",
+    message: "Synthetic non-customer data — do not process"
+  });
+  const providerPayload = buildProviderPayload(
+    payload,
+    "GL-TEST-CONTROLLED",
+    new Date("2026-11-15T12:34:56.000Z")
+  );
+
+  assert.match(providerPayload._subject, /^\[TEST-GDLOGI\] \[DO NOT PROCESS\]/);
 });
 
 test("provider body carries both inspection types and their truthful scope boundaries", () => {

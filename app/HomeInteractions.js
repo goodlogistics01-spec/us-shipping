@@ -5,6 +5,7 @@ import {
   getPublicSourcePage,
   INQUIRY_FAILURE_MESSAGE,
   INQUIRY_PENDING_MESSAGE,
+  isMarkedTestInquiry,
   submitInquiryForm
 } from "./lib/inquiry-client";
 
@@ -384,15 +385,17 @@ export default function HomeInteractions() {
         }
         if (!focusScheduled) {
           focusScheduled = true;
-          emitAnonymousEvent("quote_validation_error", {
-            form_id: "homepage_quick_quote",
-            field_name: field.name || "unknown"
-          });
-          emitAnonymousEvent("quote_submit_failed", {
-            form_id: "homepage_quick_quote",
-            result: "validation",
-            failure_code: "validation"
-          });
+          if (!isMarkedTestInquiry(form)) {
+            emitAnonymousEvent("quote_validation_error", {
+              form_id: "homepage_quick_quote",
+              field_name: field.name || "unknown"
+            });
+            emitAnonymousEvent("quote_submit_failed", {
+              form_id: "homepage_quick_quote",
+              result: "validation",
+              failure_code: "validation"
+            });
+          }
           window.requestAnimationFrame(() => {
             form.querySelector(":invalid")?.focus();
             focusScheduled = false;
@@ -410,6 +413,7 @@ export default function HomeInteractions() {
         if (!form.checkValidity()) return;
 
         setAttributionFields();
+        const trackSubmission = !isMarkedTestInquiry(form);
         form.dataset.submissionState = "submitting";
         form.dataset.submissionId = "";
         if (submitButton) {
@@ -428,23 +432,27 @@ export default function HomeInteractions() {
           form.dataset.submissionId = result.submission_id || "";
           if (result.submission_status === "PENDING") {
             if (submitButton) submitButton.textContent = "Inquiry Processing…";
-            emitAnonymousEvent("quote_submit_pending", {
-              form_id: "homepage_quick_quote",
-              ...getSelectionContext()
-            });
+            if (trackSubmission) {
+              emitAnonymousEvent("quote_submit_pending", {
+                form_id: "homepage_quick_quote",
+                ...getSelectionContext()
+              });
+            }
             showPendingStatus(result.submission_id);
             return;
           }
 
-          emitAnonymousEvent("quote_submit_success", {
-            form_id: "homepage_quick_quote",
-            ...getSelectionContext()
-          });
-          window.dispatchEvent(
-            new CustomEvent("gdlogi:generate_lead", {
-              detail: { source: "homepage-quick-quote", ...getSelectionContext() }
-            })
-          );
+          if (trackSubmission) {
+            emitAnonymousEvent("quote_submit_success", {
+              form_id: "homepage_quick_quote",
+              ...getSelectionContext()
+            });
+            window.dispatchEvent(
+              new CustomEvent("gdlogi:generate_lead", {
+                detail: { source: "homepage-quick-quote", ...getSelectionContext() }
+              })
+            );
+          }
           window.location.assign(result.redirect || "/thank-you/");
         } catch (error) {
           form.dataset.submissionState = "failed";
@@ -460,13 +468,15 @@ export default function HomeInteractions() {
             field.setCustomValidity(message);
             showFieldError(field);
           });
-          emitAnonymousEvent("quote_submit_failed", {
-            form_id: "homepage_quick_quote",
-            failure_code: error.code || "delivery_failed"
-          });
+          if (trackSubmission) {
+            emitAnonymousEvent("quote_submit_failed", {
+              form_id: "homepage_quick_quote",
+              failure_code: error.code || "delivery_failed"
+            });
+          }
           if (submitButton) {
             submitButton.disabled = false;
-            submitButton.textContent = "Request a Shipping & Prep Quote";
+            submitButton.textContent = "Send My Quote Request";
           }
           if (status) {
             status.classList.remove("is-pending");
@@ -537,7 +547,7 @@ export default function HomeInteractions() {
         }
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = "Request a Shipping & Prep Quote";
+          submitButton.textContent = "Send My Quote Request";
         }
       };
 
