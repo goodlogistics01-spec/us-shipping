@@ -11,20 +11,23 @@ Status definitions:
 | Item | Status | Evidence required before publication |
 | --- | --- | --- |
 | GOOD LOGISTICS public brand | VERIFIED | Owner-confirmed public presentation on 2026-11-10 |
-| Good Logistics Co., Ltd. public English company name | VERIFIED for public display | Official registered-English-name status still requires a primary document |
-| 深圳市谷得供应链有限公司 public Chinese company name | VERIFIED for public display | Registration number, registered address and other license fields remain unpublished pending document review |
+| Good Logistics Co., Ltd. public English company name | VERIFIED for public display | Owner-confirmed wording also appears on a private foreign-trade operator filing inspected on 2026-11-16; do not treat that filing as NVOCC or international freight-forwarder qualification evidence |
+| 深圳市谷得供应链有限公司 public Chinese company name | VERIFIED | A private business license was inspected on 2026-11-16; registration number, registered address and other sensitive fields remain unpublished |
 | Zoe Zhou contact name, email and WhatsApp | VERIFIED | Current project contact data |
 | Zoe Zhou title: Director of International Logistics | VERIFIED | User-specified website role |
 | Zoe Zhou replacement profile photo | VERIFIED for website use | User supplied the exact replacement file and explicitly confirmed public website display on 2026-11-10; source hash and derivatives are recorded in `docs/GDLOGI-SOURCE-OF-TRUTH.md` |
 | Freight-forwarding filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | NVOCC-related filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
-| Company registration number and registered address | NOT_VERIFIED | Original company registration record and publication approval |
-| Company founding year | NOT_VERIFIED | Registration record or written company confirmation |
+| Company registration number and registered address | VERIFIED privately; not approved for public display | Keep the unredacted license and its sensitive fields out of Git and the public website |
+| Company founding year | VERIFIED for text-only public display | The private business license supports “Established in Shenzhen in 2019”; do not upload the unredacted document |
 | Team size, shipment volume, customer count and on-time rate | NOT_VERIFIED | Dated company records and publication approval |
 | Detailed Shenzhen office address | NOT_VERIFIED | Company confirmation and publication approval |
 
-The supplied composite certificate graphic is treated as a marketing reference,
-not as an original source certificate.
+The private business license and foreign-trade operator filing are identity
+evidence, not public website assets. The foreign-trade filing is not evidence of
+NVOCC status or an international freight-forwarder enterprise filing. The
+supplied composite certificate graphic remains a marketing reference, not an
+original source certificate.
 
 ## Shipment case records
 

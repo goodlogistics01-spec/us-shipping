@@ -3,9 +3,9 @@ import QuoteForm from "./QuoteForm";
 import { company } from "../site-data";
 
 const trustItems = [
-  "China-Side Shipment Coordination",
+  "China-Side Pickup & Consolidation",
   "FCL & LCL Shipping Options",
-  "U.S. Delivery Reviewed by ZIP Code",
+  "U.S. Delivery Planned by Address & ZIP",
   "Commercial & FBA Destination Planning",
   "Oversized Cargo Support"
 ];
@@ -13,8 +13,8 @@ const trustItems = [
 const capabilities = [
   {
     number: "01",
-    title: "Coordinated from Pickup to Delivery",
-    copy: "Pickup, export handoff, ocean freight, customs coordination and U.S. delivery are reviewed under one shipment plan."
+    title: "One Plan from Pickup to Delivery",
+    copy: "See pickup, export handoff, ocean freight, customs-broker responsibilities and U.S. delivery in the same quotation."
   },
   {
     number: "02",
@@ -122,8 +122,7 @@ export default function OceanFreightPage({ service, schema }) {
           <h1>Sea Freight from China to the USA</h1>
           <p className="ocean-hero-service-line">FCL, LCL &amp; Door-to-Door Shipping</p>
           <div className="ocean-hero-copy">
-            <p>From factory pickup in China to ocean freight, customs coordination and delivery to the confirmed U.S. address, our team coordinates the agreed shipment scope.</p>
-            <p>FCL, LCL, Amazon FBA, oversized cargo and complex shipments can be reviewed under one shipping plan.</p>
+            <p>GOOD LOGISTICS arranges factory pickup, ocean freight, customs-broker handoffs and delivery to the agreed U.S. address. Compare FCL, LCL, FBA, oversized and complex-cargo options in one quotation.</p>
           </div>
           <div className="ocean-hero-actions">
             <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
@@ -300,7 +299,7 @@ export default function OceanFreightPage({ service, schema }) {
           </div>
           <div>
             <p className="marketing-eyebrow">Specific Operations</p>
-            <h2>What Good Logistics can coordinate</h2>
+            <h2>What the service can include</h2>
             <ul className="marketing-check-list">
               {service.operations.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -312,7 +311,7 @@ export default function OceanFreightPage({ service, schema }) {
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Service Boundaries</p>
-            <h2 id="ocean-boundaries-title">What is confirmed separately</h2>
+            <h2 id="ocean-boundaries-title">Limits and shipment-specific conditions</h2>
             <ul className="marketing-check-list">
               {service.boundaries.map((item) => <li key={item}>{item}</li>)}
             </ul>

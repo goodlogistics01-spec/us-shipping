@@ -1,7 +1,7 @@
 # GDLOGI.US SOURCE OF TRUTH / WEBSITE FACT VERIFICATION
 
-Last updated from owner decisions: 2026-11-15
-Scope: current repository, the owner's 2026-10-20 answers to Questions 01–30, the 2026-11-10 supplemental capability, internal case background and publication-status decisions, the 2026-11-13 operational-media publication direction, and the 2026-11-14/15 follow-up directions recorded in this project. No external corporate registry, license database, contract, or original certificate was inspected; inbox evidence is limited to the owner-reported controlled test recorded below.
+Last updated from owner decisions and inspected evidence: 2026-11-16
+Scope: current repository, the owner's 2026-10-20 answers to Questions 01–30, the 2026-11-10 supplemental capability, internal case background and publication-status decisions, the 2026-11-13 operational-media publication direction, the 2026-11-14/15 follow-up directions recorded in this project, and the private primary documents described below. No external corporate registry, current-status license database or contract was inspected; inbox evidence is limited to the owner-reported controlled test recorded below.
 Purpose: approval ledger for facts that may appear on the homepage, About, Service, Destination, Case Study, Schema, author profile, and qualification sections.
 
 ## Status Rules
@@ -15,6 +15,7 @@ Source labels used below:
 
 - `USER_CONFIRMED`: explicitly confirmed or directed by the owner in the dated decisions recorded in this ledger through 2026-11-15.
 - `LOCAL_FILE`: value found in the current repository.
+- `PRIMARY_DOCUMENT`: a private source document inspected for the stated fact; the original is not copied into the public repository.
 - `OBSERVED`: visual or runtime observation from the restart audit.
 - `NOT_VERIFIED`: the repository does not provide primary evidence.
 - `OWNER`: requires an explicit owner decision or primary document.
@@ -24,12 +25,12 @@ Source labels used below:
 | Item | Current Website Value | Source | Status | Owner Confirmation |
 | --- | --- | --- | --- | --- |
 | Brand Name | GOOD LOGISTICS | `USER_CONFIRMED`; owner confirmed this public presentation on 2026-11-10; older GOOD-SHIPPING branding is retired from future public use | CONFIRMED | Confirmed: GOOD LOGISTICS |
-| Chinese Legal Entity | 深圳市谷得供应链有限公司 | `USER_CONFIRMED`; owner states registration document is available but it has not been inspected in this audit | CONFIRMED | Confirmed; extract exact fields from license before legal publication |
-| Official English Public Company Name | Good Logistics Co., Ltd. | `USER_CONFIRMED` on 2026-11-10 for public website use; whether it is an official registered English legal name still requires a primary-document check | CONFIRMED for public display; legal-registration status NEEDS CONFIRMATION | Confirmed public wording |
-| Company registration number | — | `USER_CONFIRMED`: must be extracted from the original business license | NEEDS CONFIRMATION | Do not publish on the public site unless required for an approved qualification display |
-| Registered address | — | `USER_CONFIRMED`: must be extracted from the original business license | NEEDS CONFIRMATION | Do not publish publicly by default; do not confuse with office address |
+| Chinese Legal Entity | 深圳市谷得供应链有限公司 | `USER_CONFIRMED`; `PRIMARY_DOCUMENT`: business license inspected privately on 2026-11-16, SHA-256 `85ca3cd8ba975442c0ab31f76ef543478da3f1ccbb7b061eac5553ab9e96b97f` | CONFIRMED | Publish the name only; keep the unredacted record private |
+| Official English Public Company Name | Good Logistics Co., Ltd. | `USER_CONFIRMED` on 2026-11-10; `PRIMARY_DOCUMENT`: foreign-trade operator filing inspected privately on 2026-11-16, SHA-256 `3d265f7cad6c94e8393bb8b65dd9919ebe3836a488ec8a1d637b3fe49fc68238` | CONFIRMED for public display; current filing status and legal-name classification not independently checked | Do not describe the filing as an international freight-forwarder or NVOCC qualification |
+| Company registration number | — | `PRIMARY_DOCUMENT`: present in the private business license | VERIFIED privately; DO NOT PUBLISH | Keep out of the public site unless publication is separately approved and required |
+| Registered address | — | `PRIMARY_DOCUMENT`: present in the private business license | VERIFIED privately; DO NOT PUBLISH | Keep out of the public site; do not confuse with office address |
 | Office address | Shenzhen, China | `USER_CONFIRMED`: public site may use city-level wording; a separate office address may later appear on About/Contact | CONFIRMED | Confirmed public wording: Shenzhen, China |
-| Year established | — | `USER_CONFIRMED`: do not use `2019` or another year until the business-license establishment date is checked | NEEDS CONFIRMATION | Await business license; do not publish meanwhile |
+| Year established | 2019 | `PRIMARY_DOCUMENT`: establishment date in the private business license inspected on 2026-11-16 | CONFIRMED for the public wording “Established in Shenzhen in 2019” | Exact license date is not needed on the public page |
 | Main website domain | https://gdlogi.us is intended as the U.S.-focused site; https://gdlogi.com is intended as the global/company site | `USER_CONFIRMED` conditionally; actual domain/operational relationship has not been independently verified | NEEDS CONFIRMATION | Verify ownership, live routing, and organizational relationship before treating as a legal/company fact |
 | Public email | zoe@gdlogi.com | `LOCAL_FILE`: site data, forms, contact pages; launch checklist marks current project contact data verified | CONFIRMED | Recorded value: zoe@gdlogi.com |
 | Public WhatsApp | +86 135 5686 1676 / https://wa.me/8613556861676 | `LOCAL_FILE`: site data, homepage, contact pages; launch checklist marks current project contact data verified | CONFIRMED | Recorded value: +86 135 5686 1676 |
@@ -38,8 +39,8 @@ Source labels used below:
 ## Identity publication gate
 
 - Use `GOOD LOGISTICS` as the public brand presentation.
-- `Good Logistics Co., Ltd.` is owner-approved public wording; do not describe it as an official registered English legal name until a primary document is inspected.
-- Do not publish a registration number, registered address, founding year, or detailed office address from inference.
+- `Good Logistics Co., Ltd.` is owner-approved public wording and appears on the inspected foreign-trade filing. Do not misdescribe that filing as an international freight-forwarder or NVOCC qualification.
+- The public site may say “Established in Shenzhen in 2019.” Do not publish the registration number, registered address, exact license date or detailed office address without a separate need and approval.
 - Keep the registered address and office address as separate fields.
 - Retire the older `GOOD-SHIPPING` logo from future public use.
 
@@ -236,7 +237,7 @@ Do not describe these as Good Logistics shipments, China-to-USA projects, ocean-
 | Ten active operational source items and recorded derivatives, plus three retained rollback sets | Owner directed publication on `gdlogi.us` on 2026-11-13; source hashes and treatments are recorded above | Photographer ownership, independent customer/facility permission and project attribution remain unverified | Limit use to the recorded derivatives, neutral captions and `gdlogi.us`; do not infer project facts, customer endorsement or authorize unrelated reuse | OWNER-APPROVED FOR `GDLOGI.US` PUBLICATION; THIRD-PARTY RIGHTS NOT_VERIFIED |
 | Other uploaded customer/project photos | Owner confirmed on 2026-11-13 that uploaded materials may be considered for public website use | Customer permission, photographer rights, location/person privacy, customer identifiers and inaccurate attribution still require asset-level review | Publish only selected privacy-treated derivatives with a page task; keep unsuitable, sensitive, conflicting, duplicate or geographically misleading files inactive | OWNER-APPROVED FOR SELECTION; NOT AUTOMATICALLY SELECTED |
 | Amazon-related illustration | Generic graphic contains Amazon branding; source/authorization unclear | Trademark and brand-guideline risk; could imply affiliation | Owner directs replacement with real FBA operations material; do not treat it as a permanent asset | NEEDS CONFIRMATION |
-| Certificates/filings | No original certificate image found; old composite described only as marketing reference | Misrepresentation and sensitive-data exposure | Obtain original/registry evidence; approve public-safe redacted copies | DO NOT PUBLISH |
+| Certificates/filings | A private business license and a private foreign-trade operator filing were inspected on 2026-11-16; neither is an NVOCC or international freight-forwarder qualification | Misrepresentation, current-status and sensitive-data exposure | Keep originals private; obtain current registry evidence and an approved public-safe copy before any qualification display | DO NOT PUBLISH AS QUALIFICATION PROOF |
 | Customer brand logos | No standalone customer-logo library found; the selected carton source contains customer branding | Independent trademark/customer permission and endorsement are not established | Keep the active derivative brand-redacted; do not extract a customer logo, add a testimonial/client claim or imply endorsement | DO NOT DISPLAY READABLE CUSTOMER BRANDING |
 | Third-party stock images | No conventional stock-photo file identified in current asset set | Source/license unknown if later discovered | Retain source URL/license/receipt before use | NEEDS CONFIRMATION |
 | AI/generic imagery | Amazon illustration is generic; no provenance metadata found | Attribution/trademark/source uncertainty | Record creation/source and usage rights | NEEDS CONFIRMATION |

@@ -73,7 +73,7 @@ export default async function DestinationPage({ params }) {
             </div>
             <div className="marketing-note-card">
               <p className="marketing-eyebrow">Route Review</p>
-              <h2>Confirm the address before confirming the scope</h2>
+              <h2>Use the exact address to build the delivery plan</h2>
               <ul className="marketing-check-list">
                 <li>Final ZIP code and delivery type</li>
                 <li>Commercial, residential or project-site access</li>
@@ -104,14 +104,14 @@ export default async function DestinationPage({ params }) {
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Coordinated Scope</p>
-            <h2>What Good Logistics can coordinate</h2>
+            <h2>What the destination plan can include</h2>
             <ul className="marketing-check-list">
               {destination.operations.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
             <p className="marketing-eyebrow">Customer Inputs</p>
-            <h2>What to send for an address review</h2>
+            <h2>What we need for the last-mile plan</h2>
             <ul className="marketing-check-list">
               {destination.customerInputs.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -150,7 +150,7 @@ export default async function DestinationPage({ params }) {
       </section>
       <section className="marketing-cta">
         <div className="marketing-container marketing-cta-inner">
-          <div><h2>Planning cargo for this destination?</h2><p>Send the final ZIP code, cargo details and delivery conditions for review.</p></div>
+          <div><h2>Planning cargo for this destination?</h2><p>Send the final ZIP code, cargo data, access and unloading needs for a destination-specific quote.</p></div>
           <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Get a Shipping Quote</a>
         </div>
       </section>

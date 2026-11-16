@@ -414,12 +414,12 @@ export const services = {
   "supplier-consolidation": {
     navTitle: "Pickup & Consolidation",
     category: "China Operations",
-    eyebrow: "China-side supplier coordination",
+    eyebrow: "Multiple suppliers, one release plan",
     title: "Supplier Pickup & Consolidation in China",
     description:
-      "Coordinate factory pickup, receiving checks and multi-supplier consolidation in China before international shipping.",
+      "Arrange factory pickup, package-level receiving records and compatible-cargo consolidation in China before international shipping.",
     summary:
-      "A coordinated workflow for buyers who need cargo collected from one or more Chinese suppliers, checked against the agreed handoff record and released under one shipping plan.",
+      "Bring cargo from one or more Chinese suppliers into a single recorded plan for combined or split release.",
     heroMedia: {
       base: "/good-shipping-homepage/assets/operations/consolidation-staging",
       widths: [480, 800, 1000],
@@ -436,10 +436,10 @@ export const services = {
       "Shipments needing agreed receiving and package checks before export"
     ],
     operations: [
-      "Coordinate pickup from the confirmed factory or supplier locations.",
-      "Register arrivals and check package count against the customer-provided packing list.",
-      "Coordinate cargo from different suppliers in one consolidation plan.",
-      "Combine or split releases according to the confirmed shipping instructions."
+      "Arrange pickup from the confirmed factory or supplier locations.",
+      "Register arrivals and compare package counts with the customer-provided packing list.",
+      "Group compatible cargo for a combined shipment or keep it separate when required.",
+      "Release full or split quantities under the agreed instructions."
     ],
     boundaries: [
       "Receiving checks cover the agreed package-level information and visible condition; they are not automatically a product-quality inspection.",

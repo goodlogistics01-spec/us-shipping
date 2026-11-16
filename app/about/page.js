@@ -16,7 +16,7 @@ export default function AboutPage() {
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About" }]} />
           <p className="marketing-eyebrow">About GOOD LOGISTICS</p>
           <h1>One Logistics Team for Your Shipment from China</h1>
-          <p className="marketing-lead">Based in Shenzhen, GOOD LOGISTICS coordinates the steps between supplier pickup in China and delivery to the confirmed U.S. destination for importers, multi-supplier buyers, brands and FBA sellers.</p>
+          <p className="marketing-lead">GOOD LOGISTICS brings supplier pickup, China-side handling, freight, broker handoffs and U.S. delivery into one shipment plan for importers, multi-supplier buyers, brands and FBA sellers.</p>
           <div className="marketing-actions">
             <a className="marketing-button marketing-button-primary" href="/quote/">Get a Shipping Quote</a>
             <a className="marketing-button marketing-button-secondary" href={`${company.whatsappHref}?text=Hello%20Zoe%2C%20I%27d%20like%20to%20discuss%20a%20shipment%20from%20China.`}>Chat with Zoe</a>
@@ -57,9 +57,9 @@ export default function AboutPage() {
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Clear Responsibilities</p>
-            <h2>Confirm the handoffs before booking</h2>
-            <p>GOOD LOGISTICS manages shipment planning and coordination. Depending on the shipment, physical carriage, U.S. customs work, specialist equipment and final delivery may be performed by carriers, licensed customs brokers or local partners.</p>
-            <p>The quotation identifies the agreed scope, known exclusions and any condition still requiring confirmation.</p>
+            <h2>Know who handles each stage before booking</h2>
+            <p>The quotation identifies which stages GOOD LOGISTICS arranges and which are performed by carriers, licensed customs brokers or local partners.</p>
+            <p>It also identifies the agreed scope, known exclusions and any condition still requiring confirmation.</p>
           </div>
           <div>
             <p className="marketing-eyebrow">How to Start</p>
@@ -86,6 +86,7 @@ export default function AboutPage() {
             <h2>GOOD LOGISTICS</h2>
             <p>{company.legalName}</p>
             <p lang="zh-CN">{company.chineseName}</p>
+            <p>Established in Shenzhen in 2019</p>
             <p>Shenzhen, China</p>
           </div>
         </div>
@@ -99,7 +100,7 @@ export default function AboutPage() {
           <div>
             <p className="marketing-eyebrow">Your Public Contact</p>
             <h2>Plan the shipment with Zoe Zhou</h2>
-            <p>Zoe Zhou, Director of International Logistics, is the public contact for shipment planning. Share the supplier locations, cargo details and destination address you already have.</p>
+            <p>Zoe Zhou, Director of International Logistics, is the public contact for shipment planning. Send the supplier, cargo and delivery details you have. Zoe will identify what is still needed for a useful quote.</p>
             <div className="marketing-actions">
               <a className="marketing-button marketing-button-primary" href="/quote/">Get a Shipping Quote</a>
               <a className="marketing-text-link" href="/about/zoe-zhou/">Meet Zoe Zhou →</a>

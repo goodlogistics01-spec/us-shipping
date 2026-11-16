@@ -225,7 +225,7 @@ export default async function ServicePage({ params }) {
           </div>
           <div>
             <p className="marketing-eyebrow">Specific Operations</p>
-            <h2>What Good Logistics can coordinate</h2>
+            <h2>What the service can include</h2>
             <ul className="marketing-check-list">
               {service.operations.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -252,14 +252,14 @@ export default async function ServicePage({ params }) {
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Service Boundaries</p>
-            <h2>What is confirmed separately</h2>
+            <h2>Limits and shipment-specific conditions</h2>
             <ul className="marketing-check-list">
               {service.boundaries.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
             <p className="marketing-eyebrow">Customer Inputs</p>
-            <h2>What to provide for a useful review</h2>
+            <h2>What we need from you</h2>
             <ul className="marketing-check-list">
               {service.customerInputs.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -273,14 +273,14 @@ export default async function ServicePage({ params }) {
             <div className="marketing-two-column marketing-planning-grid">
               <div>
                 <p className="marketing-eyebrow">What You Send</p>
-                <h2>Information for a useful first review</h2>
+                <h2>Send these shipment details</h2>
                 <ul className="marketing-check-list">
                   {service.planningInputs.map((item) => <li key={item}>{item}</li>)}
                 </ul>
               </div>
               <div>
                 <p className="marketing-eyebrow">What We Return</p>
-                <h2>A scope to confirm before work starts</h2>
+                <h2>Receive a written handling and shipment plan</h2>
                 <ul className="marketing-check-list">
                   {service.planningOutput.map((item) => <li key={item}>{item}</li>)}
                 </ul>
@@ -311,7 +311,7 @@ export default async function ServicePage({ params }) {
           </div>
           <div>
             <p className="marketing-eyebrow">How to Start</p>
-            <h2>Move from details to an agreed scope</h2>
+            <h2>Turn shipment details into a written scope</h2>
             <ol className="marketing-step-list">
               {service.startSteps.map((item, index) => (
                 <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
