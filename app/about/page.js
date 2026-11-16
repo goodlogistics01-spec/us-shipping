@@ -86,7 +86,6 @@ export default function AboutPage() {
             <h2>GOOD LOGISTICS</h2>
             <p>{company.legalName}</p>
             <p lang="zh-CN">{company.chineseName}</p>
-            <p>Established in Shenzhen in 2019</p>
             <p>Shenzhen, China</p>
           </div>
         </div>

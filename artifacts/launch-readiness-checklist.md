@@ -19,8 +19,11 @@ Status definitions:
 | Freight-forwarding filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | NVOCC-related filing name, number, issuer and date | NOT_VERIFIED | Original readable filing and approved public-safe copy |
 | Company registration number and registered address | VERIFIED privately; not approved for public display | Keep the unredacted license and its sensitive fields out of Git and the public website |
-| Company founding year | VERIFIED for text-only public display | The private business license supports “Established in Shenzhen in 2019”; do not upload the unredacted document |
-| Team size, shipment volume, customer count and on-time rate | NOT_VERIFIED | Dated company records and publication approval |
+| Company founding year | VERIFIED privately; withdrawn from public display | Owner directed on 2026-11-16 that the website should not use the 2019 establishment claim |
+| `10+ years` industry experience | NOT_VERIFIED | Define whose experience is counted and supply the starting basis before publication |
+| Warehouse area | NOT_VERIFIED | Clarify whether “30000 万平方” means 30,000 m² or another value, whether the space is owned, operated or partner-provided, the locations included and the as-of date |
+| `190,000+` cooperating customers | NOT_VERIFIED | Define the counted entity, deduplication method, period and as-of date; competitor material is not evidence |
+| Team size, shipment volume, other customer counts and on-time rate | NOT_VERIFIED | Dated company records and publication approval |
 | Detailed Shenzhen office address | NOT_VERIFIED | Company confirmation and publication approval |
 
 The private business license and foreign-trade operator filing are identity

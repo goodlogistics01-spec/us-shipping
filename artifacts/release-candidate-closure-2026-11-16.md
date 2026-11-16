@@ -2,7 +2,7 @@
 
 ## Release identity
 
-- Release version: `GDLOGI-WEB-2026.11.16-RC1`
+- Release version: `GDLOGI-WEB-2026.11.16-RC2`
 - Requested baseline: `68624a92c587cc8a6bb80e552b84841523272890`
 - Working branch: `codex/gdlogi-v2-optimization-20261115`
 - Production branch observed from the public GitHub repository: `main`
@@ -102,10 +102,15 @@ promotable.
 - Current hero status: static photo. No video is implemented in Git. Candidate
   videos found outside the repository have not passed rights, privacy, claim and
   page-fit review, so video-first hero acceptance is `NOT_COMPLETED`.
-- A private business license supports the Chinese entity and the text
-  “Established in Shenzhen in 2019.” A private foreign-trade operator filing
-  supports the approved English public name. Neither document proves NVOCC or
-  international freight-forwarder qualification; raw documents remain private.
+- A private business license supports the Chinese entity, but the owner directed
+  on 2026-11-16 that the website should omit its 2019 establishment claim. A
+  private foreign-trade operator filing supports the approved English public
+  name. Neither document proves NVOCC or international freight-forwarder
+  qualification; raw documents remain private.
+- The requested `10+ years`, warehouse-area and `190,000+ customers` metrics are
+  withheld until their definitions, units, operating model, counting method and
+  dated evidence are confirmed. The supplied DFH screenshot is not GOOD
+  LOGISTICS evidence.
 - No shipment case has traceable public authorization and a complete evidence
   record. The Ningbo-three-supplier-to-Chicago record remains an internal draft
   and is not exposed as a public case or structured data.

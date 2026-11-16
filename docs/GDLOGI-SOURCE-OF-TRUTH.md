@@ -30,7 +30,10 @@ Source labels used below:
 | Company registration number | — | `PRIMARY_DOCUMENT`: present in the private business license | VERIFIED privately; DO NOT PUBLISH | Keep out of the public site unless publication is separately approved and required |
 | Registered address | — | `PRIMARY_DOCUMENT`: present in the private business license | VERIFIED privately; DO NOT PUBLISH | Keep out of the public site; do not confuse with office address |
 | Office address | Shenzhen, China | `USER_CONFIRMED`: public site may use city-level wording; a separate office address may later appear on About/Contact | CONFIRMED | Confirmed public wording: Shenzhen, China |
-| Year established | 2019 | `PRIMARY_DOCUMENT`: establishment date in the private business license inspected on 2026-11-16 | CONFIRMED for the public wording “Established in Shenzhen in 2019” | Exact license date is not needed on the public page |
+| Year established | — | `PRIMARY_DOCUMENT`: establishment date exists in the private business license; `USER_CONFIRMED` on 2026-11-16 that the website should not use the 2019 establishment claim | VERIFIED privately; DO NOT PUBLISH | Omit the founding year from public pages |
+| Industry experience | — | `USER_REQUESTED` on 2026-11-16: “10+ years”; whether this means Zoe, the current team, founders, partners or the company is not defined | NEEDS CONFIRMATION; DO NOT PUBLISH YET | Confirm whose experience is counted, the starting basis and the public wording |
+| Warehouse area | — | `USER_REQUESTED` on 2026-11-16: “30000 万平方”; the unit is ambiguous and no owned/operated/partner-facility scope or dated area record was supplied | NEEDS CONFIRMATION; DO NOT PUBLISH YET | Confirm the exact figure and unit, facility model, locations included and measurement date |
+| Cooperating customers | — | `USER_REQUESTED` on 2026-11-16: “19万+”; no definition, counting method, period or dated customer record was supplied | NEEDS CONFIRMATION; DO NOT PUBLISH YET | Confirm whether this means unique paying customers, accounts, inquiries, orders or shipments and the as-of date |
 | Main website domain | https://gdlogi.us is intended as the U.S.-focused site; https://gdlogi.com is intended as the global/company site | `USER_CONFIRMED` conditionally; actual domain/operational relationship has not been independently verified | NEEDS CONFIRMATION | Verify ownership, live routing, and organizational relationship before treating as a legal/company fact |
 | Public email | zoe@gdlogi.com | `LOCAL_FILE`: site data, forms, contact pages; launch checklist marks current project contact data verified | CONFIRMED | Recorded value: zoe@gdlogi.com |
 | Public WhatsApp | +86 135 5686 1676 / https://wa.me/8613556861676 | `LOCAL_FILE`: site data, homepage, contact pages; launch checklist marks current project contact data verified | CONFIRMED | Recorded value: +86 135 5686 1676 |
@@ -40,7 +43,8 @@ Source labels used below:
 
 - Use `GOOD LOGISTICS` as the public brand presentation.
 - `Good Logistics Co., Ltd.` is owner-approved public wording and appears on the inspected foreign-trade filing. Do not misdescribe that filing as an international freight-forwarder or NVOCC qualification.
-- The public site may say “Established in Shenzhen in 2019.” Do not publish the registration number, registered address, exact license date or detailed office address without a separate need and approval.
+- Do not publish the company founding year; the owner withdrew the 2019 public wording on 2026-11-16. Do not publish the registration number, registered address, exact license date or detailed office address without a separate need and approval.
+- Do not publish `10+ years`, a warehouse-area figure or `190,000+ customers` until the owner closes the definitions and evidence gaps recorded above. A screenshot describing DFH is competitor material and is not evidence for GOOD LOGISTICS.
 - Keep the registered address and office address as separate fields.
 - Retire the older `GOOD-SHIPPING` logo from future public use.
 
@@ -254,7 +258,7 @@ The following decisions were recorded from the owner's 2026-10-20 response. `CLO
 | Q03 | Chinese legal entity: 深圳市谷得供应链有限公司; registration document available | CLOSED; document extraction open |
 | Q04 | Extract registration number/address from license; do not publish full details by default | EVIDENCE OPEN |
 | Q05 | Public location: Shenzhen, China; keep office and registered address separate | CLOSED |
-| Q06 | Do not publish 2019 or any year until license date is checked | EVIDENCE OPEN |
+| Q06 | Do not publish 2019 or another company founding year; owner withdrew the public founding-year wording on 2026-11-16 | RESOLVED — OMIT FROM PUBLIC SITE |
 | Q07 | Intended relationship: gdlogi.us U.S.-focused; gdlogi.com global/company | EVIDENCE OPEN for actual ownership/routing verification |
 | Q08 | Zoe title: Director of International Logistics | CLOSED |
 | Q09 | Zoe name, title, photo, business email, and business WhatsApp may appear publicly | CLOSED; photo source rights open |
