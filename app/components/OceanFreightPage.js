@@ -14,17 +14,17 @@ const capabilities = [
   {
     number: "01",
     title: "One Plan from Pickup to Delivery",
-    copy: "See pickup, export handoff, ocean freight, customs-broker responsibilities and U.S. delivery in the same quotation."
+    copy: "Your quote can cover pickup, ocean freight, customs-clearance coordination and U.S. delivery."
   },
   {
     number: "02",
     title: "FCL & LCL Planning",
-    copy: "Container options are compared using cargo volume, handling needs, supplier locations and the requested delivery scope."
+    copy: "We compare container options using cargo volume, handling needs and supplier locations."
   },
   {
     number: "03",
-    title: "Oversized & Complex Cargo Review",
-    copy: "Packed dimensions, weight, lifting points, equipment and site access are checked before a handling plan is proposed."
+    title: "Oversized & Complex Cargo",
+    copy: "Send packed dimensions, weight, lifting points and site access so we can plan handling."
   },
   {
     number: "04",
@@ -36,7 +36,7 @@ const capabilities = [
 const solutions = [
   {
     title: "FCL Shipping",
-    copy: "Dedicated container space for cargo that fits a full-container plan or benefits from fewer consolidation handoffs.",
+    copy: "Dedicated container space for cargo that fills a container or benefits from fewer cargo transfers.",
     href: "#fcl-lcl",
     label: "Compare FCL"
   },
@@ -48,7 +48,7 @@ const solutions = [
   },
   {
     title: "Door-to-Door Shipping",
-    copy: "A defined shipment scope from China pickup through the agreed delivery point in the United States.",
+    copy: "Pickup in China through delivery to the agreed U.S. point can be included in one quote.",
     href: "/services/ddp-shipping-china-to-usa/",
     label: "Explore door delivery"
   },
@@ -60,7 +60,7 @@ const solutions = [
   },
   {
     title: "Oversized Cargo Shipping",
-    copy: "Route and handling review for machinery, large fixtures and cargo with non-standard dimensions or access needs.",
+    copy: "Route and handling planning for machinery, large fixtures and cargo with non-standard dimensions or access needs.",
     href: "/services/oversized-cargo-shipping/",
     label: "Explore oversized cargo"
   }
@@ -68,29 +68,19 @@ const solutions = [
 
 const workflow = [
   ["01", "Cargo Details", "Share the commodity, packaging, dimensions, weight, supplier location and cargo-ready date."],
-  ["02", "Pickup & Consolidation", "Pickup and multi-supplier consolidation needs are reviewed before cargo moves."],
-  ["03", "Export & Ocean Freight", "The booking scope connects origin handling, export handoff and the selected ocean option."],
-  ["04", "Customs & Destination Handling", "Documentation and customs-coordination responsibilities are defined with the destination handling scope."],
-  ["05", "Final Delivery", "The address, appointment, equipment and access requirements are confirmed for the delivery plan."]
-];
-
-const planningFactors = [
-  "Origin city and supplier readiness",
-  "Port pair and current sailing options",
-  "FCL, LCL or consolidation choice",
-  "Export and destination handling scope",
-  "Customs review and document readiness",
-  "Final delivery distance and appointment needs",
-  "Cargo dimensions, packaging and special handling"
+  ["02", "Pickup & Consolidation", "We arrange the agreed pickups and combine compatible cargo."],
+  ["03", "Export & Ocean Freight", "We connect origin handling to the booked ocean option."],
+  ["04", "Customs & Destination Handling", "We coordinate required documents, customs-broker responsibilities and destination handling."],
+  ["05", "Final Delivery", "We use the address, appointment, equipment and access needs to plan delivery."]
 ];
 
 const comparisonRows = [
   ["Cargo fit", "Cargo suited to dedicated container space", "Cargo that does not require a full container"],
-  ["Cost basis", "Quoted by container and route scope", "Based on volume, weight and handling scope"],
-  ["Handling", "Fewer consolidation handoffs", "Includes consolidation and deconsolidation handoffs"],
-  ["Schedule considerations", "Depends on booking, sailing and destination scope", "Also depends on consolidation and release timing"],
-  ["Cargo compatibility", "Useful when separation or dedicated space matters", "Compatibility with other consolidated cargo must be reviewed"],
-  ["Oversized cargo", "Equipment and loading method require advance review", "May not fit LCL handling limits; dimensions must be checked"]
+  ["Cost basis", "Quoted by container, route and included services", "Based on volume, weight and handling"],
+  ["Handling", "Fewer cargo transfers", "Includes consolidation and deconsolidation transfers"],
+  ["Schedule considerations", "Depends on booking, sailing and final delivery", "Also depends on consolidation and release timing"],
+  ["Cargo compatibility", "Dedicated space keeps cargo separate", "Shared space requires compatible cargo"],
+  ["Oversized cargo", "Needs advance equipment and loading planning", "May exceed LCL handling limits; dimensions must be checked"]
 ];
 
 function ArrowIcon() {
@@ -122,7 +112,7 @@ export default function OceanFreightPage({ service, schema }) {
           <h1>Sea Freight from China to the USA</h1>
           <p className="ocean-hero-service-line">FCL, LCL &amp; Door-to-Door Shipping</p>
           <div className="ocean-hero-copy">
-            <p>GOOD LOGISTICS arranges factory pickup, ocean freight, customs-broker handoffs and delivery to the agreed U.S. address. Compare FCL, LCL, FBA, oversized and complex-cargo options in one quotation.</p>
+            <p>GOOD LOGISTICS arranges factory pickup, ocean freight, customs-clearance coordination and delivery to the agreed U.S. address. Compare FCL, LCL, FBA, oversized and complex-cargo options in one quote.</p>
           </div>
           <div className="ocean-hero-actions">
             <a className="ocean-button ocean-button-primary" href="#quote-form" data-quote-location="ocean_hero">Get a Shipping Quote</a>
@@ -142,7 +132,7 @@ export default function OceanFreightPage({ service, schema }) {
           <div className="ocean-conversion-heading">
             <p className="ocean-section-label">Operational planning</p>
             <h2 id="ocean-capabilities-title">Built Around Real-World Shipping</h2>
-            <p>Each shipment starts with the cargo facts and the handoffs needed to move it—not a preset route promise.</p>
+            <p>Each shipment starts with the cargo facts, pickup needs and delivery address.</p>
           </div>
           <div className="ocean-capability-grid">
             {capabilities.map((item) => (
@@ -159,10 +149,10 @@ export default function OceanFreightPage({ service, schema }) {
       <section className="ocean-section ocean-real-ops" aria-labelledby="ocean-real-ops-title">
         <div className="marketing-container ocean-ops-layout">
           <div className="ocean-ops-copy">
-            <p className="ocean-section-label">Quote readiness</p>
-            <h2 id="ocean-real-ops-title">Cargo Facts Before Route Promises</h2>
+            <p className="ocean-section-label">What to send</p>
+            <h2 id="ocean-real-ops-title">Start With the Cargo Facts</h2>
             <p>A useful sea-freight quotation starts with the product, packed dimensions, weight, supplier location and delivery conditions. Unknown weight or volume can be marked for follow-up.</p>
-            <p className="ocean-evidence-note">The quotation confirms the shipment-specific scope; it does not imply fixed schedules, customs acceptance or an unconditional delivery promise.</p>
+            <p className="ocean-evidence-note">Your quote lists the included services and current sailing and customs assumptions.</p>
           </div>
           <div className="ocean-ops-evidence">
             <div className="ocean-ops-gallery" role="group" aria-label="Selected cargo handling photos">
@@ -172,7 +162,7 @@ export default function OceanFreightPage({ service, schema }) {
                   <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/empty-container-interior-480.webp 480w, /good-shipping-homepage/assets/operations/empty-container-interior-800.webp 800w, /good-shipping-homepage/assets/operations/empty-container-interior-1200.webp 1200w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
                   <img src="/good-shipping-homepage/assets/operations/empty-container-interior-1200.jpg" alt="Empty shipping container interior before cargo loading." width="1200" height="900" loading="lazy" decoding="async" />
                 </picture>
-                <figcaption>Empty-container context before loading; condition checks and cargo suitability are confirmed separately.</figcaption>
+                <figcaption>Container interior before cargo loading.</figcaption>
               </figure>
               <figure>
                 <picture>
@@ -180,7 +170,7 @@ export default function OceanFreightPage({ service, schema }) {
                   <source type="image/webp" srcSet="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-480.webp 480w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-800.webp 800w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.webp 1000w" sizes="(max-width: 760px) 100vw, (max-width: 1023px) 48vw, 28vw" />
                   <img src="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.jpg" alt="Cartoned cargo arranged inside an open shipping container during loading." width="1000" height="1250" loading="lazy" decoding="async" />
                 </picture>
-                <figcaption>Privacy-treated cartoned-cargo loading context; shipment details and the loading scope are confirmed separately.</figcaption>
+                <figcaption>Cartons positioned during loading. Dimensions and loading order guide container use and handling.</figcaption>
               </figure>
             </div>
             <ul className="ocean-factor-list" aria-label="Details reviewed for a sea freight quote">
@@ -238,7 +228,7 @@ export default function OceanFreightPage({ service, schema }) {
           <div>
             <p className="ocean-section-label">Destination planning</p>
             <h2 id="ocean-delivery-title">U.S. Final-Delivery Planning</h2>
-            <p>The final-delivery scope can be planned after the destination address, access conditions and unloading or appointment requirements are confirmed.</p>
+            <p>Share the destination address, access, appointment and unloading needs so we can plan the final-mile leg.</p>
           </div>
           <div className="ocean-delivery-groups">
             <div>
@@ -253,26 +243,12 @@ export default function OceanFreightPage({ service, schema }) {
         </div>
       </section>
 
-      <section className="ocean-section ocean-transit-section" aria-labelledby="ocean-transit-title">
-        <div className="marketing-container ocean-transit-layout">
-          <div>
-            <p className="ocean-section-label">Schedule scope</p>
-            <h2 id="ocean-transit-title">Typical Transit Planning</h2>
-            <p>Transit planning is route- and shipment-specific. A working schedule is reviewed after the shipment details and current operating conditions are known.</p>
-            <a className="ocean-button ocean-button-primary" href="#quote-form" data-quote-location="ocean_schedule">Get a Shipping Quote</a>
-          </div>
-          <ul className="ocean-factor-list">
-            {planningFactors.map((factor) => <li key={factor}>{factor}</li>)}
-          </ul>
-        </div>
-      </section>
-
       <section className="ocean-section ocean-comparison-section" id="fcl-lcl" aria-labelledby="ocean-comparison-title">
         <div className="marketing-container">
           <div className="ocean-conversion-heading">
             <p className="ocean-section-label">Container comparison</p>
             <h2 id="ocean-comparison-title">FCL vs LCL: Which Option Fits Your Shipment?</h2>
-            <p>This comparison is a planning guide. The quotation should compare the complete route and delivery scope.</p>
+            <p>Compare the full route, cargo transfers and final delivery—not only the ocean leg.</p>
           </div>
           <div className="ocean-comparison-scroll" tabIndex="0" aria-label="Scrollable FCL and LCL comparison">
             <table className="ocean-comparison-table">
@@ -310,8 +286,8 @@ export default function OceanFreightPage({ service, schema }) {
       <section className="marketing-section" aria-labelledby="ocean-boundaries-title">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Service Boundaries</p>
-            <h2 id="ocean-boundaries-title">Limits and shipment-specific conditions</h2>
+            <p className="marketing-eyebrow">Before Booking</p>
+            <h2 id="ocean-boundaries-title">Details That Affect the Service</h2>
             <ul className="marketing-check-list">
               {service.boundaries.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -337,7 +313,7 @@ export default function OceanFreightPage({ service, schema }) {
           </div>
           <div>
             <p className="marketing-eyebrow">How to Start</p>
-            <h2>Move from details to an agreed scope</h2>
+            <h2>Build the quote from your cargo details</h2>
             <ol className="marketing-step-list">
               {service.startSteps.map((item, index) => (
                 <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
@@ -351,7 +327,7 @@ export default function OceanFreightPage({ service, schema }) {
         <div className="marketing-container ocean-faq-layout">
           <div>
             <p className="ocean-section-label">Frequently asked questions</p>
-            <h2 id="ocean-faq-title">Questions to Settle Before Booking</h2>
+            <h2 id="ocean-faq-title">Sea Freight Questions</h2>
           </div>
           <div className="ocean-faq-list">
             {service.faq.map(([question, answer], index) => (
@@ -367,9 +343,9 @@ export default function OceanFreightPage({ service, schema }) {
       <section className="ocean-section ocean-quote-section" id="quote-form" aria-labelledby="ocean-quote-title">
         <div className="marketing-container">
           <div className="ocean-quote-heading">
-            <p className="ocean-section-label">Route-specific quotation</p>
+            <p className="ocean-section-label">Get a sea freight quote</p>
             <h2 id="ocean-quote-title">Tell Us About Your Shipment</h2>
-            <p>Share the cargo, pickup and delivery details that affect the route, handling plan and quotation scope.</p>
+            <p>Share the cargo, pickup and delivery details so we can price the route and handling.</p>
           </div>
           <div className="ocean-quote-form-layout">
             <QuoteForm
@@ -384,13 +360,13 @@ export default function OceanFreightPage({ service, schema }) {
             <aside className="ocean-contact-card" id="contact-options" aria-labelledby="ocean-contact-title">
               <p className="ocean-section-label">Direct contact</p>
               <h3 id="ocean-contact-title">Discuss Your Cargo</h3>
-              <p>If you already have a packing list or cargo photos, you can send them directly for review.</p>
+              <p>If you already have a packing list or cargo photos, send them directly to Zoe.</p>
               <ul>
                 <li><span>Email</span><a href={`mailto:${company.email}`}>{company.email}</a></li>
                 <li><span>WhatsApp</span><a href={company.whatsappHref}>Message {company.phoneDisplay}</a></li>
                 <li><span>Phone</span><a href={`tel:${company.phoneHref}`}>{company.phoneDisplay}</a></li>
               </ul>
-              <p className="ocean-contact-note">A response can confirm what information is still needed. It does not confirm space, customs acceptance or a transit commitment.</p>
+              <p className="ocean-contact-note">Space, customs acceptance and transit timing are set only after the booking details are available.</p>
             </aside>
           </div>
         </div>

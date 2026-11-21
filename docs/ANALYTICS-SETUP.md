@@ -34,7 +34,7 @@ Until both a valid ID and `granted` consent exist, no Google script is requested
 
 Allowed parameters are limited to form/page identifiers, shipping method, allowlisted service needs, allowlisted inspection types, result category, link location and non-sensitive request references. Names, email addresses, phone numbers, cargo text, full URLs, query strings and free-form values must not be sent to analytics.
 
-`quote_cta_click.link_location` is accepted only from this fixed list: `home_header_mobile`, `home_header_desktop`, `home_hero`, `customer_scenario_consolidation`, `customer_scenario_fba`, `customer_scenario_complex_cargo`, `ocean_hero`, `ocean_schedule`, `service_hero` and `service_footer`. Any missing or unrecognized value is recorded as `site`. Query-string values and visible link copy are never used as analytics parameters. The sea-freight page's same-page `#quote-form` links use the two `ocean_...` values; arbitrary same-page anchors are not counted.
+`quote_cta_click.link_location` is accepted only from this fixed list: `home_header_mobile`, `home_header_desktop`, `home_hero`, `customer_scenario_consolidation`, `customer_scenario_fba`, `customer_scenario_complex_cargo`, `ocean_hero`, `service_hero` and `service_footer`. Any missing or unrecognized value is recorded as `site`. Query-string values and visible link copy are never used as analytics parameters. The sea-freight page's same-page `#quote-form` link uses `ocean_hero`; arbitrary same-page anchors are not counted.
 
 Direct visits or refreshes of `/thank-you/` do not emit `quote_submit_success`. Only the submit handler emits that event after explicit acceptance.
 

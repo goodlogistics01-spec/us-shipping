@@ -11,7 +11,7 @@ import {
 
 const shippingMethodOptions = [
   ["not-sure", "Not sure — please advise"],
-  ["ocean-freight", "Ocean Freight — review FCL/LCL"],
+  ["ocean-freight", "Ocean Freight — compare FCL/LCL"],
   ["ocean-fcl", "Ocean FCL"],
   ["ocean-lcl", "Ocean LCL"],
   ["air-freight", "Air Freight"],
@@ -32,8 +32,8 @@ const serviceNeedOptions = [
 
 const inspectionTypeOptions = [
   ["receiving-checks", "Receiving Checks — quantity, cartons, labels and visible damage"],
-  ["product-quality-inspection", "Product Quality Inspection — scope to confirm"],
-  ["scope-not-specified", "Not sure — help define the inspection scope"]
+  ["product-quality-inspection", "Product Quality Inspection — requirements agreed before work starts"],
+  ["scope-not-specified", "Not sure — help choose the inspection type"]
 ];
 
 const optionalDetailFieldNames = new Set([
@@ -290,7 +290,7 @@ export default function QuoteForm({
       data.getAll("service_needs").includes("inspection") &&
       data.getAll("inspection_types").length === 0
     ) {
-      errors.inspection_types = "Choose the inspection type or ask us to define the scope.";
+      errors.inspection_types = "Choose the inspection type or ask us to help choose it.";
     }
     if (!form.elements.privacy_consent?.checked) {
       errors.privacy_consent = "Please confirm that we may use these details to answer your request.";
@@ -527,7 +527,7 @@ export default function QuoteForm({
 
       <div className="marketing-form-grid">
         <p className="marketing-form-intro form-span-two">
-          Only the starred fields are required. We can confirm the remaining details with you.
+          Only starred fields are required.
         </p>
         <label>
           <span className="marketing-field-label">Name <span aria-hidden="true">*</span></span>
@@ -768,7 +768,7 @@ export default function QuoteForm({
                   >email</a>.
                 </>
               )
-            : "Email and WhatsApp responses are available. If the form does not complete, email zoe@gdlogi.com."}
+            : "Questions? Email zoe@gdlogi.com or message Zoe on WhatsApp."}
       </p>
     </form>
   );

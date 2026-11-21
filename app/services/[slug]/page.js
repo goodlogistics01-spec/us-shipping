@@ -186,7 +186,7 @@ export default async function ServicePage({ params }) {
                 <p>China <span aria-hidden="true">→</span> United States</p>
                 <ul>
                   <li>{service.category}</li>
-                  <li>Scope confirmed before work starts</li>
+                  <li>Work agreed before it starts</li>
                   <li>Progress updates at agreed milestones</li>
                 </ul>
               </aside>
@@ -198,9 +198,9 @@ export default async function ServicePage({ params }) {
       {service.workflow ? (
         <section className="marketing-section marketing-workflow-section">
           <div className="marketing-container">
-            <p className="marketing-eyebrow">A Scope You Can Review</p>
+            <p className="marketing-eyebrow">What Happens Next</p>
             <h2>From supplier list to approved cargo release</h2>
-            <p className="marketing-section-intro">Each step is confirmed against the actual suppliers, cargo and release instructions. It is a working sequence, not a fixed promise that every shipment follows the same route.</p>
+            <p className="marketing-section-intro">We adapt these steps to your suppliers, cargo and release instructions.</p>
             <div className="marketing-workflow-grid">
               {service.workflow.map(([number, title, copy]) => (
                 <article key={number}>
@@ -240,7 +240,7 @@ export default async function ServicePage({ params }) {
               <ResponsiveOperationPhoto media={service.supportingMedia} sizes="(max-width: 700px) 100vw, 52vw" />
             </figure>
             <div>
-              <p className="marketing-eyebrow">Operational Planning</p>
+              <p className="marketing-eyebrow">In Practice</p>
               <h2>{service.supportingMedia.title}</h2>
               <p>{service.supportingMedia.copy}</p>
             </div>
@@ -251,8 +251,8 @@ export default async function ServicePage({ params }) {
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Service Boundaries</p>
-            <h2>Limits and shipment-specific conditions</h2>
+            <p className="marketing-eyebrow">Before Booking</p>
+            <h2>Details That Affect the Service</h2>
             <ul className="marketing-check-list">
               {service.boundaries.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -311,7 +311,7 @@ export default async function ServicePage({ params }) {
           </div>
           <div>
             <p className="marketing-eyebrow">How to Start</p>
-            <h2>Turn shipment details into a written scope</h2>
+            <h2>Get a Clear Shipment Plan</h2>
             <ol className="marketing-step-list">
               {service.startSteps.map((item, index) => (
                 <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
@@ -324,12 +324,12 @@ export default async function ServicePage({ params }) {
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container">
           <p className="marketing-eyebrow">Related Services</p>
-          <h2>Build the shipment around the actual work required</h2>
+          <h2>Combine the Services Your Shipment Needs</h2>
           <div className="marketing-card-grid">
             {service.relatedServices.map(([title, href]) => (
               <article className="marketing-content-card" key={href}>
                 <h2>{title}</h2>
-                <p>Review this service together with the cargo, supplier and delivery requirements.</p>
+                <p>Add this service when it fits your cargo, supplier or delivery needs.</p>
                 <a className="marketing-text-link" href={href}>View service →</a>
               </article>
             ))}

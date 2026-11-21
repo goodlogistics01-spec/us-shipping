@@ -11,7 +11,6 @@ const QUOTE_LINK_LOCATIONS = new Set([
   "customer_scenario_fba",
   "customer_scenario_complex_cargo",
   "ocean_hero",
-  "ocean_schedule",
   "service_hero",
   "service_footer"
 ]);

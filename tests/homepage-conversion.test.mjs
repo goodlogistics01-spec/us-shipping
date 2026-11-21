@@ -18,7 +18,15 @@ test("homepage customer scenarios use the three approved buyer-oriented messages
   assert.match(homepage, /Several Suppliers\. One Shipment Plan\./);
   assert.match(homepage, /Prepare Your Stock for U\.S\. Delivery\./);
   assert.match(homepage, /A Shipping Plan Built Around Your Cargo\./);
-  assert.match(homepage, /Share what you have—we can clarify the remaining details with you\./);
+  assert.match(homepage, /Start with the cargo problem you need to solve/);
+});
+
+test("homepage moves core freight modes directly after customer scenarios and omits weak delivery proof", () => {
+  const scenarios = homepage.indexOf('id="customer-paths"');
+  const modes = homepage.indexOf('id="services"');
+  const operations = homepage.indexOf('id="home-operations-showcase-title"');
+  assert.ok(scenarios >= 0 && modes > scenarios && operations > modes);
+  assert.doesNotMatch(homepage, /redacted-delivery-record|home-delivery-proof|privacy-treated/);
 });
 
 test("multi-supplier scenario opens the editable quote contract with the right service preselection", () => {
@@ -68,10 +76,11 @@ test("public homepage omits rejected scale, credential and case-study claims", (
   assert.doesNotMatch(homepage, /Chicago case study|999,?996|140\+\s*(?:employees|staff)/i);
 });
 
-test("sea-freight in-page quote CTAs have allowlisted anonymous attribution", () => {
-  for (const location of ["ocean_hero", "ocean_schedule"]) {
-    assert.match(oceanFreightPage, new RegExp(`href="#quote-form" data-quote-location="${location}"`));
-    assert.match(analyticsBridge, new RegExp(`"${location}"`));
-  }
+test("sea-freight in-page quote CTA has allowlisted anonymous attribution", () => {
+  const location = "ocean_hero";
+  assert.match(oceanFreightPage, new RegExp(`href="#quote-form" data-quote-location="${location}"`));
+  assert.match(analyticsBridge, new RegExp(`"${location}"`));
+  assert.doesNotMatch(oceanFreightPage, /Typical Transit Planning|ocean_schedule/);
+  assert.doesNotMatch(analyticsBridge, /ocean_schedule/);
   assert.match(analyticsBridge, /url\.hash === "#quote-form"/);
 });

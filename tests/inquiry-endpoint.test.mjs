@@ -108,7 +108,7 @@ test("SUCCESS returns a bound request ID cookie and carries every inquiry field 
   assert.match(response.headers.get("set-cookie"), /Secure/);
   assert.equal(providerBody._replyto, "route.test@example.com");
   assert.equal(providerBody.requested_service, "Supplier Consolidation");
-  assert.equal(providerBody.shipping_method, "Ocean freight — review FCL/LCL");
+  assert.equal(providerBody.shipping_method, "Ocean freight — compare FCL/LCL");
   assert.equal(providerBody.service_needs, "Shipping, Consolidation, Inspection");
   assert.match(providerBody.inspection_types, /Receiving Checks/);
   assert.match(providerBody.inspection_types, /Product Quality Inspection/);

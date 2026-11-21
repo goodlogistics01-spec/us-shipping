@@ -37,11 +37,11 @@ export const metadata = {
 };
 
 const faqItems = [
-  ["Can you collect cargo from multiple suppliers?", "Yes. Supplier locations, cargo-ready dates, packing lists and release instructions are reviewed before a combined pickup and consolidation plan is confirmed."],
-  ["Can you apply FNSKU and outer-carton labels?", "Yes. Labeling can be arranged using the final files and placement instructions confirmed by the customer. Current platform requirements still need shipment-specific verification."],
-  ["Is receiving the same as a product-quality inspection?", "No. Standard receiving can cover package quantity, outer cartons, labels and visible damage. Product checks, sampling and acceptance criteria must be scoped separately."],
-  ["Can you store and release cargo in stages?", "Temporary storage and planned releases can be coordinated after the cargo, expected duration, inventory record and release instructions are confirmed."],
-  ["Do you handle oversized cargo and U.S. island destinations?", "Yes, subject to review of packed cargo data, routing, equipment, access and final-delivery conditions for the confirmed address."]
+  ["Can you collect cargo from multiple suppliers?", "Yes. Share each pickup location, cargo-ready date and packing list. We can plan one combined shipment or staged releases where cargo is compatible."],
+  ["Can you apply FNSKU and outer-carton labels?", "Yes. We apply customer-approved label files and placement instructions. Platform requirements must be checked for the destination market."],
+  ["Is receiving the same as a product-quality inspection?", "No. Receiving checks cover quantity, outer cartons, labels and visible damage. Product-quality inspection needs agreed sampling, criteria and reporting."],
+  ["Can you store and release cargo in stages?", "Yes. Share the expected storage period, cargo details and release schedule. Availability and handling are quoted for the shipment."],
+  ["Do you handle oversized cargo and U.S. island destinations?", "Yes. Send packed dimensions, weight, ZIP code and unloading or access needs. We will identify available routing and equipment for the address."]
 ];
 
 const homeSchema = {

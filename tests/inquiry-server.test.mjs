@@ -244,7 +244,7 @@ test("provider payload contains product, shipping method, and every selected ser
   assert.equal(providerPayload.product_name, "Dining chairs");
   assert.equal(providerPayload.email, "name+tag@example.co.uk");
   assert.equal(providerPayload.whatsapp, "+1 213 555 0188");
-  assert.equal(providerPayload.shipping_method, "Ocean freight — review FCL/LCL");
+  assert.equal(providerPayload.shipping_method, "Ocean freight — compare FCL/LCL");
   assert.equal(
     providerPayload.service_needs,
     "Shipping, FBA Prep / Labeling, Kitting / Light Assembly"
@@ -280,7 +280,7 @@ test("provider body carries both inspection types and their truthful scope bound
   assert.equal(providerPayload.requested_service, "Supplier Consolidation");
   assert.equal(
     providerPayload.inspection_types,
-    "Receiving Checks — quantity, cartons, labels and visible damage, Product Quality Inspection — scope to confirm"
+    "Receiving Checks — quantity, cartons, labels and visible damage, Product Quality Inspection — requirements agreed before work starts"
   );
   assert.match(providerPayload.inspection_scope, /quantity, outer-carton, label and visible-damage/);
   assert.match(providerPayload.inspection_scope, /sampling, criteria and reporting must be confirmed/);

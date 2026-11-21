@@ -45,7 +45,7 @@ export const SERVICE_LABELS = Object.freeze({
 
 export const SHIPPING_METHOD_LABELS = Object.freeze({
   "not-sure": "Not sure — please advise",
-  "ocean-freight": "Ocean freight — review FCL/LCL",
+  "ocean-freight": "Ocean freight — compare FCL/LCL",
   "ocean-fcl": "Ocean FCL",
   "ocean-lcl": "Ocean LCL",
   "air-freight": "Air freight",
@@ -66,7 +66,7 @@ export const SERVICE_NEED_LABELS = Object.freeze({
 
 export const INSPECTION_TYPE_LABELS = Object.freeze({
   "receiving-checks": "Receiving Checks — quantity, cartons, labels and visible damage",
-  "product-quality-inspection": "Product Quality Inspection — scope to confirm",
+  "product-quality-inspection": "Product Quality Inspection — requirements agreed before work starts",
   "scope-not-specified": "Inspection request — type not specified; confirm scope"
 });
 

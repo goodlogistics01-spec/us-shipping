@@ -1,0 +1,158 @@
+{
+  "home": {
+    "375": {
+      "url": "http://127.0.0.1:3257/",
+      "title": "China to USA Freight & Cargo Coordination | GOOD LOGISTICS",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "document": {
+        "clientWidth": 375,
+        "scrollWidth": 375,
+        "scrollHeight": 11775
+      },
+      "horizontalOverflow": false,
+      "h1": "From Your Suppliers in China to U.S. Delivery.",
+      "heroBottom": 1181,
+      "formTop": 8994
+    },
+    "390": {
+      "url": "http://127.0.0.1:3257/",
+      "title": "China to USA Freight & Cargo Coordination | GOOD LOGISTICS",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "scrollHeight": 11725
+      },
+      "horizontalOverflow": false,
+      "h1": "From Your Suppliers in China to U.S. Delivery.",
+      "heroBottom": 1142,
+      "formTop": 8944
+    },
+    "768": {
+      "url": "http://127.0.0.1:3257/",
+      "title": "China to USA Freight & Cargo Coordination | GOOD LOGISTICS",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "document": {
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "scrollHeight": 8962
+      },
+      "horizontalOverflow": false,
+      "h1": "From Your Suppliers in China to U.S. Delivery.",
+      "heroBottom": 1148,
+      "formTop": 7382
+    },
+    "1440": {
+      "url": "http://127.0.0.1:3257/",
+      "title": "China to USA Freight & Cargo Coordination | GOOD LOGISTICS",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "document": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "scrollHeight": 6970
+      },
+      "horizontalOverflow": false,
+      "h1": "From Your Suppliers in China to U.S. Delivery.",
+      "heroBottom": 712,
+      "formTop": 5555
+    }
+  },
+  "quote": {
+    "mobile": {
+      "url": "http://127.0.0.1:3257/quote/?shipping_method=ocean-freight&service_need=shipping&service_need=inspection&inspection_type=receiving-checks&inspection_type=product-quality-inspection",
+      "title": "Get a China to USA Shipping Quote | GOOD LOGISTICS",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "scrollHeight": 3899
+      },
+      "horizontalOverflow": false,
+      "h1": "Start Your Quote",
+      "heroBottom": 274,
+      "formTop": 334
+    },
+    "preselection": {
+      "shippingMethod": "ocean-freight",
+      "serviceNeeds": [
+        "shipping",
+        "inspection"
+      ],
+      "inspectionTypes": [
+        "receiving-checks",
+        "product-quality-inspection"
+      ],
+      "inspectionVisible": true,
+      "requiredNote": "Only starred fields are required."
+    },
+    "desktop": {
+      "url": "http://127.0.0.1:3257/quote/",
+      "title": "Get a China to USA Shipping Quote | GOOD LOGISTICS",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "document": {
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "scrollHeight": 1903
+      },
+      "horizontalOverflow": false,
+      "h1": "Start Your Quote",
+      "heroBottom": 290,
+      "formTop": 318
+    }
+  },
+  "menu": {
+    "open": {
+      "expanded": "true",
+      "navDisplay": "grid",
+      "toggleSize": {
+        "width": 44,
+        "height": 44
+      }
+    },
+    "services": {
+      "expanded": "true",
+      "dropdownDisplay": "block"
+    }
+  },
+  "form": {
+    "success": {
+      "url": "http://127.0.0.1:3257/thank-you/?request_id=GL-20261121-6A01B02E",
+      "heading": "We’ve received your shipment details."
+    },
+    "failed": {
+      "url": "http://127.0.0.1:3257/quote/?shipping_method=ocean-freight&service_need=shipping&service_need=inspection&inspection_type=receiving-checks&inspection_type=product-quality-inspection",
+      "text": "We couldn’t send your inquiry. Please try again or contact us by WhatsApp or email.",
+      "disabled": false
+    },
+    "pending": {
+      "url": "http://127.0.0.1:3257/quote/?shipping_method=ocean-freight&service_need=shipping&service_need=inspection&inspection_type=receiving-checks&inspection_type=product-quality-inspection",
+      "text": "We could not confirm delivery yet. This request has not been counted as accepted and will not be sent again automatically. Reference: GL-20261121-E8E1475F. If you need to add information, contact us by WhatsApp or email.",
+      "disabled": true
+    },
+    "mockRequestCount": 3,
+    "lastPayload": {
+      "shipping_method": "Ocean freight — compare FCL/LCL",
+      "service_needs": "Shipping, Inspection",
+      "inspection_types": "Receiving Checks — quantity, cartons, labels and visible damage, Product Quality Inspection — requirements agreed before work starts",
+      "product_name": "[TEST-GDLOGI] pending-1795243891979"
+    }
+  }
+}

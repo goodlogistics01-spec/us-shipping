@@ -597,7 +597,7 @@
 }
 
 .home-section {
-  padding-block: 104px;
+  padding-block: 88px;
   background: var(--home-white);
 }
 
@@ -633,10 +633,10 @@
 .home-qualification-intro,
 .home-person-card > div > p,
 .home-quote-copy > p {
-  margin-top: 18px;
+  margin-top: 14px;
   color: var(--home-muted);
   font-size: 17px;
-  line-height: 1.68;
+  line-height: 1.6;
 }
 
 .home-section-heading-centered {
@@ -1195,7 +1195,7 @@
 }
 
 .home-process-grid {
-  margin: 44px 0 0;
+  margin: 30px 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1203,8 +1203,8 @@
 }
 
 .home-process-grid li {
-  min-height: 246px;
-  padding: 28px 28px 24px;
+  min-height: 190px;
+  padding: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-right: 1px solid rgba(255, 255, 255, 0.16);
 }
@@ -1220,7 +1220,7 @@
 }
 
 .home-process-grid h3 {
-  margin-top: 44px;
+  margin-top: 24px;
   color: var(--home-white);
   font-size: 20px;
   font-weight: 680;
@@ -1246,7 +1246,7 @@
 }
 
 .home-mainland-card {
-  min-height: 390px;
+  min-height: 0;
   padding: 38px;
   border-radius: 16px;
   color: var(--home-white);
@@ -1281,44 +1281,6 @@
   color: #c7d6e6;
   font-size: 15px;
   line-height: 1.65;
-}
-
-.home-delivery-proof {
-  margin: 28px 0 0;
-  display: grid;
-  grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
-  gap: 20px;
-  align-items: center;
-}
-
-.home-delivery-proof picture {
-  display: block;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  background: #dfe5eb;
-}
-
-.home-delivery-proof img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.home-delivery-proof figcaption {
-  display: grid;
-  gap: 7px;
-}
-
-.home-delivery-proof strong {
-  color: var(--home-white);
-  font-size: 14px;
-}
-
-.home-delivery-proof span {
-  color: #c7d6e6;
-  font-size: 12px;
-  line-height: 1.55;
 }
 
 .home-city-list {
@@ -1950,11 +1912,11 @@
 }
 
 .home-buyer-card {
-  min-height: 430px;
+  min-height: 390px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 30px;
+  padding: 26px;
   border: 1px solid var(--home-line);
   border-radius: 16px;
   background: var(--home-white);
@@ -2094,7 +2056,7 @@
 
 .home-mode-card {
   min-width: 0;
-  min-height: 300px;
+  min-height: 270px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -2680,10 +2642,6 @@
     min-height: 270px;
   }
 
-  .home-delivery-proof {
-    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
-  }
-
   .home-faq-layout {
     grid-template-columns: 1fr;
     gap: 44px;
@@ -2701,7 +2659,11 @@
   }
 
   .home-section {
-    padding-block: 64px;
+    padding-block: 48px;
+  }
+
+  .home-final-cta {
+    padding-block: 52px;
   }
 
   .home-hero-grid {
@@ -2801,6 +2763,12 @@
     font-size: clamp(34px, 9vw, 42px);
   }
 
+  .home-section-heading > p:last-child,
+  .home-person-card > div > p,
+  .home-quote-copy > p {
+    font-size: 16px;
+  }
+
   .home-service-grid,
   .home-buyer-grid,
   .home-mode-grid,
@@ -2813,6 +2781,7 @@
 
   .home-operations-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .home-service-directory {
@@ -2825,7 +2794,7 @@
   }
 
   .home-mode-grid {
-    margin-top: 30px;
+    margin-top: 24px;
     gap: 12px;
   }
 
@@ -2863,12 +2832,22 @@
     text-align: center;
   }
 
-  .home-delivery-proof {
-    grid-template-columns: 1fr;
-  }
-
   .home-buyer-card {
     min-height: 0;
+    padding: 22px;
+  }
+
+  .home-buyer-grid {
+    margin-top: 28px;
+    gap: 12px;
+  }
+
+  .home-buyer-card h3 {
+    margin-top: 18px;
+  }
+
+  .home-buyer-links {
+    padding-top: 18px;
   }
 
   .home-buyer-card:last-child {
@@ -2931,12 +2910,14 @@
 
   .home-process-grid {
     grid-template-columns: 1fr;
+    margin-top: 24px;
   }
 
   .home-process-grid li,
   .home-process-grid li:first-child,
   .home-process-grid li:nth-child(3) {
-    min-height: 220px;
+    min-height: 0;
+    padding: 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.16);
   }
 
@@ -2945,7 +2926,7 @@
   }
 
   .home-process-grid h3 {
-    margin-top: 30px;
+    margin-top: 16px;
   }
 
   .home-mainland-card {
