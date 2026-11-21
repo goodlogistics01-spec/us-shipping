@@ -125,7 +125,7 @@ export default function OceanFreightPage({ service, schema }) {
             <p>GOOD LOGISTICS arranges factory pickup, ocean freight, customs-broker handoffs and delivery to the agreed U.S. address. Compare FCL, LCL, FBA, oversized and complex-cargo options in one quotation.</p>
           </div>
           <div className="ocean-hero-actions">
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form" data-quote-location="ocean_hero">Get a Shipping Quote</a>
             <a className="ocean-button ocean-button-secondary" href="#contact-options">Discuss Your Cargo</a>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function OceanFreightPage({ service, schema }) {
             <p className="ocean-section-label">Schedule scope</p>
             <h2 id="ocean-transit-title">Typical Transit Planning</h2>
             <p>Transit planning is route- and shipment-specific. A working schedule is reviewed after the shipment details and current operating conditions are known.</p>
-            <a className="ocean-button ocean-button-primary" href="#quote-form">Get a Shipping Quote</a>
+            <a className="ocean-button ocean-button-primary" href="#quote-form" data-quote-location="ocean_schedule">Get a Shipping Quote</a>
           </div>
           <ul className="ocean-factor-list">
             {planningFactors.map((factor) => <li key={factor}>{factor}</li>)}

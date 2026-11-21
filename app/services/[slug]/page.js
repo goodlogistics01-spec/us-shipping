@@ -159,7 +159,7 @@ export default async function ServicePage({ params }) {
               <h1>{service.title}</h1>
               <p className="marketing-lead">{service.summary}</p>
               <div className="marketing-actions">
-                <a className="marketing-button marketing-button-primary" href={quoteHref}>
+                <a className="marketing-button marketing-button-primary" href={quoteHref} data-quote-location="service_hero">
                   Get a Shipping Quote
                 </a>
                 <a
@@ -356,9 +356,9 @@ export default async function ServicePage({ params }) {
         <div className="marketing-container marketing-cta-inner">
           <div>
             <h2>Need a shipment and handling plan?</h2>
-            <p>Send the cargo, supplier, operation and destination details needed for a scope-based quotation.</p>
+            <p>Send your product, weight or dimensions, pickup location and delivery address. Share what you have—we can clarify the remaining details with you.</p>
           </div>
-          <a className="marketing-button marketing-button-primary" href={quoteHref}>Get a Shipping Quote</a>
+          <a className="marketing-button marketing-button-primary" href={quoteHref} data-quote-location="service_footer">Get a Shipping Quote</a>
         </div>
       </section>
     </MarketingPage>

@@ -1,0 +1,256 @@
+{
+  "viewports": {
+    "375": {
+      "clientWidth": 375,
+      "scrollWidth": 375,
+      "noHorizontalOverflow": true,
+      "heroCtas": [
+        {
+          "text": "Get a Shipping Quote",
+          "width": 347,
+          "height": 48
+        },
+        {
+          "text": "Chat with Zoe on WhatsApp",
+          "width": 347,
+          "height": 48
+        }
+      ],
+      "scenarioCtas": [
+        {
+          "text": "Plan My Consolidated Shipment",
+          "width": 285,
+          "height": 46
+        },
+        {
+          "text": "Discuss My FBA Shipment",
+          "width": 285,
+          "height": 46
+        },
+        {
+          "text": "Review My Shipping Options",
+          "width": 285,
+          "height": 46
+        }
+      ],
+      "scenarioColumns": 1,
+      "processColumns": 1,
+      "fixedElements": [],
+      "incompleteImagesAfterScroll": []
+    },
+    "390": {
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "noHorizontalOverflow": true,
+      "heroCtas": [
+        {
+          "text": "Get a Shipping Quote",
+          "width": 362,
+          "height": 48
+        },
+        {
+          "text": "Chat with Zoe on WhatsApp",
+          "width": 362,
+          "height": 48
+        }
+      ],
+      "scenarioCtas": [
+        {
+          "text": "Plan My Consolidated Shipment",
+          "width": 300,
+          "height": 46
+        },
+        {
+          "text": "Discuss My FBA Shipment",
+          "width": 300,
+          "height": 46
+        },
+        {
+          "text": "Review My Shipping Options",
+          "width": 300,
+          "height": 46
+        }
+      ],
+      "scenarioColumns": 1,
+      "processColumns": 1,
+      "fixedElements": [],
+      "incompleteImagesAfterScroll": []
+    },
+    "768": {
+      "clientWidth": 768,
+      "scrollWidth": 768,
+      "noHorizontalOverflow": true,
+      "heroCtas": [
+        {
+          "text": "Get a Shipping Quote",
+          "width": 192,
+          "height": 48
+        },
+        {
+          "text": "Chat with Zoe on WhatsApp",
+          "width": 238,
+          "height": 48
+        }
+      ],
+      "scenarioCtas": [
+        {
+          "text": "Plan My Consolidated Shipment",
+          "width": 292,
+          "height": 46
+        },
+        {
+          "text": "Discuss My FBA Shipment",
+          "width": 292,
+          "height": 46
+        },
+        {
+          "text": "Review My Shipping Options",
+          "width": 666,
+          "height": 46
+        }
+      ],
+      "scenarioColumns": 2,
+      "processColumns": 2,
+      "fixedElements": [],
+      "incompleteImagesAfterScroll": []
+    },
+    "1440": {
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "noHorizontalOverflow": true,
+      "heroCtas": [
+        {
+          "text": "Get a Shipping Quote",
+          "width": 192,
+          "height": 48
+        },
+        {
+          "text": "Chat with Zoe on WhatsApp",
+          "width": 238,
+          "height": 48
+        }
+      ],
+      "scenarioCtas": [
+        {
+          "text": "Plan My Consolidated Shipment",
+          "width": 351,
+          "height": 46
+        },
+        {
+          "text": "Discuss My FBA Shipment",
+          "width": 351,
+          "height": 46
+        },
+        {
+          "text": "Review My Shipping Options",
+          "width": 351,
+          "height": 46
+        }
+      ],
+      "scenarioColumns": 3,
+      "processColumns": 3,
+      "fixedElements": [],
+      "incompleteImagesAfterScroll": []
+    }
+  },
+  "menus": {
+    "homeOpen": {
+      "expanded": "true",
+      "headerOpen": true,
+      "bodyLocked": true,
+      "activeText": "Close navigation menu"
+    },
+    "homeClosed": {
+      "expanded": "false",
+      "bodyLocked": false,
+      "focusRestored": true
+    },
+    "quoteOpen": {
+      "expanded": "true",
+      "navOpen": "true",
+      "buttonHeight": 44
+    },
+    "quoteClosed": {
+      "expanded": "false",
+      "navOpen": "false",
+      "focusRestored": true
+    }
+  },
+  "preselection": {
+    "consolidation": {
+      "shippingMethod": "not-sure",
+      "services": [
+        "shipping",
+        "supplier-pickup",
+        "consolidation"
+      ]
+    },
+    "fba": {
+      "shippingMethod": "not-sure",
+      "services": [
+        "shipping",
+        "fba-prep-labeling",
+        "repacking"
+      ]
+    },
+    "complexCargo": {
+      "shippingMethod": "not-sure",
+      "services": [
+        "shipping"
+      ]
+    },
+    "editable": {
+      "afterAdd": [
+        "shipping",
+        "supplier-pickup",
+        "consolidation",
+        "warehousing"
+      ],
+      "afterRemove": [
+        "shipping",
+        "supplier-pickup",
+        "consolidation"
+      ],
+      "services": [
+        "shipping",
+        "supplier-pickup",
+        "consolidation",
+        "warehousing",
+        "inspection"
+      ],
+      "inspectionVisible": true,
+      "inspectionTypes": [
+        "receiving-checks",
+        "product-quality-inspection"
+      ]
+    }
+  },
+  "mockSubmission": {
+    "currentUrl": "http://127.0.0.1:3247/thank-you/?request_id=GL-20261121-3F720C70",
+    "requestCountBefore": 0,
+    "requestCountAfter": 1,
+    "requestsAdded": 1,
+    "providerPayload": {
+      "markedTest": true,
+      "shippingMethod": "Not sure — please advise",
+      "serviceNeeds": "Shipping, Supplier Pickup, Consolidation, Warehousing, Inspection",
+      "inspectionTypes": "Receiving Checks — quantity, cartons, labels and visible damage, Product Quality Inspection — scope to confirm",
+      "hasSubmissionId": true
+    },
+    "successCookiePresent": true,
+    "successCookieEvidence": "HttpOnly cookie gdlogi_inquiry_accepted_<request_id> found in the isolated Chrome profile"
+  },
+  "analytics": {
+    "before": [
+      {
+        "event": "page_view",
+        "page_path": "/"
+      }
+    ],
+    "scenarioQuoteClick": {
+      "event": "quote_cta_click",
+      "page_path": "/",
+      "link_location": "customer_scenario_consolidation"
+    }
+  }
+}

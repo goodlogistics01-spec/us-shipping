@@ -60,10 +60,10 @@
         <a href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">WhatsApp</a>
         <a href="mailto:zoe@gdlogi.com" data-contact-event="email_click">Email</a>
       </div>
-      <a class="home-button home-button-primary home-mobile-quote" href="/quote/">Get a Shipping Quote</a>
+      <a class="home-button home-button-primary home-mobile-quote" href="/quote/" data-quote-location="home_header_mobile">Get a Shipping Quote</a>
     </nav>
 
-    <a class="home-button home-button-primary home-desktop-quote" href="/quote/">Get a Shipping Quote</a>
+    <a class="home-button home-button-primary home-desktop-quote" href="/quote/" data-quote-location="home_header_desktop">Get a Shipping Quote</a>
   </div>
 </header>
 
@@ -78,7 +78,7 @@
           <span>Supplier Pickup</span><span>Consolidation</span><span>Ocean Freight</span><span>Air &amp; Express</span><span>U.S. Door Delivery</span>
         </div>
         <div class="home-hero-actions">
-          <a class="home-button home-button-primary" href="/quote/">Get a Shipping Quote</a>
+          <a class="home-button home-button-primary" href="/quote/" data-quote-location="home_hero">Get a Shipping Quote</a>
           <a class="home-button home-button-secondary" href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">Chat with Zoe on WhatsApp</a>
         </div>
         <p class="home-trust-line"><span class="home-trust-item">Shenzhen-based shipment coordination</span><span class="home-trust-separator" aria-hidden="true">·</span><span class="home-trust-item">Mainland USA, Hawaii, Alaska &amp; Puerto Rico</span><span class="home-trust-separator" aria-hidden="true">·</span><span class="home-trust-item">Commercial, FBA and project-address planning</span></p>
@@ -89,33 +89,51 @@
           <source type="image/webp" srcset="/good-shipping-homepage/assets/operations/carton-container-480.webp 480w, /good-shipping-homepage/assets/operations/carton-container-800.webp 800w, /good-shipping-homepage/assets/operations/carton-container-1200.webp 1200w" sizes="(max-width: 1100px) 100vw, 46vw">
           <img src="/good-shipping-homepage/assets/operations/carton-container-1200.jpg" alt="Palletized cartons arranged inside a shipping container." width="1200" height="900" fetchpriority="high" decoding="async">
         </picture>
-        <div class="home-photo-note"><strong>Cartons prepared for container loading</strong><span>Palletized cartons arranged inside a shipping container before departure.</span><small>Load planning is reviewed against the packed dimensions, weight and release instructions.</small></div>
+        <div class="home-photo-note"><strong>Cartons prepared for container loading</strong><span>The loading arrangement provides a visible check against packed dimensions, weight and release instructions before the shipment moves.</span><small>Actual container use and handling scope are confirmed from the final cargo data.</small></div>
       </div>
     </div>
   </section>
 
   <section class="home-section home-soft" id="customer-paths" aria-labelledby="customer-paths-title">
     <div class="home-shell">
-      <div class="home-section-heading"><p class="home-eyebrow">Start With Your Buying Workflow</p><h2 id="customer-paths-title">Start With the Way You Buy and Ship</h2><p>Choose the closest scenario. Zoe can combine freight and China-side operations around the actual suppliers, cargo and delivery address.</p></div>
+      <div class="home-section-heading"><p class="home-eyebrow">Start With Your Buying Workflow</p><h2 id="customer-paths-title">Start With the Way You Buy and Ship</h2><p>Choose the closest scenario. Each route opens the same editable quote form with relevant services selected.</p></div>
       <div class="home-buyer-grid">
-        <article class="home-buyer-card"><span>01</span><h3>Amazon FBA &amp; E-commerce Sellers</h3><p>Coordinate supplier pickup, label application from approved files, repacking, polybagging, kitting and delivery planning for the assigned FBA destination.</p><div class="home-buyer-links"><a href="/services/amazon-fba-shipping/">FBA prep &amp; shipping →</a><a href="/services/kitting-light-assembly/">Kitting &amp; light assembly →</a></div></article>
-        <article class="home-buyer-card"><span>02</span><h3>Importers &amp; Multi-Supplier Buyers</h3><p>Bring packages from several factories into one receiving record and a combined or split release for international shipping.</p><div class="home-buyer-links"><a href="/services/supplier-consolidation/">Pickup &amp; consolidation →</a><a href="/resources/multi-supplier-consolidation-checklist/">Supplier information checklist →</a></div></article>
-        <article class="home-buyer-card"><span>03</span><h3>Oversized Cargo &amp; Special Destinations</h3><p>Match packaging, handling equipment and site access to the packed cargo and final-delivery address.</p><div class="home-buyer-links"><a href="/services/oversized-cargo-shipping/">Oversized cargo planning →</a><a href="#destinations">Hawaii, Alaska &amp; Puerto Rico →</a></div></article>
+        <article class="home-buyer-card">
+          <span>01 · Multi-supplier buyers</span>
+          <h3>Several Suppliers. One Shipment Plan.</h3>
+          <p class="home-buyer-question">Are different factories finishing at different times?</p>
+          <p>Supplier pickup, package-level receiving records and compatible-cargo consolidation can be mapped into one combined or split release plan.</p>
+          <div class="home-buyer-links"><a class="home-buyer-cta" href="/quote/?shipping_method=not-sure&amp;service_need=shipping&amp;service_need=supplier-pickup&amp;service_need=consolidation" data-quote-location="customer_scenario_consolidation">Plan My Consolidated Shipment</a><a class="home-buyer-detail" href="/services/supplier-consolidation/">See pickup &amp; consolidation details →</a></div>
+        </article>
+        <article class="home-buyer-card">
+          <span>02 · FBA &amp; e-commerce</span>
+          <h3>Prepare Your Stock for U.S. Delivery.</h3>
+          <p class="home-buyer-question">Does stock need labeling or packing work before freight?</p>
+          <p>Customer-approved labels, repacking requirements and freight planning can be connected to the assigned FBA or warehouse destination.</p>
+          <div class="home-buyer-links"><a class="home-buyer-cta" href="/quote/?shipping_method=not-sure&amp;service_need=shipping&amp;service_need=fba-prep-labeling&amp;service_need=repacking" data-quote-location="customer_scenario_fba">Discuss My FBA Shipment</a><a class="home-buyer-detail" href="/services/amazon-fba-shipping/">See FBA prep &amp; shipping details →</a></div>
+        </article>
+        <article class="home-buyer-card">
+          <span>03 · Complex cargo &amp; addresses</span>
+          <h3>A Shipping Plan Built Around Your Cargo.</h3>
+          <p class="home-buyer-question">Is the cargo large, difficult to handle or going to a special address?</p>
+          <p>Packed dimensions, weight, access and unloading conditions shape the transport and final-delivery options that can be quoted.</p>
+          <div class="home-buyer-links"><a class="home-buyer-cta" href="/quote/?shipping_method=not-sure&amp;service_need=shipping" data-quote-location="customer_scenario_complex_cargo">Review My Shipping Options</a><a class="home-buyer-detail" href="/services/oversized-cargo-shipping/">See oversized cargo planning →</a></div>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="home-section home-operations-section" aria-labelledby="home-operations-showcase-title">
     <div class="home-shell">
-      <div class="home-section-heading home-operations-heading"><p class="home-eyebrow">Selected Operation Photos</p><h2 id="home-operations-showcase-title">See the Work Behind the Shipment</h2><p>These operation photos show visible cargo staging and container loading.</p></div>
+      <div class="home-section-heading home-operations-heading"><p class="home-eyebrow">Selected Operation Photos</p><h2 id="home-operations-showcase-title">See the Work Behind the Shipment</h2><p>Selected, privacy-treated photos explain the cargo information and handling decisions behind a workable shipment plan.</p></div>
       <div class="home-operations-grid home-operations-grid-featured">
         <a class="home-operation-card" href="/services/supplier-consolidation/">
           <picture><source type="image/avif" srcset="/good-shipping-homepage/assets/operations/consolidation-staging-480.avif 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.avif 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.avif 1000w" sizes="(max-width: 760px) 100vw, 33vw"><source type="image/webp" srcset="/good-shipping-homepage/assets/operations/consolidation-staging-480.webp 480w, /good-shipping-homepage/assets/operations/consolidation-staging-800.webp 800w, /good-shipping-homepage/assets/operations/consolidation-staging-1000.webp 1000w" sizes="(max-width: 760px) 100vw, 33vw"><img src="/good-shipping-homepage/assets/operations/consolidation-staging-1000.jpg" alt="Mixed crates and packaged cargo staged inside a cargo handling area." width="1000" height="750" loading="lazy" decoding="async"></picture>
-          <div><strong>Cargo staged for coordination</strong><span>Mixed crates and packages grouped in a handling area while supplier and release instructions are managed separately.</span></div>
+          <div><strong>Review staged cargo before release</strong><span>The photo records packaged cargo staged for handling. For a multi-supplier plan, package readiness and release instructions are reconciled before a combined or split release.</span></div>
         </a>
         <a class="home-operation-card" href="/services/sea-freight-china-to-usa/">
           <picture><source type="image/avif" srcset="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-480.avif 480w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-800.avif 800w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.avif 1000w" sizes="(max-width: 760px) 100vw, 33vw"><source type="image/webp" srcset="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-480.webp 480w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-800.webp 800w, /good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.webp 1000w" sizes="(max-width: 760px) 100vw, 33vw"><img src="/good-shipping-homepage/assets/operations/fcl-loaded-cartons-1000.jpg" alt="Cartoned cargo arranged inside an open shipping container during loading." width="1000" height="1250" loading="lazy" decoding="async"></picture>
-          <div><strong>Cartons arranged for container loading</strong><span>Packaged cargo positioned inside an open container as part of the loading process.</span></div>
+          <div><strong>Plan loading from the packed cargo data</strong><span>Carton dimensions and the loading arrangement provide inputs for reviewing container use, handling needs and release sequence.</span></div>
         </a>
       </div>
     </div>
@@ -123,6 +141,17 @@
 
   <section class="home-section home-authenticity home-soft" aria-labelledby="company-title">
     <div class="home-shell home-auth-grid"><div class="home-person-card"><picture><source srcset="/good-shipping-homepage/assets/authors/zoe-zhou-headshot-640.avif" type="image/avif"><img src="/good-shipping-homepage/assets/authors/zoe-zhou-headshot.jpg" alt="Upper-body portrait of Zoe Zhou, Director of International Logistics at Good Logistics" width="640" height="904" loading="lazy" decoding="async"></picture><div><p class="home-eyebrow">Your Direct Contact</p><h2 id="company-title">Plan the Shipment With Zoe</h2><p>Send the cargo, supplier and destination details you already have. Zoe will identify what is still needed for a workable quotation.</p><div class="home-company-names"><strong>GOOD LOGISTICS</strong><span>Good Logistics Co., Ltd.</span><span lang="zh-CN">深圳市谷得供应链有限公司</span></div><dl><div><dt>Contact</dt><dd>Zoe Zhou</dd></div><div><dt>Role</dt><dd>Director of International Logistics</dd></div><div><dt>Email</dt><dd><a href="mailto:zoe@gdlogi.com" data-contact-event="email_click">zoe@gdlogi.com</a></dd></div><div><dt>WhatsApp</dt><dd><a href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">+86 135 5686 1676</a></dd></div><div><dt>Location</dt><dd>Shenzhen, China</dd></div></dl><div class="home-person-actions"><a class="home-button home-button-primary" href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">Chat with Zoe on WhatsApp</a><a class="home-text-link" href="/about/zoe-zhou/">Meet Zoe Zhou →</a></div></div></div></div>
+  </section>
+
+  <section class="home-section home-process" aria-labelledby="home-process-title">
+    <div class="home-shell">
+      <div class="home-section-heading"><p class="home-eyebrow">A Clear First-Shipment Process</p><h2 id="home-process-title">What You Send, What We Do and What You Receive</h2><p>Send your product, weight or dimensions, pickup location and delivery address. Share what you have—we can clarify the remaining details with you.</p></div>
+      <ol class="home-process-grid">
+        <li><span>01 · You share</span><h3>Start with the cargo facts</h3><p>Provide the product, supplier or pickup location, packed weight or dimensions, cargo-ready timing and final delivery address you already know.</p></li>
+        <li><span>02 · We map</span><h3>Turn the details into a working scope</h3><p>GOOD LOGISTICS maps the requested China-side work, freight mode, broker handoffs and delivery conditions, then identifies any missing information.</p></li>
+        <li><span>03 · You receive</span><h3>Review the quotation and next steps</h3><p>You receive a written scope showing included stages, key conditions, quotation factors and the information needed before pickup or cargo handoff.</p></li>
+      </ol>
+    </div>
   </section>
 
   <section class="home-section" id="services" aria-labelledby="services-title">
@@ -139,8 +168,8 @@
 
   <section class="home-section home-destinations" id="destinations" aria-labelledby="destinations-title">
     <div class="home-shell">
-      <div class="home-section-heading"><p class="home-eyebrow">United States Delivery</p><h2 id="destinations-title">Mainland, Island and Complex-Address Planning</h2><p>The ZIP code, address type, access, appointment and unloading needs determine the route and last-mile setup that can be quoted.</p></div>
-      <div class="home-destination-layout"><div class="home-mainland-card"><span class="home-map-mark" aria-hidden="true">USA</span><h3>Mainland United States</h3><p>Coordinate commercial-address, warehouse, FBA and accessible project-site delivery under the confirmed quotation scope.</p><figure class="home-delivery-proof"><picture><source type="image/avif" srcset="/good-shipping-homepage/assets/operations/redacted-delivery-record-480.avif 480w, /good-shipping-homepage/assets/operations/redacted-delivery-record-640.avif 640w" sizes="(max-width: 760px) 100vw, 260px"><source type="image/webp" srcset="/good-shipping-homepage/assets/operations/redacted-delivery-record-480.webp 480w, /good-shipping-homepage/assets/operations/redacted-delivery-record-640.webp 640w" sizes="(max-width: 760px) 100vw, 260px"><img src="/good-shipping-homepage/assets/operations/redacted-delivery-record-640.jpg" alt="A proof-of-delivery record with personal and shipment details redacted." width="640" height="298" loading="lazy" decoding="async"></picture><figcaption><strong>Redacted delivery record</strong><span>Personal, address, vehicle, signature and shipment details are removed from public display.</span></figcaption></figure><div class="home-city-list" aria-label="Mainland delivery reference cities"><span>Los Angeles</span><span>Houston</span><span>Chicago</span><span>New York</span><span>Miami</span><span>Seattle</span></div></div><div class="home-island-grid"><a href="/destinations/hawaii/"><span>HI</span><h3>Hawaii</h3><p>Review island, route and final-delivery conditions.</p><strong>View destination →</strong></a><a href="/destinations/alaska/"><span>AK</span><h3>Alaska</h3><p>Review onward routing, access and delivery needs.</p><strong>View destination →</strong></a><a href="/destinations/puerto-rico/"><span>PR</span><h3>Puerto Rico</h3><p>Review documentation and island delivery scope.</p><strong>View destination →</strong></a></div></div>
+      <div class="home-section-heading"><p class="home-eyebrow">United States Delivery</p><h2 id="destinations-title">Mainland, Island and Complex-Address Planning</h2><p>The ZIP code, address type, access, appointment and unloading needs shape the route and last-mile setup that can be quoted.</p></div>
+      <div class="home-destination-layout"><div class="home-mainland-card"><span class="home-map-mark" aria-hidden="true">USA</span><h3>Mainland United States</h3><p>Coordinate commercial-address, warehouse, FBA and accessible project-site delivery under the written quotation scope.</p><figure class="home-delivery-proof"><picture><source type="image/avif" srcset="/good-shipping-homepage/assets/operations/redacted-delivery-record-480.avif 480w, /good-shipping-homepage/assets/operations/redacted-delivery-record-640.avif 640w" sizes="(max-width: 760px) 100vw, 260px"><source type="image/webp" srcset="/good-shipping-homepage/assets/operations/redacted-delivery-record-480.webp 480w, /good-shipping-homepage/assets/operations/redacted-delivery-record-640.webp 640w" sizes="(max-width: 760px) 100vw, 260px"><img src="/good-shipping-homepage/assets/operations/redacted-delivery-record-640.jpg" alt="A proof-of-delivery record with personal and shipment details redacted." width="640" height="298" loading="lazy" decoding="async"></picture><figcaption><strong>Delivery handoff documented without exposing recipient data</strong><span>The public record is redacted while preserving evidence that a handoff record can be retained for shipment follow-up.</span></figcaption></figure><div class="home-city-list" aria-label="Mainland delivery reference cities"><span>Los Angeles</span><span>Houston</span><span>Chicago</span><span>New York</span><span>Miami</span><span>Seattle</span></div></div><div class="home-island-grid"><a href="/destinations/hawaii/"><span>HI</span><h3>Hawaii</h3><p>Review island, route and final-delivery conditions.</p><strong>View destination →</strong></a><a href="/destinations/alaska/"><span>AK</span><h3>Alaska</h3><p>Review onward routing, access and delivery needs.</p><strong>View destination →</strong></a><a href="/destinations/puerto-rico/"><span>PR</span><h3>Puerto Rico</h3><p>Review documentation and island delivery scope.</p><strong>View destination →</strong></a></div></div>
     </div>
   </section>
 
@@ -150,7 +179,7 @@
 
   <section class="home-final-cta" id="quote" aria-labelledby="quote-title">
     <div class="home-shell home-quote-layout">
-      <div class="home-quote-copy"><p class="home-eyebrow">Start With the Cargo Details</p><h2 id="quote-title">Get a Shipping Quote</h2><p>Choose shipping separately from the China-side operations you need. Unknown weight or volume can be left for follow-up.</p><div class="home-contact-links"><a href="mailto:zoe@gdlogi.com" data-contact-event="email_click">zoe@gdlogi.com</a><a href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">WhatsApp +86 135 5686 1676</a></div></div>
+      <div class="home-quote-copy"><p class="home-eyebrow">Start With the Cargo Details</p><h2 id="quote-title">Get a Shipping Quote</h2><p>Send your product, weight or dimensions, pickup location and delivery address. Share what you have—we can clarify the remaining details with you.</p><div class="home-contact-links"><a href="mailto:zoe@gdlogi.com" data-contact-event="email_click">zoe@gdlogi.com</a><a href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">WhatsApp +86 135 5686 1676</a></div></div>
       <form class="home-quick-form" action="/api/inquiry/" method="POST" data-home-quote-form data-lead-event="generate_lead">
         <input type="hidden" name="source_type" value="homepage-quick-quote"><input type="hidden" name="source_page" value="https://gdlogi.us/"><input type="hidden" name="referrer" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value="">
         <label class="home-honeypot" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>

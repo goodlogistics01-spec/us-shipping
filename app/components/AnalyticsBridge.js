@@ -3,6 +3,18 @@
 import { useEffect } from "react";
 
 const GTM_ID_PATTERN = /^GTM-[A-Z0-9]+$/;
+const QUOTE_LINK_LOCATIONS = new Set([
+  "home_header_mobile",
+  "home_header_desktop",
+  "home_hero",
+  "customer_scenario_consolidation",
+  "customer_scenario_fba",
+  "customer_scenario_complex_cargo",
+  "ocean_hero",
+  "ocean_schedule",
+  "service_hero",
+  "service_footer"
+]);
 
 function pushAnonymousEvent(event, details = {}) {
   window.dataLayer = window.dataLayer || [];
@@ -65,8 +77,15 @@ export default function AnalyticsBridge({ gtmId = "" }) {
       } else {
         try {
           const url = new URL(href, window.location.href);
-          if (url.origin === window.location.origin && url.pathname === "/quote/") {
-            pushAnonymousEvent("quote_cta_click", { link_location: "site" });
+          const isQuotePage = url.pathname === "/quote/";
+          const isCurrentPageQuoteAnchor =
+            url.pathname === window.location.pathname && url.hash === "#quote-form";
+          if (url.origin === window.location.origin && (isQuotePage || isCurrentPageQuoteAnchor)) {
+            const requestedLocation = link.dataset.quoteLocation || "";
+            const linkLocation = QUOTE_LINK_LOCATIONS.has(requestedLocation)
+              ? requestedLocation
+              : "site";
+            pushAnonymousEvent("quote_cta_click", { link_location: linkLocation });
           }
         } catch {
           // Ignore malformed links instead of interrupting navigation.
