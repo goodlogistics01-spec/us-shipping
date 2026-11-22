@@ -29,8 +29,27 @@ end
 if record.ownerToken ~= ARGV[2] then
   return {'OWNER_MISMATCH'}
 end
-if record.state ~= 'PROCESSING' then
+if record.state ~= 'PROCESSING' and record.state ~= 'CAPTURED' then
   return {'ALREADY_COMPLETE', current}
+end
+redis.call('SET', KEYS[1], ARGV[3], 'PX', ARGV[4])
+return {'STORED'}
+`;
+
+const CAPTURE_SCRIPT = `
+local current = redis.call('GET', KEYS[1])
+if not current then
+  return {'MISSING'}
+end
+local record = cjson.decode(current)
+if record.fingerprint ~= ARGV[1] then
+  return {'FINGERPRINT_MISMATCH'}
+end
+if record.ownerToken ~= ARGV[2] then
+  return {'OWNER_MISMATCH'}
+end
+if record.state ~= 'PROCESSING' then
+  return {'ALREADY_CAPTURED', current}
 end
 redis.call('SET', KEYS[1], ARGV[3], 'PX', ARGV[4])
 return {'STORED'}
@@ -107,13 +126,33 @@ export function createMemoryInquiryStateStore({
       if (!existing) return { status: "MISSING" };
       if (existing.fingerprint !== fingerprint) return { status: "FINGERPRINT_MISMATCH" };
       if (existing.ownerToken !== ownerToken) return { status: "OWNER_MISMATCH" };
-      if (existing.state !== "PROCESSING") return { status: "ALREADY_COMPLETE" };
+      if (!["PROCESSING", "CAPTURED"].includes(existing.state)) {
+        return { status: "ALREADY_COMPLETE" };
+      }
 
       idempotencyStore.set(key, {
         fingerprint,
         submissionId: existing.submissionId,
         ownerToken,
         state: outcome.submissionStatus,
+        outcome,
+        expiresAt: nowMs + ttlMs
+      });
+      return { status: "STORED" };
+    },
+
+    async capture({ key, fingerprint, ownerToken, outcome, nowMs, ttlMs }) {
+      const existing = activeMemoryRecord(idempotencyStore, key, nowMs);
+      if (!existing) return { status: "MISSING" };
+      if (existing.fingerprint !== fingerprint) return { status: "FINGERPRINT_MISMATCH" };
+      if (existing.ownerToken !== ownerToken) return { status: "OWNER_MISMATCH" };
+      if (existing.state !== "PROCESSING") return { status: "ALREADY_CAPTURED" };
+
+      idempotencyStore.set(key, {
+        fingerprint,
+        submissionId: existing.submissionId,
+        ownerToken,
+        state: "CAPTURED",
         outcome,
         expiresAt: nowMs + ttlMs
       });
@@ -262,6 +301,32 @@ export function createUpstashInquiryStateStore({
       const result = await command([
         "EVAL",
         COMPLETE_SCRIPT,
+        1,
+        idempotencyKey(key),
+        fingerprint,
+        ownerToken,
+        record,
+        ttlMs
+      ]);
+      if (!Array.isArray(result) || !result[0]) {
+        throw new InquiryStateStoreError("STATE_STORE_RESPONSE_INVALID");
+      }
+      return { status: String(result[0]) };
+    },
+
+    async capture({ key, fingerprint, ownerToken, outcome, nowMs, ttlMs }) {
+      const record = JSON.stringify({
+        v: 1,
+        fingerprint,
+        submissionId: outcome.submissionId,
+        ownerToken,
+        state: "CAPTURED",
+        outcome,
+        updatedAt: nowMs
+      });
+      const result = await command([
+        "EVAL",
+        CAPTURE_SCRIPT,
         1,
         idempotencyKey(key),
         fingerprint,

@@ -6,6 +6,8 @@ import {
   submitToProvider,
   validatePayload
 } from "./inquiry-server.mjs";
+import { storeInquiryInHubSpot } from "./inquiry-lead-store-hubspot.mjs";
+import { submitViaResend } from "./inquiry-provider-resend.mjs";
 import { inquiryConfirmationCookieName } from "./inquiry-confirmation.mjs";
 import {
   createMemoryInquiryStateStore,
@@ -34,6 +36,10 @@ const DEFAULT_PROVIDER_TIMEOUT_MS =
   ROUTE_EXECUTION_BUDGET_MS -
   INQUIRY_STATE_STORE_TIMEOUT_MS * SHARED_STATE_CALLS_PER_SUBMISSION -
   RESPONSE_HEADROOM_MS;
+const HUBSPOT_TIMEOUT_MAX_MS = 8_000;
+const RESEND_TIMEOUT_MAX_MS = 5_000;
+const CONSENT_TEXT =
+  "I agree that Good Logistics may use these details to respond to my shipping request. See the Privacy Policy.";
 const IDEMPOTENCY_KEY_PATTERN = /^inq-[a-f0-9]{32,64}$/;
 const IDEMPOTENCY_PAYLOAD_FIELDS = Object.freeze([
   "name",
@@ -398,6 +404,104 @@ export function resolveProviderConfiguration(request, env = process.env) {
   return { ok: true, endpoint: endpoint.toString(), timeoutMs };
 }
 
+function configuredTimeout(value, fallback, maximum) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric > 0
+    ? Math.min(numeric, maximum)
+    : fallback;
+}
+
+function hasSafeEmailHeader(value) {
+  const normalized = String(value || "").trim();
+  return (
+    normalized.length > 3 &&
+    normalized.length <= 200 &&
+    !/[\r\n]/.test(normalized) &&
+    /@/.test(normalized)
+  );
+}
+
+function realProviderGateAllows(request, env) {
+  const localRequest = isLoopbackHostname(requestHostname(request));
+  if (localRequest) return env.INQUIRY_ALLOW_REAL_PROVIDER_LOCAL === "true";
+  if (env.VERCEL_ENV === "preview") {
+    return env.INQUIRY_ALLOW_REAL_PROVIDER_PREVIEW === "true";
+  }
+  if (env.VERCEL_ENV === "production") {
+    return env.INQUIRY_ALLOW_REAL_PROVIDER_PRODUCTION === "true";
+  }
+  return false;
+}
+
+export function resolveDeliveryConfiguration(request, env = process.env) {
+  const explicitMode = String(env.INQUIRY_DELIVERY_MODE || "")
+    .trim()
+    .toLowerCase();
+  const legacyRequested =
+    explicitMode === "legacy-formsubmit" ||
+    (!explicitMode &&
+      (Boolean(env.INQUIRY_PROVIDER_ENDPOINT) ||
+        env.INQUIRY_PROVIDER_MODE === "local-mock"));
+
+  if (legacyRequested) {
+    const legacy = resolveProviderConfiguration(request, env);
+    return legacy.ok
+      ? { ok: true, mode: "legacy-formsubmit", legacy }
+      : legacy;
+  }
+  if (explicitMode !== "hubspot-resend") {
+    return { ok: false, code: "DELIVERY_CONFIGURATION_ERROR" };
+  }
+  if (!realProviderGateAllows(request, env)) {
+    return { ok: false, code: "DELIVERY_CONFIGURATION_ERROR" };
+  }
+
+  const portalId = String(env.HUBSPOT_PORTAL_ID || "").trim();
+  const formGuid = String(env.HUBSPOT_FORM_GUID || "").trim();
+  const accessToken = String(env.HUBSPOT_ACCESS_TOKEN || "").trim();
+  const fromEmail = String(env.RESEND_FROM_EMAIL || "").trim();
+  const configuredRecipient = String(env.INQUIRY_TO_EMAIL || RECIPIENT_EMAIL).trim();
+  const resendApiKey = String(env.RESEND_API_KEY || "").trim();
+  if (
+    !portalId ||
+    !formGuid ||
+    !accessToken ||
+    !resendApiKey ||
+    !hasSafeEmailHeader(fromEmail) ||
+    configuredRecipient.toLowerCase() !== RECIPIENT_EMAIL
+  ) {
+    return { ok: false, code: "DELIVERY_CONFIGURATION_ERROR" };
+  }
+
+  return {
+    ok: true,
+    mode: "hubspot-resend",
+    hubspot: {
+      portalId,
+      formGuid,
+      accessToken,
+      timeoutMs: configuredTimeout(
+        env.HUBSPOT_SUBMISSION_TIMEOUT_MS,
+        HUBSPOT_TIMEOUT_MAX_MS,
+        HUBSPOT_TIMEOUT_MAX_MS
+      ),
+      detailsField: String(
+        env.HUBSPOT_DETAILS_FIELD || "gdlogi_inquiry_details"
+      ).trim()
+    },
+    resend: {
+      apiKey: resendApiKey,
+      fromEmail,
+      toEmail: RECIPIENT_EMAIL,
+      timeoutMs: configuredTimeout(
+        env.RESEND_NOTIFICATION_TIMEOUT_MS,
+        RESEND_TIMEOUT_MAX_MS,
+        RESEND_TIMEOUT_MAX_MS
+      )
+    }
+  };
+}
+
 export function resolveInquiryStateStore(
   request,
   env = process.env,
@@ -458,25 +562,112 @@ async function executeSubmission({
   request,
   payload,
   submissionId,
+  submittedAt,
   env,
-  fetchImpl
+  fetchImpl,
+  captureAccepted
 }) {
-  const providerConfiguration = resolveProviderConfiguration(request, env);
-  if (!providerConfiguration.ok) {
+  const deliveryConfiguration = resolveDeliveryConfiguration(request, env);
+  if (!deliveryConfiguration.ok) {
     return {
       submissionStatus: "FAILED",
-      code: providerConfiguration.code,
+      code: deliveryConfiguration.code,
       httpStatus: 503,
       submissionId,
       message: CONFIGURATION_MESSAGE
     };
   }
 
+  if (deliveryConfiguration.mode === "hubspot-resend") {
+    const hubspotOutcome = await storeInquiryInHubSpot({
+      portalId: deliveryConfiguration.hubspot.portalId,
+      formGuid: deliveryConfiguration.hubspot.formGuid,
+      accessToken: deliveryConfiguration.hubspot.accessToken,
+      fieldMap: { details: deliveryConfiguration.hubspot.detailsField },
+      consentText: CONSENT_TEXT,
+      payload,
+      submissionId,
+      submittedAt,
+      timeoutMs: deliveryConfiguration.hubspot.timeoutMs,
+      fetchImpl
+    });
+
+    if (hubspotOutcome.submissionStatus !== "SUCCESS") {
+      return {
+        submissionStatus: hubspotOutcome.submissionStatus,
+        code: hubspotOutcome.code,
+        ...(hubspotOutcome.submissionStatus === "FAILED"
+          ? {
+              httpStatus:
+                hubspotOutcome.code === "HUBSPOT_CONFIGURATION_ERROR" ? 503 : 502,
+              message:
+                hubspotOutcome.code === "HUBSPOT_CONFIGURATION_ERROR"
+                  ? CONFIGURATION_MESSAGE
+                  : FAILURE_MESSAGE
+            }
+          : {}),
+        submissionId,
+        leadStoreStatus: hubspotOutcome.submissionStatus,
+        leadStoreCode: hubspotOutcome.code,
+        notificationStatus: "NOT_ATTEMPTED"
+      };
+    }
+
+    const capturedOutcome = {
+      submissionStatus: "SUCCESS",
+      code: "CRM_ACCEPTED",
+      submissionId,
+      leadStored: true,
+      leadStoreStatus: "SUCCESS",
+      leadStoreCode: hubspotOutcome.code,
+      ...(hubspotOutcome.providerLeadId
+        ? { leadStoreRecordId: hubspotOutcome.providerLeadId }
+        : {}),
+      ...(hubspotOutcome.providerRequestId
+        ? { leadStoreRequestId: hubspotOutcome.providerRequestId }
+        : {}),
+      notificationStatus: "PENDING",
+      notificationCode: "NOT_CONFIRMED"
+    };
+    if (!(await captureAccepted(capturedOutcome))) {
+      return {
+        submissionStatus: "PENDING",
+        code: "STATE_STORE_CAPTURE_UNKNOWN",
+        submissionId,
+        skipFinalStateWrite: true
+      };
+    }
+
+    const notificationOutcome = await submitViaResend({
+      apiKey: deliveryConfiguration.resend.apiKey,
+      fromEmail: deliveryConfiguration.resend.fromEmail,
+      toEmail: deliveryConfiguration.resend.toEmail,
+      payload,
+      submissionId,
+      timeoutMs: deliveryConfiguration.resend.timeoutMs,
+      fetchImpl
+    });
+    return {
+      ...capturedOutcome,
+      code:
+        notificationOutcome.submissionStatus === "SUCCESS"
+          ? "CRM_ACCEPTED_NOTIFICATION_ACCEPTED"
+          : notificationOutcome.submissionStatus === "FAILED"
+            ? "CRM_ACCEPTED_NOTIFICATION_FAILED"
+            : "CRM_ACCEPTED_NOTIFICATION_PENDING",
+      notificationStatus: notificationOutcome.submissionStatus,
+      notificationCode: notificationOutcome.code,
+      ...(notificationOutcome.providerMessageId
+        ? { notificationMessageId: notificationOutcome.providerMessageId }
+        : {})
+    };
+  }
+
   const providerOutcome = await submitToProvider({
-    endpoint: providerConfiguration.endpoint,
+    endpoint: deliveryConfiguration.legacy.endpoint,
     payload,
     submissionId,
-    timeoutMs: providerConfiguration.timeoutMs,
+    timeoutMs: deliveryConfiguration.legacy.timeoutMs,
     fetchImpl
   });
   if (providerOutcome.submissionStatus === "FAILED") {
@@ -518,6 +709,30 @@ async function completeOutcome({
       ttlMs: IDEMPOTENCY_TTL_MS
     });
     return completion?.status === "STORED";
+  } catch {
+    return false;
+  }
+}
+
+async function captureOutcome({
+  stateStore,
+  idempotencyKey,
+  fingerprint,
+  ownerToken,
+  outcome,
+  nowMs
+}) {
+  if (typeof stateStore.capture !== "function") return false;
+  try {
+    const captured = await stateStore.capture({
+      key: idempotencyKey,
+      fingerprint,
+      ownerToken,
+      outcome,
+      nowMs,
+      ttlMs: IDEMPOTENCY_TTL_MS
+    });
+    return captured?.status === "STORED";
   } catch {
     return false;
   }
@@ -727,8 +942,18 @@ export async function handleInquiryRequest(
       request,
       payload,
       submissionId,
+      submittedAt: currentDate,
       env,
-      fetchImpl
+      fetchImpl,
+      captureAccepted: (capturedOutcome) =>
+        captureOutcome({
+          stateStore: activeStore,
+          idempotencyKey: idempotency.key,
+          fingerprint,
+          ownerToken,
+          outcome: capturedOutcome,
+          nowMs
+        })
     });
   } catch {
     outcome = {
@@ -736,6 +961,13 @@ export async function handleInquiryRequest(
       code: "PROVIDER_RESPONSE_UNKNOWN",
       submissionId
     };
+  }
+
+  if (outcome.skipFinalStateWrite) {
+    return pendingResponse(request, {
+      submissionId,
+      code: outcome.code
+    });
   }
 
   const stored = await completeOutcome({
@@ -747,6 +979,9 @@ export async function handleInquiryRequest(
     nowMs
   });
   if (!stored) {
+    if (outcome.leadStored === true) {
+      return responseFromOutcome(request, outcome);
+    }
     return pendingResponse(request, {
       submissionId,
       code: "STATE_STORE_WRITE_UNKNOWN"

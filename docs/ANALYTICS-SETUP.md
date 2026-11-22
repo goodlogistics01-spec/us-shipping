@@ -26,7 +26,7 @@ Until both a valid ID and `granted` consent exist, no Google script is requested
 | `page_view` | A page rendered; the event includes only the path | No |
 | `quote_cta_click` | User chose an internal link to the quote page | No |
 | `quote_start` | First interaction with a quote form | No |
-| `quote_submit_success` | Provider explicitly accepted the inquiry | Yes |
+| `quote_submit_success` | Primary inquiry store explicitly accepted the inquiry (HubSpot in the candidate); email notification receipt is separate | Yes |
 | `quote_submit_failed` | Client validation or explicit provider rejection | No |
 | `quote_submit_pending` | Timeout, network, 202, non-JSON or unknown response | No |
 | `whatsapp_click` | User chose a WhatsApp contact link | No |

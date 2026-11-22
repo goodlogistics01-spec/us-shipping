@@ -48,6 +48,42 @@ test("two memory-store instances atomically share one claim and replay its store
   assert.deepEqual(replay.outcome, outcome);
 });
 
+test("a captured CRM outcome is replayable before notification metadata is finalized", async () => {
+  const idempotencyStore = new Map();
+  const store = createMemoryInquiryStateStore({ idempotencyStore });
+  assert.equal((await store.claim(CLAIM)).status, "CLAIMED");
+
+  const capturedOutcome = {
+    submissionStatus: "SUCCESS",
+    code: "CRM_ACCEPTED",
+    submissionId: CLAIM.submissionId,
+    leadStoreStatus: "SUCCESS",
+    notificationStatus: "PENDING"
+  };
+  assert.equal((await store.capture({
+    ...CLAIM,
+    outcome: capturedOutcome,
+    nowMs: 1_500
+  })).status, "STORED");
+
+  const replay = await store.claim({ ...CLAIM, ownerToken: "other", nowMs: 1_600 });
+  assert.equal(replay.status, "REPLAY");
+  assert.deepEqual(replay.outcome, capturedOutcome);
+
+  const finalOutcome = {
+    ...capturedOutcome,
+    code: "CRM_ACCEPTED_NOTIFICATION_SENT",
+    notificationStatus: "SUCCESS"
+  };
+  assert.equal((await store.complete({
+    ...CLAIM,
+    outcome: finalOutcome,
+    nowMs: 1_700
+  })).status, "STORED");
+  const finalReplay = await store.claim({ ...CLAIM, nowMs: 1_800 });
+  assert.deepEqual(finalReplay.outcome, finalOutcome);
+});
+
 test("memory rate-limit expiry keeps newer timestamps when the oldest leaves the window", async () => {
   const rateLimitStore = new Map();
   const store = createMemoryInquiryStateStore({ rateLimitStore });
@@ -63,7 +99,7 @@ test("memory rate-limit expiry keeps newer timestamps when the oldest leaves the
   assert.equal((await store.checkRateLimit({ ...base, member: "d", nowMs: 600_002 })).limited, true);
 });
 
-test("Upstash adapter sends atomic EVAL commands for claim, complete, and rate limiting", async () => {
+test("Upstash adapter sends atomic EVAL commands for claim, capture, complete, and rate limiting", async () => {
   const commands = [];
   const store = createUpstashInquiryStateStore({
     url: "https://example.upstash.io",
@@ -76,7 +112,7 @@ test("Upstash adapter sends atomic EVAL commands for claim, complete, and rate l
           headers: { "content-type": "application/json" }
         });
       }
-      if (commands.length === 2) {
+      if (commands.length === 2 || commands.length === 3) {
         return new Response(JSON.stringify({ result: ["STORED"] }), {
           headers: { "content-type": "application/json" }
         });
@@ -88,6 +124,15 @@ test("Upstash adapter sends atomic EVAL commands for claim, complete, and rate l
   });
 
   assert.equal((await store.claim(CLAIM)).status, "CLAIMED");
+  assert.equal((await store.capture({
+    ...CLAIM,
+    outcome: {
+      submissionStatus: "SUCCESS",
+      code: "CRM_ACCEPTED",
+      submissionId: CLAIM.submissionId,
+      notificationStatus: "PENDING"
+    }
+  })).status, "STORED");
   assert.equal((await store.complete({
     ...CLAIM,
     outcome: {
@@ -104,7 +149,7 @@ test("Upstash adapter sends atomic EVAL commands for claim, complete, and rate l
     max: 5
   })).limited, false);
 
-  assert.equal(commands.length, 3);
+  assert.equal(commands.length, 4);
   assert.ok(commands.every((command) => command[0] === "EVAL"));
   assert.ok(commands.every((command) => command[2] === 1));
 });

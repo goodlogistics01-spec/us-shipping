@@ -32,12 +32,12 @@ export default async function ThankYouPage({ searchParams }) {
           {inquiryAccepted ? (
             <>
               <h1>We’ve received your shipment details.</h1>
-              <p className="marketing-lead">Your inquiry was accepted for delivery to the Good Logistics team. Keep your cargo dimensions, weight, packing list and destination details available for follow-up.</p>
+              <p className="marketing-lead">Your inquiry was recorded for follow-up by the Good Logistics team. Keep your cargo dimensions, weight, packing list and destination details available.</p>
             </>
           ) : (
             <>
               <h1>No confirmed inquiry found</h1>
-              <p className="marketing-lead">This page confirms an inquiry only after the website receives a successful response from the delivery provider. Please return to the quote form or contact us directly.</p>
+              <p className="marketing-lead">This page confirms an inquiry only after the website receives an explicit acceptance from the inquiry service. Please return to the quote form or contact us directly.</p>
             </>
           )}
           <div className="marketing-actions">

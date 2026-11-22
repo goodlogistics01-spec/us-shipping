@@ -1,6 +1,6 @@
 # Private inquiry follow-up record
 
-Use this structure in the company's existing private spreadsheet or CRM after an inquiry reaches the company inbox. It is an operating method only; this repository does not store customer inquiries and does not claim a durable CRM integration.
+Use this structure in the designated private CRM and follow-up process. In the HubSpot + Resend candidate, HubSpot is the primary inquiry record and Resend is a separate inbox notification. This repository contains the integration code but stores no customer inquiry records itself. Production activation remains `NOT_VERIFIED` until the configured deployment passes the controlled test.
 
 ## Minimum columns
 
@@ -8,8 +8,14 @@ Use this structure in the company's existing private spreadsheet or CRM after an
 | --- | --- |
 | `submission_id` | Match the website response, provider message and any investigation without using contact data in analytics |
 | `received_at` | Inbox receipt time in one agreed timezone |
-| `provider_status` | `SUCCESS`, `FAILED` or `PENDING` as returned by the website provider call |
+| `provider_status` | Overall `SUCCESS`, `FAILED` or `PENDING` returned by the website |
+| `crm_storage_status` | Whether HubSpot explicitly accepted the record, rejected it or remained uncertain |
+| `crm_record_id` | Non-sensitive Provider record/request identifier when returned; keep the website `submission_id` as the primary reconciliation key |
+| `crm_accepted_at` | Time the CRM acceptance was confirmed |
+| `notification_status` | Resend `SUCCESS`, `FAILED`, `PENDING` or `NOT_ATTEMPTED`; this is separate from CRM storage |
+| `notification_message_id` | Resend message identifier when explicitly returned; it is not proof of inbox delivery |
 | `inbox_receipt` | `confirmed`, `not found` or `not checked`; provider acceptance alone is not receipt confirmation |
+| `inbox_received_at` | Actual inbox receipt time when manually confirmed |
 | `source_page` | Identify the service, resource or quote page that started the inquiry |
 | `utm_source`, `utm_medium`, `utm_campaign` | Record only the allowlisted attribution fields delivered in the message |
 | `contact_name`, `company`, `email`, `whatsapp` | Sales follow-up details; keep private and out of public analytics |
@@ -26,9 +32,10 @@ Use this structure in the company's existing private spreadsheet or CRM after an
 
 ## Status rules
 
-- `SUCCESS` means the upstream provider explicitly accepted one request. It does not by itself prove inbox delivery, field completeness or reply delivery.
+- In the HubSpot + Resend candidate, `SUCCESS` means HubSpot explicitly accepted the inquiry record. It does not prove Resend delivery, inbox receipt, field completeness or reply delivery.
 - `PENDING` must not be automatically resent. Check the inbox and provider state using the `submission_id` before deciding on any manual action.
 - `FAILED` may be retried after a correctable field or configuration issue is fixed. A new cargo inquiry from the same email or IP must not be rejected merely because an earlier inquiry exists.
+- A Resend failure after CRM acceptance does not change the customer-facing result back to `FAILED`; recover the inquiry from HubSpot and investigate notification separately.
 - `inbox_receipt=confirmed` requires an actual message in the company inbox with the expected `submission_id`.
 - A valid Reply-To check requires the reply composer to address the controlled submitter mailbox; end-to-end reply delivery is a separate manual confirmation.
 
