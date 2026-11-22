@@ -72,8 +72,8 @@ export default async function DestinationPage({ params }) {
               </div>
             </div>
             <div className="marketing-note-card">
-              <p className="marketing-eyebrow">Route Review</p>
-              <h2>Use the exact address to build the delivery plan</h2>
+              <p className="marketing-eyebrow">For an Accurate Quote</p>
+              <h2>Send the final delivery address</h2>
               <ul className="marketing-check-list">
                 <li>Final ZIP code and delivery type</li>
                 <li>Commercial, residential or project-site access</li>
@@ -87,13 +87,13 @@ export default async function DestinationPage({ params }) {
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Address-Specific Planning</p>
+            <p className="marketing-eyebrow">Destination Details</p>
             <h2>{destination.focusTitle}</h2>
             <p>{destination.focusCopy}</p>
           </div>
           <div>
-            <p className="marketing-eyebrow">Before Quotation</p>
-            <h2>Details that affect the plan</h2>
+            <p className="marketing-eyebrow">What Changes The Plan</p>
+            <h2>Access and delivery requirements</h2>
             <ul className="marketing-check-list">
               {destination.considerations.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -103,15 +103,15 @@ export default async function DestinationPage({ params }) {
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Coordinated Scope</p>
-            <h2>What the destination plan can include</h2>
+            <p className="marketing-eyebrow">Delivery Options</p>
+            <h2>What we can arrange</h2>
             <ul className="marketing-check-list">
               {destination.operations.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
-            <p className="marketing-eyebrow">Customer Inputs</p>
-            <h2>What we need for the last-mile plan</h2>
+            <p className="marketing-eyebrow">What To Send</p>
+            <h2>Details needed for the last mile</h2>
             <ul className="marketing-check-list">
               {destination.customerInputs.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -121,36 +121,32 @@ export default async function DestinationPage({ params }) {
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Before Booking</p>
-            <h2>What the quotation should clarify</h2>
+            <p className="marketing-eyebrow">Your Quote</p>
+            <h2>What it should show</h2>
             <ul className="marketing-check-list">
               {destination.quoteClarifies.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
-          <div className="marketing-note-card">
-            <p className="marketing-eyebrow">Shipment-Specific Boundaries</p>
-            <h2>No blanket route, time or coverage promise</h2>
-            <p>{destination.boundary}</p>
+          <div>
+            <p className="marketing-eyebrow">Frequently Asked Questions</p>
+            <h2>Common questions</h2>
+            <div className="marketing-faq-list">
+              {destination.faq.map(([question, answer]) => (
+                <details key={question}>
+                  <summary>{question}</summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-      <section className="marketing-section marketing-soft-section">
-        <div className="marketing-container marketing-content-narrow">
-          <p className="marketing-eyebrow">Frequently Asked Questions</p>
-          <h2>Questions to settle before booking</h2>
-          <div className="marketing-faq-list">
-            {destination.faq.map(([question, answer]) => (
-              <details key={question}>
-                <summary>{question}</summary>
-                <p>{answer}</p>
-              </details>
-            ))}
-          </div>
+        <div className="marketing-container">
+          <p className="marketing-section-note">Routes, schedules and final-delivery options depend on the cargo and confirmed address. {destination.boundary}</p>
         </div>
       </section>
       <section className="marketing-cta">
         <div className="marketing-container marketing-cta-inner">
-          <div><h2>Planning cargo for this destination?</h2><p>Send the final ZIP code, cargo data, access and unloading needs for a destination-specific quote.</p></div>
+          <div><h2>Shipping to this destination?</h2><p>Send the final ZIP code, cargo details and unloading needs for a destination-specific quote.</p></div>
           <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Get a Shipping Quote</a>
         </div>
       </section>

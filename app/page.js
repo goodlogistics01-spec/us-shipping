@@ -1,47 +1,48 @@
 import fs from "node:fs";
 import path from "node:path";
 import HomeInteractions from "./HomeInteractions";
+import SiteFooter from "./components/SiteFooter";
+import SiteHeader from "./components/SiteHeader";
 import "./homepage.css";
 
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: { absolute: "China to USA Freight & Cargo Coordination | GOOD LOGISTICS" },
+  title: { absolute: "Freight Forwarding from China | GOOD LOGISTICS" },
   description:
-    "China to USA ocean, air and express freight with supplier pickup, consolidation, cargo prep, customs-broker handoffs and final-delivery coordination.",
+    "Ocean, air and express freight from China with supplier pickup, consolidation, cargo preparation and delivery to the USA and other major markets.",
   alternates: {
     canonical: "https://gdlogi.us/"
   },
   openGraph: {
-    title: "China to USA Shipping, From Pickup to Delivery | GOOD LOGISTICS",
+    title: "Freight Forwarding from China | GOOD LOGISTICS",
     description:
-      "Supplier pickup, receiving, consolidation and prep coordinated with ocean, air or express freight and final delivery to the United States.",
+      "Supplier pickup, consolidation and cargo preparation coordinated with ocean, air or express freight and final delivery.",
     url: "https://gdlogi.us/",
     siteName: "GOOD LOGISTICS",
     type: "website",
     images: [
       {
-        url: "/good-shipping-homepage/assets/good-logistics-logo.png",
-        width: 520,
-        height: 270,
-        alt: "GOOD LOGISTICS"
+        url: "/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg",
+        width: 1600,
+        height: 900,
+        alt: "Container terminal and port cranes"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "China to USA Shipping, From Pickup to Delivery | GOOD LOGISTICS",
-    description: "China-side cargo operations coordinated with ocean, air or express freight and final delivery to the United States.",
-    images: ["/good-shipping-homepage/assets/good-logistics-logo.png"]
+    title: "Freight Forwarding from China | GOOD LOGISTICS",
+    description: "Ocean, air and express freight with China-side cargo coordination and international delivery.",
+    images: ["/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg"]
   }
 };
 
 const faqItems = [
-  ["Can you collect cargo from multiple suppliers?", "Yes. Share each pickup location, cargo-ready date and packing list. We can plan one combined shipment or staged releases where cargo is compatible."],
-  ["Can you apply FNSKU and outer-carton labels?", "Yes. We apply customer-approved label files and placement instructions. Platform requirements must be checked for the destination market."],
-  ["Is receiving the same as a product-quality inspection?", "No. Receiving checks cover quantity, outer cartons, labels and visible damage. Product-quality inspection needs agreed sampling, criteria and reporting."],
-  ["Can you store and release cargo in stages?", "Yes. Share the expected storage period, cargo details and release schedule. Availability and handling are quoted for the shipment."],
-  ["Do you handle oversized cargo and U.S. island destinations?", "Yes. Send packed dimensions, weight, ZIP code and unloading or access needs. We will identify available routing and equipment for the address."]
+  ["Can you collect cargo from multiple suppliers?", "Yes. Send each pickup location, ready date and packing list. We can plan one shipment or staged releases for compatible cargo."],
+  ["Are receiving checks the same as product inspection?", "No. Receiving checks cover agreed package quantities, outer cartons, labels and visible damage. Product inspection needs a separate checklist, sampling method and report."],
+  ["Which destinations can you quote?", "We quote shipments from China to the USA, Canada, the UK, Europe, Australia and New Zealand. U.S. planning also includes Hawaii, Alaska and Puerto Rico."],
+  ["What should I send first?", "Send the product, pickup location, delivery address and any known weight or dimensions. Unknown details can be confirmed with you."]
 ];
 
 const homeSchema = {
@@ -66,14 +67,19 @@ const homeSchema = {
     {
       "@type": "Service",
       "@id": "https://gdlogi.us/#china-operations-and-delivery",
-      name: "China-Side Cargo Operations and China-to-USA Delivery",
+      name: "China Freight Forwarding and Cargo Coordination",
       serviceType: "Cargo handling and international freight coordination",
       provider: { "@id": "https://gdlogi.us/#organization" },
       areaServed: [
         { "@type": "Country", name: "China" },
-        { "@type": "Country", name: "United States" }
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "Canada" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Place", name: "Europe" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "New Zealand" }
       ],
-      description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with ocean, air or express freight, customs-broker handoffs and final delivery to the United States."
+      description: "Supplier pickup, receiving checks, warehousing, consolidation, labeling, repacking and kitting coordinated with ocean, air or express freight, customs-broker handoffs and final delivery."
     },
     {
       "@type": "FAQPage",
@@ -93,8 +99,10 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }} />
+      <SiteHeader context="home" />
       <div dangerouslySetInnerHTML={{ __html: body }} />
       <HomeInteractions />
+      <SiteFooter />
     </>
   );
 }

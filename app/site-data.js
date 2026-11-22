@@ -70,7 +70,7 @@ export const services = {
       "Arrange the agreed handoff and provide updates at the confirmed milestones."
     ],
     boundaries: [
-      "Carrier, channel, route and service level are confirmed per shipment; this site does not claim an exclusive or official carrier appointment.",
+      "Available carriers and service levels vary by route, cargo and booking date.",
       "Restricted, dangerous, regulated or unusually sized goods require separate review before acceptance.",
       "Customs decisions, remote-area coverage and carrier-controlled delivery events are not unconditional guarantees."
     ],
@@ -101,7 +101,7 @@ export const services = {
     ],
     faq: [
       ["What details are needed for an express quote?", "Send the product description, value, package count, packed dimensions, gross weight, pickup city and complete destination address."],
-      ["Is the express carrier fixed?", "No carrier or channel is promised on this page. The available option and service level are confirmed for the actual shipment and route."],
+      ["Is the express carrier fixed?", "The carrier and service level are selected for the actual route, cargo and booking date."],
       ["Why do packed dimensions matter?", "Express pricing commonly considers chargeable weight, which may be based on actual weight or package volume. Exact packed dimensions are needed for a useful comparison."],
       ["Can every product move by express?", "No. Commodity restrictions, batteries, liquids, declared value, dimensions and destination conditions must be reviewed before acceptance."]
     ]
@@ -128,7 +128,7 @@ export const services = {
       "Coordinate customs handoff and final delivery to the confirmed U.S. address."
     ],
     boundaries: [
-      "Flight space, routing and schedules are confirmed for the shipment; they are not fixed website promises.",
+      "Flight space, routing and schedules are checked for each shipment.",
       "Restricted, dangerous or regulated goods require separate review before acceptance.",
       "Customs decisions and third-party carrier performance remain outside an unconditional guarantee."
     ],
@@ -351,7 +351,7 @@ export const services = {
       width: 1200,
       height: 800,
       alt: "Truck-mounted lifting equipment positioned for cargo handling at an indoor handoff.",
-      caption: "Specialist lifting equipment at a cargo handoff. Location, provider and operating responsibility are confirmed per shipment."
+      caption: "Specialist lifting equipment positioned for cargo that needs a planned loading and unloading method."
     },
     supportingMedia: {
       base: "/good-shipping-homepage/assets/operations/packing-preparation",
@@ -360,8 +360,8 @@ export const services = {
       width: 1000,
       height: 563,
       alt: "Large wooden shipping crates prepared for cargo handling.",
-      title: "Packaging is reviewed against the actual cargo",
-      copy: "Packed dimensions, lifting points, crate condition and the proposed loading method are reviewed before equipment or routing is confirmed. This is a planning review, not a packaging certification."
+      title: "Plan the handling around the packed cargo",
+      copy: "Packed dimensions, lifting points, crate condition and the loading method guide the equipment and route. Packaging certification is not included."
     },
     bestFor: [
       "Machinery and industrial equipment",
@@ -427,7 +427,7 @@ export const services = {
       width: 1000,
       height: 750,
       alt: "Mixed crates and packaged cargo staged inside a cargo handling area.",
-      caption: "Crates and packaged cargo in a handling area. Supplier and shipment details are confirmed separately."
+      caption: "Mixed crates and packaged cargo staged so arrivals can be recorded and prepared for combined or separate release."
     },
     bestFor: [
       "Importers buying from several factories",
@@ -517,7 +517,7 @@ export const services = {
       width: 1150,
       height: 862,
       alt: "Wooden export crates stored inside a cargo handling area.",
-      caption: "Crated cargo in a handling area. Facility model, storage conditions and release scope are confirmed per project."
+      caption: "Crated cargo held for a planned release. Storage conditions and timing depend on the cargo and arrangement."
     },
     bestFor: [
       "Buyers collecting cargo from multiple suppliers",
@@ -533,7 +533,7 @@ export const services = {
     ],
     boundaries: [
       "Storage acceptance, duration and conditions depend on the product, packaging and available arrangement.",
-      "No real-time inventory system, customer API or automatic platform synchronization is promised.",
+      "Inventory reporting and update points are agreed for each project; no real-time portal or API is included.",
       "Package-level records do not replace a separately agreed product-quality inspection."
     ],
     customerInputs: [
@@ -679,7 +679,7 @@ export const services = {
     faq: [
       ["What is included in a receiving check?", "The agreed scope can cover package quantity, outer-carton condition, labels and visible damage against customer-provided references."],
       ["Is a receiving check a quality inspection?", "No. Product checks, sampling, tolerances and reporting require a separately confirmed inspection scope."],
-      ["Do you promise AQL or laboratory testing?", "No such capability is claimed on this site. Any specialized requirement must be reviewed and confirmed for the project."]
+      ["Do you provide AQL or laboratory testing?", "AQL sampling, laboratory tests or 100% inspection require a separately agreed service and method."]
     ]
   }
 };

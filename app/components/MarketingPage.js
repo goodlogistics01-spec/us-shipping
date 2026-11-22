@@ -18,10 +18,25 @@ export function Breadcrumbs({ items }) {
   );
 }
 
-export default function MarketingPage({ children }) {
+export function PageHero({ breadcrumbs, title, lead, eyebrow, variant = "default", children }) {
+  const classes = ["marketing-page-hero", `marketing-page-hero-${variant}`].join(" ");
+  return (
+    <section className={classes}>
+      <div className="marketing-container marketing-content-narrow">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+        {eyebrow && <p className="marketing-eyebrow">{eyebrow}</p>}
+        <h1>{title}</h1>
+        {lead && <p className="marketing-lead">{lead}</p>}
+        {children}
+      </div>
+    </section>
+  );
+}
+
+export default function MarketingPage({ children, headerContext = "site" }) {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader context={headerContext} />
       <main className="marketing-main">{children}</main>
       <SiteFooter />
     </>

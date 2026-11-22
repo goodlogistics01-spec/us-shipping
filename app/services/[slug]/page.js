@@ -183,11 +183,11 @@ export default async function ServicePage({ params }) {
                   width="520"
                   height="270"
                 />
-                <p>China <span aria-hidden="true">→</span> United States</p>
+                <p>China <span aria-hidden="true">→</span> your destination</p>
                 <ul>
                   <li>{service.category}</li>
-                  <li>Work agreed before it starts</li>
-                  <li>Progress updates at agreed milestones</li>
+                  <li>One contact for shipment planning</li>
+                  <li>Updates at the agreed milestones</li>
                 </ul>
               </aside>
             )}
@@ -195,37 +195,18 @@ export default async function ServicePage({ params }) {
         </div>
       </section>
 
-      {service.workflow ? (
-        <section className="marketing-section marketing-workflow-section">
-          <div className="marketing-container">
-            <p className="marketing-eyebrow">What Happens Next</p>
-            <h2>From supplier list to approved cargo release</h2>
-            <p className="marketing-section-intro">We adapt these steps to your suppliers, cargo and release instructions.</p>
-            <div className="marketing-workflow-grid">
-              {service.workflow.map(([number, title, copy]) => (
-                <article key={number}>
-                  <span>{number}</span>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Best Fit</p>
-            <h2>When this service may fit</h2>
+            <h2>Who this service is for</h2>
             <ul className="marketing-check-list">
               {service.bestFor.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
-            <p className="marketing-eyebrow">Specific Operations</p>
-            <h2>What the service can include</h2>
+            <p className="marketing-eyebrow">What We Do</p>
+            <h2>Operations available for your cargo</h2>
             <ul className="marketing-check-list">
               {service.operations.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -251,15 +232,15 @@ export default async function ServicePage({ params }) {
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container marketing-two-column">
           <div>
-            <p className="marketing-eyebrow">Before Booking</p>
-            <h2>Details That Affect the Service</h2>
+            <p className="marketing-eyebrow">Shipment Details</p>
+            <h2>What affects the plan</h2>
             <ul className="marketing-check-list">
               {service.boundaries.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
-            <p className="marketing-eyebrow">Customer Inputs</p>
-            <h2>What we need from you</h2>
+            <p className="marketing-eyebrow">What To Send</p>
+            <h2>Information needed for a useful quote</h2>
             <ul className="marketing-check-list">
               {service.customerInputs.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -267,51 +248,18 @@ export default async function ServicePage({ params }) {
         </div>
       </section>
 
-      {service.planningInputs && service.planningOutput ? (
-        <section className="marketing-section marketing-planning-section">
-          <div className="marketing-container">
-            <div className="marketing-two-column marketing-planning-grid">
-              <div>
-                <p className="marketing-eyebrow">What You Send</p>
-                <h2>Send these shipment details</h2>
-                <ul className="marketing-check-list">
-                  {service.planningInputs.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-              </div>
-              <div>
-                <p className="marketing-eyebrow">What We Return</p>
-                <h2>Receive a written handling and shipment plan</h2>
-                <ul className="marketing-check-list">
-                  {service.planningOutput.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-              </div>
-            </div>
-            {service.resourceLink ? (
-              <aside className="marketing-resource-callout">
-                <div>
-                  <p className="marketing-eyebrow">Preparation Guide</p>
-                  <h3>{service.resourceLink.title}</h3>
-                  <p>{service.resourceLink.copy}</p>
-                </div>
-                <a className="marketing-button marketing-button-secondary" href={service.resourceLink.href}>Open the checklist</a>
-              </aside>
-            ) : null}
-          </div>
-        </section>
-      ) : null}
-
       <section className="marketing-section">
         <div className="marketing-container marketing-two-column">
           <div>
             <p className="marketing-eyebrow">Cost Factors</p>
-            <h2>What influences the quotation</h2>
+            <h2>What influences your quote</h2>
             <ul className="marketing-check-list">
               {service.costFactors.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
-            <p className="marketing-eyebrow">How to Start</p>
-            <h2>Get a Clear Shipment Plan</h2>
+            <p className="marketing-eyebrow">Next Steps</p>
+            <h2>Start with the details you have</h2>
             <ol className="marketing-step-list">
               {service.startSteps.map((item, index) => (
                 <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
@@ -319,17 +267,29 @@ export default async function ServicePage({ params }) {
             </ol>
           </div>
         </div>
+        {service.resourceLink ? (
+          <div className="marketing-container">
+            <aside className="marketing-resource-callout">
+              <div>
+                <p className="marketing-eyebrow">Preparation Guide</p>
+                <h3>{service.resourceLink.title}</h3>
+                <p>{service.resourceLink.copy}</p>
+              </div>
+              <a className="marketing-button marketing-button-secondary" href={service.resourceLink.href}>Open the checklist</a>
+            </aside>
+          </div>
+        ) : null}
       </section>
 
       <section className="marketing-section marketing-soft-section">
         <div className="marketing-container">
-          <p className="marketing-eyebrow">Related Services</p>
-          <h2>Combine the Services Your Shipment Needs</h2>
+          <p className="marketing-eyebrow">Continue Planning</p>
+          <h2>Related services</h2>
           <div className="marketing-card-grid">
             {service.relatedServices.map(([title, href]) => (
               <article className="marketing-content-card" key={href}>
                 <h2>{title}</h2>
-                <p>Add this service when it fits your cargo, supplier or delivery needs.</p>
+                <p>See how this service can connect with the rest of your shipment.</p>
                 <a className="marketing-text-link" href={href}>View service →</a>
               </article>
             ))}
@@ -340,7 +300,7 @@ export default async function ServicePage({ params }) {
       <section className="marketing-section">
         <div className="marketing-container marketing-content-narrow">
           <p className="marketing-eyebrow">Frequently Asked Questions</p>
-          <h2>Questions to settle before booking</h2>
+          <h2>Common questions</h2>
           <div className="marketing-faq-list">
             {service.faq.map(([question, answer]) => (
               <details key={question}>
@@ -355,8 +315,8 @@ export default async function ServicePage({ params }) {
       <section className="marketing-cta">
         <div className="marketing-container marketing-cta-inner">
           <div>
-            <h2>Need a shipment and handling plan?</h2>
-            <p>Send your product, weight or dimensions, pickup location and delivery address. Share what you have—we can clarify the remaining details with you.</p>
+            <h2>Ready to plan your shipment?</h2>
+            <p>Send your product, weight or dimensions, pickup location and delivery address. We can clarify the remaining details with you.</p>
           </div>
           <a className="marketing-button marketing-button-primary" href={quoteHref} data-quote-location="service_footer">Get a Shipping Quote</a>
         </div>

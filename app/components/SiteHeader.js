@@ -1,72 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const serviceGroups = [
-  {
-    label: "China Operations",
-    items: [
-      ["Pickup & Consolidation", "/services/supplier-consolidation/"],
-      ["Warehousing & Inventory", "/services/warehousing-inventory-coordination/"],
-      ["FBA Prep & Repacking", "/services/amazon-fba-shipping/"],
-      ["Kitting & Light Assembly", "/services/kitting-light-assembly/"],
-      ["Inspection & Receiving Checks", "/services/cargo-inspection-receiving-checks/"]
-    ]
-  },
-  {
-    label: "International Freight & Delivery",
-    items: [
-      ["Ocean Freight", "/services/sea-freight-china-to-usa/"],
-      ["Air Freight", "/services/air-freight-china-to-usa/"],
-      ["International Express", "/services/international-express-china-to-usa/"],
-      ["DDP Door-to-Door", "/services/ddp-shipping-china-to-usa/"],
-      ["Amazon FBA Delivery", "/services/amazon-fba-shipping/"],
-      ["Oversized Cargo", "/services/oversized-cargo-shipping/"]
-    ]
-  }
-];
-
-const destinations = [
-  ["Mainland USA", "/#destinations"],
-  ["Hawaii", "/destinations/hawaii/"],
-  ["Alaska", "/destinations/alaska/"],
-  ["Puerto Rico", "/destinations/puerto-rico/"]
-];
-
-const directLinks = [
-  ["About Us", "/about/"],
-  ["Resources", "/resources/"]
-];
-
-function Dropdown({ label, items, openMenu, setOpenMenu, closeAll }) {
-  const isOpen = openMenu === label;
-  return (
-    <div className="marketing-nav-item" data-open={isOpen ? "true" : "false"}>
-      <button
-        className="marketing-nav-trigger"
-        type="button"
-        aria-expanded={isOpen}
-        onClick={() => setOpenMenu(isOpen ? "" : label)}
-      >
-        {label}
-        <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5" /></svg>
-      </button>
-      <div className="marketing-dropdown">
-        {items.map(([itemLabel, href, external]) => (
-          <a
-            key={`${itemLabel}-${href}`}
-            href={href}
-            target={external ? "_blank" : undefined}
-            rel={external ? "noopener" : undefined}
-            onClick={closeAll}
-          >
-            <span>{itemLabel}</span>{external && <small>Global site</small>}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { destinationGroups, directLinks, serviceGroups } from "../navigation-data";
+import { company } from "../site-data";
 
 function GroupedDropdown({ label, groups, openMenu, setOpenMenu, closeAll }) {
   const isOpen = openMenu === label;
@@ -95,7 +31,7 @@ function GroupedDropdown({ label, groups, openMenu, setOpenMenu, closeAll }) {
   );
 }
 
-export default function SiteHeader() {
+export default function SiteHeader({ context = "site" }) {
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState("");
   const headerRef = useRef(null);
@@ -105,6 +41,10 @@ export default function SiteHeader() {
     setOpen(false);
     setOpenMenu("");
   };
+
+  const quoteLocation = context === "home"
+    ? { desktop: "home_header_desktop", mobile: "home_header_mobile" }
+    : {};
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -123,9 +63,11 @@ export default function SiteHeader() {
     };
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onPointerDown);
+    document.body.classList.toggle("marketing-menu-lock", open);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
+      document.body.classList.remove("marketing-menu-lock");
     };
   }, [open, openMenu]);
 
@@ -162,16 +104,29 @@ export default function SiteHeader() {
           aria-label="Primary navigation"
         >
           <GroupedDropdown label="Services" groups={serviceGroups} openMenu={openMenu} setOpenMenu={setOpenMenu} closeAll={closeAll} />
-          <Dropdown label="Destinations" items={destinations} openMenu={openMenu} setOpenMenu={setOpenMenu} closeAll={closeAll} />
+          <GroupedDropdown label="Destinations" groups={destinationGroups} openMenu={openMenu} setOpenMenu={setOpenMenu} closeAll={closeAll} />
           {directLinks.map(([label, href]) => (
             <a className="marketing-nav-link" key={href} href={href} onClick={closeAll}>{label}</a>
           ))}
-          <a className="marketing-button marketing-button-primary marketing-mobile-quote" href="/quote/" onClick={closeAll}>
-            Get a Shipping Quote
+          <div className="marketing-mobile-contact" aria-label="Direct contact">
+            <a href={company.whatsappHref} data-contact-event="whatsapp_click" onClick={closeAll}>WhatsApp {company.phoneDisplay}</a>
+            <a href={`mailto:${company.email}`} data-contact-event="email_click" onClick={closeAll}>Email</a>
+          </div>
+          <a
+            className="marketing-button marketing-button-primary marketing-mobile-quote"
+            href="/quote/"
+            data-quote-location={quoteLocation.mobile}
+            onClick={closeAll}
+          >
+            Get a Quote
           </a>
         </nav>
-        <a className="marketing-button marketing-button-primary marketing-desktop-quote" href="/quote/">
-          Get a Shipping Quote
+        <a
+          className="marketing-button marketing-button-primary marketing-desktop-quote"
+          href="/quote/"
+          data-quote-location={quoteLocation.desktop}
+        >
+          Get a Quote
         </a>
       </div>
     </header>

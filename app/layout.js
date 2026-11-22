@@ -3,11 +3,11 @@ import AnalyticsBridge from "./components/AnalyticsBridge";
 
 export const metadata = {
   title: {
-    default: "China Cargo Operations & USA Delivery | GOOD LOGISTICS",
+    default: "Freight Forwarding from China | GOOD LOGISTICS",
     template: "%s | GOOD LOGISTICS"
   },
   description:
-    "China-side pickup, consolidation, warehousing, prep, receiving checks and project-scoped product inspection coordinated with international freight and U.S. final delivery.",
+    "China-side pickup, consolidation, cargo preparation and receiving checks coordinated with ocean, air or express freight and international delivery.",
   metadataBase: new URL("https://gdlogi.us"),
   applicationName: "GOOD LOGISTICS",
   icons: { icon: "/good-shipping-homepage/assets/good-logistics-logo.png" },

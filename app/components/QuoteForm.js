@@ -311,10 +311,10 @@ export default function QuoteForm({
           result: "validation"
         });
       }
-      window.requestAnimationFrame(() => {
+      window.setTimeout(() => {
         const firstInvalid = form.querySelector('[aria-invalid="true"]');
         firstInvalid?.focus();
-      });
+      }, 0);
       return false;
     }
     return true;
@@ -391,9 +391,9 @@ export default function QuoteForm({
         });
       }
       if (Object.keys(serverFieldErrors).length > 0) {
-        window.requestAnimationFrame(() => {
+        window.setTimeout(() => {
           form.querySelector('[aria-invalid="true"]')?.focus();
-        });
+        }, 0);
       }
     }
   }

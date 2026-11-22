@@ -1,10 +1,11 @@
 import { company } from "../site-data";
+import { serviceGroups } from "../navigation-data";
 
 export default function SiteFooter() {
   return (
     <footer className="marketing-footer">
       <div className="marketing-container marketing-footer-grid">
-        <div>
+        <div className="marketing-footer-brand">
           <img
             className="marketing-footer-logo"
             src="/good-shipping-homepage/assets/good-logistics-logo.png"
@@ -13,23 +14,21 @@ export default function SiteFooter() {
             height="94"
             loading="lazy"
           />
-          <p>China-side cargo operations and international delivery coordination from suppliers to the confirmed final destination.</p>
+          <p>Freight and China-side cargo coordination from supplier pickup to the agreed destination.</p>
           <p>{company.legalName}<br />{company.chineseName}</p>
         </div>
         <div>
-          <h2>Services</h2>
-          <a href="/services/supplier-consolidation/">Pickup &amp; Consolidation</a>
-          <a href="/services/warehousing-inventory-coordination/">Warehousing &amp; Inventory</a>
-          <a href="/services/amazon-fba-shipping/">FBA Prep &amp; Shipping</a>
-          <a href="/services/kitting-light-assembly/">Kitting &amp; Light Assembly</a>
-          <a href="/services/cargo-inspection-receiving-checks/">Inspection &amp; Receiving</a>
+          <h2>{serviceGroups[0].label}</h2>
+          {serviceGroups[0].items.slice(0, 6).map(([label, href]) => <a href={href} key={href}>{label}</a>)}
         </div>
         <div>
-          <h2>Freight &amp; Destinations</h2>
-          <a href="/services/sea-freight-china-to-usa/">Sea Freight</a>
-          <a href="/services/air-freight-china-to-usa/">Air Freight</a>
-          <a href="/services/international-express-china-to-usa/">International Express</a>
-          <a href="/services/ddp-shipping-china-to-usa/">DDP Door-to-Door</a>
+          <h2>{serviceGroups[1].label}</h2>
+          {serviceGroups[1].items.map(([label, href]) => <a href={href} key={href}>{label}</a>)}
+        </div>
+        <div>
+          <h2>Destinations</h2>
+          <a href="/#destinations">USA, Canada, UK &amp; Europe</a>
+          <a href="/#destinations">Australia &amp; New Zealand</a>
           <a href="/destinations/hawaii/">Hawaii</a>
           <a href="/destinations/alaska/">Alaska</a>
           <a href="/destinations/puerto-rico/">Puerto Rico</a>
@@ -40,7 +39,7 @@ export default function SiteFooter() {
           <a href="/about/zoe-zhou/">Zoe Zhou</a>
           <a href="/contact/">Contact</a>
           <a href="/resources/">Resources</a>
-          <a href="/quote/">Get a Shipping Quote</a>
+          <a href="/quote/">Get a Quote</a>
           <a href={`mailto:${company.email}`}>Email {company.email}</a>
           <a href={company.whatsappHref}>WhatsApp {company.phoneDisplay}</a>
         </div>

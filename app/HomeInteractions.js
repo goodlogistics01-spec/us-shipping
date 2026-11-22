@@ -66,63 +66,7 @@ function getCampaignValue(name, maxLength) {
 
 export default function HomeInteractions() {
   useEffect(() => {
-    const header = document.querySelector("[data-home-header]");
-    const menuToggle = document.querySelector("[data-home-menu-toggle]");
-    const menuLabel = document.querySelector("[data-home-menu-label]");
-    const navItems = Array.from(document.querySelectorAll("[data-home-nav-item]"));
     const form = document.querySelector("[data-home-quote-form]");
-
-    const setMenuLabel = (isOpen) => {
-      const label = isOpen ? "Close navigation menu" : "Open navigation menu";
-      menuToggle?.setAttribute("aria-label", label);
-      if (menuLabel) menuLabel.textContent = label;
-    };
-
-    const closeDropdowns = (exceptItem = null) => {
-      navItems.forEach((item) => {
-        if (item === exceptItem) return;
-        item.classList.remove("is-open");
-        item.querySelector("[data-home-nav-trigger]")?.setAttribute("aria-expanded", "false");
-      });
-    };
-
-    const closeMobileMenu = ({ restoreFocus = false } = {}) => {
-      if (!header || !menuToggle) return;
-      const wasOpen = header.classList.contains("is-menu-open");
-      header.classList.remove("is-menu-open");
-      document.body.classList.remove("home-menu-lock");
-      menuToggle.setAttribute("aria-expanded", "false");
-      setMenuLabel(false);
-      closeDropdowns();
-      if (restoreFocus && wasOpen) menuToggle.focus();
-    };
-
-    const navLinks = Array.from(document.querySelectorAll("#home-primary-navigation a"));
-
-    const onMenuToggle = () => {
-      if (!header || !menuToggle) return;
-      const isOpen = header.classList.toggle("is-menu-open");
-      document.body.classList.toggle("home-menu-lock", isOpen);
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-      setMenuLabel(isOpen);
-      if (isOpen) {
-        window.requestAnimationFrame(() => navLinks[0]?.focus());
-      } else {
-        closeDropdowns();
-      }
-    };
-
-    const navTriggerHandlers = navItems.map((item) => {
-      const trigger = item.querySelector("[data-home-nav-trigger]");
-      const handler = () => {
-        const shouldOpen = !item.classList.contains("is-open");
-        closeDropdowns(item);
-        item.classList.toggle("is-open", shouldOpen);
-        trigger?.setAttribute("aria-expanded", String(shouldOpen));
-      };
-      trigger?.addEventListener("click", handler);
-      return [trigger, handler];
-    });
 
     const onDocumentClick = (event) => {
       const contactLink = event.target.closest?.("[data-contact-event]");
@@ -132,31 +76,8 @@ export default function HomeInteractions() {
         });
       }
 
-      if (header && !header.contains(event.target)) closeMobileMenu();
     };
-
-    const onKeyDown = (event) => {
-      if (event.key !== "Escape") return;
-      const mobileMenuWasOpen = header?.classList.contains("is-menu-open");
-      const expandedTrigger = header?.querySelector(
-        ".home-nav-item.is-open [data-home-nav-trigger]"
-      );
-      closeMobileMenu();
-      const focusTarget = mobileMenuWasOpen ? menuToggle : expandedTrigger;
-      if (focusTarget) window.requestAnimationFrame(() => focusTarget.focus());
-    };
-
-    const onNavLinkClick = () => closeMobileMenu();
-    const desktopMedia = window.matchMedia("(min-width: 1101px)");
-    const onDesktopChange = (event) => {
-      if (event.matches) closeMobileMenu();
-    };
-
-    menuToggle?.addEventListener("click", onMenuToggle);
-    navLinks.forEach((link) => link.addEventListener("click", onNavLinkClick));
     document.addEventListener("click", onDocumentClick);
-    document.addEventListener("keydown", onKeyDown);
-    desktopMedia.addEventListener("change", onDesktopChange);
 
     let onFocusIn;
     let onInput;
@@ -396,10 +317,10 @@ export default function HomeInteractions() {
               failure_code: "validation"
             });
           }
-          window.requestAnimationFrame(() => {
+          window.setTimeout(() => {
             form.querySelector(":invalid")?.focus();
             focusScheduled = false;
-          });
+          }, 0);
         }
       };
 
@@ -486,9 +407,9 @@ export default function HomeInteractions() {
               : INQUIRY_FAILURE_MESSAGE;
           }
           if (Object.keys(serverFieldErrors).length > 0) {
-            window.requestAnimationFrame(() => {
+            window.setTimeout(() => {
               form.querySelector(":invalid")?.focus();
-            });
+            }, 0);
           }
         }
       };
@@ -566,13 +487,7 @@ export default function HomeInteractions() {
     }
 
     return () => {
-      document.body.classList.remove("home-menu-lock");
-      menuToggle?.removeEventListener("click", onMenuToggle);
-      navLinks.forEach((link) => link.removeEventListener("click", onNavLinkClick));
-      navTriggerHandlers.forEach(([trigger, handler]) => trigger?.removeEventListener("click", handler));
       document.removeEventListener("click", onDocumentClick);
-      document.removeEventListener("keydown", onKeyDown);
-      desktopMedia.removeEventListener("change", onDesktopChange);
       if (form) {
         if (onFocusIn) form.removeEventListener("focusin", onFocusIn);
         if (onInvalid) form.removeEventListener("invalid", onInvalid, true);
