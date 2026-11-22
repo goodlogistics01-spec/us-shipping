@@ -1722,15 +1722,18 @@ body.marketing-menu-lock {
   min-height: 0;
   display: block;
   overflow: hidden;
-  color: #fff;
-  background: var(--brand-navy);
+  color: var(--brand-ink);
+  border-bottom: 1px solid var(--brand-line);
+  background: #fff;
 }
 
 .ocean-hero-grid {
-  width: min(100%, 1600px);
+  width: min(100% - 48px, 1280px);
   display: grid;
-  grid-template-columns: minmax(420px, 0.9fr) minmax(520px, 1.1fr);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 0.94fr) minmax(500px, 1.06fr);
+  gap: clamp(44px, 5vw, 68px);
+  align-items: center;
+  padding-block: 58px 64px;
 }
 
 .ocean-hero-copy {
@@ -1738,19 +1741,19 @@ body.marketing-menu-lock {
   margin: 0;
   display: grid;
   align-content: center;
-  padding: 68px clamp(38px, 5vw, 76px) 72px max(24px, calc((100vw - 1280px) / 2));
-  background: var(--brand-navy);
+  padding: 0;
+  background: transparent;
 }
 
 .ocean-hero-copy .marketing-breadcrumbs {
-  margin-bottom: 30px;
-  color: #b8cbe0;
+  margin-bottom: 26px;
+  color: var(--brand-muted);
 }
 
 .ocean-hero-copy h1 {
   max-width: 650px;
   margin: 8px 0 18px;
-  color: #fff;
+  color: var(--brand-navy);
   font-size: clamp(48px, 5vw, 68px);
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -1760,7 +1763,7 @@ body.marketing-menu-lock {
 .ocean-hero-copy > p:not(.ocean-section-label) {
   max-width: 600px;
   margin: 0;
-  color: #d5e3f1;
+  color: var(--brand-muted);
   font-size: 18px;
   line-height: 1.65;
 }
@@ -1774,6 +1777,10 @@ body.marketing-menu-lock {
   text-transform: uppercase;
 }
 
+.ocean-hero .ocean-section-label {
+  color: var(--brand-blue);
+}
+
 .ocean-hero-actions {
   margin-top: 30px;
   display: flex;
@@ -1782,22 +1789,27 @@ body.marketing-menu-lock {
 }
 
 .ocean-button-light {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.55);
-  background: transparent;
+  color: var(--brand-navy);
+  border-color: #b7c7d8;
+  background: #fff;
 }
 
 .ocean-button-light:hover,
 .ocean-button-light:focus-visible {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--brand-blue);
+  border-color: var(--brand-blue);
+  background: #fff;
 }
 
 .ocean-hero-picture {
-  min-height: 590px;
+  min-height: 0;
+  height: 500px;
   display: block;
   overflow: hidden;
-  background: #1a3a57;
+  border: 1px solid var(--brand-line);
+  border-radius: 18px;
+  background: var(--brand-soft);
+  box-shadow: 0 20px 54px rgba(29, 57, 84, 0.1);
 }
 
 .ocean-hero-picture img {
@@ -2196,16 +2208,19 @@ body.marketing-menu-lock {
   }
 
   .ocean-hero-grid {
-    width: 100%;
+    width: min(100% - 48px, 800px);
     grid-template-columns: 1fr;
+    gap: 36px;
+    padding-block: 52px 58px;
   }
 
   .ocean-hero-copy {
-    padding: 58px max(24px, calc((100vw - 800px) / 2)) 62px;
+    padding: 0;
   }
 
   .ocean-hero-picture {
-    min-height: 390px;
+    min-height: 0;
+    height: clamp(350px, 56vw, 470px);
   }
 
   .ocean-service-strip ul {
@@ -2266,7 +2281,7 @@ body.marketing-menu-lock {
   }
 
   .ocean-hero-copy {
-    padding: 38px 16px 44px;
+    padding: 0;
   }
 
   .ocean-hero-copy .marketing-breadcrumbs {
@@ -2291,8 +2306,10 @@ body.marketing-menu-lock {
   }
 
   .ocean-hero-picture {
-    min-height: 220px;
-    height: 220px;
+    min-height: 0;
+    height: 250px;
+    border-radius: 14px;
+    box-shadow: 0 14px 38px rgba(29, 57, 84, 0.1);
   }
 
   .ocean-section {

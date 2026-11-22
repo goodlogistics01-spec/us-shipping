@@ -121,3 +121,17 @@ test("sea-freight in-page quote CTA has allowlisted anonymous attribution", () =
   assert.doesNotMatch(analyticsBridge, /ocean_schedule/);
   assert.match(analyticsBridge, /url\.hash === "#quote-form"/);
 });
+
+test("homepage and sea-freight heroes use distinct responsive image families", () => {
+  assert.match(homepage, /container-ship-hero-mobile-640\.avif/);
+  assert.match(homepage, /container-ship-hero-desktop-1600\.webp/);
+  assert.match(homepage, /container-ship-hero-desktop-1600\.jpg/);
+  assert.match(homepage, /width="1600" height="1200" fetchpriority="high"/);
+  assert.doesNotMatch(homepage, /sea-freight-terminal-hero/);
+
+  assert.match(oceanFreightPage, /sea-freight-terminal-hero-mobile-640\.avif/);
+  assert.match(oceanFreightPage, /sea-freight-terminal-hero-desktop-1600\.webp/);
+  assert.match(oceanFreightPage, /sea-freight-terminal-hero-desktop-1600\.jpg/);
+  assert.match(oceanFreightPage, /width="1600" height="1200" fetchPriority="high"/);
+  assert.doesNotMatch(oceanFreightPage, /srcSet="\/good-shipping-homepage\/assets\/brand\/container-ship-hero/);
+});

@@ -1,0 +1,70 @@
+{
+  "value": {
+    "url": "http://127.0.0.1:3311/",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document": {
+      "clientWidth": 1425,
+      "scrollWidth": 1425
+    },
+    "hero": {
+      "x": 0,
+      "y": 75,
+      "width": 1425,
+      "height": 601,
+      "right": 1425,
+      "bottom": 676
+    },
+    "picture": {
+      "x": 761,
+      "y": 133,
+      "width": 592,
+      "height": 480,
+      "right": 1353,
+      "bottom": 613
+    },
+    "image": {
+      "currentSrc": "http://127.0.0.1:3311/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.avif",
+      "naturalWidth": 600,
+      "naturalHeight": 450,
+      "rect": {
+        "x": 762,
+        "y": 134,
+        "width": 590,
+        "height": 478,
+        "right": 1352,
+        "bottom": 612
+      }
+    },
+    "actions": [
+      {
+        "text": "Get a Shipping Quote",
+        "href": "http://127.0.0.1:3311/quote/",
+        "rect": {
+          "x": 73,
+          "y": 460,
+          "width": 201,
+          "height": 50,
+          "right": 274,
+          "bottom": 510
+        }
+      },
+      {
+        "text": "Chat with Zoe on WhatsApp",
+        "href": "https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo.",
+        "rect": {
+          "x": 286,
+          "y": 460,
+          "width": 251,
+          "height": 50,
+          "right": 537,
+          "bottom": 510
+        }
+      }
+    ],
+    "title": "From China to Your Business."
+  },
+  "exception": null
+}

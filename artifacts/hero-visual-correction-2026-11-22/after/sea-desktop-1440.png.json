@@ -1,0 +1,70 @@
+{
+  "value": {
+    "url": "http://127.0.0.1:3311/services/sea-freight-china-to-usa/",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "document": {
+      "clientWidth": 1425,
+      "scrollWidth": 1425
+    },
+    "hero": {
+      "x": 0,
+      "y": 75,
+      "width": 1425,
+      "height": 623,
+      "right": 1425,
+      "bottom": 698
+    },
+    "picture": {
+      "x": 710,
+      "y": 133,
+      "width": 642,
+      "height": 500,
+      "right": 1353,
+      "bottom": 633
+    },
+    "image": {
+      "currentSrc": "http://127.0.0.1:3311/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-960.avif",
+      "naturalWidth": 620,
+      "naturalHeight": 465,
+      "rect": {
+        "x": 711,
+        "y": 134,
+        "width": 640,
+        "height": 498,
+        "right": 1352,
+        "bottom": 632
+      }
+    },
+    "actions": [
+      {
+        "text": "Get a Shipping Quote",
+        "href": "http://127.0.0.1:3311/services/sea-freight-china-to-usa/#quote-form",
+        "rect": {
+          "x": 73,
+          "y": 520,
+          "width": 194,
+          "height": 48,
+          "right": 266,
+          "bottom": 568
+        }
+      },
+      {
+        "text": "Chat with Zoe on WhatsApp",
+        "href": "https://wa.me/8613556861676",
+        "rect": {
+          "x": 278,
+          "y": 520,
+          "width": 240,
+          "height": 48,
+          "right": 518,
+          "bottom": 568
+        }
+      }
+    ],
+    "title": "Sea Freight from China to the USA"
+  },
+  "exception": null
+}

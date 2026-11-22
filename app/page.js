@@ -25,8 +25,8 @@ export const metadata = {
       {
         url: "/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg",
         width: 1600,
-        height: 900,
-        alt: "Container ship crossing calm coastal water"
+        height: 1200,
+        alt: "Aerial view of a container ship, cargo cranes and stacked containers at a port terminal"
       }
     ]
   },

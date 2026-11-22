@@ -44,12 +44,14 @@ export default function OceanFreightPage({ service, schema }) {
               <a className="marketing-button ocean-button-light" href={company.whatsappHref} data-contact-event="whatsapp_click">Chat with Zoe on WhatsApp</a>
             </div>
           </div>
-          <picture className="ocean-hero-picture" aria-hidden="true">
-            <source media="(max-width: 760px)" type="image/avif" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.avif 960w" sizes="100vw" />
-            <source media="(max-width: 760px)" type="image/webp" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.webp 960w" sizes="100vw" />
-            <source type="image/avif" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
-            <source type="image/webp" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
-            <img src="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg" alt="Container ship crossing calm coastal water." width="1600" height="900" fetchPriority="high" decoding="async" />
+          <picture className="ocean-hero-picture">
+            <source media="(max-width: 760px)" type="image/avif" srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-960.avif 960w" sizes="calc(100vw - 32px)" />
+            <source media="(max-width: 760px)" type="image/webp" srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-960.webp 960w" sizes="calc(100vw - 32px)" />
+            <source media="(max-width: 760px)" srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-640.jpg 640w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-mobile-960.jpg 960w" sizes="calc(100vw - 32px)" />
+            <source type="image/avif" srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) calc(100vw - 48px), 620px" />
+            <source type="image/webp" srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) calc(100vw - 48px), 620px" />
+            <source srcSet="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-960.jpg 960w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-1600.jpg 1600w, /good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-2400.jpg 2400w" sizes="(max-width: 1100px) calc(100vw - 48px), 620px" />
+            <img src="/good-shipping-homepage/assets/brand/sea-freight-terminal-hero-desktop-1600.jpg" alt="Container ships berthed beside cargo-handling cranes at an industrial port." width="1600" height="1200" fetchPriority="high" decoding="async" />
           </picture>
         </div>
       </section>
