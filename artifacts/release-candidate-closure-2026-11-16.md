@@ -99,9 +99,8 @@ promotable.
   request procedure. These facts were not invented.
 - Terms still needs an effective date, exact site operator/contracting entity,
   governing law, jurisdiction/dispute route and legal approval.
-- Current hero status: static photo. No video is implemented in Git. Candidate
-  videos found outside the repository have not passed rights, privacy, claim and
-  page-fit review, so video-first hero acceptance is `NOT_COMPLETED`.
+- Current hero status: static licensed industry-context photo. Hero video is not
+  a release requirement and has been removed from the required-material list.
 - A private business license supports the Chinese entity, but the owner directed
   on 2026-11-16 that the website should omit its 2019 establishment claim. A
   private foreign-trade operator filing supports the approved English public
@@ -141,9 +140,10 @@ Preview, but production release remains gated by:
 3. Authenticated confirmation of the Vercel Production Branch, environment
    scopes and the rollback target's promotability.
 
-Legal-detail completion, hero video, public cases, GTM/GA and search-console
-connections remain accurately disclosed follow-up work unless Zoe or legal
-counsel makes them a release condition.
+Legal-detail completion, public cases, GTM/GA and search-console connections
+remain accurately disclosed follow-up work unless Zoe or legal counsel makes
+them a release condition. A hero video is optional future creative work, not a
+release gate.
 
 ## Local validation of this closure
 

@@ -13,6 +13,7 @@ const IDEMPOTENCY_FIELDS = [
   "email",
   "whatsapp",
   "origin",
+  "destination_country",
   "destination",
   "cargo_type",
   "weight",
@@ -27,6 +28,7 @@ const IDEMPOTENCY_FIELDS = [
   "cargo_ready_date",
   "preferred_contact",
   "privacy_consent",
+  "form_schema_version",
   "service_needs",
   "inspection_types"
 ];

@@ -23,10 +23,10 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg",
+        url: "/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg",
         width: 1600,
         height: 900,
-        alt: "Container terminal and port cranes"
+        alt: "Container ship crossing calm coastal water"
       }
     ]
   },
@@ -34,7 +34,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Freight Forwarding from China | GOOD LOGISTICS",
     description: "Ocean, air and express freight with China-side cargo coordination and international delivery.",
-    images: ["/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg"]
+    images: ["/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg"]
   }
 };
 

@@ -116,9 +116,9 @@ The Quote and Contact desktop pages are slightly taller because the shared navig
 - No real inquiry was sent during this task. The current build was tested only with the controlled loopback provider.
 - The previously reported real receipt does not by itself re-verify this final local build or its eventual production environment.
 - Analytics events are implemented, but external collection is not considered active unless a valid production container and consent path are configured and verified.
-- In-memory rate limiting and idempotency are effective only within one warm process; they are not a cross-instance store for a multi-instance or serverless deployment.
-- No public credential document, authorised customer case, testimonial, transit-time table, company-scale metric, or hero video was added because matching evidence and publication authority were not available.
-- The new port image is licensed industry context, not evidence of a GOOD LOGISTICS-owned facility, shipment, vehicle, container, or route.
+- Shared Upstash Redis state is implemented for atomic rate limiting and idempotency; real Vercel Preview configuration and cross-instance behavior remain unverified and are still a release gate. Public requests do not fall back to process memory.
+- No public credential document, authorised customer case, testimonial, transit-time table, or company-scale metric was added because matching evidence and publication authority were not available. Hero video is not required for release; the current static hero uses separately recorded licensed industry photography.
+- The container-ship Hero is licensed industry context, not evidence of a GOOD LOGISTICS-owned vessel, facility, shipment, vehicle, container, or route.
 
 ## Rollback
 

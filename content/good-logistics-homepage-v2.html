@@ -12,12 +12,12 @@
         <p class="home-capability-line">FCL &amp; LCL <span>·</span> Air Freight <span>·</span> Express <span>·</span> Door-to-Door</p>
       </div>
       <picture class="home-hero-picture" aria-hidden="true">
-        <source media="(max-width: 700px)" type="image/avif" srcset="/good-shipping-homepage/assets/brand/port-terminal-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/port-terminal-hero-mobile-960.avif 960w" sizes="100vw">
-        <source media="(max-width: 700px)" type="image/webp" srcset="/good-shipping-homepage/assets/brand/port-terminal-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/port-terminal-hero-mobile-960.webp 960w" sizes="100vw">
-        <source media="(max-width: 700px)" srcset="/good-shipping-homepage/assets/brand/port-terminal-hero-mobile-640.jpg 640w, /good-shipping-homepage/assets/brand/port-terminal-hero-mobile-960.jpg 960w" sizes="100vw">
-        <source type="image/avif" srcset="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) 50vw, 58vw">
-        <source type="image/webp" srcset="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) 50vw, 58vw">
-        <img src="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg" alt="Container terminal with stacked containers and cargo-handling cranes." width="1600" height="900" fetchpriority="high" decoding="async">
+        <source media="(max-width: 700px)" type="image/avif" srcset="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.avif 960w" sizes="100vw">
+        <source media="(max-width: 700px)" type="image/webp" srcset="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.webp 960w" sizes="100vw">
+        <source media="(max-width: 700px)" srcset="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.jpg 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.jpg 960w" sizes="100vw">
+        <source type="image/avif" srcset="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) 50vw, 58vw">
+        <source type="image/webp" srcset="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) 50vw, 58vw">
+        <img src="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg" alt="Container ship crossing calm coastal water." width="1600" height="900" fetchpriority="high" decoding="async">
       </picture>
     </div>
   </section>
@@ -87,12 +87,12 @@
         <p>Send the country, city and final address. We will quote the route and delivery scope for the cargo.</p>
       </div>
       <div class="home-market-grid">
-        <a href="/quote/?service_need=shipping"><strong>United States</strong><span>Mainland delivery plus Hawaii, Alaska and Puerto Rico planning</span></a>
-        <a href="/quote/?service_need=shipping"><strong>Canada</strong><span>Commercial cargo and final-address planning</span></a>
-        <a href="/quote/?service_need=shipping"><strong>United Kingdom</strong><span>Ocean, air and express options</span></a>
-        <a href="/quote/?service_need=shipping"><strong>Europe</strong><span>Quote by country, cargo and address</span></a>
-        <a href="/quote/?service_need=shipping"><strong>Australia</strong><span>Freight and delivery coordination</span></a>
-        <a href="/quote/?service_need=shipping"><strong>New Zealand</strong><span>Freight and delivery coordination</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_country=United+States"><strong>United States</strong><span>Mainland delivery plus Hawaii, Alaska and Puerto Rico planning</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_country=Canada"><strong>Canada</strong><span>Commercial cargo and final-address planning</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_country=United+Kingdom"><strong>United Kingdom</strong><span>Ocean, air and express options</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_region=europe"><strong>Europe</strong><span>Select the destination country for a route-specific quote</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_country=Australia"><strong>Australia</strong><span>Freight and delivery coordination</span></a>
+        <a href="/quote/?service_need=shipping&amp;destination_country=New+Zealand"><strong>New Zealand</strong><span>Freight and delivery coordination</span></a>
       </div>
       <div class="home-us-destination-links"><span>U.S. special destinations:</span><a href="/destinations/hawaii/">Hawaii</a><a href="/destinations/alaska/">Alaska</a><a href="/destinations/puerto-rico/">Puerto Rico</a></div>
     </div>
@@ -152,7 +152,7 @@
         <div class="home-contact-links"><a href="mailto:zoe@gdlogi.com" data-contact-event="email_click">zoe@gdlogi.com</a><a href="https://wa.me/8613556861676?text=Hello%20Good%20Logistics%2C%20I%27d%20like%20to%20discuss%20my%20cargo." data-contact-event="whatsapp_click">WhatsApp +86 135 5686 1676</a></div>
       </div>
       <form class="home-quick-form" action="/api/inquiry/" method="POST" data-home-quote-form data-lead-event="generate_lead">
-        <input type="hidden" name="source_type" value="homepage-quick-quote"><input type="hidden" name="source_page" value="https://gdlogi.us/"><input type="hidden" name="referrer" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value="">
+        <input type="hidden" name="form_schema_version" value="2"><input type="hidden" name="source_type" value="homepage-quick-quote"><input type="hidden" name="source_page" value="https://gdlogi.us/"><input type="hidden" name="referrer" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value="">
         <label class="home-honeypot" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
         <div class="home-form-grid">
           <p class="home-form-intro home-form-full">Only the starred fields are required. We can confirm the remaining details with you.</p>
@@ -162,7 +162,8 @@
           <label><span>WhatsApp / Phone <small>(optional for email reply)</small><span data-home-phone-required hidden aria-hidden="true"> *</span></span><input id="home-whatsapp" type="tel" name="whatsapp" placeholder="+1 213 555 0188" maxlength="50" autocomplete="tel" inputmode="tel" aria-describedby="home-whatsapp-help home-whatsapp-error"><small id="home-whatsapp-help" class="home-field-help">Use +, spaces, parentheses or hyphens.</small><small id="home-whatsapp-error" class="home-field-error" data-field-error></small></label>
           <label class="home-form-full"><span>Product / Goods *</span><input id="home-product" type="text" name="product_name" placeholder="e.g. machine parts, furniture or commercial goods" maxlength="180" aria-describedby="home-product-error" required><small id="home-product-error" class="home-field-error" data-field-error></small></label>
           <label><span>China Origin / Supplier Location *</span><input id="home-origin" type="text" name="origin" placeholder="City or supplier location" maxlength="120" aria-describedby="home-origin-error" required><small id="home-origin-error" class="home-field-error" data-field-error></small></label>
-          <label><span>Destination Country, City / Warehouse *</span><input id="home-destination" type="text" name="destination" placeholder="Country, city, ZIP or warehouse" maxlength="160" aria-describedby="home-destination-error" required><small id="home-destination-error" class="home-field-error" data-field-error></small></label>
+          <label><span>Destination Country *</span><input id="home-destination-country" type="text" name="destination_country" placeholder="e.g. United States or Canada" maxlength="100" autocomplete="country-name" aria-describedby="home-destination-country-error" required><small id="home-destination-country-error" class="home-field-error" data-field-error></small></label>
+          <label><span>Destination City / Postal Code / Warehouse *</span><input id="home-destination" type="text" name="destination" placeholder="City, postal code or warehouse" maxlength="160" aria-describedby="home-destination-error" required><small id="home-destination-error" class="home-field-error" data-field-error></small></label>
           <label><span>Weight <small>(optional)</small></span><input type="text" name="weight" placeholder="kg, lb or unknown" maxlength="100"></label>
           <label><span>Volume <small>(optional)</small></span><input type="text" name="volume" placeholder="CBM or unknown" maxlength="160"></label>
           <details class="home-optional-details home-form-full" data-home-optional-details>

@@ -45,11 +45,11 @@ export default function OceanFreightPage({ service, schema }) {
             </div>
           </div>
           <picture className="ocean-hero-picture" aria-hidden="true">
-            <source media="(max-width: 760px)" type="image/avif" srcSet="/good-shipping-homepage/assets/brand/port-terminal-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/port-terminal-hero-mobile-960.avif 960w" sizes="100vw" />
-            <source media="(max-width: 760px)" type="image/webp" srcSet="/good-shipping-homepage/assets/brand/port-terminal-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/port-terminal-hero-mobile-960.webp 960w" sizes="100vw" />
-            <source type="image/avif" srcSet="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
-            <source type="image/webp" srcSet="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/port-terminal-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
-            <img src="/good-shipping-homepage/assets/brand/port-terminal-hero-desktop-1600.jpg" alt="Container terminal with stacked containers and cargo-handling cranes." width="1600" height="900" fetchPriority="high" decoding="async" />
+            <source media="(max-width: 760px)" type="image/avif" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.avif 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.avif 960w" sizes="100vw" />
+            <source media="(max-width: 760px)" type="image/webp" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-mobile-640.webp 640w, /good-shipping-homepage/assets/brand/container-ship-hero-mobile-960.webp 960w" sizes="100vw" />
+            <source type="image/avif" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.avif 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.avif 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.avif 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
+            <source type="image/webp" srcSet="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-960.webp 960w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.webp 1600w, /good-shipping-homepage/assets/brand/container-ship-hero-desktop-2400.webp 2400w" sizes="(max-width: 1100px) 100vw, 55vw" />
+            <img src="/good-shipping-homepage/assets/brand/container-ship-hero-desktop-1600.jpg" alt="Container ship crossing calm coastal water." width="1600" height="900" fetchPriority="high" decoding="async" />
           </picture>
         </div>
       </section>
@@ -185,6 +185,7 @@ export default function OceanFreightPage({ service, schema }) {
               productId="sea-freight-china-to-usa"
               defaultShippingMethod={service.shippingMethod}
               defaultServiceNeeds={service.quoteNeeds}
+              defaultDestinationCountry="United States"
               submitLabel="Send My Quote Request"
             />
             <aside className="ocean-contact-card" id="contact-options" aria-labelledby="ocean-contact-title">

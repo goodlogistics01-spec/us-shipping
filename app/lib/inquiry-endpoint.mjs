@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from "node:crypto";
+import { createHash, createHmac, randomUUID } from "node:crypto";
 
 import {
   cleanString,
@@ -7,6 +7,11 @@ import {
   validatePayload
 } from "./inquiry-server.mjs";
 import { inquiryConfirmationCookieName } from "./inquiry-confirmation.mjs";
+import {
+  createMemoryInquiryStateStore,
+  createUpstashInquiryStateStore,
+  INQUIRY_STATE_STORE_TIMEOUT_MS
+} from "./inquiry-state-store.mjs";
 
 export const RECIPIENT_EMAIL = "zoe@gdlogi.com";
 export const SUCCESS_PATH = "/thank-you/";
@@ -20,10 +25,15 @@ const CONFIGURATION_MESSAGE =
 const MAX_BODY_BYTES = 32_768;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
-const RATE_LIMIT_STORE_MAX = 10_000;
-const IDEMPOTENCY_TTL_MS = 15 * 60 * 1000;
-const IDEMPOTENCY_STORE_MAX = 1_000;
-const DEFAULT_PROVIDER_TIMEOUT_MS = 24_000;
+const IDEMPOTENCY_TTL_MS = 24 * 60 * 60 * 1000;
+const IDEMPOTENCY_KEY_WINDOW_MS = 15 * 60 * 1000;
+const ROUTE_EXECUTION_BUDGET_MS = 30_000;
+const SHARED_STATE_CALLS_PER_SUBMISSION = 3;
+const RESPONSE_HEADROOM_MS = 3_000;
+const DEFAULT_PROVIDER_TIMEOUT_MS =
+  ROUTE_EXECUTION_BUDGET_MS -
+  INQUIRY_STATE_STORE_TIMEOUT_MS * SHARED_STATE_CALLS_PER_SUBMISSION -
+  RESPONSE_HEADROOM_MS;
 const IDEMPOTENCY_KEY_PATTERN = /^inq-[a-f0-9]{32,64}$/;
 const IDEMPOTENCY_PAYLOAD_FIELDS = Object.freeze([
   "name",
@@ -31,6 +41,7 @@ const IDEMPOTENCY_PAYLOAD_FIELDS = Object.freeze([
   "email",
   "whatsapp",
   "origin",
+  "destination_country",
   "destination",
   "cargo_type",
   "weight",
@@ -45,15 +56,16 @@ const IDEMPOTENCY_PAYLOAD_FIELDS = Object.freeze([
   "cargo_ready_date",
   "preferred_contact",
   "privacy_consent",
+  "form_schema_version",
   "service_needs",
   "inspection_types"
 ]);
 
-const defaultRateLimitStore = globalThis.__gdlogiInquiryRateLimits || new Map();
-globalThis.__gdlogiInquiryRateLimits = defaultRateLimitStore;
+const localMemoryRateLimits = globalThis.__gdlogiInquiryRateLimits || new Map();
+globalThis.__gdlogiInquiryRateLimits = localMemoryRateLimits;
 
-const defaultIdempotencyStore = globalThis.__gdlogiInquiryIdempotency || new Map();
-globalThis.__gdlogiInquiryIdempotency = defaultIdempotencyStore;
+const localMemoryIdempotency = globalThis.__gdlogiInquiryIdempotency || new Map();
+globalThis.__gdlogiInquiryIdempotency = localMemoryIdempotency;
 
 function jsonResponse(body, status, headers = {}) {
   return new Response(JSON.stringify(body), {
@@ -264,7 +276,7 @@ export function createPayloadFingerprint(payload) {
 }
 
 function deriveIdempotencyKey(payload, nowMs) {
-  const timeBucket = Math.floor(nowMs / IDEMPOTENCY_TTL_MS);
+  const timeBucket = Math.floor(nowMs / IDEMPOTENCY_KEY_WINDOW_MS);
   const digest = createHash("sha256")
     .update(`${timeBucket}\n${canonicalPayload(payload)}`)
     .digest("hex");
@@ -282,53 +294,12 @@ function getIdempotencyKey(request, raw, payload, nowMs) {
   return { key: suppliedKey || deriveIdempotencyKey(payload, nowMs) };
 }
 
-function cleanupIdempotencyStore(store, nowMs) {
-  for (const [key, entry] of store) {
-    if (entry.expiresAt <= nowMs) store.delete(key);
-  }
-  while (store.size >= IDEMPOTENCY_STORE_MAX) {
-    store.delete(store.keys().next().value);
-  }
-}
-
 function getClientIp(request) {
   return (
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip")?.trim() ||
     ""
   );
-}
-
-function checkRateLimit(request, store, nowMs) {
-  const clientIp = getClientIp(request);
-  if (!clientIp) return { limited: false };
-
-  for (const [key, entry] of store) {
-    if (entry.expiresAt <= nowMs) store.delete(key);
-  }
-  while (store.size >= RATE_LIMIT_STORE_MAX) store.delete(store.keys().next().value);
-
-  const recent = (store.get(clientIp)?.timestamps || []).filter(
-    (timestamp) => nowMs - timestamp < RATE_LIMIT_WINDOW_MS
-  );
-  if (recent.length >= RATE_LIMIT_MAX) {
-    const retryAfterSeconds = Math.max(
-      1,
-      Math.ceil((RATE_LIMIT_WINDOW_MS - (nowMs - recent[0])) / 1000)
-    );
-    store.set(clientIp, {
-      timestamps: recent,
-      expiresAt: recent[0] + RATE_LIMIT_WINDOW_MS
-    });
-    return { limited: true, retryAfterSeconds };
-  }
-
-  recent.push(nowMs);
-  store.set(clientIp, {
-    timestamps: recent,
-    expiresAt: recent[0] + RATE_LIMIT_WINDOW_MS
-  });
-  return { limited: false };
 }
 
 function requestHostname(request) {
@@ -427,27 +398,69 @@ export function resolveProviderConfiguration(request, env = process.env) {
   return { ok: true, endpoint: endpoint.toString(), timeoutMs };
 }
 
+export function resolveInquiryStateStore(
+  request,
+  env = process.env,
+  { fetchImpl = fetch } = {}
+) {
+  const mode = String(env.INQUIRY_STATE_STORE || "").trim().toLowerCase();
+  const localRequest = isLoopbackHostname(requestHostname(request));
+  const keySecret = String(env.INQUIRY_STATE_KEY_SECRET || "");
+
+  if (mode === "memory") {
+    if (!localRequest || env.INQUIRY_ALLOW_MEMORY_STATE !== "true") {
+      return { ok: false, code: "STATE_STORE_CONFIGURATION_ERROR" };
+    }
+    return {
+      ok: true,
+      store: createMemoryInquiryStateStore({
+        idempotencyStore: localMemoryIdempotency,
+        rateLimitStore: localMemoryRateLimits
+      }),
+      keySecret: keySecret || "gdlogi-local-memory-state-only"
+    };
+  }
+
+  if (mode !== "upstash-redis") {
+    return { ok: false, code: "STATE_STORE_CONFIGURATION_ERROR" };
+  }
+  if (
+    !env.UPSTASH_REDIS_REST_URL ||
+    !env.UPSTASH_REDIS_REST_TOKEN ||
+    keySecret.length < 16
+  ) {
+    return { ok: false, code: "STATE_STORE_CONFIGURATION_ERROR" };
+  }
+
+  try {
+    return {
+      ok: true,
+      store: createUpstashInquiryStateStore({
+        url: env.UPSTASH_REDIS_REST_URL,
+        token: env.UPSTASH_REDIS_REST_TOKEN,
+        namespace: env.INQUIRY_STATE_NAMESPACE || "gdlogi:inquiry",
+        fetchImpl
+      }),
+      keySecret
+    };
+  } catch {
+    return { ok: false, code: "STATE_STORE_CONFIGURATION_ERROR" };
+  }
+}
+
+function createRateLimitKey(request, keySecret) {
+  const clientIp = getClientIp(request);
+  if (!clientIp) return "";
+  return createHmac("sha256", keySecret).update(clientIp).digest("hex");
+}
+
 async function executeSubmission({
   request,
   payload,
   submissionId,
   env,
-  fetchImpl,
-  rateLimitStore,
-  nowMs
+  fetchImpl
 }) {
-  const rateLimit = checkRateLimit(request, rateLimitStore, nowMs);
-  if (rateLimit.limited) {
-    return {
-      submissionStatus: "FAILED",
-      code: "RATE_LIMITED",
-      httpStatus: 429,
-      submissionId,
-      message: FAILURE_MESSAGE,
-      headers: { "Retry-After": String(rateLimit.retryAfterSeconds) }
-    };
-  }
-
   const providerConfiguration = resolveProviderConfiguration(request, env);
   if (!providerConfiguration.ok) {
     return {
@@ -477,15 +490,52 @@ async function executeSubmission({
   return { ...providerOutcome, submissionId };
 }
 
+function stateStoreFailureOutcome(submissionId, code = "STATE_STORE_UNAVAILABLE") {
+  return {
+    submissionStatus: "FAILED",
+    code,
+    httpStatus: 503,
+    submissionId,
+    message: CONFIGURATION_MESSAGE
+  };
+}
+
+async function completeOutcome({
+  stateStore,
+  idempotencyKey,
+  fingerprint,
+  ownerToken,
+  outcome,
+  nowMs
+}) {
+  try {
+    const completion = await stateStore.complete({
+      key: idempotencyKey,
+      fingerprint,
+      ownerToken,
+      outcome,
+      nowMs,
+      ttlMs: IDEMPOTENCY_TTL_MS
+    });
+    return completion?.status === "STORED";
+  } catch {
+    return false;
+  }
+}
+
 export async function handleInquiryRequest(
   request,
   {
     env = process.env,
     fetchImpl = fetch,
-    rateLimitStore = defaultRateLimitStore,
-    idempotencyStore = defaultIdempotencyStore,
+    stateStore,
+    stateStoreFetchImpl = fetch,
+    stateKeySecret,
+    rateLimitStore,
+    idempotencyStore,
     now = () => new Date(),
-    uuidFactory = randomUUID
+    uuidFactory = randomUUID,
+    ownerTokenFactory = randomUUID
   } = {}
 ) {
   let raw;
@@ -532,40 +582,154 @@ export async function handleInquiryRequest(
     });
   }
 
-  cleanupIdempotencyStore(idempotencyStore, nowMs);
   const fingerprint = createPayloadFingerprint(payload);
-  const existing = idempotencyStore.get(idempotency.key);
-  if (existing) {
-    if (existing.fingerprint !== fingerprint) {
+  let activeStore = stateStore;
+  let activeKeySecret = stateKeySecret;
+  if (!activeStore && (rateLimitStore || idempotencyStore)) {
+    activeStore = createMemoryInquiryStateStore({
+      rateLimitStore: rateLimitStore || new Map(),
+      idempotencyStore: idempotencyStore || new Map()
+    });
+    activeKeySecret = activeKeySecret || "gdlogi-injected-test-state";
+  }
+  if (!activeStore) {
+    const stateConfiguration = resolveInquiryStateStore(request, env, {
+      fetchImpl: stateStoreFetchImpl
+    });
+    if (!stateConfiguration.ok) {
       return failureResponse(request, {
-        status: 409,
-        code: "IDEMPOTENCY_CONFLICT",
-        message:
-          "This submission key was already used for different cargo details. Refresh the form and try again."
+        status: 503,
+        code: stateConfiguration.code,
+        submissionId,
+        message: CONFIGURATION_MESSAGE
       });
     }
-    const outcome = existing.outcome || await existing.promise;
-    return responseFromOutcome(request, outcome, true);
+    activeStore = stateConfiguration.store;
+    activeKeySecret = stateConfiguration.keySecret;
+  }
+  if (typeof activeKeySecret !== "string" || activeKeySecret.length < 16) {
+    return failureResponse(request, {
+      status: 503,
+      code: "STATE_STORE_CONFIGURATION_ERROR",
+      submissionId,
+      message: CONFIGURATION_MESSAGE
+    });
   }
 
-  const promise = executeSubmission({
-    request,
-    payload,
-    submissionId,
-    env,
-    fetchImpl,
-    rateLimitStore,
-    nowMs
-  });
-  idempotencyStore.set(idempotency.key, {
-    fingerprint,
-    expiresAt: nowMs + IDEMPOTENCY_TTL_MS,
-    promise
-  });
+  const ownerToken = ownerTokenFactory();
+  let claim;
+  try {
+    claim = await activeStore.claim({
+      key: idempotency.key,
+      fingerprint,
+      submissionId,
+      ownerToken,
+      nowMs,
+      ttlMs: IDEMPOTENCY_TTL_MS
+    });
+  } catch {
+    return failureResponse(request, {
+      status: 503,
+      code: "STATE_STORE_UNAVAILABLE",
+      submissionId,
+      message: CONFIGURATION_MESSAGE
+    });
+  }
+
+  if (claim?.status === "CONFLICT") {
+    return failureResponse(request, {
+      status: 409,
+      code: "IDEMPOTENCY_CONFLICT",
+      submissionId: claim.submissionId || "",
+      message:
+        "This submission key was already used for different cargo details. Refresh the form and try again."
+    });
+  }
+  if (claim?.status === "PROCESSING") {
+    return pendingResponse(request, {
+      submissionId: claim.submissionId,
+      code: "SUBMISSION_IN_PROGRESS",
+      replayed: true
+    });
+  }
+  if (claim?.status === "REPLAY" && claim.outcome) {
+    return responseFromOutcome(request, claim.outcome, true);
+  }
+  if (claim?.status !== "CLAIMED") {
+    return failureResponse(request, {
+      status: 503,
+      code: "STATE_STORE_RESPONSE_INVALID",
+      submissionId,
+      message: CONFIGURATION_MESSAGE
+    });
+  }
+
+  const rateLimitKey = createRateLimitKey(request, activeKeySecret);
+  if (rateLimitKey) {
+    let rateLimit;
+    try {
+      rateLimit = await activeStore.checkRateLimit({
+        key: rateLimitKey,
+        member: `${nowMs}:${ownerToken}`,
+        nowMs,
+        windowMs: RATE_LIMIT_WINDOW_MS,
+        max: RATE_LIMIT_MAX
+      });
+    } catch {
+      const outcome = stateStoreFailureOutcome(submissionId);
+      await completeOutcome({
+        stateStore: activeStore,
+        idempotencyKey: idempotency.key,
+        fingerprint,
+        ownerToken,
+        outcome,
+        nowMs
+      });
+      return responseFromOutcome(request, outcome);
+    }
+
+    if (rateLimit.limited) {
+      const retryAfterSeconds = Math.max(
+        1,
+        Math.ceil(Number(rateLimit.retryAfterMs || 0) / 1000)
+      );
+      const outcome = {
+        submissionStatus: "FAILED",
+        code: "RATE_LIMITED",
+        httpStatus: 429,
+        submissionId,
+        message: FAILURE_MESSAGE,
+        headers: { "Retry-After": String(retryAfterSeconds) }
+      };
+      const stored = await completeOutcome({
+        stateStore: activeStore,
+        idempotencyKey: idempotency.key,
+        fingerprint,
+        ownerToken,
+        outcome,
+        nowMs
+      });
+      if (!stored) {
+        return failureResponse(request, {
+          status: 503,
+          code: "STATE_STORE_UNAVAILABLE",
+          submissionId,
+          message: CONFIGURATION_MESSAGE
+        });
+      }
+      return responseFromOutcome(request, outcome);
+    }
+  }
 
   let outcome;
   try {
-    outcome = await promise;
+    outcome = await executeSubmission({
+      request,
+      payload,
+      submissionId,
+      env,
+      fetchImpl
+    });
   } catch {
     outcome = {
       submissionStatus: "PENDING",
@@ -573,10 +737,20 @@ export async function handleInquiryRequest(
       submissionId
     };
   }
-  idempotencyStore.set(idempotency.key, {
+
+  const stored = await completeOutcome({
+    stateStore: activeStore,
+    idempotencyKey: idempotency.key,
     fingerprint,
-    expiresAt: nowMs + IDEMPOTENCY_TTL_MS,
-    outcome
+    ownerToken,
+    outcome,
+    nowMs
   });
+  if (!stored) {
+    return pendingResponse(request, {
+      submissionId,
+      code: "STATE_STORE_WRITE_UNKNOWN"
+    });
+  }
   return responseFromOutcome(request, outcome);
 }

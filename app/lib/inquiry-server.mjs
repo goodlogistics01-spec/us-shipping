@@ -4,6 +4,7 @@ export const FIELD_LIMITS = Object.freeze({
   email: 254,
   whatsapp: 50,
   origin: 160,
+  destination_country: 100,
   destination: 160,
   cargo_type: 2000,
   weight: 100,
@@ -20,6 +21,7 @@ export const FIELD_LIMITS = Object.freeze({
   cargo_ready_date: 32,
   preferred_contact: 20,
   privacy_consent: 20,
+  form_schema_version: 10,
   referrer: 500,
   utm_source: 100,
   utm_medium: 100,
@@ -284,6 +286,7 @@ export function normalizePayload(raw, request) {
   const legacyAliases = {
     whatsapp: raw.whatsapp || raw.phone,
     origin: raw.origin || raw.origin_city,
+    destination_country: raw.destination_country || raw.country,
     weight: raw.weight || raw.total_weight || raw.cargo_volume_weight,
     volume: raw.volume || raw.total_volume,
     service: raw.service || raw.shipping_method,
@@ -338,6 +341,7 @@ export function normalizePayload(raw, request) {
 
 export function validatePayload(payload) {
   const errors = {};
+  const requiresDestinationCountry = payload.form_schema_version === "2";
 
   if (!isValidEmail(payload.email)) errors.email = "Enter a valid email address.";
   if (payload.whatsapp && !isValidPhone(payload.whatsapp)) {
@@ -358,11 +362,20 @@ export function validatePayload(payload) {
   }
   if (["quote-page", "service-page"].includes(payload.source_type)) {
     if (!payload.origin) errors.origin = "Origin is required.";
+    if (requiresDestinationCountry && !payload.destination_country) {
+      errors.destination_country = "Destination country is required.";
+    }
     if (!payload.destination) errors.destination = "Destination is required.";
   }
   if (payload.source_type === "homepage-quick-quote") {
     if (!payload.origin) errors.origin = "Origin is required.";
+    if (requiresDestinationCountry && !payload.destination_country) {
+      errors.destination_country = "Destination country is required.";
+    }
     if (!payload.destination) errors.destination = "Destination is required.";
+  }
+  if (["eu", "europe", "european union"].includes(payload.destination_country.toLowerCase())) {
+    errors.destination_country = "Enter a specific European country.";
   }
 
   return errors;
@@ -443,6 +456,7 @@ export function buildProviderPayload(payload, submissionId, submittedAt = new Da
     email: payload.email,
     whatsapp: payload.whatsapp,
     origin: payload.origin,
+    destination_country: payload.destination_country,
     destination: payload.destination,
     product_name: payload.product_name,
     cargo_type: payload.cargo_type,

@@ -11,6 +11,7 @@ import {
 
 const PHONE_MESSAGE =
   "Enter a phone number using digits and common separators such as +, spaces, parentheses or hyphens.";
+const BROAD_EUROPE_LABELS = new Set(["eu", "europe", "european union"]);
 
 function isValidEmail(value) {
   const normalized = String(value || "").trim().normalize("NFKC").toLowerCase();
@@ -92,6 +93,7 @@ export default function HomeInteractions() {
       const preferredContact = form.elements.preferred_contact;
       const phone = form.elements.whatsapp;
       const email = form.elements.email;
+      const destinationCountry = form.elements.destination_country;
       const optionalDetails = form.querySelector("[data-home-optional-details]");
       const phoneRequiredIndicator = form.querySelector("[data-home-phone-required]");
       const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
@@ -185,6 +187,23 @@ export default function HomeInteractions() {
           return true;
         }
         showFieldError(email);
+        return false;
+      };
+
+      const validateDestinationCountry = () => {
+        if (!destinationCountry) return true;
+        const value = destinationCountry.value.trim();
+        destinationCountry.setCustomValidity("");
+        if (BROAD_EUROPE_LABELS.has(value.toLowerCase())) {
+          destinationCountry.setCustomValidity(
+            "Enter a specific European country, such as Germany or France."
+          );
+        }
+        if (destinationCountry.validity.valid) {
+          clearFieldError(destinationCountry);
+          return true;
+        }
+        showFieldError(destinationCountry);
         return false;
       };
 
@@ -329,6 +348,7 @@ export default function HomeInteractions() {
         if (submitButton?.disabled) return;
         validatePhone();
         validateEmail();
+        validateDestinationCountry();
         validateServiceNeeds();
         validateInspectionTypes();
         if (!form.checkValidity()) return;
@@ -417,6 +437,7 @@ export default function HomeInteractions() {
       onInput = (event) => {
         if (event.target === phone || event.target === preferredContact) validatePhone();
         if (event.target === email) validateEmail();
+        if (event.target === destinationCountry) validateDestinationCountry();
         if (event.target.name === "service_needs") {
           if (event.target.checked && event.target.value === "not-sure") {
             serviceNeedInputs.forEach((input) => {
@@ -441,7 +462,11 @@ export default function HomeInteractions() {
             if (unspecified) unspecified.checked = false;
           }
           validateInspectionTypes();
-        } else if (event.target !== phone && event.target !== email) {
+        } else if (
+          event.target !== phone &&
+          event.target !== email &&
+          event.target !== destinationCountry
+        ) {
           event.target.setCustomValidity?.("");
         }
         if (event.target.validity?.valid) clearFieldError(event.target);

@@ -23,6 +23,12 @@ export default async function DestinationPage({ params }) {
   if (!destination) notFound();
 
   const url = `${company.website}/destinations/${slug}/`;
+  const quoteParams = new URLSearchParams({
+    destination_country: "United States",
+    destination_region: destination.areaServed,
+    service_need: "shipping"
+  });
+  const quoteHref = `/quote/?${quoteParams.toString()}`;
   const whatsappHref = `${company.whatsappHref}?text=${encodeURIComponent(`Hello Zoe, I'd like to discuss shipping from China to ${destination.areaServed}.`)}`;
   const schema = {
     "@context": "https://schema.org",
@@ -67,7 +73,7 @@ export default async function DestinationPage({ params }) {
               <h1>{destination.title}</h1>
               <p className="marketing-lead">{destination.summary}</p>
               <div className="marketing-actions">
-                <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Get a Shipping Quote</a>
+                <a className="marketing-button marketing-button-primary" href={quoteHref}>Get a Shipping Quote</a>
                 <a className="marketing-button marketing-button-secondary" href={whatsappHref}>Chat with Zoe</a>
               </div>
             </div>
@@ -147,7 +153,7 @@ export default async function DestinationPage({ params }) {
       <section className="marketing-cta">
         <div className="marketing-container marketing-cta-inner">
           <div><h2>Shipping to this destination?</h2><p>Send the final ZIP code, cargo details and unloading needs for a destination-specific quote.</p></div>
-          <a className="marketing-button marketing-button-primary" href="/quote/?service_need=shipping">Get a Shipping Quote</a>
+          <a className="marketing-button marketing-button-primary" href={quoteHref}>Get a Shipping Quote</a>
         </div>
       </section>
     </MarketingPage>

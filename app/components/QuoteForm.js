@@ -115,6 +115,25 @@ const inspectionTypeParameterMap = {
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phonePattern = /^\+?[0-9][0-9\s().-]*$/;
+const broadEuropeLabels = new Set(["eu", "europe", "european union"]);
+const commonDestinationCountries = [
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Australia",
+  "New Zealand",
+  "Germany",
+  "France",
+  "Netherlands",
+  "Italy",
+  "Spain",
+  "Belgium",
+  "Poland",
+  "Sweden",
+  "Denmark",
+  "Ireland",
+  "Portugal"
+];
 
 function cleanAttributionValue(value) {
   return String(value || "")
@@ -148,6 +167,10 @@ function isValidEmail(value) {
     .every((label) => label && !label.startsWith("-") && !label.endsWith("-"));
 }
 
+function isBroadEuropeLabel(value) {
+  return broadEuropeLabels.has(String(value || "").trim().toLowerCase());
+}
+
 function trackInquiryEvent(eventName, details = {}) {
   if (typeof window === "undefined") return;
   const payload = {
@@ -177,12 +200,15 @@ export default function QuoteForm({
   defaultShippingMethod = "not-sure",
   defaultServiceNeeds = ["not-sure"],
   defaultInspectionTypes = [],
+  defaultDestinationCountry = "",
   submitLabel = "Send My Quote Request"
 }) {
   const [status, setStatus] = useState("idle");
   const [submissionId, setSubmissionId] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [preferredContact, setPreferredContact] = useState("email");
+  const [destinationCountry, setDestinationCountry] = useState(defaultDestinationCountry);
+  const [destinationRegion, setDestinationRegion] = useState("");
   const submittingRef = useRef(false);
   const startedRef = useRef(false);
   const optionalDetailsRef = useRef(null);
@@ -206,6 +232,15 @@ export default function QuoteForm({
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const requestedService = params.get("service") || params.get("solution") || "";
+    const requestedDestinationRegion = params.get("destination_region") || "";
+    const requestedDestinationCountry =
+      params.get("destination_country") || params.get("country") || "";
+    setDestinationRegion(requestedDestinationRegion);
+    if (requestedDestinationCountry) {
+      setDestinationCountry(requestedDestinationCountry);
+    } else if (requestedDestinationRegion.toLowerCase() === "europe") {
+      setDestinationCountry("");
+    }
     const requestedShippingMethod = params.get("shipping_method") || params.get("transport_mode") || requestedService;
     if (shippingMethodParameterMap[requestedShippingMethod]) {
       setSelectedShippingMethod(shippingMethodParameterMap[requestedShippingMethod]);
@@ -264,12 +299,16 @@ export default function QuoteForm({
       ["email", "Please enter your email address."],
       ["product_name", "Please enter the product you are shipping."],
       ["origin", "Please enter the pickup city or origin."],
-      ["destination", "Please enter the destination city or ZIP code."]
+      ["destination_country", "Please enter the destination country."],
+      ["destination", "Please enter the destination city, postal code or warehouse."]
     ];
 
     requiredTextFields.forEach(([name, message]) => {
       if (!String(data.get(name) || "").trim()) errors[name] = message;
     });
+    if (isBroadEuropeLabel(data.get("destination_country"))) {
+      errors.destination_country = "Enter a specific European country, such as Germany or France.";
+    }
 
     const email = String(data.get("email") || "").trim();
     if (email && !isValidEmail(email)) {
@@ -514,6 +553,7 @@ export default function QuoteForm({
       data-lead-event="generate_lead"
     >
       <input type="hidden" name="source_type" value={source} />
+      <input type="hidden" name="form_schema_version" value="2" />
       <input type="hidden" name="product_id" value={productId} />
       <input type="hidden" name="source_page" value={attribution.page_url || pageUrl} />
       <input type="hidden" name="referrer" value={attribution.referrer} />
@@ -585,10 +625,41 @@ export default function QuoteForm({
           <FieldError id="quote-error-origin" message={fieldErrors.origin} />
         </label>
         <label>
-          <span className="marketing-field-label">Destination / ZIP Code <span aria-hidden="true">*</span></span>
+          <span className="marketing-field-label">Destination Country <span aria-hidden="true">*</span></span>
+          <input
+            name="destination_country"
+            list="quote-destination-country-options"
+            autoComplete="country-name"
+            placeholder={destinationRegion.toLowerCase() === "europe"
+              ? "Enter a specific European country"
+              : "e.g. United States or Canada"}
+            maxLength="100"
+            required
+            value={destinationCountry}
+            onChange={(event) => setDestinationCountry(event.target.value)}
+            aria-invalid={Boolean(fieldErrors.destination_country)}
+            aria-describedby={[
+              destinationRegion.toLowerCase() === "europe" ? "quote-destination-country-help" : "",
+              fieldErrors.destination_country ? "quote-error-destination-country" : ""
+            ].filter(Boolean).join(" ") || undefined}
+          />
+          <datalist id="quote-destination-country-options">
+            {commonDestinationCountries.map((country) => (
+              <option value={country} key={country} />
+            ))}
+          </datalist>
+          {destinationRegion.toLowerCase() === "europe" ? (
+            <small id="quote-destination-country-help">
+              Choose the country in Europe so we can plan the correct route and delivery scope.
+            </small>
+          ) : null}
+          <FieldError id="quote-error-destination-country" message={fieldErrors.destination_country} />
+        </label>
+        <label className="form-span-two">
+          <span className="marketing-field-label">Destination City / Postal Code / Warehouse <span aria-hidden="true">*</span></span>
           <input
             name="destination"
-            placeholder="U.S. city, state and ZIP code"
+            placeholder="City, postal code or warehouse"
             maxLength="160"
             required
             aria-invalid={Boolean(fieldErrors.destination)}

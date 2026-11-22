@@ -23,11 +23,13 @@ function validRaw(overrides = {}) {
     preferred_contact: "email",
     product_name: "Commercial furniture",
     origin: "Shenzhen",
+    destination_country: "United States",
     destination: "Los Angeles, CA 90001",
     service: "not-sure",
     shipping_method: "not-sure",
     service_needs: ["not-sure"],
     privacy_consent: "agreed",
+    form_schema_version: "2",
     ...overrides
   };
 }
@@ -92,6 +94,29 @@ test("legacy phone and requirement names normalize into the current schema", () 
   assert.equal(payload.whatsapp, "+1 213 555 0188");
   assert.equal(payload.product_name, "Industrial pumps");
   assert.deepEqual(validatePayload(payload), {});
+});
+
+test("legacy country aliases normalize while old payloads without a country remain compatible", () => {
+  const aliased = validPayload({ destination_country: "", country: "Canada" });
+  assert.equal(aliased.destination_country, "Canada");
+  assert.deepEqual(validatePayload(aliased), {});
+
+  const legacy = validPayload({ destination_country: "", form_schema_version: "" });
+  assert.deepEqual(validatePayload(legacy), {});
+});
+
+test("current forms require a specific destination country instead of a broad Europe label", () => {
+  const missing = validPayload({ destination_country: "" });
+  const broadEurope = validPayload({ destination_country: "Europe" });
+
+  assert.equal(
+    validatePayload(missing).destination_country,
+    "Destination country is required."
+  );
+  assert.equal(
+    validatePayload(broadEurope).destination_country,
+    "Enter a specific European country."
+  );
 });
 
 test("email reply permits an empty phone, WhatsApp reply requires one", () => {
@@ -242,6 +267,8 @@ test("provider payload contains product, shipping method, and every selected ser
   );
 
   assert.equal(providerPayload.product_name, "Dining chairs");
+  assert.equal(providerPayload.destination_country, "United States");
+  assert.equal(providerPayload.destination, "Los Angeles, CA 90001");
   assert.equal(providerPayload.email, "name+tag@example.co.uk");
   assert.equal(providerPayload.whatsapp, "+1 213 555 0188");
   assert.equal(providerPayload.shipping_method, "Ocean freight — compare FCL/LCL");

@@ -63,15 +63,15 @@ labeling, kitting, dates, savings or testimonials.
 
 | Check | Status | Required action |
 | --- | --- | --- |
-| Server validation, provider classification and route behavior | VERIFIED locally | 41 unit/route tests pass, including valid international email/phone forms, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency, controlled-test marking and configuration failure |
+| Server validation, provider classification and route behavior | VERIFIED locally | Unit/route tests cover valid international email/phone forms, destination country plus legacy destination, `SUCCESS` / `FAILED` / `PENDING`, honeypot, rate limit, idempotency, controlled-test marking and configuration failure |
 | Active browser forms and responsive interaction | VERIFIED locally on final build within stated scope | `/quote/` completed a full controlled-loopback success path with every current field and both inspection types. Homepage, Sea Freight and service-page entries share the validated contract or route to the editable Quote form; their links, preselection and responsive layouts were checked without additional provider submissions. No real provider was contacted |
 | Separate shipping method and multi-value service needs | VERIFIED locally | Route tests preserve all selected values in the provider body |
 | Receiving checks versus product-quality inspection | VERIFIED locally and in the controlled inbox message | Both types and their separate scope boundaries were present in request `GL-20261111-5D836B44`; legacy generic `Inspection` remains scope-not-specified |
 | Consent, honeypot and same-page duplicate-submit guard | VERIFIED locally on final build | Honeypot makes zero provider calls; a double-click success sample produced one mock record and the browser lock remained active for `PENDING` |
-| Per-instance rate limit and idempotency | VERIFIED within stated boundary | Bounded in-memory Maps protect one running instance only; deployment platform and any cross-instance store remain `NOT_VERIFIED` |
+| Shared rate limit and idempotency code | VERIFIED locally with a shared test backend; deployed Redis remains `NOT_VERIFIED` | Atomic claim/state/rate-limit behavior is covered across two local store instances, a reconstructed instance, concurrent duplicates and storage failures. Production requires Upstash Redis variables and a Preview test; public requests fail closed rather than fall back to memory |
 | Mock / production provider isolation | VERIFIED in route tests | Local mock requires explicit QA mode, loopback endpoint, loopback site request and local-only switch; public-host loopback configuration fails clearly |
 | Historical FormSubmit delivery to `zoe@gdlogi.com` | VERIFIED for 2026-10-21 schema only | Owner confirmed one non-customer test reached the inbox before the current service and inspection fields were added |
-| Current full-field inbox delivery and Reply-To | VERIFIED; reply delivery remains `NOT_VERIFIED` | The owner confirmed exactly one copy, every current field and the correct Reply-To target for request `GL-20261111-5D836B44`. A manual reply still needs to be confirmed at the controlled mailbox |
+| Previous full-field inbox delivery and Reply-To | VERIFIED for the 2026-11-11 pre-country-split schema; current release remains `NOT_VERIFIED` | The owner confirmed exactly one copy, the then-current fields and correct Reply-To target for request `GL-20261111-5D836B44`. A controlled deployed test must additionally confirm `destination_country`, the retained destination field and shared-store behavior. Manual reply delivery remains to be confirmed |
 | Provider timeout / ambiguous response | VERIFIED locally and observed in the controlled call | The controlled call remained `PENDING`, did not set a success cookie, did not fire success and was not resent automatically |
 
 ### Historical owner-approved live test — 2026-10-21 (pre-current schema)
@@ -97,7 +97,7 @@ live inquiry is submitted during automated or local QA.
 | Privacy Policy legal entity, regions, retention and recipients | NOT_VERIFIED | Company and qualified legal review |
 | Terms contracting entity, governing law and dispute process | NOT_VERIFIED | Company and qualified legal review |
 | Hosting logs and cross-border processing | NOT_VERIFIED | Confirm production hosting configuration |
-| Deployment platform and multi-instance behavior | Vercel hosting VERIFIED; production settings and durable protection NOT_VERIFIED | Current response headers and server route identify Vercel hosting, whose scalable/serverless execution does not make the in-memory Maps cross-instance. Confirm production project settings and add an atomic TTL store if cross-instance protection is required |
+| Deployment platform and multi-instance behavior | Vercel hosting VERIFIED; production Redis settings and deployed cross-instance behavior NOT_VERIFIED | Current response headers and server route identify Vercel hosting. The release now requires an atomic Upstash Redis store, but the Vercel project variables and a real Preview exercise cannot be verified from this local worktree |
 | GTM / GA collection | NOT_VERIFIED and disabled | No production ID is committed; configure an applicable consent flow and validate before claiming collection |
 | Anonymous success-event gating | VERIFIED locally in code and state tests | `SUCCESS` is reachable only from explicit provider acceptance; browser `FAILED`/`PENDING` states did not navigate to success. Event payload builders include only form/source, allowlisted service/inspection selections and result fields, not contact or cargo text. Marked `[TEST-GDLOGI]` submissions do not emit outcome or generated-lead events. GTM remains disabled without a real ID and consent |
 
@@ -107,7 +107,7 @@ Before production deployment:
 
 1. Close or intentionally remove every `NOT_VERIFIED` public claim.
 2. Final local production build, controlled-mock browser QA, link, redirect, SEO and screenshot checks completed on 2026-11-15.
-3. Confirm the Vercel production-project settings and decide whether per-instance rate limiting and idempotency are sufficient; add a durable atomic TTL store before representing them as cross-instance controls.
+3. Confirm the Vercel project settings, connect Upstash Redis, set the required server-only variables for Preview and Production, then run the controlled Preview cross-instance and inbox checks. Do not publish while the route returns `STATE_STORE_CONFIGURATION_ERROR`.
 4. Owner approval was obtained and the single controlled current-schema FormSubmit call was made on 2026-11-11; do not submit it again.
-5. Receipt, exactly-one count, current fields and Reply-To are confirmed for request `GL-20261111-5D836B44`; only delivery of a manually sent reply remains to be confirmed.
+5. Receipt, exactly-one count, pre-country-split fields and Reply-To are confirmed for request `GL-20261111-5D836B44`; the current destination-country field, deployed shared-store behavior and delivery of a manually sent reply remain to be confirmed.
 6. Review the production diff and obtain explicit approval before changing the live site.

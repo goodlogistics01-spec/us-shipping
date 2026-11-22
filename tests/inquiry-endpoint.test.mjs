@@ -3,8 +3,10 @@ import test from "node:test";
 
 import {
   handleInquiryRequest,
+  resolveInquiryStateStore,
   resolveProviderConfiguration
 } from "../app/lib/inquiry-endpoint.mjs";
+import { createMemoryInquiryStateStore } from "../app/lib/inquiry-state-store.mjs";
 import {
   inquiryConfirmationCookieName,
   isConfirmedInquiryRequest,
@@ -29,12 +31,14 @@ function validBody(overrides = {}) {
     preferred_contact: "email",
     product_name: "Commercial furniture",
     origin: "Shenzhen",
+    destination_country: "United States",
     destination: "Los Angeles, CA 90001",
     service: "supplier-consolidation",
     shipping_method: "ocean-freight",
     service_needs: ["shipping", "consolidation", "inspection"],
     inspection_types: ["receiving-checks", "product-quality-inspection"],
     privacy_consent: "agreed",
+    form_schema_version: "2",
     source_page: "https://gdlogi.us/quote/",
     ...overrides
   };
@@ -107,6 +111,8 @@ test("SUCCESS returns a bound request ID cookie and carries every inquiry field 
   assert.match(response.headers.get("set-cookie"), /Max-Age=300/);
   assert.match(response.headers.get("set-cookie"), /Secure/);
   assert.equal(providerBody._replyto, "route.test@example.com");
+  assert.equal(providerBody.destination_country, "United States");
+  assert.equal(providerBody.destination, "Los Angeles, CA 90001");
   assert.equal(providerBody.requested_service, "Supplier Consolidation");
   assert.equal(providerBody.shipping_method, "Ocean freight — compare FCL/LCL");
   assert.equal(providerBody.service_needs, "Shipping, Consolidation, Inspection");
@@ -197,36 +203,60 @@ test("202 stays PENDING and an identical replay never resends", async () => {
   assert.equal(calls, 1);
 });
 
-test("concurrent requests with the same key and payload share one provider call", async () => {
+test("two instances return PENDING while the owner is processing, then replay the final outcome after restart", async () => {
   let calls = 0;
   let releaseProvider;
+  const idempotencyStore = new Map();
+  const rateLimitStore = new Map();
   const providerPromise = new Promise((resolve) => {
     releaseProvider = resolve;
   });
-  const options = harness({
+  const sharedOptions = {
+    env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+    now: () => NOW,
+    uuidFactory: () => UUID,
+    ownerTokenFactory: () => "shared-owner-token",
     fetchImpl: async () => {
       calls += 1;
       await providerPromise;
       return jsonProvider(JSON.stringify({ success: true }));
-    }
-  });
+    },
+    stateKeySecret: "shared-test-state-key"
+  };
+  const firstInstance = createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore });
+  const secondInstance = createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore });
   const firstPromise = handleInquiryRequest(
     jsonRequest(validBody(), { requestKey: key(6) }),
-    options
-  );
-  const secondPromise = handleInquiryRequest(
-    jsonRequest(validBody(), { requestKey: key(6) }),
-    options
+    { ...sharedOptions, stateStore: firstInstance }
   );
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(calls, 1);
-  releaseProvider();
-  const [first, second] = await Promise.all([firstPromise, secondPromise]);
-  const firstResult = await first.json();
+  const second = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(6) }),
+    { ...sharedOptions, stateStore: secondInstance }
+  );
   const secondResult = await second.json();
 
-  assert.equal(firstResult.request_id, secondResult.request_id);
+  assert.equal(calls, 1);
+  assert.equal(second.status, 202);
+  assert.equal(secondResult.submission_status, "PENDING");
+  assert.equal(secondResult.code, "SUBMISSION_IN_PROGRESS");
+  assert.equal(secondResult.request_id, "GL-20261110-12345678");
   assert.equal(second.headers.get("idempotency-replayed"), "true");
+
+  releaseProvider();
+  const first = await firstPromise;
+  const firstResult = await first.json();
+  assert.equal(firstResult.submission_status, "SUCCESS");
+
+  const restartedInstance = createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore });
+  const replay = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(6) }),
+    { ...sharedOptions, stateStore: restartedInstance }
+  );
+  const replayResult = await replay.json();
+  assert.equal(replayResult.submission_status, "SUCCESS");
+  assert.equal(replayResult.request_id, firstResult.request_id);
+  assert.equal(replay.headers.get("idempotency-replayed"), "true");
   assert.equal(calls, 1);
 });
 
@@ -359,6 +389,177 @@ test("different cargo with the same email and IP is not treated as an idempotent
   assert.equal(calls, 2);
 });
 
+test("PENDING is stored across a new instance and is never automatically delivered again", async () => {
+  let calls = 0;
+  const idempotencyStore = new Map();
+  const rateLimitStore = new Map();
+  const common = {
+    env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+    now: () => NOW,
+    uuidFactory: () => UUID,
+    stateKeySecret: "pending-shared-state-key",
+    fetchImpl: async () => {
+      calls += 1;
+      return jsonProvider(JSON.stringify({ accepted: true }), { status: 202 });
+    }
+  };
+  const first = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(42) }),
+    {
+      ...common,
+      stateStore: createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore })
+    }
+  );
+  const replay = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(42) }),
+    {
+      ...common,
+      stateStore: createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore })
+    }
+  );
+
+  assert.equal(first.status, 202);
+  assert.equal((await first.json()).submission_status, "PENDING");
+  assert.equal(replay.status, 202);
+  assert.equal((await replay.json()).idempotency_replayed, true);
+  assert.equal(calls, 1);
+});
+
+test("a state claim failure stops before the provider and fails closed", async () => {
+  let providerCalls = 0;
+  const response = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(43) }),
+    {
+      env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+      stateKeySecret: "claim-failure-test-key",
+      stateStore: {
+        claim: async () => {
+          throw new Error("mock store unavailable");
+        }
+      },
+      fetchImpl: async () => {
+        providerCalls += 1;
+        return jsonProvider(JSON.stringify({ success: true }));
+      },
+      now: () => NOW,
+      uuidFactory: () => UUID
+    }
+  );
+  const result = await response.json();
+
+  assert.equal(response.status, 503);
+  assert.equal(result.code, "STATE_STORE_UNAVAILABLE");
+  assert.equal(response.headers.get("set-cookie"), null);
+  assert.equal(providerCalls, 0);
+});
+
+test("a final state write failure after provider acceptance remains PENDING and is not resent", async () => {
+  let providerCalls = 0;
+  const idempotencyStore = new Map();
+  const rateLimitStore = new Map();
+  const baseStore = createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore });
+  const writeFailingStore = {
+    ...baseStore,
+    complete: async () => {
+      throw new Error("mock write unavailable");
+    }
+  };
+  const common = {
+    env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+    stateKeySecret: "write-failure-test-key",
+    fetchImpl: async () => {
+      providerCalls += 1;
+      return jsonProvider(JSON.stringify({ success: true }));
+    },
+    now: () => NOW,
+    uuidFactory: () => UUID
+  };
+  const first = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(44) }),
+    { ...common, stateStore: writeFailingStore }
+  );
+  const firstResult = await first.json();
+  const replay = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(44) }),
+    { ...common, stateStore: baseStore }
+  );
+  const replayResult = await replay.json();
+
+  assert.equal(first.status, 202);
+  assert.equal(firstResult.code, "STATE_STORE_WRITE_UNKNOWN");
+  assert.equal(first.headers.get("set-cookie"), null);
+  assert.equal(replay.status, 202);
+  assert.equal(replayResult.code, "SUBMISSION_IN_PROGRESS");
+  assert.equal(providerCalls, 1);
+});
+
+test("two instances share one rate limit and the sixth distinct inquiry is rejected", async () => {
+  let providerCalls = 0;
+  const idempotencyStore = new Map();
+  const rateLimitStore = new Map();
+  const stores = [
+    createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore }),
+    createMemoryInquiryStateStore({ idempotencyStore, rateLimitStore })
+  ];
+  const common = {
+    env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+    stateKeySecret: "shared-rate-limit-key",
+    fetchImpl: async () => {
+      providerCalls += 1;
+      return jsonProvider(JSON.stringify({ success: true }));
+    },
+    now: () => NOW,
+    uuidFactory: () => UUID
+  };
+
+  for (let index = 1; index <= 6; index += 1) {
+    const response = await handleInquiryRequest(
+      jsonRequest(validBody({ product_name: `Shared cargo ${index}` }), {
+        requestKey: key(60 + index)
+      }),
+      { ...common, stateStore: stores[index % 2] }
+    );
+    assert.equal(response.status, index <= 5 ? 200 : 429);
+  }
+  assert.equal(providerCalls, 5);
+});
+
+test("public requests require an explicitly configured shared state store", async () => {
+  let providerCalls = 0;
+  const response = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(70) }),
+    {
+      env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+      fetchImpl: async () => {
+        providerCalls += 1;
+        return jsonProvider(JSON.stringify({ success: true }));
+      },
+      now: () => NOW,
+      uuidFactory: () => UUID
+    }
+  );
+  const result = await response.json();
+
+  assert.equal(response.status, 503);
+  assert.equal(result.code, "STATE_STORE_CONFIGURATION_ERROR");
+  assert.equal(providerCalls, 0);
+});
+
+test("an injected state store without a key secret fails clearly instead of throwing", async () => {
+  const response = await handleInquiryRequest(
+    jsonRequest(validBody(), { requestKey: key(71) }),
+    {
+      env: { INQUIRY_PROVIDER_ENDPOINT: PROVIDER_ENDPOINT },
+      stateStore: createMemoryInquiryStateStore(),
+      now: () => NOW,
+      uuidFactory: () => UUID
+    }
+  );
+
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).code, "STATE_STORE_CONFIGURATION_ERROR");
+});
+
 test("unsafe provider configuration fails clearly without a fetch call", async () => {
   for (const endpoint of [
     "not a URL",
@@ -425,6 +626,34 @@ test("local mock requires explicit QA mode, loopback request host, and the local
   );
 });
 
+test("memory inquiry state is local-only and Upstash configuration is fail-closed", () => {
+  const memoryEnv = {
+    INQUIRY_STATE_STORE: "memory",
+    INQUIRY_ALLOW_MEMORY_STATE: "true"
+  };
+  assert.equal(
+    resolveInquiryStateStore(
+      new Request("http://127.0.0.1:3100/api/inquiry/"),
+      memoryEnv
+    ).ok,
+    true
+  );
+  assert.equal(
+    resolveInquiryStateStore(
+      new Request("https://gdlogi.us/api/inquiry/"),
+      memoryEnv
+    ).ok,
+    false
+  );
+  assert.equal(
+    resolveInquiryStateStore(
+      new Request("https://gdlogi.us/api/inquiry/"),
+      { INQUIRY_STATE_STORE: "upstash-redis" }
+    ).code,
+    "STATE_STORE_CONFIGURATION_ERROR"
+  );
+});
+
 test("a local site request cannot contact the real provider unless separately and explicitly allowed", () => {
   assert.equal(
     resolveProviderConfiguration(
@@ -442,12 +671,12 @@ test("a local site request cannot contact the real provider unless separately an
   );
 });
 
-test("provider timeout defaults to 24 seconds, clamps larger values, and keeps smaller values", () => {
+test("provider timeout preserves shared-store and response headroom inside the 30-second route budget", () => {
   const request = new Request("https://gdlogi.us/api/inquiry/");
-  assert.equal(resolveProviderConfiguration(request, {}).timeoutMs, 24_000);
+  assert.equal(resolveProviderConfiguration(request, {}).timeoutMs, 18_000);
   assert.equal(
     resolveProviderConfiguration(request, { INQUIRY_PROVIDER_TIMEOUT_MS: "60000" }).timeoutMs,
-    24_000
+    18_000
   );
   assert.equal(
     resolveProviderConfiguration(request, { INQUIRY_PROVIDER_TIMEOUT_MS: "9000" }).timeoutMs,

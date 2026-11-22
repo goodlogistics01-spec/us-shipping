@@ -5,6 +5,9 @@ import { company, services } from "../../site-data";
 
 function createQuoteHref(service) {
   const params = new URLSearchParams();
+  if (service.category !== "China Operations") {
+    params.set("destination_country", "United States");
+  }
   if (service.shippingMethod) params.set("shipping_method", service.shippingMethod);
   service.quoteNeeds.forEach((need) => params.append("service_need", need));
   (service.quoteInspectionTypes || []).forEach((type) => {

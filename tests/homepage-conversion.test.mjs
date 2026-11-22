@@ -6,11 +6,19 @@ const projectRoot = new URL("../", import.meta.url);
 const homepage = await readFile(new URL("content/good-logistics-homepage-v2.html", projectRoot), "utf8");
 const analyticsBridge = await readFile(new URL("app/components/AnalyticsBridge.js", projectRoot), "utf8");
 const oceanFreightPage = await readFile(new URL("app/components/OceanFreightPage.js", projectRoot), "utf8");
+const quoteForm = await readFile(new URL("app/components/QuoteForm.js", projectRoot), "utf8");
 
 function hrefFor(label) {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = homepage.match(new RegExp(`<a[^>]+href="([^"]+)"[^>]*>${escaped}</a>`));
   assert.ok(match, `Missing homepage link: ${label}`);
+  return new URL(match[1].replaceAll("&amp;", "&"), "https://gdlogi.us");
+}
+
+function marketHrefFor(label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = homepage.match(new RegExp(`<a[^>]+href="([^"]+)"[^>]*><strong>${escaped}</strong>`));
+  assert.ok(match, `Missing homepage market link: ${label}`);
   return new URL(match[1].replaceAll("&amp;", "&"), "https://gdlogi.us");
 }
 
@@ -56,6 +64,35 @@ test("complex-cargo scenario keeps the service choice conservative and editable"
   assert.equal(url.pathname, "/quote/");
   assert.equal(url.searchParams.get("shipping_method"), "not-sure");
   assert.deepEqual(url.searchParams.getAll("service_need"), ["shipping"]);
+});
+
+test("homepage country links prefill an editable country while Europe requires a specific choice", () => {
+  for (const country of [
+    "United States",
+    "Canada",
+    "United Kingdom",
+    "Australia",
+    "New Zealand"
+  ]) {
+    const url = marketHrefFor(country);
+    assert.equal(url.pathname, "/quote/");
+    assert.equal(url.searchParams.get("destination_country"), country);
+    assert.deepEqual(url.searchParams.getAll("service_need"), ["shipping"]);
+  }
+
+  const europe = marketHrefFor("Europe");
+  assert.equal(europe.searchParams.get("destination_country"), null);
+  assert.equal(europe.searchParams.get("destination_region"), "europe");
+});
+
+test("current inquiry forms use separate country and destination fields without a U.S.-only hint", () => {
+  assert.match(homepage, /name="destination_country"/);
+  assert.match(homepage, /name="destination"/);
+  assert.match(quoteForm, /name="destination_country"/);
+  assert.match(quoteForm, /name="destination"/);
+  assert.match(quoteForm, /form_schema_version/);
+  assert.doesNotMatch(quoteForm, /U\.S\. city, state and ZIP code/);
+  assert.match(oceanFreightPage, /defaultDestinationCountry="United States"/);
 });
 
 test("scenario CTA attribution is allowlisted rather than copied from a URL or label", () => {

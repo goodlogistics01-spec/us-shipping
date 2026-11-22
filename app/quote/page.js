@@ -15,7 +15,7 @@ export default function QuotePage() {
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Quote" }]}
         eyebrow="Shipping Quote"
         title="Tell Us What You’re Shipping"
-        lead="Share your product, pickup location and destination. Weight or dimensions help, but you can submit what you have."
+        lead="Share the product, China pickup location, destination country and city or postal code. Weight or dimensions help, but you can enter unknown."
         variant="compact"
       />
       <section className="marketing-section marketing-quote-form-section"><div className="marketing-container marketing-form-shell"><QuoteForm replyFieldsNearEmail /></div></section>
