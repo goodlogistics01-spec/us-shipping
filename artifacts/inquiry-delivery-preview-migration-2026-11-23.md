@@ -38,8 +38,8 @@ Status at initial implementation:
 | --- | --- |
 | Upstash Redis on current Vercel Preview | Previously connected for the candidate; must be rechecked after the new deployment |
 | HubSpot free account, form, details property and supported server credential | `NOT_VERIFIED` |
-| Resend account and API key | `NOT_VERIFIED` |
-| Resend sending domain and Provider-issued DNS records | `NOT_VERIFIED`; DNS unchanged and requires separate owner confirmation |
+| Resend free resource and Preview API key injection | VERIFIED — Vercel resource `gdlogi-preview-inquiry-email`, free plan, connected to Preview only; Production has no Resend variables |
+| Resend sending domain and Provider-issued DNS records | `mail.gdlogi.com` is in `not_started` onboarding; DNS unchanged and requires separate owner confirmation |
 | Vercel Preview variables and release-commit match | `NOT_VERIFIED` |
 | One HubSpot TEST record | `NOT_VERIFIED` |
 | One Resend accepted notification | `NOT_VERIFIED` |
@@ -47,6 +47,25 @@ Status at initial implementation:
 | Production activation | Not performed |
 
 The exact environment variable names are documented in `.env.example` and `README.md`; secret values must remain in Vercel and must never be committed or copied into public evidence.
+
+### Email DNS inventory and prepared Resend records
+
+Read-only public DNS on 2026-11-23 showed:
+
+- Root MX: priority 5 `mxbiz1.qq.com`, priority 10 `mxbiz2.qq.com`.
+- No public root SPF TXT response was returned.
+- No `_dmarc.gdlogi.com` TXT response was returned.
+- DNS hosting/account access was not changed or used.
+
+The Resend free resource generated three records for the separate `mail.gdlogi.com` sending subdomain:
+
+| Purpose | Type | Relative name | Target/value handling | Status |
+| --- | --- | --- | --- | --- |
+| DKIM | TXT | `resend._domainkey.mail` | Use the current Provider-issued public key from the Resend dashboard | Not added |
+| Return-path/SPF routing | CNAME | `rsend.mail` | `rsend.forge.rmta.net` | Not added |
+| Sending routing | CNAME | `send.mail` | `send.forge.rmta.net` | Not added |
+
+These subdomain records do not replace the existing root MX records. Re-read the Provider values immediately before an owner-approved DNS change; do not guess or reuse a stale DKIM key. Root-domain SPF/DMARC remediation is a separate email-domain decision and was not bundled into this Preview task.
 
 ## Historical FormSubmit archive
 
