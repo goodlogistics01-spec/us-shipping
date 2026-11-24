@@ -204,22 +204,45 @@ test("HubSpot capture precedes one Resend notification and replays SUCCESS witho
 
 test("HubSpot explicit rejection fails and never calls Resend", async () => {
   let calls = 0;
+  const auditEvents = [];
   const response = await handleInquiryRequest(
     request(validBody(), key(4)),
-    harness({
-      fetchImpl: async (url) => {
-        calls += 1;
-        assert.equal(new URL(url).hostname, HUBSPOT_HOST);
-        return json({ category: "VALIDATION_ERROR" }, 400);
-      }
-    })
+    {
+      ...harness({
+        fetchImpl: async (url) => {
+          calls += 1;
+          assert.equal(new URL(url).hostname, HUBSPOT_HOST);
+          return json(
+            { category: "VALIDATION_ERROR" },
+            400,
+            { "x-hubspot-correlation-id": "hubspot-rejected-123" }
+          );
+        }
+      }),
+      auditLogger: (event) => auditEvents.push(event)
+    }
   );
   const body = await response.json();
 
   assert.equal(response.status, 502);
   assert.equal(body.submission_status, "FAILED");
   assert.equal(body.code, "HUBSPOT_REJECTED");
+  assert.equal(body.provider_request_id, undefined);
   assert.equal(calls, 1);
+  assert.deepEqual(auditEvents, [
+    {
+      event: "gdlogi.inquiry.delivery_outcome",
+      submission_id: "GL-20261123-87654321",
+      submission_status: "FAILED",
+      code: "HUBSPOT_REJECTED",
+      http_status: 502,
+      lead_store_status: "FAILED",
+      lead_store_code: "HUBSPOT_REJECTED",
+      lead_store_request_id: "hubspot-rejected-123",
+      notification_status: "NOT_ATTEMPTED",
+      vercel_env: "preview"
+    }
+  ]);
 });
 
 test("HubSpot uncertainty stays PENDING and never calls Resend", async () => {
@@ -244,6 +267,7 @@ test("HubSpot uncertainty stays PENDING and never calls Resend", async () => {
 
 test("an uncertain CAPTURED write returns PENDING and does not notify", async () => {
   let calls = 0;
+  const auditEvents = [];
   const baseStore = createMemoryInquiryStateStore();
   const store = {
     ...baseStore,
@@ -253,20 +277,25 @@ test("an uncertain CAPTURED write returns PENDING and does not notify", async ()
   };
   const response = await handleInquiryRequest(
     request(validBody(), key(6)),
-    harness({
-      store,
-      fetchImpl: async (url) => {
-        calls += 1;
-        assert.equal(new URL(url).hostname, HUBSPOT_HOST);
-        return acceptedHubSpot();
-      }
-    })
+    {
+      ...harness({
+        store,
+        fetchImpl: async (url) => {
+          calls += 1;
+          assert.equal(new URL(url).hostname, HUBSPOT_HOST);
+          return acceptedHubSpot();
+        }
+      }),
+      auditLogger: (event) => auditEvents.push(event)
+    }
   );
   const body = await response.json();
 
   assert.equal(response.status, 202);
   assert.equal(body.code, "STATE_STORE_CAPTURE_UNKNOWN");
   assert.equal(calls, 1);
+  assert.equal(auditEvents[0].lead_store_request_id, "hubspot-correlation-123");
+  assert.equal(auditEvents[0].notification_status, "NOT_ATTEMPTED");
 });
 
 test("Resend rejection or uncertainty never changes a captured inquiry from SUCCESS", async () => {

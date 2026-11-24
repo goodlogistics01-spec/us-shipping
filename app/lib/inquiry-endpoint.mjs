@@ -10,6 +10,10 @@ import { storeInquiryInHubSpot } from "./inquiry-lead-store-hubspot.mjs";
 import { submitViaResend } from "./inquiry-provider-resend.mjs";
 import { inquiryConfirmationCookieName } from "./inquiry-confirmation.mjs";
 import {
+  createInquiryOutcomeAuditEvent,
+  emitInquiryAudit
+} from "./inquiry-audit.mjs";
+import {
   createMemoryInquiryStateStore,
   createUpstashInquiryStateStore,
   INQUIRY_STATE_STORE_TIMEOUT_MS
@@ -609,6 +613,9 @@ async function executeSubmission({
         submissionId,
         leadStoreStatus: hubspotOutcome.submissionStatus,
         leadStoreCode: hubspotOutcome.code,
+        ...(hubspotOutcome.providerRequestId
+          ? { leadStoreRequestId: hubspotOutcome.providerRequestId }
+          : {}),
         notificationStatus: "NOT_ATTEMPTED"
       };
     }
@@ -631,9 +638,11 @@ async function executeSubmission({
     };
     if (!(await captureAccepted(capturedOutcome))) {
       return {
+        ...capturedOutcome,
         submissionStatus: "PENDING",
         code: "STATE_STORE_CAPTURE_UNKNOWN",
-        submissionId,
+        notificationStatus: "NOT_ATTEMPTED",
+        notificationCode: "STATE_STORE_CAPTURE_UNKNOWN",
         skipFinalStateWrite: true
       };
     }
@@ -750,7 +759,8 @@ export async function handleInquiryRequest(
     idempotencyStore,
     now = () => new Date(),
     uuidFactory = randomUUID,
-    ownerTokenFactory = randomUUID
+    ownerTokenFactory = randomUUID,
+    auditLogger
   } = {}
 ) {
   let raw;
@@ -868,6 +878,13 @@ export async function handleInquiryRequest(
     });
   }
   if (claim?.status === "REPLAY" && claim.outcome) {
+    emitInquiryAudit(
+      auditLogger,
+      createInquiryOutcomeAuditEvent(claim.outcome, {
+        environment: env.VERCEL_ENV,
+        replayed: true
+      })
+    );
     return responseFromOutcome(request, claim.outcome, true);
   }
   if (claim?.status !== "CLAIMED") {
@@ -962,6 +979,11 @@ export async function handleInquiryRequest(
       submissionId
     };
   }
+
+  emitInquiryAudit(
+    auditLogger,
+    createInquiryOutcomeAuditEvent(outcome, { environment: env.VERCEL_ENV })
+  );
 
   if (outcome.skipFinalStateWrite) {
     return pendingResponse(request, {
