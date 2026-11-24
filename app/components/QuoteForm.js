@@ -30,6 +30,10 @@ const serviceNeedOptions = [
   ["not-sure", "Not sure — please advise"]
 ];
 
+const additionalServiceNeedOptions = serviceNeedOptions.filter(
+  ([value]) => value !== "shipping"
+);
+
 const inspectionTypeOptions = [
   ["receiving-checks", "Receiving Checks — quantity, cartons, labels and visible damage"],
   ["product-quality-inspection", "Product Quality Inspection — requirements agreed before work starts"],
@@ -39,6 +43,8 @@ const inspectionTypeOptions = [
 const optionalDetailFieldNames = new Set([
   "company",
   "whatsapp",
+  "weight",
+  "volume",
   "cargo_ready_date",
   "preferred_contact",
   "package_count",
@@ -198,7 +204,7 @@ export default function QuoteForm({
   productPage = false,
   replyFieldsNearEmail = false,
   defaultShippingMethod = "not-sure",
-  defaultServiceNeeds = ["not-sure"],
+  defaultServiceNeeds = ["shipping"],
   defaultInspectionTypes = [],
   defaultDestinationCountry = "",
   submitLabel = "Send My Quote Request"
@@ -211,6 +217,7 @@ export default function QuoteForm({
   const [destinationRegion, setDestinationRegion] = useState("");
   const submittingRef = useRef(false);
   const startedRef = useRef(false);
+  const serviceOptionsRef = useRef(null);
   const optionalDetailsRef = useRef(null);
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(defaultShippingMethod);
   const [selectedServiceNeeds, setSelectedServiceNeeds] = useState(defaultServiceNeeds);
@@ -337,6 +344,9 @@ export default function QuoteForm({
 
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
+      if (errors.service_needs || errors.inspection_types) {
+        serviceOptionsRef.current?.setAttribute("open", "");
+      }
       if (Object.keys(errors).some(isOptionalDetailField)) {
         optionalDetailsRef.current?.setAttribute("open", "");
       }
@@ -416,6 +426,9 @@ export default function QuoteForm({
       submittingRef.current = false;
       const serverFieldErrors = error.fieldErrors || {};
       setFieldErrors((current) => ({ ...current, ...serverFieldErrors }));
+      if (serverFieldErrors.service_needs || serverFieldErrors.inspection_types) {
+        serviceOptionsRef.current?.setAttribute("open", "");
+      }
       if (Object.keys(serverFieldErrors).some(isOptionalDetailField)) {
         optionalDetailsRef.current?.setAttribute("open", "");
       }
@@ -451,7 +464,7 @@ export default function QuoteForm({
     setPreferredContact(nextMethod);
     setFieldErrors((current) => ({
       ...current,
-      whatsapp: whatsapp && !isValidPhone(whatsapp)
+      whatsapp: nextMethod !== "email" && whatsapp && !isValidPhone(whatsapp)
         ? "Enter a valid number using digits, spaces, +, parentheses or hyphens."
         : ""
     }));
@@ -515,6 +528,8 @@ export default function QuoteForm({
         name="preferred_contact"
         value={preferredContact}
         onChange={handlePreferredContactChange}
+        aria-controls="quote-whatsapp-field"
+        aria-expanded={preferredContact !== "email"}
       >
         <option value="email">Email</option>
         <option value="whatsapp">WhatsApp</option>
@@ -524,7 +539,7 @@ export default function QuoteForm({
   );
 
   const whatsappPhoneField = (
-    <label>
+    <label id="quote-whatsapp-field" hidden={preferredContact === "email"}>
       <span className="marketing-field-label">
         WhatsApp / Phone {preferredContact === "whatsapp" ? <span aria-hidden="true">*</span> : null}
       </span>
@@ -533,6 +548,7 @@ export default function QuoteForm({
         type="tel"
         autoComplete="tel"
         maxLength="50"
+        disabled={preferredContact === "email"}
         required={preferredContact === "whatsapp"}
         aria-invalid={Boolean(fieldErrors.whatsapp)}
         aria-describedby={fieldErrors.whatsapp ? "quote-error-whatsapp" : undefined}
@@ -540,6 +556,10 @@ export default function QuoteForm({
       <FieldError id="quote-error-whatsapp" message={fieldErrors.whatsapp} />
     </label>
   );
+
+  const selectedAdditionalServiceCount = selectedServiceNeeds.filter(
+    (value) => value !== "shipping"
+  ).length;
 
   return (
     <form
@@ -567,7 +587,7 @@ export default function QuoteForm({
 
       <div className="marketing-form-grid">
         <p className="marketing-form-intro form-span-two">
-          Only starred fields are required.
+          Only starred fields are required. We can confirm the remaining details with you.
         </p>
         <label>
           <span className="marketing-field-label">Name <span aria-hidden="true">*</span></span>
@@ -680,80 +700,115 @@ export default function QuoteForm({
             ))}
           </select>
         </label>
-        {(productPage || !compact) ? (
-          <>
-            <label>
-              <span className="marketing-field-label">Total Weight <span className="marketing-optional-label">(optional)</span></span>
-              <input name="weight" placeholder="kg, lb or not sure" maxLength="100" />
-            </label>
-            <label>
-              <span className="marketing-field-label">Total Volume <span className="marketing-optional-label">(optional)</span></span>
-              <input name="volume" placeholder="CBM or not sure" maxLength="160" />
-            </label>
-          </>
-        ) : null}
 
         <fieldset
-          className="marketing-service-needs form-span-two"
+          className="marketing-service-needs marketing-service-needs-primary form-span-two"
           aria-describedby={fieldErrors.service_needs ? "quote-error-service-needs" : "quote-service-needs-help"}
         >
-          <legend>Service Needs <span aria-hidden="true">*</span></legend>
-          <p id="quote-service-needs-help">Choose all that apply. Shipping method is selected separately.</p>
-          <div className="marketing-checkbox-grid">
-            {serviceNeedOptions.map(([value, label]) => (
-              <label key={value}>
-                <input
-                  type="checkbox"
-                  name="service_needs"
-                  value={value}
-                  checked={selectedServiceNeeds.includes(value)}
-                  onChange={handleServiceNeedChange}
-                  aria-invalid={Boolean(fieldErrors.service_needs)}
-                />
-                <span>{label}</span>
-              </label>
-            ))}
+          <legend>Service Need <span aria-hidden="true">*</span></legend>
+          <p id="quote-service-needs-help">Shipping is selected by default. Add other services only if needed.</p>
+          <div className="marketing-checkbox-grid marketing-checkbox-grid-primary">
+            <label>
+              <input
+                type="checkbox"
+                name="service_needs"
+                value="shipping"
+                checked={selectedServiceNeeds.includes("shipping")}
+                onChange={handleServiceNeedChange}
+                aria-invalid={Boolean(fieldErrors.service_needs)}
+              />
+              <span>Shipping</span>
+            </label>
           </div>
           <FieldError id="quote-error-service-needs" message={fieldErrors.service_needs} />
         </fieldset>
-        {selectedServiceNeeds.includes("inspection") ? (
-          <fieldset
-            className="marketing-service-needs form-span-two"
-            aria-describedby={fieldErrors.inspection_types ? "quote-error-inspection-types" : "quote-inspection-types-help"}
-          >
-            <legend>Inspection Type <span aria-hidden="true">*</span></legend>
-            <p id="quote-inspection-types-help">Receiving checks and product-quality inspection are separate. Choose both if both are needed.</p>
-            <div className="marketing-checkbox-grid">
-              {inspectionTypeOptions.map(([value, label]) => (
-                <label key={value}>
-                  <input
-                    type="checkbox"
-                    name="inspection_types"
-                    value={value}
-                    checked={selectedInspectionTypes.includes(value)}
-                    onChange={handleInspectionTypeChange}
-                    aria-invalid={Boolean(fieldErrors.inspection_types)}
-                  />
-                  <span>{label}</span>
-                </label>
-              ))}
-            </div>
-            <FieldError id="quote-error-inspection-types" message={fieldErrors.inspection_types} />
-          </fieldset>
-        ) : null}
+        <details
+          className="marketing-optional-details marketing-service-options form-span-two"
+          ref={serviceOptionsRef}
+        >
+          <summary>
+            Add pickup, prep or inspection{" "}
+            <span>
+              {selectedAdditionalServiceCount > 0
+                ? `(${selectedAdditionalServiceCount} selected)`
+                : "(optional)"}
+            </span>
+          </summary>
+          <div className="marketing-optional-details-grid marketing-service-options-grid">
+            <fieldset
+              className="marketing-service-needs marketing-service-needs-nested"
+              aria-describedby={fieldErrors.service_needs ? "quote-error-service-needs" : "quote-additional-service-needs-help"}
+            >
+              <legend>Additional Service Needs</legend>
+              <p id="quote-additional-service-needs-help">Choose any China-side handling or preparation you need.</p>
+              <div className="marketing-checkbox-grid">
+                {additionalServiceNeedOptions.map(([value, label]) => (
+                  <label key={value}>
+                    <input
+                      type="checkbox"
+                      name="service_needs"
+                      value={value}
+                      checked={selectedServiceNeeds.includes(value)}
+                      onChange={handleServiceNeedChange}
+                      aria-invalid={Boolean(fieldErrors.service_needs)}
+                    />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            {selectedServiceNeeds.includes("inspection") ? (
+              <fieldset
+                className="marketing-service-needs marketing-service-needs-nested"
+                aria-describedby={fieldErrors.inspection_types ? "quote-error-inspection-types" : "quote-inspection-types-help"}
+              >
+                <legend>Inspection Type <span aria-hidden="true">*</span></legend>
+                <p id="quote-inspection-types-help">Receiving checks and product-quality inspection are separate. Choose both if needed.</p>
+                <div className="marketing-checkbox-grid">
+                  {inspectionTypeOptions.map(([value, label]) => (
+                    <label key={value}>
+                      <input
+                        type="checkbox"
+                        name="inspection_types"
+                        value={value}
+                        checked={selectedInspectionTypes.includes(value)}
+                        onChange={handleInspectionTypeChange}
+                        aria-invalid={Boolean(fieldErrors.inspection_types)}
+                      />
+                      <span>{label}</span>
+                    </label>
+                  ))}
+                </div>
+                <FieldError id="quote-error-inspection-types" message={fieldErrors.inspection_types} />
+              </fieldset>
+            ) : null}
+          </div>
+        </details>
         <details className="marketing-optional-details form-span-two" ref={optionalDetailsRef}>
           <summary>Add shipment details <span>(optional)</span></summary>
           <div className="marketing-form-grid marketing-optional-details-grid">
+            {(productPage || !compact) ? (
+              <>
+                <label>
+                  <span className="marketing-field-label">Total Weight <span className="marketing-optional-label">(unknown is fine)</span></span>
+                  <input name="weight" placeholder="kg, lb or not sure" maxLength="100" />
+                </label>
+                <label>
+                  <span className="marketing-field-label">Total Volume <span className="marketing-optional-label">(unknown is fine)</span></span>
+                  <input name="volume" placeholder="CBM or not sure" maxLength="160" />
+                </label>
+              </>
+            ) : null}
+            {replyFieldsNearEmail ? null : preferredReplyField}
+            {replyFieldsNearEmail ? null : whatsappPhoneField}
             <label>
               <span className="marketing-field-label">Company</span>
               <input name="company" autoComplete="organization" maxLength="160" />
             </label>
-            {replyFieldsNearEmail ? null : whatsappPhoneField}
             <label>
               <span className="marketing-field-label">Cargo Ready Date</span>
               <input name="cargo_ready_date" type="date" />
             </label>
-            {replyFieldsNearEmail ? null : preferredReplyField}
             <label>
               <span className="marketing-field-label">Carton / Pallet Quantity</span>
               <input name="package_count" inputMode="numeric" maxLength="80" />
@@ -820,7 +875,12 @@ export default function QuoteForm({
         {status === "invalid"
           ? "Please complete the required fields and check the highlighted entries."
           : status === "failed"
-            ? INQUIRY_FAILURE_MESSAGE
+            ? (
+              <>
+                {INQUIRY_FAILURE_MESSAGE}
+                {submissionId ? <> Reference: {submissionId}.</> : null}
+              </>
+            )
             : status === "pending"
               ? (
                 <>

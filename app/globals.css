@@ -815,6 +815,10 @@ body a {
   box-shadow: 0 0 0 1px rgba(175, 23, 51, 0.12);
 }
 
+.marketing-form [hidden] {
+  display: none !important;
+}
+
 .marketing-field-error {
   color: #9a1630;
   font-size: 12px;
@@ -891,10 +895,57 @@ body a {
   line-height: 1.5;
 }
 
+.marketing-service-needs-primary {
+  padding-block: 15px;
+}
+
+.marketing-service-needs-nested {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.marketing-service-options summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+}
+
+.marketing-service-options summary::-webkit-details-marker {
+  display: none;
+}
+
+.marketing-service-options summary span {
+  margin-left: auto;
+}
+
+.marketing-service-options summary::after {
+  flex: 0 0 auto;
+  color: #1682c4;
+  content: "+";
+  font-size: 20px;
+  line-height: 1;
+}
+
+.marketing-service-options[open] summary::after {
+  content: "−";
+}
+
+.marketing-service-options-grid {
+  display: grid;
+  gap: 20px;
+}
+
 .marketing-checkbox-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px 12px;
+}
+
+.marketing-checkbox-grid-primary {
+  grid-template-columns: minmax(0, 280px);
 }
 
 .marketing-checkbox-grid label {
@@ -1281,6 +1332,10 @@ body a {
 
   .marketing-checkbox-grid {
     grid-template-columns: 1fr;
+  }
+
+  .marketing-form-grid {
+    gap: 18px;
   }
 
   .marketing-optional-details-grid {

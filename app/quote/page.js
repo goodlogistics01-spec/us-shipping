@@ -14,8 +14,8 @@ export default function QuotePage() {
       <PageHero
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Quote" }]}
         eyebrow="Shipping Quote"
-        title="Tell Us What You’re Shipping"
-        lead="Share the product, China pickup location, destination country and city or postal code. Weight or dimensions help, but you can enter unknown."
+        title="Get a Shipping Quote"
+        lead="Start with the product, pickup city and destination. Unknown weight or dimensions are fine."
         variant="compact"
       />
       <section className="marketing-section marketing-quote-form-section"><div className="marketing-container marketing-form-shell"><QuoteForm replyFieldsNearEmail /></div></section>

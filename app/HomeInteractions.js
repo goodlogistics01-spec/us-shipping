@@ -92,9 +92,12 @@ export default function HomeInteractions() {
       const status = form.querySelector("[data-home-form-status]");
       const preferredContact = form.elements.preferred_contact;
       const phone = form.elements.whatsapp;
+      const phoneField = form.querySelector("[data-home-phone-field]");
       const email = form.elements.email;
       const destinationCountry = form.elements.destination_country;
       const optionalDetails = form.querySelector("[data-home-optional-details]");
+      const optionalSummary = form.querySelector("[data-home-optional-summary]");
+      const optionalCount = form.querySelector("[data-home-optional-count]");
       const phoneRequiredIndicator = form.querySelector("[data-home-phone-required]");
       const serviceNeedInputs = Array.from(form.querySelectorAll('input[name="service_needs"]'));
       const inspectionTypesFieldset = form.querySelector("[data-home-inspection-types]");
@@ -148,7 +151,17 @@ export default function HomeInteractions() {
 
       const validatePhone = () => {
         if (!phone || !preferredContact) return true;
+        const phoneIsVisible = preferredContact.value !== "email";
         const isRequired = preferredContact.value === "whatsapp";
+        if (phoneField) phoneField.hidden = !phoneIsVisible;
+        phone.disabled = !phoneIsVisible;
+        if (!phoneIsVisible) {
+          phone.required = false;
+          phone.setCustomValidity("");
+          if (phoneRequiredIndicator) phoneRequiredIndicator.hidden = true;
+          clearFieldError(phone);
+          return true;
+        }
         const value = phone.value.trim();
         phone.required = isRequired;
         if (phoneRequiredIndicator) phoneRequiredIndicator.hidden = !isRequired;
@@ -210,6 +223,25 @@ export default function HomeInteractions() {
       const inspectionSelected = () => serviceNeedInputs.some(
         (input) => input.checked && input.value === "inspection"
       );
+
+      const syncServiceSummary = () => {
+        const selected = serviceNeedInputs.filter((input) => input.checked);
+        const additionalCount = selected.filter(
+          (input) => input.value !== "shipping"
+        ).length;
+        const shippingOnly =
+          selected.length === 1 && selected[0]?.value === "shipping";
+        if (optionalSummary) {
+          optionalSummary.textContent = shippingOnly
+            ? "Shipping selected — add services or shipment details"
+            : "Review selected services and shipment details";
+        }
+        if (optionalCount) {
+          optionalCount.textContent = shippingOnly
+            ? "(optional)"
+            : `(${additionalCount} additional selected)`;
+        }
+      };
 
       const syncInspectionTypes = () => {
         const enabled = inspectionSelected();
@@ -424,7 +456,7 @@ export default function HomeInteractions() {
             status.classList.add("is-error");
             status.textContent = Object.keys(serverFieldErrors).length > 0
               ? "Please complete the required fields and check the highlighted entries."
-              : INQUIRY_FAILURE_MESSAGE;
+              : `${INQUIRY_FAILURE_MESSAGE}${error.submissionId ? ` Reference: ${error.submissionId}.` : ""}`;
           }
           if (Object.keys(serverFieldErrors).length > 0) {
             window.setTimeout(() => {
@@ -448,6 +480,7 @@ export default function HomeInteractions() {
             if (notSureInput) notSureInput.checked = false;
           }
           syncInspectionTypes();
+          syncServiceSummary();
           validateServiceNeeds();
           validateInspectionTypes();
         } else if (event.target.name === "inspection_types") {
@@ -483,6 +516,13 @@ export default function HomeInteractions() {
       };
 
       onPageShow = () => {
+        validatePhone();
+        validateEmail();
+        validateDestinationCountry();
+        syncInspectionTypes();
+        syncServiceSummary();
+        validateServiceNeeds();
+        validateInspectionTypes();
         if (form.dataset.submissionState === "pending") {
           if (submitButton) {
             submitButton.disabled = true;
@@ -502,6 +542,7 @@ export default function HomeInteractions() {
       validateEmail();
       validateServiceNeeds();
       syncInspectionTypes();
+      syncServiceSummary();
       validateInspectionTypes();
       form.addEventListener("focusin", onFocusIn);
       form.addEventListener("invalid", onInvalid, true);

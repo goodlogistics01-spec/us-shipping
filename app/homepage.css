@@ -326,12 +326,15 @@
 .home-quick-form :where(input, select, textarea):hover { border-color: #8fa4b7; }
 .home-quick-form :where(input, select, textarea):focus { border-color: var(--home-blue); box-shadow: 0 0 0 3px rgb(23 103 178 / 12%); outline: 0; }
 .home-quick-form :where(input, select, textarea)[aria-invalid="true"] { border-color: var(--home-error); }
+.home-quick-form [hidden] { display: none !important; }
 .home-field-help, .home-field-error { min-height: 0; font-size: .76rem; font-weight: 500; line-height: 1.4; }
 .home-field-help { color: #68788a; }
 .home-field-error { color: var(--home-error); }
 .home-field-error:empty { display: none; }
 .home-optional-details { border: 1px solid var(--home-line); border-radius: 8px; background: var(--home-soft); }
 .home-optional-details summary { display: flex; min-height: 50px; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 15px; color: var(--home-navy); cursor: pointer; font-size: .9rem; font-weight: 750; list-style: none; }
+.home-optional-details summary strong { min-width: 0; color: inherit; font: inherit; }
+.home-optional-details summary > span { flex: 0 0 auto; }
 .home-optional-details summary::-webkit-details-marker { display: none; }
 .home-optional-details summary::after { flex: 0 0 auto; color: var(--home-blue); content: "+"; font-size: 1.25rem; }
 .home-optional-details[open] summary::after { content: "−"; }
